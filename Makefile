@@ -21,7 +21,7 @@ clean: ## Remove virtual environment and cache files
 	find . -type d \( -name ".cache" -o -name "*__pycache__" -o -name ".*_cache" \) -exec rm -rf {} + 2>/dev/null || true
 
 prek: ## Run git hook checks on changed files
-	uv run prek run
+	uv run prek run --fail-fast
 
 prek-all: ## Run git hook checks on all files
 	uv run prek run --all-files

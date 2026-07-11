@@ -83,7 +83,8 @@ def test_bootstrap_applies_toml_config(
     package_logger = logging.getLogger("nlp_shap")
     assert package_logger.level == logging.INFO
     assert any(
-        isinstance(handler, logging.StreamHandler) for handler in package_logger.handlers
+        isinstance(handler, logging.StreamHandler)
+        for handler in package_logger.handlers
     )
 
 
@@ -108,7 +109,7 @@ def test_bootstrap_uses_null_handler_without_logging_section(
 ) -> None:
     """TOML without [tool.logging] falls back to a null handler."""
     config_path = tmp_path / "pyproject.toml"
-    config_path.write_text("[project]\nname = \"example\"\n", encoding="utf-8")
+    config_path.write_text('[project]\nname = "example"\n', encoding="utf-8")
     monkeypatch.setenv(ENV_LOGGING_CONFIG, str(config_path))
     bootstrap_logging()
 
