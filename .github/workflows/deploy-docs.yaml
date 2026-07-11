@@ -1,0 +1,52 @@
+name: Deploy Docs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/deploy-docs.yaml"
+      - "docs/**"
+      - "src/**"
+      - "README.md"
+      - "pyproject.toml"
+      - "uv.lock"
+
+permissions:
+  contents: write
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.3.2
+        with:
+          enable-cache: true
+          version: "0.11.28"
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Sync dependencies
+        run: uv sync --locked --all-groups
+
+      - name: Build documentation
+        run: |
+          make docs
+          mkdir -p gh-pages
+          touch gh-pages/.nojekyll
+          cp -r docs/_build/html/* gh-pages/
+
+      - name: Deploy documentation
+        if: github.event_name == 'push'
+        uses: JamesIves/github-pages-deploy-action@v4.7.3
+        with:
+          branch: gh-pages
+          folder: gh-pages/
+          token: ${{ secrets.GITHUB_TOKEN }}
