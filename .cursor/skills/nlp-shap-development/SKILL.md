@@ -12,7 +12,7 @@ Follow rules in `.cursor/rules/*.mdc`. Agent exit criteria in `AGENTS.md`.
 ## 1. Read
 
 - Task scope only
-- Existing code in `src/nlp_shap/` and `tests/` for conventions
+- Existing code in `src/nlp_shap/` and `tests/` for conventions; `examples/` for published notebook style
 - MLLM-Shap port → minimum slice, not bulk copy
 
 ## 2. Red
@@ -39,6 +39,8 @@ make check
 Packaging → `make build` · docs → `make docs` · deps → `uv lock`
 
 New connector → `tests/benchmarks/` bench tests + `make bench` (see `connector-benchmarks` rule)
+
+Entirely new public workflow → minimal Jupyter notebook in `examples/` + catalog line in `examples/README.md` (see `examples.mdc`)
 
 ## 6. Hand off
 

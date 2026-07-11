@@ -13,6 +13,8 @@ New code under `src/nlp_shap/connectors/` needs two layers:
 
 Benchmarks must cover representative operations (typical init, inference/explain call, hot paths). Tests validate correctness; benchmarks measure latency and catch regressions.
 
+New connectors also need a matching minimal notebook in `examples/` (see `examples.mdc`).
+
 - Use the benchmark harness in `tests/conftest.py`
 - Run locally: `make bench` (`pytest -m bench --benchmark`)
 - Set explicit timing expectations or document baseline in the test when asserting bounds

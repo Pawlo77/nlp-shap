@@ -86,7 +86,7 @@ module = ["logging518", "logging518.*"]
 ignore_missing_imports = true
 
 [tool.bandit]
-exclude_dirs = [".venv", "tests", "docs/_build"]
+exclude_dirs = [".venv", "tests", "docs/_build", "examples"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

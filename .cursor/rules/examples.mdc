@@ -1,0 +1,41 @@
+---
+description: Jupyter notebook examples for new public workflows
+globs: "src/nlp_shap/**"
+alwaysApply: false
+---
+
+# Examples (contributors)
+
+User-facing workflows live in `examples/` as **Jupyter notebooks** — not in `src/nlp_shap/`.
+`examples/README.md` is the **gallery for end users** (setup + catalog). Contributor rules live here.
+
+## When required
+
+Add or update a minimal notebook when you introduce **entirely new public logic**, such as:
+
+- A new connector under `src/nlp_shap/connectors/`
+- A new explainer or attribution entry point
+- A new multimodal workflow users are expected to run end-to-end
+
+Not required for: bug fixes, internal refactors, typing/doc-only changes, or private helpers.
+
+## Notebook standards
+
+1. **One workflow per notebook** — focused name (`text_hf_causal.ipynb`, not `misc.ipynb` or `demo_v2.ipynb`).
+2. **Lightweight** — smallest model/data that proves the path; CPU-first when feasible; tiny prompts.
+3. **Well described** — opening markdown cells: goal, prerequisites, expected output; explain non-obvious steps.
+4. **Minimal code** — import → configure → explain → show result; no notebook-only framework or duplicate library logic.
+5. **Runnable after install** — `nlp_shap` imports and paths work from repo root after `make install` (or `pip install nlp-shap` for published examples).
+6. **Same change** — ship the notebook with the feature; remove or update it when the public API changes.
+
+## Catalog
+
+Add one bullet per notebook to `examples/README.md` under **Notebooks** — user-facing line: what it shows and optional deps. No contributor conventions in that file.
+
+## Pair with tests
+
+- **Correctness** — `tests/` (TDD)
+- **Speed** — `tests/benchmarks/` for connectors (see `connector-benchmarks.mdc`)
+- **Integration story** — matching notebook in `examples/`
+
+Run the notebook locally before hand-off when the change is user-facing.

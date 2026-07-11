@@ -33,6 +33,10 @@ make check
 
 Run `make help` for other targets.
 
+## Examples
+
+End-to-end **Jupyter notebooks** are in [`examples/`](examples/). See [`examples/README.md`](examples/README.md) for setup and the notebook catalog.
+
 ## License
 
 Apache License 2.0. See [LICENSE](LICENSE).
