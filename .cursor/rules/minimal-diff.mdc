@@ -1,0 +1,17 @@
+---
+description: Smallest correct change; no drive-by refactors
+alwaysApply: true
+---
+
+# Minimal diff
+
+- Read surrounding code first; match naming, types, and patterns already in the file
+- Solve the requested task only; no drive-by refactors
+- Reuse existing functions and patterns before adding abstractions
+- No one-line helpers that should stay inline
+- No extra error handling for impossible edge cases
+- New behavior needs tests first (see `tdd.mdc`); no tests that only assert the obvious
+- No new markdown files unless requested
+- If two approaches exist, pick the simpler one that matches the repo
+
+When copying from MLLM-Shap, port the minimum slice needed — do not bulk-copy experiments or multimodal code unless the task requires it.

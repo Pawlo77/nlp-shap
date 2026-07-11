@@ -1,0 +1,10 @@
+---
+description: Library-only scope; no experiments or scaffold
+alwaysApply: true
+---
+
+# Package boundaries
+
+- Library in `src/nlp_shap/` — experiments, papers, notebooks, GUI elsewhere
+- Add modules only with real implementation, never empty package trees
+- Heavy runtime stacks (torch, transformers) → optional extras when introduced

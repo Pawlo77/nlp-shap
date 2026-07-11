@@ -1,0 +1,21 @@
+---
+description: uv-based dev workflow for nlp-shap
+alwaysApply: true
+---
+
+# uv workflow
+
+- Install: `make install` or `uv sync --all-groups`
+- Run tools: `uv run pytest …`, `uv run prek …`, `uv run mypy …`
+- Add dev deps: edit `[dependency-groups].dev` in `pyproject.toml`, then `uv lock`
+- Build: `uv build` or `make build`
+- Never commit without updated `uv.lock` when dependencies change
+- Do not use `pip install -e .` as the primary workflow
+- Python pin: 3.12 (see `.python-version`)
+
+Hook runner is **prek**, not `pre-commit`:
+
+```bash
+make prek-all    # preferred
+uv run prek run --all-files
+```
