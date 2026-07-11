@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>API &#8212; nlp-shap  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="nlp-shap" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-nlp_shap">
+<span id="api"></span><h1>API<a class="headerlink" href="#module-nlp_shap" title="Link to this heading">¶</a></h1>
+<p>Multimodal explainability tool for NLP based on Shapley value.</p>
+<p id="module-nlp_shap._logging">Central logging bootstrap for nlp_shap.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="nlp_shap._logging.ENV_LOGGING_CONFIG">
+<span class="sig-prename descclassname"><span class="pre">nlp_shap._logging.</span></span><span class="sig-name descname"><span class="pre">ENV_LOGGING_CONFIG</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NLP_SHAP_LOGGING_CONFIG'</span></span><a class="headerlink" href="#nlp_shap._logging.ENV_LOGGING_CONFIG" title="Link to this definition">¶</a></dt>
+<dd><p>Environment variable pointing at a TOML file with a <code class="docutils literal notranslate"><span class="pre">[tool.logging]</span></code> section.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="nlp_shap._logging.PACKAGE_NAME">
+<span class="sig-prename descclassname"><span class="pre">nlp_shap._logging.</span></span><span class="sig-name descname"><span class="pre">PACKAGE_NAME</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'nlp_shap'</span></span><a class="headerlink" href="#nlp_shap._logging.PACKAGE_NAME" title="Link to this definition">¶</a></dt>
+<dd><p>Root logger namespace for the package.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="nlp_shap._logging.PYPROJECT_FILENAME">
+<span class="sig-prename descclassname"><span class="pre">nlp_shap._logging.</span></span><span class="sig-name descname"><span class="pre">PYPROJECT_FILENAME</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pyproject.toml'</span></span><a class="headerlink" href="#nlp_shap._logging.PYPROJECT_FILENAME" title="Link to this definition">¶</a></dt>
+<dd><p>Default TOML filename searched for logging configuration.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nlp_shap._logging.bootstrap_logging">
+<span class="sig-prename descclassname"><span class="pre">nlp_shap._logging.</span></span><span class="sig-name descname"><span class="pre">bootstrap_logging</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/nlp_shap/_logging.html#bootstrap_logging"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap._logging.bootstrap_logging" title="Link to this definition">¶</a></dt>
+<dd><p>Load logging from TOML or keep imports quiet.</p>
+<p>Looks for <code class="docutils literal notranslate"><span class="pre">[tool.logging]</span></code> in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> (walked up from the
+current working directory) or in the file named by
+<code class="docutils literal notranslate"><span class="pre">NLP_SHAP_LOGGING_CONFIG</span></code>. Uses <code class="docutils literal notranslate"><span class="pre">logging518</span></code> to pass the section to
+<code class="xref py py-func docutils literal notranslate"><span class="pre">logging.config.dictConfig()</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nlp_shap._logging.find_logging_config">
+<span class="sig-prename descclassname"><span class="pre">nlp_shap._logging.</span></span><span class="sig-name descname"><span class="pre">find_logging_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/nlp_shap/_logging.html#find_logging_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap._logging.find_logging_config" title="Link to this definition">¶</a></dt>
+<dd><p>Return the TOML file that defines <code class="docutils literal notranslate"><span class="pre">[tool.logging]</span></code>, if any.</p>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">nlp-shap</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#nlp_shap._logging.ENV_LOGGING_CONFIG"><code class="docutils literal notranslate"><span class="pre">ENV_LOGGING_CONFIG</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nlp_shap._logging.PACKAGE_NAME"><code class="docutils literal notranslate"><span class="pre">PACKAGE_NAME</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nlp_shap._logging.PYPROJECT_FILENAME"><code class="docutils literal notranslate"><span class="pre">PYPROJECT_FILENAME</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nlp_shap._logging.bootstrap_logging"><code class="docutils literal notranslate"><span class="pre">bootstrap_logging()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nlp_shap._logging.find_logging_config"><code class="docutils literal notranslate"><span class="pre">find_logging_config()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">nlp-shap</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Paweł Pozorski.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
