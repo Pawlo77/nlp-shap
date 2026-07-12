@@ -1,7 +1,5 @@
 """Tests for run archive manifest schema stubs."""
 
-import pytest
-
 from nlp_shap.domain.estimands import Estimand
 from nlp_shap.pipeline.manifest import RunManifest, RunManifestPayload, parse_manifest
 

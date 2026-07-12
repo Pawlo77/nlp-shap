@@ -45,7 +45,9 @@ def aggregate_from_marginals(
     if any(len(mask) != num_players for mask in masks):
         raise ValueError("all masks must have the same number of players")
 
-    payoff_lookup = {tuple(mask): payoff for mask, payoff in zip(masks, payoffs, strict=True)}
+    payoff_lookup = {
+        tuple(mask): payoff for mask, payoff in zip(masks, payoffs, strict=True)
+    }
     values = [0.0] * num_players
 
     for player_index in range(num_players):

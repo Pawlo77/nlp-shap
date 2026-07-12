@@ -1,13 +1,13 @@
 """Estimand labels for attribution outputs and archive manifests."""
 
-from enum import Enum
+from enum import StrEnum
 from typing import Literal
 
 EstimandWire = Literal["shapley", "banzhaf"]
 """Wire values used in manifests and configuration payloads."""
 
 
-class Estimand(str, Enum):
+class Estimand(StrEnum):
     """Supported cooperative-game value formulations."""
 
     SHAPLEY = "shapley"

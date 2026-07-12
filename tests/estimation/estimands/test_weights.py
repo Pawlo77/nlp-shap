@@ -34,6 +34,6 @@ def test_banzhaf_coalition_weight_is_uniform() -> None:
     num_players = 4
     expected = 1.0 / (2 ** (num_players - 1))
     for coalition_size in range(num_players):
-        assert aggregator.coalition_weight(coalition_size, num_players) == pytest.approx(
-            expected
-        )
+        assert aggregator.coalition_weight(
+            coalition_size, num_players
+        ) == pytest.approx(expected)
