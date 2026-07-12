@@ -5,7 +5,6 @@ from pathlib import Path
 from nlp_shap.domain.enums import EmbeddingMode
 from nlp_shap.domain.estimands import Estimand
 from nlp_shap.pipeline.config import (
-    ExplainConfig,
     explain_config_from_yaml,
     explain_config_to_yaml,
 )
