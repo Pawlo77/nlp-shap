@@ -20,3 +20,6 @@ class PluginGroup(StrEnum):
 
     PARTITIONS = "nlp_shap.partitions"
     """Player-partitioning plugins for conversation snapshots."""
+
+    ABSENCE_POLICIES = "nlp_shap.absence_policies"
+    """Absence-policy plugins for rendering masked snapshots."""

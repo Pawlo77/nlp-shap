@@ -71,5 +71,6 @@ Next steps
 - :doc:`../theory/shapley_values` — Shapley axioms and uniqueness
 - :doc:`../theory/estimands` — why Shapley and Banzhaf differ
 - :doc:`applications` — business and compliance use cases
-- :doc:`../examples` — embedded toy-game notebook
+- :doc:`../examples` — `estimands_toy_game.ipynb` and `masking_views.ipynb`
+- :doc:`masking` — coalition masking and absence policies
 - :doc:`../api` — module reference

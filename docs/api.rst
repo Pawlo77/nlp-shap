@@ -29,6 +29,10 @@ Public exports
      - Cooperative-game player set and references. See :doc:`api/domain`.
    * - :class:`~nlp_shap.PluginRegistry`
      - Plugin discovery and resolution. See :doc:`api/plugins`.
+   * - :class:`~nlp_shap.masking.TokenPartitioner`
+     - Whitespace token partition plugin. See :doc:`api/masking`.
+   * - :class:`~nlp_shap.masking.MaskBuilder`
+     - Shared masked snapshot views. See :doc:`api/masking`.
    * - :class:`~nlp_shap.Estimand`
      - Estimand label enum (``shapley`` | ``banzhaf``). See :doc:`api/domain`.
    * - :class:`~nlp_shap.ShapleyAggregator`
@@ -52,6 +56,7 @@ Modules
    api/protocols
    api/plugins
    api/pipeline
+   api/masking
    api/estimation
 
 Package version

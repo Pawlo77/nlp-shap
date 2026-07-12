@@ -45,6 +45,7 @@ Ship Sphinx docs with every public API / algorithm change (see `docs.mdc`):
 - `docs/release_notes.rst` — user-facing bullets per version; `Unreleased` until tag
 - `docs/index.rst` toctree
 - Notebook in `examples/` when users need an end-to-end story; catalog in `examples/README.md` and `docs/examples.rst`
+- Example notebooks must cover the **full public usability scope** of the feature they present, with **all imports in the first code cell**, and **short dual-audience section commentary** (technical behavior + business motivation). Omit stubs with no runnable behaviour. Catalog every notebook in `examples/README.md`, `docs/examples.rst`, and `README.md`. See `examples.mdc`.
 
 ## 5. Refactor
 
@@ -74,4 +75,4 @@ New Makefile target → `name: ## help` + `.PHONY`
 
 ## Pitfalls
 
-`pre-commit` → prek · `pip install` → pyproject + `uv lock` · implement before test → back to step 2 · push without `make check` → remote Prek Checks fail · notebooks without outputs → do not commit · public `feat` without `docs/` → incomplete hand-off · phase/roadmap text in `docs/` → forbidden
+`pre-commit` → prek · `pip install` → pyproject + `uv lock` · implement before test → back to step 2 · push without `make check` → remote Prek Checks fail · notebooks without outputs → do not commit · public `feat` without `docs/` → incomplete hand-off · phase/roadmap text in `docs/` → forbidden · partial example notebooks that omit shipped APIs → incomplete hand-off

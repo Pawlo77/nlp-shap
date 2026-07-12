@@ -25,4 +25,5 @@ Use the project `.venv` as the notebook kernel when working from source.
 
 ## Notebooks
 
-- `estimands_toy_game.ipynb` — Shapley vs Banzhaf on a three-player majority game; shows estimand divergence and `ExplainResult` / manifest labelling. CPU-only; no optional extras.
+- `estimands_toy_game.ipynb` — Full 0.1.1 estimand walkthrough: Shapley/Banzhaf aggregators, coalition weights, majority vs additive games, labelled `ExplainResult`, manifest wire format, and plugin entry points. CPU-only; no optional extras.
+- `masking_views.ipynb` — Full 0.1.3 masking walkthrough: token partition, delete/pad/neutral policies (including custom parameters), `MaskedSnapshot`/`MaskBuilder`, `MaskCodec`, `MaskSpace`, plugin registry, and validation guards. CPU-only; no optional extras.

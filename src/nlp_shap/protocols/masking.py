@@ -4,6 +4,7 @@ from typing import Protocol
 
 from ..domain.coalition import CoalitionMask
 from ..domain.conversation import ConversationSnapshot
+from ..domain.players import PlayerSet
 
 
 class AbsencePolicy(Protocol):
@@ -16,6 +17,7 @@ class AbsencePolicy(Protocol):
     def apply(
         self,
         snapshot: ConversationSnapshot,
+        players: PlayerSet,
         mask: CoalitionMask,
     ) -> ConversationSnapshot:
         """Return a masked snapshot view for coalition evaluation."""

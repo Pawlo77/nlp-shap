@@ -1,6 +1,6 @@
 [project]
 name = "nlp-shap"
-version = "0.1.2"
+version = "0.1.3"
 description = "Multimodal explainability tool for NLP based on Shapley value."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
@@ -34,6 +34,7 @@ classifiers = [
 
 dependencies = [
     "logging518>=1.0.0,<2.0.0",
+    "numpy>=2.0.0,<3.0.0",
     "pydantic>=2.11.0,<3.0.0",
     "pyyaml>=6.0.2,<7.0.0",
 ]
@@ -47,6 +48,14 @@ Issues = "https://github.com/Pawlo77/nlp-shap/issues"
 [project.entry-points."nlp_shap.estimands"]
 shapley = "nlp_shap.estimation.estimands.shapley:ShapleyAggregator"
 banzhaf = "nlp_shap.estimation.estimands.banzhaf:BanzhafAggregator"
+
+[project.entry-points."nlp_shap.partitions"]
+tokens = "nlp_shap.masking.partitions:TokenPartitioner"
+
+[project.entry-points."nlp_shap.absence_policies"]
+delete = "nlp_shap.masking.policies:DeletePolicy"
+pad = "nlp_shap.masking.policies:PadPolicy"
+neutral = "nlp_shap.masking.policies:NeutralPolicy"
 
 [build-system]
 requires = ["uv_build>=0.11.0,<0.12.0"]

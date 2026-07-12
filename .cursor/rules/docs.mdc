@@ -30,7 +30,7 @@ Skip for: private refactors, typing-only edits, test-only changes.
 | Theory + formulas + paper links | `docs/theory/<topic>.rst` |
 | Runnable usage / worked examples | `docs/guides/<topic>.rst` |
 | Module reference | `docs/api.rst` (`automodule` per public module) |
-| End-to-end notebook (when workflow exists) | `examples/<name>.ipynb` (executed via `make notebooks`) + catalog in `examples/README.md` and `docs/examples.rst` |
+| End-to-end notebook (when workflow exists) | `examples/<name>.ipynb` (executed via `make notebooks`) + catalog in `examples/README.md`, `docs/examples.rst`, and `README.md` — must cover full public usability scope; see `examples.mdc` |
 | Navigation | `docs/index.rst` toctree |
 | Release notes | `docs/release_notes.rst` — new section per published version |
 

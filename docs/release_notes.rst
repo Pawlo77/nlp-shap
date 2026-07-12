@@ -8,12 +8,32 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-1-3:
+
+0.1.3 (2026-07-12)
+------------------
+
+Added
+~~~~~
+
+- Masking codec: :class:`~nlp_shap.masking.codec.PackedMask`,
+  :class:`~nlp_shap.masking.codec.MaskCodec` with legacy-compatible packed hashing.
+- :class:`~nlp_shap.masking.space.MaskSpace` for projecting feature splits to full masks.
+- View-based :class:`~nlp_shap.masking.builder.MaskedSnapshot` and
+  :class:`~nlp_shap.masking.builder.MaskBuilder` with structural sharing.
+- Absence policies: :class:`~nlp_shap.masking.policies.DeletePolicy`,
+  :class:`~nlp_shap.masking.policies.PadPolicy`,
+  :class:`~nlp_shap.masking.policies.NeutralPolicy`.
+- :class:`~nlp_shap.masking.partitions.TokenPartitioner` and built-in plugin
+  registration for ``tokens``, ``delete``, ``pad``, and ``neutral``.
+- ``numpy`` core dependency for mask packing.
+
 Documentation
 ~~~~~~~~~~~~~
 
-- Expanded theory: Shapley axioms, uniqueness theorem, cooperative-game foundations.
-- Business and compliance applications guide with verified references.
-- Corrected bibliographic links (Shapley 1953 DOI, SHAP NeurIPS / arXiv).
+- Theory and usage guides for coalition masking and absence policies.
+- API reference page for :mod:`nlp_shap.masking`.
+- Example notebook ``examples/masking_views.ipynb``.
 
 .. _release-0-1-2:
 
