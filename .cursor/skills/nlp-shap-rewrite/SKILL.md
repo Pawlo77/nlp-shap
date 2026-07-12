@@ -62,9 +62,14 @@ git tag vX.Y.Z
 
 ## Workflow
 
-Use `nlp-shap-development`: red → green → refactor → `make check`.
+Use `nlp-shap-development`: red → green → document → refactor → `make check` + `make docs`.
 
 LM Studio: `pytest -m lms` locally. CI: mock only. GPU: `pytest -m gpu` optional.
+
+## Documentation gate
+
+Each phase must ship Sphinx theory/guides, API entries, and (when applicable) an
+`examples/` notebook before the phase tag. See `docs.mdc`.
 
 ## 0.x logic checklist
 

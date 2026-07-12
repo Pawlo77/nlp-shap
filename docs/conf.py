@@ -11,6 +11,7 @@ author = "Paweł Pozorski"
 
 extensions = [
     "sphinx.ext.autodoc",
+    "sphinx.ext.mathjax",
     "sphinx.ext.viewcode",
 ]
 
