@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help install update clean prek prek-all check tests coverage bench docs build
+.PHONY: help install update clean prek prek-all check tests coverage bench docs notebooks build
 
 help: ## Show available targets
 	@printf "Available targets:\n"
@@ -41,6 +41,11 @@ bench: ## Run benchmark tests with performance tracking
 
 docs: ## Build the documentation
 	uv run make -C docs html
+
+notebooks: ## Execute all example notebooks in place (store outputs)
+	@set -e; for nb in examples/*.ipynb; do \
+		uv run jupyter nbconvert --to notebook --execute "$$nb" --inplace; \
+	done
 
 build: ## Build source and wheel distributions
 	uv build
