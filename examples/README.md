@@ -25,10 +25,4 @@ Use the project `.venv` as the notebook kernel when working from source.
 
 ## Notebooks
 
-_No notebooks published yet._
-
-When available, each notebook below will link to one runnable workflow — what it demonstrates and any optional dependencies.
-
-<!-- Catalog format when notebooks land:
-- `text_hf_causal.ipynb` — …
--->
+- `estimands_toy_game.ipynb` — Shapley vs Banzhaf on a three-player majority game; shows estimand divergence and `ExplainResult` / manifest labelling. CPU-only; no optional extras.
