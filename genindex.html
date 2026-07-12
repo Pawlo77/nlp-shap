@@ -606,12 +606,6 @@
           <li><a href="api/pipeline.html#nlp_shap.pipeline.config.KvCacheConfig.enabled">(nlp_shap.pipeline.config.KvCacheConfig attribute)</a>
 </li>
         </ul></li>
-        <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.enumerate_masks">enumerate_masks() (nlp_shap.estimation.exact.ExactEstimator static method)</a>
-
-        <ul>
-          <li><a href="api.html#nlp_shap.ExactEstimator.enumerate_masks">(nlp_shap.ExactEstimator static method)</a>
-</li>
-        </ul></li>
         <li><a href="api.html#nlp_shap.Estimand">Estimand (class in nlp_shap)</a>
 
         <ul>
@@ -642,10 +636,10 @@
           <li><a href="api.html#nlp_shap.ShapleyAggregator.estimand">(nlp_shap.ShapleyAggregator property)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/domain.html#nlp_shap.domain.estimands.estimand_to_wire">estimand_to_wire() (in module nlp_shap.domain.estimands)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/protocols.html#nlp_shap.protocols.estimand.EstimandAggregator">EstimandAggregator (class in nlp_shap.protocols.estimand)</a>
 </li>
         <li><a href="api.html#nlp_shap.PluginGroup.ESTIMANDS">ESTIMANDS (nlp_shap.PluginGroup attribute)</a>
@@ -840,12 +834,24 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.include_minimal_masks">include_minimal_masks (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/runtime.html#nlp_shap.runtime.InferenceScheduler">InferenceScheduler (class in nlp_shap.runtime)</a>
 
         <ul>
           <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler">(class in nlp_shap.runtime.scheduler)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.iter_mask_ints">iter_mask_ints() (nlp_shap.estimation.exact.ExactEstimator static method)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.ExactEstimator.iter_mask_ints">(nlp_shap.ExactEstimator static method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.iter_masks">iter_masks() (nlp_shap.estimation.exact.ExactEstimator static method)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.ExactEstimator.iter_masks">(nlp_shap.ExactEstimator static method)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -904,6 +910,12 @@
 
         <ul>
           <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot.mask_hash">(nlp_shap.masking.MaskedSnapshot property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.mask_int_to_present">mask_int_to_present() (nlp_shap.estimation.exact.ExactEstimator static method)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.ExactEstimator.mask_int_to_present">(nlp_shap.ExactEstimator static method)</a>
 </li>
         </ul></li>
         <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionJob.mask_n_bits">mask_n_bits (nlp_shap.runtime.CoalitionJob attribute)</a>
@@ -1614,14 +1626,14 @@
           <li><a href="api/domain.html#nlp_shap.domain.enums.Role">(class in nlp_shap.domain.enums)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/domain.html#nlp_shap.domain.conversation.Message.role">role (nlp_shap.domain.conversation.Message attribute)</a>
 
         <ul>
           <li><a href="api.html#nlp_shap.Message.role">(nlp_shap.Message attribute)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/runtime.html#nlp_shap.runtime.InferenceScheduler.run">run() (nlp_shap.runtime.InferenceScheduler method)</a>
 
         <ul>
@@ -1634,6 +1646,18 @@
           <li><a href="api/pipeline.html#nlp_shap.pipeline.manifest.RunManifestPayload.run_id">(nlp_shap.pipeline.manifest.RunManifestPayload attribute)</a>
 </li>
           <li><a href="api.html#nlp_shap.RunManifest.run_id">(nlp_shap.RunManifest attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.InferenceScheduler.run_iter">run_iter() (nlp_shap.runtime.InferenceScheduler method)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler.run_iter">(nlp_shap.runtime.scheduler.InferenceScheduler method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.InferenceScheduler.run_stream">run_stream() (nlp_shap.runtime.InferenceScheduler method)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler.run_stream">(nlp_shap.runtime.scheduler.InferenceScheduler method)</a>
 </li>
         </ul></li>
         <li><a href="api/runtime.html#nlp_shap.runtime.RunArchive">RunArchive (class in nlp_shap.runtime)</a>

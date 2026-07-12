@@ -312,28 +312,31 @@
 <section id="coalition-enumeration">
 <h2>Coalition enumeration<a class="headerlink" href="#coalition-enumeration" title="Link to this heading">¶</a></h2>
 <p><strong>Business:</strong> Exact runs must declare how many model calls will occur — exponential in player count, but fully predictable for audit planning.</p>
-<p><strong>Technical:</strong> <code class="docutils literal notranslate"><span class="pre">ExactEstimator.sample_masks</span></code> returns <code class="docutils literal notranslate"><span class="pre">2^n</span> <span class="pre">-</span> <span class="pre">1</span></code> masks, excluding the grand coalition that backends often precompute.</p>
+<p><strong>Technical:</strong> <code class="docutils literal notranslate"><span class="pre">ExactEstimator.iter_masks</span></code> lazily yields <code class="docutils literal notranslate"><span class="pre">2^n</span> <span class="pre">-</span> <span class="pre">1</span></code> masks, excluding the grand coalition that backends often precompute. Materialize with <code class="docutils literal notranslate"><span class="pre">list(...)</span></code> only for tiny player sets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">player_set</span> <span class="o">=</span> <span class="n">PlayerSet</span><span class="p">(</span><span class="n">player_ids</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;p0&quot;</span><span class="p">,</span> <span class="s2">&quot;p1&quot;</span><span class="p">,</span> <span class="s2">&quot;p2&quot;</span><span class="p">))</span>
 <span class="n">estimator</span> <span class="o">=</span> <span class="n">ExactEstimator</span><span class="p">()</span>
 
-<span class="n">sampled_masks</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">sample_masks</span><span class="p">(</span>
-    <span class="n">player_set</span><span class="p">,</span>
-    <span class="n">budget_fraction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-    <span class="n">include_minimal_masks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="n">first_mask</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">ExactEstimator</span><span class="o">.</span><span class="n">iter_masks</span><span class="p">(</span><span class="n">player_set</span><span class="p">))</span>
+<span class="n">sampled_masks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+    <span class="n">estimator</span><span class="o">.</span><span class="n">sample_masks</span><span class="p">(</span>
+        <span class="n">player_set</span><span class="p">,</span>
+        <span class="n">budget_fraction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">include_minimal_masks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;num_coalitions:&quot;</span><span class="p">,</span> <span class="n">ExactEstimator</span><span class="o">.</span><span class="n">num_coalitions</span><span class="p">(</span><span class="n">player_set</span><span class="o">.</span><span class="n">num_players</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sampled:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sampled_masks</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;first mask:&quot;</span><span class="p">,</span> <span class="n">sampled_masks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">present</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;first mask (lazy):&quot;</span><span class="p">,</span> <span class="n">first_mask</span><span class="o">.</span><span class="n">present</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>num_coalitions: 7
 sampled: 7
-first mask: (False, False, False)
+first mask (lazy): (False, False, False)
 </pre></div>
 </div>
 </div>

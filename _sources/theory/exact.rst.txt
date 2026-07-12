@@ -1,9 +1,10 @@
 Exact estimation
 ================
 
-The :class:`~nlp_shap.estimation.exact.ExactEstimator` enumerates every coalition
-except the grand coalition and delegates attribution to an estimand plugin. Use
-it as ground truth on tiny player sets before trusting approximate samplers.
+The :class:`~nlp_shap.estimation.exact.ExactEstimator` lazily enumerates every
+coalition except the grand coalition and delegates attribution to an estimand
+plugin. Use it as ground truth on tiny player sets before trusting approximate
+samplers.
 
 Enumeration scope
 -----------------

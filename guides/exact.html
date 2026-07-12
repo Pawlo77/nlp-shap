@@ -287,9 +287,9 @@
         <article role="main" id="furo-main-content">
           <section id="using-the-exact-estimator">
 <h1>Using the exact estimator<a class="headerlink" href="#using-the-exact-estimator" title="Link to this heading">¶</a></h1>
-<p><a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.exact.ExactEstimator" title="nlp_shap.estimation.exact.ExactEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a> enumerates every coalition
-mask (except the grand coalition) and delegates attribution to a registered
-estimand plugin.</p>
+<p><a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.exact.ExactEstimator" title="nlp_shap.estimation.exact.ExactEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a> lazily enumerates every
+coalition mask (except the grand coalition) and delegates attribution to a
+registered estimand plugin.</p>
 <section id="quick-start">
 <h2>Quick start<a class="headerlink" href="#quick-start" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">product</span>
@@ -302,12 +302,12 @@ estimand plugin.</p>
 <span class="n">player_set</span> <span class="o">=</span> <span class="n">PlayerSet</span><span class="p">(</span><span class="n">player_ids</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;p0&quot;</span><span class="p">,</span> <span class="s2">&quot;p1&quot;</span><span class="p">,</span> <span class="s2">&quot;p2&quot;</span><span class="p">))</span>
 <span class="n">estimator</span> <span class="o">=</span> <span class="n">ExactEstimator</span><span class="p">()</span>
 
-<span class="n">masks</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">sample_masks</span><span class="p">(</span>
+<span class="n">masks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">sample_masks</span><span class="p">(</span>
     <span class="n">player_set</span><span class="p">,</span>
     <span class="n">budget_fraction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
     <span class="n">include_minimal_masks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;coalitions:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">masks</span><span class="p">))</span>  <span class="c1"># 7 for three players</span>
 
 <span class="n">all_masks</span> <span class="o">=</span> <span class="p">[</span>
@@ -333,6 +333,17 @@ estimand plugin.</p>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shapley:&quot;</span><span class="p">,</span> <span class="n">shapley</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Banzhaf:&quot;</span><span class="p">,</span> <span class="n">banzhaf</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="bitmask-iteration">
+<h2>Bitmask iteration<a class="headerlink" href="#bitmask-iteration" title="Link to this heading">¶</a></h2>
+<p>For large player sets, iterate packed coalition integers and decode only when
+needed:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.estimation.exact</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExactEstimator</span>
+
+<span class="k">for</span> <span class="n">mask_int</span> <span class="ow">in</span> <span class="n">ExactEstimator</span><span class="o">.</span><span class="n">iter_mask_ints</span><span class="p">(</span><span class="n">player_set</span><span class="o">.</span><span class="n">num_players</span><span class="p">):</span>
+    <span class="n">present</span> <span class="o">=</span> <span class="n">ExactEstimator</span><span class="o">.</span><span class="n">mask_int_to_present</span><span class="p">(</span><span class="n">mask_int</span><span class="p">,</span> <span class="n">player_set</span><span class="o">.</span><span class="n">num_players</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -450,6 +461,7 @@ estimand plugin.</p>
             <ul>
 <li><a class="reference internal" href="#">Using the exact estimator</a><ul>
 <li><a class="reference internal" href="#quick-start">Quick start</a></li>
+<li><a class="reference internal" href="#bitmask-iteration">Bitmask iteration</a></li>
 <li><a class="reference internal" href="#budget-requirement">Budget requirement</a></li>
 <li><a class="reference internal" href="#plugin-resolution">Plugin resolution</a></li>
 <li><a class="reference internal" href="#notebook">Notebook</a></li>

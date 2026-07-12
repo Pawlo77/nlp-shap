@@ -281,7 +281,7 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Awaitable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncIterator</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Sequence</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">..domain.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationSnapshot</span>
@@ -359,6 +359,7 @@
         <span class="n">store</span><span class="p">:</span> <span class="n">HotResultStore</span><span class="p">,</span>
         <span class="n">dedup</span><span class="p">:</span> <span class="n">CoalitionDedupRegistry</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">archive</span><span class="p">:</span> <span class="n">RunArchive</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">pending_limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">max_inflight</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;max_inflight must be at least 1&quot;</span>
@@ -369,6 +370,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dedup</span> <span class="o">=</span> <span class="n">dedup</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_archive</span> <span class="o">=</span> <span class="n">archive</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_semaphore</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">(</span><span class="n">max_inflight</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pending_limit</span> <span class="o">=</span> <span class="n">pending_limit</span> <span class="ow">or</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_inflight</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">max_inflight</span><span class="p">)</span>
 
 <div class="viewcode-block" id="InferenceScheduler.run">
 <a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.InferenceScheduler.run">[docs]</a>
@@ -378,46 +380,101 @@
         <span class="n">generate</span><span class="p">:</span> <span class="n">GenerateFn</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SchedulerMetrics</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute coalition jobs and return scheduler counters.&quot;&quot;&quot;</span>
-        <span class="n">metrics</span> <span class="o">=</span> <span class="n">SchedulerMetrics</span><span class="p">(</span>
-            <span class="n">requested</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">jobs</span><span class="p">),</span>
-            <span class="n">executed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-            <span class="n">deduplicated</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-            <span class="n">cache_hits</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">mutable</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;executed&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;deduplicated&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;cache_hits&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_iter</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">jobs</span><span class="p">),</span> <span class="n">generate</span><span class="p">)</span></div>
 
-        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_run_job</span><span class="p">(</span><span class="n">job</span><span class="p">:</span> <span class="n">CoalitionJob</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_store</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">coalition_key</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">cached</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;cache_hits&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_maybe_archive</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">cached</span><span class="p">,</span> <span class="n">cache_hit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">elapsed_ms</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
-                <span class="k">return</span>
 
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dedup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dedup</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">coalition_key</span><span class="p">):</span>
-                <span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;deduplicated&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="k">return</span>
+<div class="viewcode-block" id="InferenceScheduler.run_iter">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.InferenceScheduler.run_iter">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_iter</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">jobs</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">CoalitionJob</span><span class="p">],</span>
+        <span class="n">generate</span><span class="p">:</span> <span class="n">GenerateFn</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SchedulerMetrics</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute jobs from an iterable without creating all coroutines upfront.&quot;&quot;&quot;</span>
+        <span class="n">mutable</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;executed&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;deduplicated&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;cache_hits&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;requested&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+        <span class="n">pending</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">Task</span><span class="p">[</span><span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
-            <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_semaphore</span><span class="p">:</span>
-                <span class="n">started</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
-                <span class="n">generation_text</span> <span class="o">=</span> <span class="k">await</span> <span class="n">generate</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">snapshot</span><span class="p">)</span>
-                <span class="n">elapsed_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">started</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1000.0</span>
-            <span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;executed&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_store</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">coalition_key</span><span class="p">,</span> <span class="n">generation_text</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_maybe_archive</span><span class="p">(</span>
-                <span class="n">job</span><span class="p">,</span>
-                <span class="n">generation_text</span><span class="p">,</span>
-                <span class="n">cache_hit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                <span class="n">elapsed_ms</span><span class="o">=</span><span class="n">elapsed_ms</span><span class="p">,</span>
-            <span class="p">)</span>
+        <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">:</span>
+            <span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;requested&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">pending</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_limit</span><span class="p">:</span>
+                <span class="n">_done</span><span class="p">,</span> <span class="n">pending</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span>
+                    <span class="n">pending</span><span class="p">,</span>
+                    <span class="n">return_when</span><span class="o">=</span><span class="n">asyncio</span><span class="o">.</span><span class="n">FIRST_COMPLETED</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_job</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">generate</span><span class="p">,</span> <span class="n">mutable</span><span class="p">))</span>
+            <span class="n">pending</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
 
-        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">_run_job</span><span class="p">(</span><span class="n">job</span><span class="p">)</span> <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">pending</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">pending</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="n">SchedulerMetrics</span><span class="p">(</span>
-            <span class="n">requested</span><span class="o">=</span><span class="n">metrics</span><span class="o">.</span><span class="n">requested</span><span class="p">,</span>
+            <span class="n">requested</span><span class="o">=</span><span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;requested&quot;</span><span class="p">],</span>
             <span class="n">executed</span><span class="o">=</span><span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;executed&quot;</span><span class="p">],</span>
             <span class="n">deduplicated</span><span class="o">=</span><span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;deduplicated&quot;</span><span class="p">],</span>
             <span class="n">cache_hits</span><span class="o">=</span><span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;cache_hits&quot;</span><span class="p">],</span>
         <span class="p">)</span></div>
 
+
+<div class="viewcode-block" id="InferenceScheduler.run_stream">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.InferenceScheduler.run_stream">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_stream</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">jobs</span><span class="p">:</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">CoalitionJob</span><span class="p">],</span>
+        <span class="n">generate</span><span class="p">:</span> <span class="n">GenerateFn</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SchedulerMetrics</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute jobs from an async iterator with bounded pending tasks.&quot;&quot;&quot;</span>
+        <span class="n">mutable</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;executed&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;deduplicated&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;cache_hits&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;requested&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+        <span class="n">pending</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">Task</span><span class="p">[</span><span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">async</span> <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">:</span>
+            <span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;requested&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">pending</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_limit</span><span class="p">:</span>
+                <span class="n">_done</span><span class="p">,</span> <span class="n">pending</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span>
+                    <span class="n">pending</span><span class="p">,</span>
+                    <span class="n">return_when</span><span class="o">=</span><span class="n">asyncio</span><span class="o">.</span><span class="n">FIRST_COMPLETED</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_job</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">generate</span><span class="p">,</span> <span class="n">mutable</span><span class="p">))</span>
+            <span class="n">pending</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">pending</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">pending</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">SchedulerMetrics</span><span class="p">(</span>
+            <span class="n">requested</span><span class="o">=</span><span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;requested&quot;</span><span class="p">],</span>
+            <span class="n">executed</span><span class="o">=</span><span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;executed&quot;</span><span class="p">],</span>
+            <span class="n">deduplicated</span><span class="o">=</span><span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;deduplicated&quot;</span><span class="p">],</span>
+            <span class="n">cache_hits</span><span class="o">=</span><span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;cache_hits&quot;</span><span class="p">],</span>
+        <span class="p">)</span></div>
+
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_process_job</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">job</span><span class="p">:</span> <span class="n">CoalitionJob</span><span class="p">,</span>
+        <span class="n">generate</span><span class="p">:</span> <span class="n">GenerateFn</span><span class="p">,</span>
+        <span class="n">mutable</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_store</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">coalition_key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cached</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;cache_hits&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_maybe_archive</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">cached</span><span class="p">,</span> <span class="n">cache_hit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">elapsed_ms</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dedup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dedup</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">coalition_key</span><span class="p">):</span>
+            <span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;deduplicated&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span>
+
+        <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_semaphore</span><span class="p">:</span>
+            <span class="n">started</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+            <span class="n">generation_text</span> <span class="o">=</span> <span class="k">await</span> <span class="n">generate</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">snapshot</span><span class="p">)</span>
+            <span class="n">elapsed_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">started</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1000.0</span>
+        <span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;executed&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_store</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">coalition_key</span><span class="p">,</span> <span class="n">generation_text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maybe_archive</span><span class="p">(</span>
+            <span class="n">job</span><span class="p">,</span>
+            <span class="n">generation_text</span><span class="p">,</span>
+            <span class="n">cache_hit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">elapsed_ms</span><span class="o">=</span><span class="n">elapsed_ms</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_maybe_archive</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>

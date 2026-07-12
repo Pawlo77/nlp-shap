@@ -386,6 +386,19 @@ and schedule async coalition generation with bounded concurrency.</p>
 </pre></div>
 </div>
 </section>
+<section id="streaming-large-job-sets">
+<h2>Streaming large job sets<a class="headerlink" href="#streaming-large-job-sets" title="Link to this heading">¶</a></h2>
+<p>For exact enumeration or other large coalition batches, pass a generator to
+<a class="reference internal" href="../api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler.run_iter" title="nlp_shap.runtime.scheduler.InferenceScheduler.run_iter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run_iter()</span></code></a> so the
+scheduler does not create one coroutine per coalition upfront:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">job_stream</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">ExactEstimator</span><span class="o">.</span><span class="n">iter_masks</span><span class="p">(</span><span class="n">player_set</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">build_job_for_mask</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+
+<span class="n">metrics</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">scheduler</span><span class="o">.</span><span class="n">run_iter</span><span class="p">(</span><span class="n">job_stream</span><span class="p">(),</span> <span class="n">generate</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
 <section id="notebook">
 <h2>Notebook<a class="headerlink" href="#notebook" title="Link to this heading">¶</a></h2>
 <p>For a runnable walkthrough with stored outputs, see
@@ -460,6 +473,7 @@ and schedule async coalition generation with bounded concurrency.</p>
 <li><a class="reference internal" href="#open-a-run-archive">Open a run archive</a></li>
 <li><a class="reference internal" href="#build-coalition-dedup-keys">Build coalition dedup keys</a></li>
 <li><a class="reference internal" href="#schedule-async-coalition-jobs">Schedule async coalition jobs</a></li>
+<li><a class="reference internal" href="#streaming-large-job-sets">Streaming large job sets</a></li>
 <li><a class="reference internal" href="#notebook">Notebook</a></li>
 </ul>
 </li>

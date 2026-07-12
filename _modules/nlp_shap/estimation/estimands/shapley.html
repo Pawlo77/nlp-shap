@@ -280,7 +280,12 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">...domain.estimands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Estimand</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">._weights</span><span class="w"> </span><span class="kn">import</span> <span class="n">aggregate_from_marginals</span><span class="p">,</span> <span class="n">shapley_weight</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._weights</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">aggregate_from_marginals</span><span class="p">,</span>
+    <span class="n">aggregate_shapley_exact</span><span class="p">,</span>
+    <span class="n">is_complete_characteristic_table</span><span class="p">,</span>
+    <span class="n">shapley_weight</span><span class="p">,</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="ShapleyAggregator">
@@ -308,6 +313,8 @@
         <span class="n">payoffs</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Aggregate coalition samples into Shapley values.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">is_complete_characteristic_table</span><span class="p">(</span><span class="n">masks</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">aggregate_shapley_exact</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">aggregate_from_marginals</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">,</span> <span class="n">weight_fn</span><span class="o">=</span><span class="n">shapley_weight</span><span class="p">)</span></div>
 </div>
 

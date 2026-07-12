@@ -290,6 +290,16 @@
 <p>Changes in each published <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> version. Newest first.</p>
 <section id="unreleased">
 <span id="release-unreleased"></span><h2>Unreleased<a class="headerlink" href="#unreleased" title="Link to this heading">¶</a></h2>
+<section id="performance">
+<h3>Performance<a class="headerlink" href="#performance" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Lazy bitmask coalition enumeration via <a class="reference internal" href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.iter_mask_ints" title="nlp_shap.estimation.exact.ExactEstimator.iter_mask_ints"><code class="xref py py-meth docutils literal notranslate"><span class="pre">iter_mask_ints()</span></code></a>.</p></li>
+<li><p>Vectorized exact Shapley aggregation for complete characteristic tables.</p></li>
+<li><p>Integer-key marginal aggregation with cached factorial weights.</p></li>
+<li><p>Binary coalition-key hashing without JSON serialization.</p></li>
+<li><p>Bounded pending-task scheduling via <a class="reference internal" href="api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler.run_iter" title="nlp_shap.runtime.scheduler.InferenceScheduler.run_iter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run_iter()</span></code></a> and <code class="docutils literal notranslate"><span class="pre">run_stream</span></code>.</p></li>
+</ul>
+</section>
 </section>
 <section id="release-0-1-5">
 <span id="id1"></span><h2>0.1.5 (2026-07-13)<a class="headerlink" href="#release-0-1-5" title="Link to this heading">¶</a></h2>
@@ -493,7 +503,10 @@ estimand labelling.</p></li>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Release notes</a><ul>
-<li><a class="reference internal" href="#unreleased">Unreleased</a></li>
+<li><a class="reference internal" href="#unreleased">Unreleased</a><ul>
+<li><a class="reference internal" href="#performance">Performance</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#release-0-1-5">0.1.5 (2026-07-13)</a><ul>
 <li><a class="reference internal" href="#added">Added</a></li>
 <li><a class="reference internal" href="#documentation">Documentation</a></li>

@@ -287,9 +287,10 @@
         <article role="main" id="furo-main-content">
           <section id="exact-estimation">
 <h1>Exact estimation<a class="headerlink" href="#exact-estimation" title="Link to this heading">¶</a></h1>
-<p>The <a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.exact.ExactEstimator" title="nlp_shap.estimation.exact.ExactEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a> enumerates every coalition
-except the grand coalition and delegates attribution to an estimand plugin. Use
-it as ground truth on tiny player sets before trusting approximate samplers.</p>
+<p>The <a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.exact.ExactEstimator" title="nlp_shap.estimation.exact.ExactEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a> lazily enumerates every
+coalition except the grand coalition and delegates attribution to an estimand
+plugin. Use it as ground truth on tiny player sets before trusting approximate
+samplers.</p>
 <section id="enumeration-scope">
 <h2>Enumeration scope<a class="headerlink" href="#enumeration-scope" title="Link to this heading">¶</a></h2>
 <p>For <span class="math notranslate nohighlight">\(n\)</span> players the estimator evaluates <span class="math notranslate nohighlight">\(2^n - 1\)</span> coalitions — all

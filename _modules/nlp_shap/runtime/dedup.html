@@ -280,10 +280,10 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">..masking.codec</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaskCodec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..masking.codec</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaskCodec</span><span class="p">,</span> <span class="n">PackedMask</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..pipeline.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">DedupConfig</span><span class="p">,</span> <span class="n">GenerationConfig</span>
 
 
@@ -303,6 +303,11 @@
 
 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">_hash_packed_mask</span><span class="p">(</span><span class="n">packed</span><span class="p">:</span> <span class="n">PackedMask</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return stable bytes for a packed coalition mask.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span> <span class="n">packed</span><span class="o">.</span><span class="n">n_bits</span><span class="p">)</span> <span class="o">+</span> <span class="n">packed</span><span class="o">.</span><span class="n">words</span>
+
+
 <div class="viewcode-block" id="build_coalition_key">
 <a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.build_coalition_key">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">build_coalition_key</span><span class="p">(</span>
@@ -315,21 +320,24 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Build a stable SHA256 coalition key for deduplication.&quot;&quot;&quot;</span>
     <span class="n">packed</span> <span class="o">=</span> <span class="n">MaskCodec</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">mask_present</span><span class="p">)</span>
-    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;snapshot_id&quot;</span><span class="p">:</span> <span class="n">snapshot_id</span><span class="p">,</span>
-        <span class="s2">&quot;player_ids&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">player_ids</span><span class="p">),</span>
-        <span class="s2">&quot;mask_words&quot;</span><span class="p">:</span> <span class="n">packed</span><span class="o">.</span><span class="n">words</span><span class="o">.</span><span class="n">hex</span><span class="p">(),</span>
-        <span class="s2">&quot;mask_n_bits&quot;</span><span class="p">:</span> <span class="n">packed</span><span class="o">.</span><span class="n">n_bits</span><span class="p">,</span>
-        <span class="s2">&quot;absence_policy&quot;</span><span class="p">:</span> <span class="n">absence_policy</span><span class="p">,</span>
-        <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
-        <span class="s2">&quot;generation&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;max_new_tokens&quot;</span><span class="p">:</span> <span class="n">generation</span><span class="o">.</span><span class="n">max_new_tokens</span><span class="p">,</span>
-            <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="n">generation</span><span class="o">.</span><span class="n">temperature</span><span class="p">,</span>
-            <span class="s2">&quot;top_k&quot;</span><span class="p">:</span> <span class="n">generation</span><span class="o">.</span><span class="n">top_k</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">}</span>
-    <span class="n">encoded</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">encoded</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+    <span class="n">hasher</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
+    <span class="n">hasher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">snapshot_id</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+    <span class="n">hasher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x1e</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">player_id</span> <span class="ow">in</span> <span class="n">player_ids</span><span class="p">:</span>
+        <span class="n">hasher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">player_id</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+        <span class="n">hasher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x1f</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">hasher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_hash_packed_mask</span><span class="p">(</span><span class="n">packed</span><span class="p">))</span>
+    <span class="n">hasher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">absence_policy</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+    <span class="n">hasher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">model_id</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+    <span class="n">hasher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+        <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span>
+            <span class="s2">&quot;&lt;ifi&quot;</span><span class="p">,</span>
+            <span class="n">generation</span><span class="o">.</span><span class="n">max_new_tokens</span><span class="p">,</span>
+            <span class="n">generation</span><span class="o">.</span><span class="n">temperature</span><span class="p">,</span>
+            <span class="n">generation</span><span class="o">.</span><span class="n">top_k</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">hasher</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
 
 
 

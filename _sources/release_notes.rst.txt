@@ -8,6 +8,15 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+Performance
+~~~~~~~~~~~
+
+- Lazy bitmask coalition enumeration via :meth:`~nlp_shap.estimation.exact.ExactEstimator.iter_mask_ints`.
+- Vectorized exact Shapley aggregation for complete characteristic tables.
+- Integer-key marginal aggregation with cached factorial weights.
+- Binary coalition-key hashing without JSON serialization.
+- Bounded pending-task scheduling via :meth:`~nlp_shap.runtime.scheduler.InferenceScheduler.run_iter` and ``run_stream``.
+
 .. _release-0-1-5:
 
 0.1.5 (2026-07-13)

@@ -279,8 +279,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">product</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Sequence</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">..domain.coalition</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionMask</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..domain.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationSnapshot</span>
@@ -312,6 +311,26 @@
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">num_players</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="ExactEstimator.iter_mask_ints">
+<a class="viewcode-back" href="../../../api/estimation.html#nlp_shap.ExactEstimator.iter_mask_ints">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">iter_mask_ints</span><span class="p">(</span><span class="n">num_players</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Lazily yield coalition bitmasks except the all-present coalition.&quot;&quot;&quot;</span>
+        <span class="n">grand_mask</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">num_players</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">num_players</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">grand_mask</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">yield</span> <span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="ExactEstimator.mask_int_to_present">
+<a class="viewcode-back" href="../../../api/estimation.html#nlp_shap.ExactEstimator.mask_int_to_present">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mask_int_to_present</span><span class="p">(</span><span class="n">mask_int</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_players</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Decode a coalition bitmask into presence flags.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">bool</span><span class="p">((</span><span class="n">mask_int</span> <span class="o">&gt;&gt;</span> <span class="n">index</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_players</span><span class="p">))</span></div>
+
+
 <div class="viewcode-block" id="ExactEstimator.bind_snapshot">
 <a class="viewcode-back" href="../../../api/estimation.html#nlp_shap.ExactEstimator.bind_snapshot">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">bind_snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -327,29 +346,24 @@
         <span class="n">budget_fraction</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">include_minimal_masks</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
         <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">CoalitionMask</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return every coalition mask except the grand coalition.&quot;&quot;&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">CoalitionMask</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Yield every coalition mask except the grand coalition.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">budget_fraction</span> <span class="o">!=</span> <span class="mf">1.0</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;exact estimator requires budget_fraction == 1.0&quot;</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="n">_</span> <span class="o">=</span> <span class="n">include_minimal_masks</span><span class="p">,</span> <span class="n">seed</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">enumerate_masks</span><span class="p">(</span><span class="n">player_set</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_masks</span><span class="p">(</span><span class="n">player_set</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ExactEstimator.enumerate_masks">
-<a class="viewcode-back" href="../../../api/estimation.html#nlp_shap.ExactEstimator.enumerate_masks">[docs]</a>
+<div class="viewcode-block" id="ExactEstimator.iter_masks">
+<a class="viewcode-back" href="../../../api/estimation.html#nlp_shap.ExactEstimator.iter_masks">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">enumerate_masks</span><span class="p">(</span><span class="n">player_set</span><span class="p">:</span> <span class="n">PlayerSet</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">CoalitionMask</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build all coalition masks except the all-present coalition.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">iter_masks</span><span class="p">(</span><span class="n">player_set</span><span class="p">:</span> <span class="n">PlayerSet</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">CoalitionMask</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Lazily yield coalition masks except the all-present coalition.&quot;&quot;&quot;</span>
         <span class="n">num_players</span> <span class="o">=</span> <span class="n">player_set</span><span class="o">.</span><span class="n">num_players</span>
-        <span class="n">masks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">CoalitionMask</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">bits</span> <span class="ow">in</span> <span class="n">product</span><span class="p">([</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="n">num_players</span><span class="p">):</span>
-            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">bits</span><span class="p">):</span>
-                <span class="k">continue</span>
-            <span class="n">mask</span> <span class="o">=</span> <span class="n">CoalitionMask</span><span class="o">.</span><span class="n">from_sequence</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span>
-            <span class="n">mask</span><span class="o">.</span><span class="n">validate_against</span><span class="p">(</span><span class="n">player_set</span><span class="p">)</span>
-            <span class="n">masks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">masks</span><span class="p">)</span></div>
+        <span class="k">for</span> <span class="n">mask_int</span> <span class="ow">in</span> <span class="n">ExactEstimator</span><span class="o">.</span><span class="n">iter_mask_ints</span><span class="p">(</span><span class="n">num_players</span><span class="p">):</span>
+            <span class="n">present</span> <span class="o">=</span> <span class="n">ExactEstimator</span><span class="o">.</span><span class="n">mask_int_to_present</span><span class="p">(</span><span class="n">mask_int</span><span class="p">,</span> <span class="n">num_players</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">CoalitionMask</span><span class="o">.</span><span class="n">from_sequence</span><span class="p">(</span><span class="n">present</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ExactEstimator.estimate_attributions">
@@ -361,8 +375,7 @@
         <span class="n">aggregator</span><span class="p">:</span> <span class="n">EstimandAggregator</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Aggregate coalition payoffs with the selected estimand plugin.&quot;&quot;&quot;</span>
-        <span class="n">bool_masks</span> <span class="o">=</span> <span class="p">[</span><span class="n">mask</span><span class="o">.</span><span class="n">present</span> <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">masks</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">aggregator</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">bool_masks</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">payoffs</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="n">aggregator</span><span class="o">.</span><span class="n">aggregate</span><span class="p">([</span><span class="n">mask</span><span class="o">.</span><span class="n">present</span> <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">masks</span><span class="p">],</span> <span class="n">payoffs</span><span class="p">)</span></div>
 </div>
 
 </pre></div>
