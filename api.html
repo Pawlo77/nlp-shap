@@ -35,6 +35,125 @@
   <section id="module-nlp_shap">
 <span id="api"></span><h1>API<a class="headerlink" href="#module-nlp_shap" title="Link to this heading">¶</a></h1>
 <p>Multimodal explainability tool for NLP based on Shapley value.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.BanzhafAggregator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">BanzhafAggregator</span></span><a class="reference internal" href="_modules/nlp_shap/estimation/estimands/banzhaf.html#BanzhafAggregator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.BanzhafAggregator" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Aggregate coalition samples with uniform Banzhaf coalition weights.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.BanzhafAggregator.aggregate">
+<span class="sig-name descname"><span class="pre">aggregate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">masks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payoffs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nlp_shap/estimation/estimands/banzhaf.html#BanzhafAggregator.aggregate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.BanzhafAggregator.aggregate" title="Link to this definition">¶</a></dt>
+<dd><p>Aggregate coalition samples into Banzhaf indices.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.BanzhafAggregator.coalition_weight">
+<span class="sig-name descname"><span class="pre">coalition_weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coalition_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_players</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/nlp_shap/estimation/estimands/banzhaf.html#BanzhafAggregator.coalition_weight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.BanzhafAggregator.coalition_weight" title="Link to this definition">¶</a></dt>
+<dd><p>Return uniform Banzhaf coalition weight 1/2^(n-1).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.BanzhafAggregator.estimand">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">estimand</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#nlp_shap.Estimand" title="nlp_shap.domain.estimands.Estimand"><span class="pre">Estimand</span></a></span><a class="headerlink" href="#nlp_shap.BanzhafAggregator.estimand" title="Link to this definition">¶</a></dt>
+<dd><p>Return the Banzhaf estimand label.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.Estimand">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">Estimand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_shap/domain/estimands.html#Estimand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.Estimand" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Supported cooperative-game value formulations.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.Estimand.BANZHAF">
+<span class="sig-name descname"><span class="pre">BANZHAF</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'banzhaf'</span></span><a class="headerlink" href="#nlp_shap.Estimand.BANZHAF" title="Link to this definition">¶</a></dt>
+<dd><p>Banzhaf index with uniform coalition weights 1/2^(n-1).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.Estimand.SHAPLEY">
+<span class="sig-name descname"><span class="pre">SHAPLEY</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'shapley'</span></span><a class="headerlink" href="#nlp_shap.Estimand.SHAPLEY" title="Link to this definition">¶</a></dt>
+<dd><p>Shapley value with coalition weights k!(n-k-1)!/n!.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.ExplainResult">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">ExplainResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimand</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.Estimand" title="nlp_shap.domain.estimands.Estimand"><span class="pre">Estimand</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_shap/pipeline/result.html#ExplainResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.ExplainResult" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Attribution output for a single explain run.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.ExplainResult.estimand">
+<span class="sig-name descname"><span class="pre">estimand</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#nlp_shap.Estimand" title="nlp_shap.domain.estimands.Estimand"><span class="pre">Estimand</span></a></span><a class="headerlink" href="#nlp_shap.ExplainResult.estimand" title="Link to this definition">¶</a></dt>
+<dd><p>Estimand used to aggregate coalition samples.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.ExplainResult.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#nlp_shap.ExplainResult.values" title="Link to this definition">¶</a></dt>
+<dd><p>Per-player attribution values.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.RunManifest">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">RunManifest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimand</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.Estimand" title="nlp_shap.domain.estimands.Estimand"><span class="pre">Estimand</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_shap/pipeline/manifest.html#RunManifest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.RunManifest" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Top-level metadata persisted alongside a run archive.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.RunManifest.estimand">
+<span class="sig-name descname"><span class="pre">estimand</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#nlp_shap.Estimand" title="nlp_shap.domain.estimands.Estimand"><span class="pre">Estimand</span></a></span><a class="headerlink" href="#nlp_shap.RunManifest.estimand" title="Link to this definition">¶</a></dt>
+<dd><p>Estimand label recorded for every attribution output.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.RunManifest.run_id">
+<span class="sig-name descname"><span class="pre">run_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#nlp_shap.RunManifest.run_id" title="Link to this definition">¶</a></dt>
+<dd><p>Stable identifier for the explain run.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.RunManifest.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">RunManifestPayload</span></span></span><a class="reference internal" href="_modules/nlp_shap/pipeline/manifest.html#RunManifest.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.RunManifest.to_dict" title="Link to this definition">¶</a></dt>
+<dd><p>Serialize manifest fields to JSON-compatible primitives.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.ShapleyAggregator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">ShapleyAggregator</span></span><a class="reference internal" href="_modules/nlp_shap/estimation/estimands/shapley.html#ShapleyAggregator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.ShapleyAggregator" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Aggregate coalition samples with Shapley coalition weights.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.ShapleyAggregator.aggregate">
+<span class="sig-name descname"><span class="pre">aggregate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">masks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payoffs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nlp_shap/estimation/estimands/shapley.html#ShapleyAggregator.aggregate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.ShapleyAggregator.aggregate" title="Link to this definition">¶</a></dt>
+<dd><p>Aggregate coalition samples into Shapley values.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.ShapleyAggregator.coalition_weight">
+<span class="sig-name descname"><span class="pre">coalition_weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coalition_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_players</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/nlp_shap/estimation/estimands/shapley.html#ShapleyAggregator.coalition_weight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.ShapleyAggregator.coalition_weight" title="Link to this definition">¶</a></dt>
+<dd><p>Return Shapley coalition weight k!(n-k-1)!/n!.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.ShapleyAggregator.estimand">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">estimand</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#nlp_shap.Estimand" title="nlp_shap.domain.estimands.Estimand"><span class="pre">Estimand</span></a></span><a class="headerlink" href="#nlp_shap.ShapleyAggregator.estimand" title="Link to this definition">¶</a></dt>
+<dd><p>Return the Shapley estimand label.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nlp_shap.parse_manifest">
+<span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">parse_manifest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RunManifestPayload</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nlp_shap.RunManifest" title="nlp_shap.pipeline.manifest.RunManifest"><span class="pre">RunManifest</span></a></span></span><a class="reference internal" href="_modules/nlp_shap/pipeline/manifest.html#parse_manifest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.parse_manifest" title="Link to this definition">¶</a></dt>
+<dd><p>Parse a typed manifest payload into a run manifest.</p>
+</dd></dl>
+
 <p id="module-nlp_shap._logging">Central logging bootstrap for nlp_shap.</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="nlp_shap._logging.ENV_LOGGING_CONFIG">
@@ -101,6 +220,12 @@ current working directory) or in the file named by
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#nlp_shap.BanzhafAggregator"><code class="docutils literal notranslate"><span class="pre">BanzhafAggregator</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nlp_shap.Estimand"><code class="docutils literal notranslate"><span class="pre">Estimand</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nlp_shap.ExplainResult"><code class="docutils literal notranslate"><span class="pre">ExplainResult</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nlp_shap.RunManifest"><code class="docutils literal notranslate"><span class="pre">RunManifest</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nlp_shap.ShapleyAggregator"><code class="docutils literal notranslate"><span class="pre">ShapleyAggregator</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nlp_shap.parse_manifest"><code class="docutils literal notranslate"><span class="pre">parse_manifest()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nlp_shap._logging.ENV_LOGGING_CONFIG"><code class="docutils literal notranslate"><span class="pre">ENV_LOGGING_CONFIG</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nlp_shap._logging.PACKAGE_NAME"><code class="docutils literal notranslate"><span class="pre">PACKAGE_NAME</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nlp_shap._logging.PYPROJECT_FILENAME"><code class="docutils literal notranslate"><span class="pre">PYPROJECT_FILENAME</span></code></a></li>
