@@ -6,6 +6,7 @@ alwaysApply: true
 # Package boundaries
 
 - Library in `src/nlp_shap/` — experiments, papers, GUI elsewhere
+- Cross-module imports inside `src/nlp_shap/` use relative paths; tests and examples use `from nlp_shap...`
 - User-facing workflows in `examples/` as lightweight Jupyter notebooks (see `examples.mdc`)
 - Add modules only with real implementation, never empty package trees
 - Heavy runtime stacks (torch, transformers) → optional extras when introduced

@@ -16,7 +16,11 @@ Packaging → `make build` · docs → `make docs` · deps → `uv lock`
 - No runtime deps without justification in `pyproject.toml`
 - No force push; no `git commit --amend` unless user rules allow
 
-Repo-specific gotcha: importing `nlp_shap` bootstraps logging from cwd `pyproject.toml` `[tool.logging]`; run benchmarks with `make bench`, not `make check`.
+Repo-specific gotchas:
+- Importing `nlp_shap` bootstraps logging from cwd `pyproject.toml` `[tool.logging]`; run benchmarks with `make bench`, not `make check`
+- Modules under `src/nlp_shap/` use **relative imports**; `tests/` and `examples/` use absolute `from nlp_shap...`
+- Structured dict contracts (manifests, config slices) → `TypedDict` + `Literal` wire types, not `dict[str, Any]` with manual key checks
+- `Protocol`/abstract stubs: docstring-only bodies — no redundant `...` after the docstring
 
 ## Load order
 

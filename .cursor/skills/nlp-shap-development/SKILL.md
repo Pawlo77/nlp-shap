@@ -25,6 +25,8 @@ Follow rules in `.cursor/rules/*.mdc`. Agent exit criteria in `AGENTS.md`.
 
 - Smallest typed implementation that passes
 - Reuse before new abstractions; no placeholder packages
+- Relative imports inside `src/nlp_shap/`; absolute `from nlp_shap...` in tests and examples
+- Structured payloads → `TypedDict` with `Literal` wire fields; validate only at external boundaries
 
 ## 4. Refactor
 
@@ -50,4 +52,4 @@ New Makefile target → `name: ## help` + `.PHONY`
 
 ## Pitfalls
 
-`pre-commit` → prek · `pip install` → pyproject + `uv lock` · implement before test → back to step 2
+`pre-commit` → prek · `pip install` → pyproject + `uv lock` · implement before test → back to step 2 · `from nlp_shap...` inside `src/nlp_shap/` → use relative imports · `dict[str, Any]` payload guards → use `TypedDict` · `...` after docstring in Protocol stubs → omit
