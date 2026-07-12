@@ -1,5 +1,9 @@
-Pipeline types
-==============
+Pipeline configuration
+======================
+
+.. automodule:: nlp_shap.pipeline.config
+   :members:
+   :undoc-members:
 
 .. automodule:: nlp_shap.pipeline.result
    :members:

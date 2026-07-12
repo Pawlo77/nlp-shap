@@ -68,6 +68,8 @@ Next steps
 ----------
 
 - :doc:`estimands` — coalition weights, manifests, and wire types
+- :doc:`../theory/shapley_values` — Shapley axioms and uniqueness
 - :doc:`../theory/estimands` — why Shapley and Banzhaf differ
+- :doc:`applications` — business and compliance use cases
 - :doc:`../examples` — embedded toy-game notebook
 - :doc:`../api` — module reference
