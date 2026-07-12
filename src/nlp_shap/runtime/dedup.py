@@ -24,7 +24,6 @@ def dedup_enabled(config: DedupConfig, generation: GenerationConfig) -> bool:
 
 
 def build_coalition_key(
-    *,
     snapshot_id: str,
     player_ids: tuple[str, ...],
     mask_present: tuple[bool, ...],

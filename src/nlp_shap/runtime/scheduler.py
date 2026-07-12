@@ -69,7 +69,6 @@ class InferenceScheduler:
 
     def __init__(
         self,
-        *,
         max_inflight: int,
         generation: GenerationConfig,
         store: HotResultStore,
@@ -136,7 +135,6 @@ class InferenceScheduler:
         self,
         job: CoalitionJob,
         generation_text: str,
-        *,
         cache_hit: bool,
         elapsed_ms: float,
     ) -> None:

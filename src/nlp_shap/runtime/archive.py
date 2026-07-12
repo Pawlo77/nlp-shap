@@ -86,7 +86,6 @@ class RunArchive:
         self,
         root: Path,
         manifest: RunManifest,
-        *,
         flush_every: int = 50,
     ) -> None:
         self._root = root
@@ -104,7 +103,6 @@ class RunArchive:
         cls,
         root: Path,
         manifest: RunManifest,
-        *,
         flush_every: int = 50,
     ) -> RunArchive:
         """Create a run archive directory and open its SQLite database."""

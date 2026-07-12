@@ -21,7 +21,6 @@ async def _slow_generate(snapshot: ConversationSnapshot) -> str:
 
 def _make_job(
     snapshot: ConversationSnapshot,
-    *,
     coalition_key: str,
     mask_present: tuple[bool, ...] = (True, False, True),
 ) -> CoalitionJob:
