@@ -290,35 +290,43 @@
 <p>Changes in each published <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> version. Newest first.</p>
 <section id="unreleased">
 <span id="release-unreleased"></span><h2>Unreleased<a class="headerlink" href="#unreleased" title="Link to this heading">¶</a></h2>
-<section id="performance">
-<h3>Performance<a class="headerlink" href="#performance" title="Link to this heading">¶</a></h3>
-<ul class="simple">
-<li><p>Lazy bitmask coalition enumeration via <a class="reference internal" href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.iter_mask_ints" title="nlp_shap.estimation.exact.ExactEstimator.iter_mask_ints"><code class="xref py py-meth docutils literal notranslate"><span class="pre">iter_mask_ints()</span></code></a>.</p></li>
-<li><p>Vectorized exact Shapley aggregation for complete characteristic tables.</p></li>
-<li><p>Integer-key marginal aggregation with cached factorial weights.</p></li>
-<li><p>Binary coalition-key hashing without JSON serialization.</p></li>
-<li><p>Bounded pending-task scheduling via <a class="reference internal" href="api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler.run_iter" title="nlp_shap.runtime.scheduler.InferenceScheduler.run_iter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run_iter()</span></code></a> and <code class="docutils literal notranslate"><span class="pre">run_stream</span></code>.</p></li>
-</ul>
-</section>
 </section>
 <section id="release-0-1-5">
 <span id="id1"></span><h2>0.1.5 (2026-07-13)<a class="headerlink" href="#release-0-1-5" title="Link to this heading">¶</a></h2>
 <section id="added">
 <h3>Added<a class="headerlink" href="#added" title="Link to this heading">¶</a></h3>
 <ul class="simple">
-<li><p><a class="reference internal" href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator" title="nlp_shap.estimation.exact.ExactEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a> for full coalition
+<li><p><a class="reference internal" href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator" title="nlp_shap.estimation.exact.ExactEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a> for lazy coalition
 enumeration with estimand-plugin aggregation.</p></li>
+<li><p><a class="reference internal" href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.iter_mask_ints" title="nlp_shap.estimation.exact.ExactEstimator.iter_mask_ints"><code class="xref py py-meth docutils literal notranslate"><span class="pre">iter_mask_ints()</span></code></a> and
+<a class="reference internal" href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.iter_masks" title="nlp_shap.estimation.exact.ExactEstimator.iter_masks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">iter_masks()</span></code></a> for streaming
+masks without materializing <code class="docutils literal notranslate"><span class="pre">2^n</span></code> coalitions.</p></li>
 <li><p><a class="reference internal" href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.estimate_attributions" title="nlp_shap.estimation.exact.ExactEstimator.estimate_attributions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_attributions()</span></code></a> wires
 coalition payoffs to Shapley or Banzhaf aggregators.</p></li>
+<li><p>Vectorized exact Shapley aggregation for complete characteristic tables.</p></li>
+<li><p><a class="reference internal" href="api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler.run_iter" title="nlp_shap.runtime.scheduler.InferenceScheduler.run_iter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run_iter()</span></code></a> and
+<code class="docutils literal notranslate"><span class="pre">run_stream</span></code> for bounded pending-task scheduling.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">exact</span></code> estimator entry point under <code class="docutils literal notranslate"><span class="pre">nlp_shap.estimators</span></code>.</p></li>
+</ul>
+</section>
+<section id="changed">
+<h3>Changed<a class="headerlink" href="#changed" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="api/runtime.html#nlp_shap.runtime.dedup.build_coalition_key" title="nlp_shap.runtime.dedup.build_coalition_key"><code class="xref py py-class docutils literal notranslate"><span class="pre">build_coalition_key</span></code></a> uses compact binary
+hashing instead of JSON serialization.</p></li>
+<li><p>Marginal estimand aggregation uses integer bitmask keys and cached factorial
+weights.</p></li>
+<li><p><a class="reference internal" href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy.sample_masks" title="nlp_shap.protocols.estimator.EstimatorStrategy.sample_masks"><code class="xref py py-class docutils literal notranslate"><span class="pre">sample_masks</span></code></a> yields
+an iterator instead of a materialized tuple.</p></li>
 </ul>
 </section>
 <section id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">¶</a></h3>
 <ul class="simple">
-<li><p>Theory and usage guides for exact estimation.</p></li>
+<li><p>Theory and usage guides for exact estimation and streaming scheduler usage.</p></li>
 <li><p>API reference for <a class="reference internal" href="api/estimation.html#module-nlp_shap.estimation.exact" title="nlp_shap.estimation.exact"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nlp_shap.estimation.exact</span></code></a>.</p></li>
 <li><p>Example notebook <code class="docutils literal notranslate"><span class="pre">examples/exact_estimation.ipynb</span></code>.</p></li>
+<li><p>Performance review rules in contributor workflow.</p></li>
 </ul>
 </section>
 </section>
@@ -503,12 +511,10 @@ estimand labelling.</p></li>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Release notes</a><ul>
-<li><a class="reference internal" href="#unreleased">Unreleased</a><ul>
-<li><a class="reference internal" href="#performance">Performance</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#unreleased">Unreleased</a></li>
 <li><a class="reference internal" href="#release-0-1-5">0.1.5 (2026-07-13)</a><ul>
 <li><a class="reference internal" href="#added">Added</a></li>
+<li><a class="reference internal" href="#changed">Changed</a></li>
 <li><a class="reference internal" href="#documentation">Documentation</a></li>
 </ul>
 </li>

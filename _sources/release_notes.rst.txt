@@ -8,15 +8,6 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
-Performance
-~~~~~~~~~~~
-
-- Lazy bitmask coalition enumeration via :meth:`~nlp_shap.estimation.exact.ExactEstimator.iter_mask_ints`.
-- Vectorized exact Shapley aggregation for complete characteristic tables.
-- Integer-key marginal aggregation with cached factorial weights.
-- Binary coalition-key hashing without JSON serialization.
-- Bounded pending-task scheduling via :meth:`~nlp_shap.runtime.scheduler.InferenceScheduler.run_iter` and ``run_stream``.
-
 .. _release-0-1-5:
 
 0.1.5 (2026-07-13)
@@ -25,18 +16,35 @@ Performance
 Added
 ~~~~~
 
-- :class:`~nlp_shap.estimation.exact.ExactEstimator` for full coalition
+- :class:`~nlp_shap.estimation.exact.ExactEstimator` for lazy coalition
   enumeration with estimand-plugin aggregation.
+- :meth:`~nlp_shap.estimation.exact.ExactEstimator.iter_mask_ints` and
+  :meth:`~nlp_shap.estimation.exact.ExactEstimator.iter_masks` for streaming
+  masks without materializing ``2^n`` coalitions.
 - :meth:`~nlp_shap.estimation.exact.ExactEstimator.estimate_attributions` wires
   coalition payoffs to Shapley or Banzhaf aggregators.
+- Vectorized exact Shapley aggregation for complete characteristic tables.
+- :meth:`~nlp_shap.runtime.scheduler.InferenceScheduler.run_iter` and
+  ``run_stream`` for bounded pending-task scheduling.
 - ``exact`` estimator entry point under ``nlp_shap.estimators``.
+
+Changed
+~~~~~~~
+
+- :class:`~nlp_shap.runtime.dedup.build_coalition_key` uses compact binary
+  hashing instead of JSON serialization.
+- Marginal estimand aggregation uses integer bitmask keys and cached factorial
+  weights.
+- :class:`~nlp_shap.protocols.estimator.EstimatorStrategy.sample_masks` yields
+  an iterator instead of a materialized tuple.
 
 Documentation
 ~~~~~~~~~~~~~
 
-- Theory and usage guides for exact estimation.
+- Theory and usage guides for exact estimation and streaming scheduler usage.
 - API reference for :mod:`nlp_shap.estimation.exact`.
 - Example notebook ``examples/exact_estimation.ipynb``.
+- Performance review rules in contributor workflow.
 
 .. _release-0-1-4:
 
