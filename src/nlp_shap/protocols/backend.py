@@ -23,7 +23,6 @@ class GenerativeBackend(Protocol):
     async def generate(
         self,
         snapshot: ConversationSnapshot,
-        *,
         max_new_tokens: int,
         temperature: float,
         top_k: int,

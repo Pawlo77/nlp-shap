@@ -17,7 +17,6 @@ class EstimatorStrategy(Protocol):
     def sample_masks(
         self,
         player_set: PlayerSet,
-        *,
         budget_fraction: float,
         include_minimal_masks: bool,
         seed: int,
