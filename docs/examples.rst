@@ -45,6 +45,17 @@ compare delete, pad, and neutral absence policies.
 
    notebooks/masking_views
 
+Runtime walkthrough
+-------------------
+
+Persist coalition rows, deduplicate repeated masks, and schedule async generation
+with bounded concurrency.
+
+.. toctree::
+   :maxdepth: 1
+
+   notebooks/runtime_core
+
 Gallery
 -------
 
@@ -65,9 +76,16 @@ Gallery
    :class:`~nlp_shap.masking.space.MaskSpace`, plugin registry
    resolution, and validation guards. CPU-only; no optional extras.
 
+**runtime_core.ipynb**
+   End-to-end walkthrough of the 0.1.4 runtime API: run archive persistence,
+   coalition dedup keys, hot LRU cache, and async
+   :class:`~nlp_shap.runtime.scheduler.InferenceScheduler` with scheduler
+   metrics. CPU-only; no optional extras.
+
 Source on GitHub
 ----------------
 
 - `estimands_toy_game.ipynb <https://github.com/Pawlo77/nlp-shap/blob/main/examples/estimands_toy_game.ipynb>`_
 - `masking_views.ipynb <https://github.com/Pawlo77/nlp-shap/blob/main/examples/masking_views.ipynb>`_
+- `runtime_core.ipynb <https://github.com/Pawlo77/nlp-shap/blob/main/examples/runtime_core.ipynb>`_
 - `examples/README.md <https://github.com/Pawlo77/nlp-shap/blob/main/examples/README.md>`_

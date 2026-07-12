@@ -6,7 +6,7 @@ SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = .
 BUILDDIR      = _build
 
-NOTEBOOK_SOURCES = estimands_toy_game.ipynb masking_views.ipynb
+NOTEBOOK_SOURCES = estimands_toy_game.ipynb masking_views.ipynb runtime_core.ipynb
 
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

@@ -77,4 +77,5 @@ Further reading
 - Domain types: :doc:`../api/domain`
 - Plugin registry: :doc:`../api/plugins`
 - Masking and absence policies: :doc:`masking`
+- Runtime archive and scheduler: :doc:`runtime`
 - Estimand guide: :doc:`estimands`

@@ -71,6 +71,7 @@ Next steps
 - :doc:`../theory/shapley_values` — Shapley axioms and uniqueness
 - :doc:`../theory/estimands` — why Shapley and Banzhaf differ
 - :doc:`applications` — business and compliance use cases
-- :doc:`../examples` — `estimands_toy_game.ipynb` and `masking_views.ipynb`
+- :doc:`../examples` — `estimands_toy_game.ipynb`, `masking_views.ipynb`, and `runtime_core.ipynb`
 - :doc:`masking` — coalition masking and absence policies
+- :doc:`runtime` — archive persistence, dedup, and async scheduling
 - :doc:`../api` — module reference

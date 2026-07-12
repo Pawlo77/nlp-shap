@@ -27,3 +27,4 @@ Use the project `.venv` as the notebook kernel when working from source.
 
 - `estimands_toy_game.ipynb` — Full 0.1.1 estimand walkthrough: Shapley/Banzhaf aggregators, coalition weights, majority vs additive games, labelled `ExplainResult`, manifest wire format, and plugin entry points. CPU-only; no optional extras.
 - `masking_views.ipynb` — Full 0.1.3 masking walkthrough: token partition, delete/pad/neutral policies (including custom parameters), `MaskedSnapshot`/`MaskBuilder`, `MaskCodec`, `MaskSpace`, plugin registry, and validation guards. CPU-only; no optional extras.
+- `runtime_core.ipynb` — Full 0.1.4 runtime walkthrough: `RunArchive`, coalition dedup keys, `HotResultStore`, `InferenceScheduler`, and scheduler metrics. CPU-only; no optional extras.

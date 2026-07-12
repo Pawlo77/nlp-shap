@@ -33,6 +33,10 @@ Public exports
      - Whitespace token partition plugin. See :doc:`api/masking`.
    * - :class:`~nlp_shap.masking.MaskBuilder`
      - Shared masked snapshot views. See :doc:`api/masking`.
+   * - :class:`~nlp_shap.runtime.RunArchive`
+     - SQLite + blob coalition archive. See :doc:`api/runtime`.
+   * - :class:`~nlp_shap.runtime.InferenceScheduler`
+     - Async bounded coalition execution. See :doc:`api/runtime`.
    * - :class:`~nlp_shap.Estimand`
      - Estimand label enum (``shapley`` | ``banzhaf``). See :doc:`api/domain`.
    * - :class:`~nlp_shap.ShapleyAggregator`
@@ -57,6 +61,7 @@ Modules
    api/plugins
    api/pipeline
    api/masking
+   api/runtime
    api/estimation
 
 Package version

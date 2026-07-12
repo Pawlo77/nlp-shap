@@ -44,7 +44,7 @@ functions).
       :link: examples
       :link-type: doc
 
-      Runnable Jupyter notebooks: estimand toy game and masking views.
+      Runnable Jupyter notebooks: estimand toy game, masking views, and runtime core.
 
    .. grid-item-card:: Release notes
       :link: release_notes
@@ -70,6 +70,7 @@ Requires Python 3.12. See :doc:`guides/getting_started` for a full walkthrough.
    guides/estimands
    guides/config
    guides/masking
+   guides/runtime
    guides/applications
 
 .. toctree::
@@ -81,6 +82,7 @@ Requires Python 3.12. See :doc:`guides/getting_started` for a full walkthrough.
    theory/shapley_values
    theory/estimands
    theory/masking
+   theory/runtime
 
 .. toctree::
    :hidden:
