@@ -33,7 +33,7 @@
   <h1>Source code for nlp_shap.domain.estimands</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Estimand labels for attribution outputs and archive manifests.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">StrEnum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span>
 
 <span class="n">EstimandWire</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;shapley&quot;</span><span class="p">,</span> <span class="s2">&quot;banzhaf&quot;</span><span class="p">]</span>
@@ -42,7 +42,7 @@
 
 <div class="viewcode-block" id="Estimand">
 <a class="viewcode-back" href="../../../api.html#nlp_shap.Estimand">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Estimand</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Estimand</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Supported cooperative-game value formulations.&quot;&quot;&quot;</span>
 
     <span class="n">SHAPLEY</span> <span class="o">=</span> <span class="s2">&quot;shapley&quot;</span>
@@ -53,6 +53,8 @@
 
 
 
+<div class="viewcode-block" id="estimand_to_wire">
+<a class="viewcode-back" href="../../../api.html#nlp_shap.estimand_to_wire">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">estimand_to_wire</span><span class="p">(</span><span class="n">estimand</span><span class="p">:</span> <span class="n">Estimand</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EstimandWire</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Serialize an estimand enum member to its wire value.&quot;&quot;&quot;</span>
     <span class="k">match</span> <span class="n">estimand</span><span class="p">:</span>
@@ -61,7 +63,8 @@
         <span class="k">case</span> <span class="n">Estimand</span><span class="o">.</span><span class="n">BANZHAF</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;banzhaf&quot;</span>
         <span class="k">case</span><span class="w"> </span><span class="k">_</span> <span class="k">as</span> <span class="n">unreachable</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unsupported estimand: </span><span class="si">{</span><span class="n">unreachable</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unsupported estimand: </span><span class="si">{</span><span class="n">unreachable</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
 </pre></div>
 
           </div>
@@ -89,9 +92,19 @@
     </div>
 </search>
 <script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/estimands.html">Using estimand aggregators</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API reference</a></li>
 </ul>
 
 <div class="relations">

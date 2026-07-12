@@ -14,7 +14,7 @@
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="next" title="Cooperative games" href="theory/cooperative_games.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -34,10 +34,26 @@
             
   <section id="nlp-shap">
 <h1>nlp-shap<a class="headerlink" href="#nlp-shap" title="Link to this heading">¶</a></h1>
-<p>Multimodal explainability tool for NLP based on Shapley value.</p>
+<p>Multimodal explainability for NLP and multimodal models based on <strong>Shapley-style
+cooperative game theory</strong>. The library separates <em>what you measure</em> (estimands),
+<em>how you sample coalitions</em> (estimators), and <em>how you score outputs</em> (value
+functions).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Release 0.1.1 (Phase 0)</strong> ships estimand aggregators (Shapley, Banzhaf),
+result/manifest labelling, and theory documentation. Full explain pipelines,
+masking, and backends follow in later phases — see the
+<a class="reference external" href="https://github.com/Pawlo77/nlp-shap-research/blob/main/docs/plans/infrastructure/nlp-shap%20Package%20Rewrite.md">rewrite plan</a>.</p>
+</div>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>nlp-shap
+</pre></div>
+</div>
+<p>From source:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Pawlo77/nlp-shap
+<span class="nb">cd</span><span class="w"> </span>nlp-shap
+make<span class="w"> </span>install
 </pre></div>
 </div>
 </section>
@@ -45,39 +61,69 @@
 <h2>Development<a class="headerlink" href="#development" title="Link to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>install
 make<span class="w"> </span>check
+make<span class="w"> </span>docs
 </pre></div>
 </div>
 </section>
-<section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
-<p>Runnable Jupyter notebooks are in <code class="docutils literal notranslate"><span class="pre">examples/</span></code>. See <a class="reference internal" href="examples.html"><span class="doc">Examples</span></a> and
-<a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/README.md">examples/README.md</a>.</p>
-</section>
-<section id="api">
-<h2>API<a class="headerlink" href="#api" title="Link to this heading">¶</a></h2>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="theory/cooperative_games.html">Cooperative games</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="theory/cooperative_games.html#characteristic-function">Characteristic function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/cooperative_games.html#marginal-contributions">Marginal contributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/cooperative_games.html#phase-0-scope">Phase 0 scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/cooperative_games.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="theory/estimands.html#shapley-value">Shapley value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/estimands.html#banzhaf-index">Banzhaf index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/estimands.html#when-they-differ">When they differ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/estimands.html#labelling-requirement">Labelling requirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/estimands.html#x-motivation">0.x motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/estimands.html#references">References</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guides/estimands.html#quick-start">Quick start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guides/estimands.html#coalition-weights">Coalition weights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guides/estimands.html#explain-results-and-manifests">Explain results and manifests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guides/estimands.html#notebook">Notebook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guides/estimands.html#further-reading">Further reading</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#setup">Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#gallery">Gallery</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#nlp_shap.BanzhafAggregator"><code class="docutils literal notranslate"><span class="pre">BanzhafAggregator</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#nlp_shap.Estimand"><code class="docutils literal notranslate"><span class="pre">Estimand</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#nlp_shap.ExplainResult"><code class="docutils literal notranslate"><span class="pre">ExplainResult</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#nlp_shap.RunManifest"><code class="docutils literal notranslate"><span class="pre">RunManifest</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#nlp_shap.ShapleyAggregator"><code class="docutils literal notranslate"><span class="pre">ShapleyAggregator</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#nlp_shap.parse_manifest"><code class="docutils literal notranslate"><span class="pre">parse_manifest()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#nlp_shap._logging.ENV_LOGGING_CONFIG"><code class="docutils literal notranslate"><span class="pre">ENV_LOGGING_CONFIG</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#nlp_shap._logging.PACKAGE_NAME"><code class="docutils literal notranslate"><span class="pre">PACKAGE_NAME</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#nlp_shap._logging.PYPROJECT_FILENAME"><code class="docutils literal notranslate"><span class="pre">PYPROJECT_FILENAME</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#nlp_shap._logging.bootstrap_logging"><code class="docutils literal notranslate"><span class="pre">bootstrap_logging()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#nlp_shap._logging.find_logging_config"><code class="docutils literal notranslate"><span class="pre">find_logging_config()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-nlp_shap">Package root</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-nlp_shap.domain.estimands">Domain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-nlp_shap.estimation.estimands.shapley">Estimation — estimands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-nlp_shap.protocols.estimand">Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-nlp_shap.pipeline.result">Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-nlp_shap._logging">Logging</a></li>
 </ul>
 </li>
 </ul>
 </div>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<p>Runnable Jupyter notebooks live in <code class="docutils literal notranslate"><span class="pre">examples/</span></code>. See <a class="reference internal" href="examples.html"><span class="doc">Examples</span></a>.</p>
 </section>
 </section>
 
@@ -107,16 +153,26 @@ make<span class="w"> </span>check
     </div>
 </search>
 <script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="examples.html" title="next chapter">Examples</a></li>
+      <li>Next: <a href="theory/cooperative_games.html" title="next chapter">Cooperative games</a></li>
   </ul></li>
 </ul>
 </div>

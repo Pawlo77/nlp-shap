@@ -14,8 +14,8 @@
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API" href="api.html" />
-    <link rel="prev" title="nlp-shap" href="index.html" />
+    <link rel="next" title="API reference" href="api.html" />
+    <link rel="prev" title="Using estimand aggregators" href="guides/estimands.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -35,8 +35,8 @@
             
   <section id="examples">
 <h1>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h1>
-<p>The <code class="docutils literal notranslate"><span class="pre">examples/</span></code> directory contains <strong>Jupyter notebooks</strong> with runnable,
-end-to-end <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> workflows. They complement the API reference.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">examples/</span></code> directory contains <strong>Jupyter notebooks</strong> with runnable
+<code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> workflows. They complement theory pages and the API reference.</p>
 <section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">¶</a></h2>
 <p>Install the package:</p>
@@ -51,9 +51,16 @@ end-to-end <code class="docutils literal notranslate"><span class="pre">nlp-shap
 </section>
 <section id="gallery">
 <h2>Gallery<a class="headerlink" href="#gallery" title="Link to this heading">¶</a></h2>
-<p>No notebooks are published yet. See the <a class="reference external" href="https://github.com/Pawlo77/nlp-shap/tree/main/examples">examples folder</a> and
-<a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/README.md">examples/README.md</a>
-for the catalog as notebooks are added.</p>
+<dl class="simple">
+<dt><strong>estimands_toy_game.ipynb</strong></dt><dd><p>Compare Shapley and Banzhaf aggregators on a three-player majority game.
+Demonstrates why estimand labelling matters and how to use
+<a class="reference internal" href="api.html#nlp_shap.estimation.estimands.shapley.ShapleyAggregator" title="nlp_shap.estimation.estimands.shapley.ShapleyAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapleyAggregator</span></code></a> and
+<a class="reference internal" href="api.html#nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator" title="nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BanzhafAggregator</span></code></a> directly.
+No optional dependencies beyond <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code>.</p>
+</dd>
+</dl>
+<p>Source: <a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/estimands_toy_game.ipynb">examples/estimands_toy_game.ipynb</a></p>
+<p>See also <a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/README.md">examples/README.md</a>.</p>
 </section>
 </section>
 
@@ -83,21 +90,31 @@ for the catalog as notebooks are added.</p>
     </div>
 </search>
 <script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#gallery">Gallery</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">nlp-shap</a></li>
-      <li>Next: <a href="api.html" title="next chapter">API</a></li>
+      <li>Previous: <a href="guides/estimands.html" title="previous chapter">Using estimand aggregators</a></li>
+      <li>Next: <a href="api.html" title="next chapter">API reference</a></li>
   </ul></li>
 </ul>
 </div>

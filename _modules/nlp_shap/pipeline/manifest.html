@@ -39,6 +39,8 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">..domain.estimands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Estimand</span><span class="p">,</span> <span class="n">EstimandWire</span><span class="p">,</span> <span class="n">estimand_to_wire</span>
 
 
+<div class="viewcode-block" id="RunManifestPayload">
+<a class="viewcode-back" href="../../../api.html#nlp_shap.RunManifestPayload">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RunManifestPayload</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;JSON-compatible manifest payload persisted with a run archive.&quot;&quot;&quot;</span>
 
@@ -46,7 +48,8 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimand label recorded for every attribution output.&quot;&quot;&quot;</span>
 
     <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stable identifier for the explain run.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stable identifier for the explain run.&quot;&quot;&quot;</span></div>
+
 
 
 <div class="viewcode-block" id="RunManifest">
@@ -109,9 +112,19 @@
     </div>
 </search>
 <script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/estimands.html">Using estimand aggregators</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API reference</a></li>
 </ul>
 
 <div class="relations">

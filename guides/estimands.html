@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Using estimand aggregators &#8212; nlp-shap  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Examples" href="../examples.html" />
+    <link rel="prev" title="Estimands: Shapley vs Banzhaf" href="../theory/estimands.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="using-estimand-aggregators">
+<h1>Using estimand aggregators<a class="headerlink" href="#using-estimand-aggregators" title="Link to this heading">¶</a></h1>
+<p>Phase <code class="docutils literal notranslate"><span class="pre">0.1.1</span></code> exposes standalone <strong>estimand aggregators</strong>. You provide coalition
+masks and payoffs <span class="math notranslate nohighlight">\(v(S)\)</span>; the library returns per-player attributions and
+records which estimand was used.</p>
+<section id="quick-start">
+<h2>Quick start<a class="headerlink" href="#quick-start" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">product</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap</span><span class="w"> </span><span class="kn">import</span> <span class="n">BanzhafAggregator</span><span class="p">,</span> <span class="n">Estimand</span><span class="p">,</span> <span class="n">ShapleyAggregator</span>
+
+<span class="n">num_players</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">masks</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span> <span class="k">for</span> <span class="n">bits</span> <span class="ow">in</span> <span class="n">product</span><span class="p">([</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="n">num_players</span><span class="p">)]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">majority_payoff</span><span class="p">(</span><span class="n">mask</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="k">else</span> <span class="mf">0.0</span>
+
+<span class="n">payoffs</span> <span class="o">=</span> <span class="p">[</span><span class="n">majority_payoff</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">masks</span><span class="p">]</span>
+
+<span class="n">shapley</span> <span class="o">=</span> <span class="n">ShapleyAggregator</span><span class="p">()</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">)</span>
+<span class="n">banzhaf</span> <span class="o">=</span> <span class="n">BanzhafAggregator</span><span class="p">()</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shapley:&quot;</span><span class="p">,</span> <span class="n">shapley</span><span class="p">)</span>   <span class="c1"># ~[0.333, 0.333, 0.333]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Banzhaf:&quot;</span><span class="p">,</span> <span class="n">banzhaf</span><span class="p">)</span>   <span class="c1"># [0.5, 0.5, 0.5]</span>
+</pre></div>
+</div>
+</section>
+<section id="coalition-weights">
+<h2>Coalition weights<a class="headerlink" href="#coalition-weights" title="Link to this heading">¶</a></h2>
+<p>Inspect weights without full aggregation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShapleyAggregator</span><span class="p">,</span> <span class="n">BanzhafAggregator</span>
+
+<span class="n">shapley</span> <span class="o">=</span> <span class="n">ShapleyAggregator</span><span class="p">()</span>
+<span class="n">banzhaf</span> <span class="o">=</span> <span class="n">BanzhafAggregator</span><span class="p">()</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;k=</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shapley</span><span class="o">.</span><span class="n">coalition_weight</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">banzhaf</span><span class="o">.</span><span class="n">coalition_weight</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="explain-results-and-manifests">
+<h2>Explain results and manifests<a class="headerlink" href="#explain-results-and-manifests" title="Link to this heading">¶</a></h2>
+<p>Label outputs explicitly for archives and papers:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap</span><span class="w"> </span><span class="kn">import</span> <span class="n">Estimand</span><span class="p">,</span> <span class="n">ExplainResult</span><span class="p">,</span> <span class="n">RunManifest</span><span class="p">,</span> <span class="n">parse_manifest</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">ExplainResult</span><span class="p">(</span>
+    <span class="n">estimand</span><span class="o">=</span><span class="n">Estimand</span><span class="o">.</span><span class="n">SHAPLEY</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="mf">0.333</span><span class="p">,</span> <span class="mf">0.333</span><span class="p">,</span> <span class="mf">0.333</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">manifest</span> <span class="o">=</span> <span class="n">RunManifest</span><span class="p">(</span><span class="n">estimand</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">estimand</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="s2">&quot;run-42&quot;</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="n">restored</span> <span class="o">=</span> <span class="n">parse_manifest</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">restored</span><span class="o">.</span><span class="n">estimand</span> <span class="ow">is</span> <span class="n">Estimand</span><span class="o">.</span><span class="n">SHAPLEY</span>
+</pre></div>
+</div>
+<p>Wire values for JSON manifests use <a class="reference internal" href="../api.html#nlp_shap.domain.estimands.EstimandWire" title="nlp_shap.domain.estimands.EstimandWire"><code class="xref py py-data docutils literal notranslate"><span class="pre">EstimandWire</span></code></a>
+(<code class="docutils literal notranslate"><span class="pre">&quot;shapley&quot;</span></code> | <code class="docutils literal notranslate"><span class="pre">&quot;banzhaf&quot;</span></code>).</p>
+</section>
+<section id="notebook">
+<h2>Notebook<a class="headerlink" href="#notebook" title="Link to this heading">¶</a></h2>
+<p>See the runnable walkthrough in <a class="reference internal" href="../examples.html"><span class="doc">Examples</span></a> —
+<code class="docutils literal notranslate"><span class="pre">examples/estimands_toy_game.ipynb</span></code>.</p>
+</section>
+<section id="further-reading">
+<h2>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Theory: <a class="reference internal" href="../theory/estimands.html"><span class="doc">Estimands: Shapley vs Banzhaf</span></a></p></li>
+<li><p>Cooperative games: <a class="reference internal" href="../theory/cooperative_games.html"><span class="doc">Cooperative games</span></a></p></li>
+<li><p>API: <a class="reference internal" href="../api.html"><span class="doc">API reference</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">nlp-shap</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using estimand aggregators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#coalition-weights">Coalition weights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#explain-results-and-manifests">Explain results and manifests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#notebook">Notebook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#further-reading">Further reading</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../theory/estimands.html" title="previous chapter">Estimands: Shapley vs Banzhaf</a></li>
+      <li>Next: <a href="../examples.html" title="next chapter">Examples</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Paweł Pozorski.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/guides/estimands.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

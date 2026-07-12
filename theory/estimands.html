@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Estimands: Shapley vs Banzhaf &#8212; nlp-shap  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using estimand aggregators" href="../guides/estimands.html" />
+    <link rel="prev" title="Cooperative games" href="cooperative_games.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="estimands-shapley-vs-banzhaf">
+<h1>Estimands: Shapley vs Banzhaf<a class="headerlink" href="#estimands-shapley-vs-banzhaf" title="Link to this heading">¶</a></h1>
+<p>An <strong>estimand</strong> is the quantity your attribution procedure targets. Monte Carlo
+coalition averaging does <strong>not</strong> automatically estimate Shapley values; unweighted
+means over sampled coalitions estimate the <strong>Banzhaf index</strong> unless Shapley
+weights are applied explicitly.</p>
+<p><code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> keeps estimands separate from estimators so results and archive
+manifests are honestly labelled.</p>
+<section id="shapley-value">
+<h2>Shapley value<a class="headerlink" href="#shapley-value" title="Link to this heading">¶</a></h2>
+<p>The Shapley value <span class="math notranslate nohighlight">\(\phi_i(v)\)</span> for player <span class="math notranslate nohighlight">\(i\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[\phi_i(v) = \sum_{S \subseteq N \setminus \{i\}}
+\frac{|S|!\,(|N|-|S|-1)!}{|N|!}
+\bigl(v(S \cup \{i\}) - v(S)\bigr)\]</div>
+<p>The weight for a coalition of size <span class="math notranslate nohighlight">\(|S| = k\)</span> (excluding <span class="math notranslate nohighlight">\(i\)</span>) is:</p>
+<div class="math notranslate nohighlight">
+\[w_{\mathrm{Shapley}}(k, n) = \frac{k!\,(n-k-1)!}{n!}\]</div>
+<p>Implemented in <a class="reference internal" href="../api.html#nlp_shap.estimation.estimands.shapley.ShapleyAggregator" title="nlp_shap.estimation.estimands.shapley.ShapleyAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapleyAggregator</span></code></a>.</p>
+<p><strong>Properties (axiomatic):</strong> efficiency, symmetry, dummy player, additivity —
+see Shapley (1953).</p>
+</section>
+<section id="banzhaf-index">
+<h2>Banzhaf index<a class="headerlink" href="#banzhaf-index" title="Link to this heading">¶</a></h2>
+<p>The Banzhaf index <span class="math notranslate nohighlight">\(\beta_i(v)\)</span> uses <strong>uniform</strong> weights over
+<span class="math notranslate nohighlight">\(S \subseteq N \setminus \{i\}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\beta_i(v) = \frac{1}{2^{|N|-1}}
+\sum_{S \subseteq N \setminus \{i\}}
+\bigl(v(S \cup \{i\}) - v(S)\bigr)\]</div>
+<p>Equivalently, <span class="math notranslate nohighlight">\(w_{\mathrm{Banzhaf}}(k, n) = 2^{-(n-1)}\)</span> for every
+coalition size <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<p>Implemented in <a class="reference internal" href="../api.html#nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator" title="nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BanzhafAggregator</span></code></a>.</p>
+</section>
+<section id="when-they-differ">
+<h2>When they differ<a class="headerlink" href="#when-they-differ" title="Link to this heading">¶</a></h2>
+<p>For <strong>additive</strong> games <span class="math notranslate nohighlight">\(v(S) = \sum_{i \in S} a_i\)</span>, Shapley and Banzhaf
+coincide (both recover coefficients <span class="math notranslate nohighlight">\(a_i\)</span>).</p>
+<p>For <strong>non-additive</strong> games they diverge. A standard toy example is the
+<strong>majority/threshold</strong> game with <span class="math notranslate nohighlight">\(|N|=3\)</span> and <span class="math notranslate nohighlight">\(v(S)=1\)</span> iff
+<span class="math notranslate nohighlight">\(|S| \ge 2\)</span>, else <span class="math notranslate nohighlight">\(0\)</span>:</p>
+<ul class="simple">
+<li><p>Shapley: each player receives <span class="math notranslate nohighlight">\(2/6 \approx 0.333\)</span></p></li>
+<li><p>Banzhaf: each player receives <span class="math notranslate nohighlight">\(0.5\)</span></p></li>
+</ul>
+<p>The test suite locks this divergence on identical coalition samples.</p>
+</section>
+<section id="labelling-requirement">
+<h2>Labelling requirement<a class="headerlink" href="#labelling-requirement" title="Link to this heading">¶</a></h2>
+<p>Every <a class="reference internal" href="../api.html#nlp_shap.pipeline.result.ExplainResult" title="nlp_shap.pipeline.result.ExplainResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainResult</span></code></a> carries an
+<a class="reference internal" href="../api.html#nlp_shap.domain.estimands.Estimand" title="nlp_shap.domain.estimands.Estimand"><code class="xref py py-class docutils literal notranslate"><span class="pre">Estimand</span></code></a> label. Run archives persist the
+same label in <a class="reference internal" href="../api.html#nlp_shap.pipeline.manifest.RunManifestPayload" title="nlp_shap.pipeline.manifest.RunManifestPayload"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunManifestPayload</span></code></a> so
+downstream analysis never misreports Banzhaf output as Shapley.</p>
+</section>
+<section id="x-motivation">
+<h2>0.x motivation<a class="headerlink" href="#x-motivation" title="Link to this heading">¶</a></h2>
+<p>Legacy MLLM-Shap Monte Carlo paths averaged coalition contributions without
+Shapley weights while labelling outputs “Shapley”. Phase 0 fixes this at the
+architecture level by splitting <a class="reference internal" href="../api.html#nlp_shap.protocols.estimand.EstimandAggregator" title="nlp_shap.protocols.estimand.EstimandAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimandAggregator</span></code></a>
+from future estimator plugins.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Shapley, L. S. (1953). <em>A Value for n-person Games</em>.
+<a class="reference external" href="https://projecteuclid.org/journals/contributions-to-the-theory-of-games/volume-2/issue-none/A-Value-for-n-person-Games/10.1215/sm/1175702444.full">Project Euclid</a></p></li>
+<li><p>Banzhaf, J. F. (1965). <em>Weighted voting doesn’t work: A mathematical analysis</em>.
+<em>Rutgers Law Review</em>, 19(2), 317–343.</p></li>
+<li><p>Strumbelj, E., &amp; Kononenko, I. (2014). <em>Explaining prediction models and
+individual predictions with feature contributions</em>.
+<a class="reference external" href="https://doi.org/10.1016/j.knosys.2013.10.012">DOI:10.1016/j.knosys.2013.10.012</a>
+(Banzhaf-style unweighted coalition averages in explainability)</p></li>
+<li><p>Lundberg, S. M., &amp; Lee, S.-I. (2017). <em>A Unified Approach to Interpreting
+Model Predictions</em> (SHAP). NeurIPS.
+<a class="reference external" href="https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions">NeurIPS proceedings</a></p></li>
+<li><p>Fryer, D., Strümke, I., &amp; Nguyen, H. (2021). <em>Shapley Values for NLP
+Explainability</em>. <a class="reference external" href="https://arxiv.org/abs/2104.08744">arXiv:2104.08744</a></p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">nlp-shap</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Estimands: Shapley vs Banzhaf</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#shapley-value">Shapley value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#banzhaf-index">Banzhaf index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#when-they-differ">When they differ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#labelling-requirement">Labelling requirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#x-motivation">0.x motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/estimands.html">Using estimand aggregators</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="cooperative_games.html" title="previous chapter">Cooperative games</a></li>
+      <li>Next: <a href="../guides/estimands.html" title="next chapter">Using estimand aggregators</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Paweł Pozorski.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/theory/estimands.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

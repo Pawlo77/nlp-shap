@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Cooperative games &#8212; nlp-shap  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Estimands: Shapley vs Banzhaf" href="estimands.html" />
+    <link rel="prev" title="nlp-shap" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cooperative-games">
+<h1>Cooperative games<a class="headerlink" href="#cooperative-games" title="Link to this heading">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> explains model behaviour by treating input units (tokens, segments,
+etc.) as <strong>players</strong> in a cooperative game. Each coalition <span class="math notranslate nohighlight">\(S \subseteq N\)</span>
+of players yields a <strong>payoff</strong> <span class="math notranslate nohighlight">\(v(S)\)</span> from a characteristic function
+<span class="math notranslate nohighlight">\(v\)</span> defined by a value function and model inference.</p>
+<section id="characteristic-function">
+<h2>Characteristic function<a class="headerlink" href="#characteristic-function" title="Link to this heading">¶</a></h2>
+<p>A cooperative game is given by:</p>
+<ul class="simple">
+<li><p>a finite player set <span class="math notranslate nohighlight">\(N = \{1, \dots, n\}\)</span></p></li>
+<li><p>a function <span class="math notranslate nohighlight">\(v : 2^N \to \mathbb{R}\)</span> with <span class="math notranslate nohighlight">\(v(\emptyset)\)</span> as the
+empty-coalition reference</p></li>
+</ul>
+<p>In explainability, <span class="math notranslate nohighlight">\(v(S)\)</span> is the utility of the model output when only
+the players in <span class="math notranslate nohighlight">\(S\)</span> are <strong>present</strong> (others are masked according to an
+absence policy). The grand coalition <span class="math notranslate nohighlight">\(v(N)\)</span> is the unmasked input.</p>
+</section>
+<section id="marginal-contributions">
+<h2>Marginal contributions<a class="headerlink" href="#marginal-contributions" title="Link to this heading">¶</a></h2>
+<p>For player <span class="math notranslate nohighlight">\(i\)</span> and coalition <span class="math notranslate nohighlight">\(S \subseteq N \setminus \{i\}\)</span> the
+marginal contribution is:</p>
+<div class="math notranslate nohighlight">
+\[\Delta_i(S) = v(S \cup \{i\}) - v(S)\]</div>
+<p>Attribution methods differ in how they <strong>weight</strong> and <strong>aggregate</strong> marginal
+contributions across coalitions — see <a class="reference internal" href="estimands.html"><span class="doc">Estimands: Shapley vs Banzhaf</span></a>.</p>
+</section>
+<section id="phase-0-scope">
+<h2>Phase 0 scope<a class="headerlink" href="#phase-0-scope" title="Link to this heading">¶</a></h2>
+<p>Version <code class="docutils literal notranslate"><span class="pre">0.1.1</span></code> ships <strong>estimand aggregators</strong> only. Coalition sampling,
+masking, backends, and the full explain pipeline arrive in later phases. The
+aggregators assume you supply coalition masks and aligned payoffs
+<span class="math notranslate nohighlight">\(v(S)\)</span>.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Shapley, L. S. (1953). <em>A Value for n-person Games</em>. In <em>Contributions to the
+Theory of Games II</em>, Annals of Mathematics Studies 28, Princeton University
+Press. <a class="reference external" href="https://projecteuclid.org/journals/contributions-to-the-theory-of-games/volume-2/issue-none/A-Value-for-n-person-Games/10.1215/sm/1175702444.full">Project Euclid</a></p></li>
+<li><p>Owen, G. (1972). <em>Multilinear extensions of games</em>. Management Science.
+<a class="reference external" href="https://doi.org/10.1287/mnsc.18.5.64">DOI:10.1287/mnsc.18.5.64</a></p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">nlp-shap</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cooperative games</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#characteristic-function">Characteristic function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#marginal-contributions">Marginal contributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#phase-0-scope">Phase 0 scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/estimands.html">Using estimand aggregators</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../index.html" title="previous chapter">nlp-shap</a></li>
+      <li>Next: <a href="estimands.html" title="next chapter">Estimands: Shapley vs Banzhaf</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Paweł Pozorski.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/theory/cooperative_games.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
