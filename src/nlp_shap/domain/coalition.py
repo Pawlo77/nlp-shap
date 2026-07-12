@@ -1,0 +1,40 @@
+"""Coalition masks over explainability players."""
+
+from __future__ import annotations
+
+from collections.abc import Sequence
+from dataclasses import dataclass
+
+from .players import PlayerSet
+
+
+@dataclass(frozen=True, slots=True)
+class CoalitionMask:
+    """Boolean presence mask aligned with a :class:`~nlp_shap.domain.players.PlayerSet`."""
+
+    present: tuple[bool, ...]
+    """Presence flags aligned with :class:`~nlp_shap.domain.players.PlayerSet` order."""
+
+    def __post_init__(self) -> None:
+        if not self.present:
+            msg = "coalition mask must include at least one player"
+            raise ValueError(msg)
+
+    @classmethod
+    def from_sequence(cls, present: Sequence[bool]) -> CoalitionMask:
+        """Build a mask from any boolean sequence."""
+        return cls(present=tuple(present))
+
+    def coalition_size(self) -> int:
+        """Return the number of present players."""
+        return sum(self.present)
+
+    def validate_against(self, player_set: PlayerSet) -> None:
+        """Ensure the mask length matches the player set."""
+        if len(self.present) != player_set.num_players:
+            msg = (
+                "coalition mask length "
+                f"{len(self.present)} does not match player count "
+                f"{player_set.num_players}"
+            )
+            raise ValueError(msg)

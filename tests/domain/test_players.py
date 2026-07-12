@@ -1,0 +1,23 @@
+"""Tests for player sets."""
+
+import pytest
+
+from nlp_shap.domain.players import PlayerSet
+
+
+def test_player_set_exposes_count() -> None:
+    """Player sets report the number of registered players."""
+    players = PlayerSet(player_ids=("t0", "t1", "t2"))
+    assert players.num_players == 3
+
+
+def test_player_set_rejects_empty_ids() -> None:
+    """Player sets require at least one player."""
+    with pytest.raises(ValueError, match="at least one player"):
+        PlayerSet(player_ids=())
+
+
+def test_player_set_rejects_duplicate_ids() -> None:
+    """Player ids must be unique."""
+    with pytest.raises(ValueError, match="unique"):
+        PlayerSet(player_ids=("t0", "t0"))

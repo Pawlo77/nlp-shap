@@ -34,9 +34,10 @@ Every Python file in `src/nlp_shap` starts with a module docstring — including
 | Module | **Required** on every file (including `__init__.py`): one line stating what the module owns |
 | Module-level constant | **Required**: one-line docstring directly under the assignment |
 | Public class | One-line summary; add body sections only when behavior is not obvious from the name |
+| Public class fields | **Required**: one-line docstring directly under every field (dataclass, Pydantic, TypedDict key) |
+| Enum / StrEnum members | **Required**: one-line docstring directly under every member |
 | Public function/method | One line when name + signature + return type are sufficient; otherwise add only the sections that add information (`Args`, `Returns`, `Raises`, `Note`) |
-| Public class attributes | One-line attribute docstring when part of the exported contract |
-| `_private` | Omit unless logic is genuinely non-obvious |
+| `_private` fields | Omit unless logic is genuinely non-obvious |
 | `tests/` | Docstring optional; prefer clear test names |
 
 **Redundant (forbidden):** restating parameter types, echoing the function name, empty `Args`/`Returns`, module essays.
@@ -50,6 +51,25 @@ Every Python file in `src/nlp_shap` starts with a module docstring — including
 
 DEFAULT_BUDGET: int = 100
 """Default evaluation budget when the caller does not override it."""
+
+@dataclass(frozen=True, slots=True)
+class ExplainResult:
+    """Attribution output for a single explain run."""
+
+    estimand: Estimand
+    """Estimand used to aggregate coalition samples."""
+
+    values: tuple[float, ...]
+    """Per-player attribution values."""
+
+class Estimand(StrEnum):
+    """Supported cooperative-game value formulations."""
+
+    SHAPLEY = "shapley"
+    """Shapley value with coalition weights k!(n-k-1)!/n!."""
+
+    BANZHAF = "banzhaf"
+    """Banzhaf index with uniform coalition weights 1/2^(n-1)."""
 
 # Sufficient — contract is obvious
 def version() -> str:

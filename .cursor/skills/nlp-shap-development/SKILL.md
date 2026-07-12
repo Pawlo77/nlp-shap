@@ -13,7 +13,7 @@ Follow rules in `.cursor/rules/*.mdc`. Minimal exit in `AGENTS.md` (`make check`
 
 - Importing `nlp_shap` bootstraps logging from cwd `pyproject.toml` `[tool.logging]`; benchmarks → `make bench`, not `make check`
 - Relative imports inside `src/nlp_shap/`; absolute `from nlp_shap...` in `tests/` and `examples/`
-- Structured payloads → `TypedDict` + `Literal` wire fields; validate only at external boundaries (`docs.mdc`, `python-quality.mdc`)
+- Structured payloads → `TypedDict` + `Literal` wire fields; validate only at external boundaries (`docs.mdc`, `python-quality.mdc`); **every class field gets a one-line docstring** (`python-quality.mdc`)
 - `Protocol` stubs: docstring-only bodies — no redundant `...` (`python-quality.mdc`)
 - User-facing `docs/` and `examples/`: shipped API only — no phases or rewrite progress (`docs.mdc`)
 - MLLM-Shap port → minimum slice from `papers/MLLM-Shap/mllm_shap/`, not bulk copy

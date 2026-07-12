@@ -1,0 +1,32 @@
+backend:
+  kind: lmstudio
+  model_id: qwen2-500m-instruct
+  api_host: null
+
+generation:
+  max_new_tokens: 128
+  temperature: 0.0
+  top_k: 1
+  precompute_base: true
+
+explanation:
+  use_v2: true
+  estimand: shapley
+  estimator: neyman_cc
+  value_fn: tfidf_cosine
+  normalizer: identity
+  players: tokens
+  absence_policy: delete
+  budget:
+    fraction: 0.3
+  include_minimal_masks: false
+  max_inflight: 2
+  archive:
+    path: ./runs/{run_id}
+    flush_every: 50
+  dedup:
+    enabled: auto
+  kv_cache:
+    enabled: true
+  embedding_mode: static
+  seed: 42
