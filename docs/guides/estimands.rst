@@ -76,6 +76,7 @@ See the runnable walkthrough in :doc:`../examples` —
 Further reading
 ---------------
 
+- :doc:`getting_started` — install and first example
 - Theory: :doc:`../theory/estimands`
 - Cooperative games: :doc:`../theory/cooperative_games`
 - API: :doc:`../api`

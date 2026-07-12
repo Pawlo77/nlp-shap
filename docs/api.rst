@@ -1,52 +1,45 @@
 API reference
-===============
+=============
 
-Package root
-------------
+``nlp-shap`` exposes a small, typed public surface. Import the symbols below
+from :mod:`nlp_shap` or follow the module pages for implementation detail.
 
-.. automodule:: nlp_shap
-   :members:
-   :undoc-members:
+Public exports
+--------------
 
-Domain
-------
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
 
-.. automodule:: nlp_shap.domain.estimands
-   :members:
-   :undoc-members:
+   * - Symbol
+     - Description
+   * - :class:`~nlp_shap.Estimand`
+     - Estimand label enum (``shapley`` | ``banzhaf``). See :doc:`api/domain`.
+   * - :class:`~nlp_shap.ShapleyAggregator`
+     - Shapley-weighted coalition aggregation. See :doc:`api/estimation`.
+   * - :class:`~nlp_shap.BanzhafAggregator`
+     - Uniform Banzhaf coalition aggregation. See :doc:`api/estimation`.
+   * - :class:`~nlp_shap.ExplainResult`
+     - Labelled explain output. See :doc:`api/pipeline`.
+   * - :class:`~nlp_shap.RunManifest`
+     - Run-archive metadata builder. See :doc:`api/pipeline`.
+   * - :func:`~nlp_shap.parse_manifest`
+     - Parse manifest payloads at archive boundaries. See :doc:`api/pipeline`.
 
-Estimation — estimands
-----------------------
-
-.. automodule:: nlp_shap.estimation.estimands.shapley
-   :members:
-   :undoc-members:
-
-.. automodule:: nlp_shap.estimation.estimands.banzhaf
-   :members:
-   :undoc-members:
-
-Protocols
----------
-
-.. automodule:: nlp_shap.protocols.estimand
-   :members:
-   :undoc-members:
-
-Pipeline
---------
-
-.. automodule:: nlp_shap.pipeline.result
-   :members:
-   :undoc-members:
-
-.. automodule:: nlp_shap.pipeline.manifest
-   :members:
-   :undoc-members:
-
-Logging
+Modules
 -------
 
-.. automodule:: nlp_shap._logging
-   :members:
+.. toctree::
+   :maxdepth: 1
+
+   api/domain
+   api/estimation
+   api/pipeline
+   api/protocols
+
+Package version
+---------------
+
+.. automodule:: nlp_shap
+   :members: __version__
    :undoc-members:

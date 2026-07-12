@@ -1,0 +1,9 @@
+/* Brand tweaks on top of Furo defaults. */
+
+.sidebar-brand-text {
+  font-weight: 700;
+}
+
+article[role="main"] .highlight {
+  border-radius: 0.375rem;
+}

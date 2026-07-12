@@ -15,6 +15,7 @@ Documentation
 - Usage guide for estimand aggregators, results, and manifests.
 - Expanded API reference for public modules.
 - Example notebook ``examples/estimands_toy_game.ipynb``.
+- Furo theme, getting-started page, embedded notebook rendering, and API module layout.
 
 Tooling
 ~~~~~~~

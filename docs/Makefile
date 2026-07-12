@@ -6,10 +6,18 @@ SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = .
 BUILDDIR      = _build
 
+NOTEBOOK_SOURCES = estimands_toy_game.ipynb
+
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-.PHONY: help Makefile
+.PHONY: help Makefile copy-notebooks
 
-%: Makefile
+copy-notebooks:
+	@mkdir -p notebooks
+	@for nb in $(NOTEBOOK_SOURCES); do \
+		cp ../examples/$$nb notebooks/$$nb; \
+	done
+
+%: Makefile copy-notebooks
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

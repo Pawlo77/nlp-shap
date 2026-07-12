@@ -1,9 +1,10 @@
 <div align="center">
   <h1>📦 nlp-shap</h1>
-  <p><strong>Multimodal explainability tool for NLP models based on Shapley value.</strong></p>
+  <p><strong>Multimodal explainability for NLP and multimodal models based on Shapley-style cooperative game theory.</strong></p>
   <p>
     <a href="https://pypi.org/project/nlp-shap/"><img src="https://img.shields.io/pypi/v/nlp-shap.svg" alt="PyPI"></a>
     <a href="https://pypi.org/project/nlp-shap/"><img src="https://img.shields.io/pypi/pyversions/nlp-shap.svg" alt="Python"></a>
+    <a href="https://pawlo77.github.io/nlp-shap/"><img src="https://img.shields.io/badge/docs-GitHub%20Pages-blue" alt="Documentation"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
   </p>
 </div>
@@ -23,6 +24,14 @@ make install
 ```
 
 Requires Python 3.12 and [uv](https://docs.astral.sh/uv/).
+
+## Documentation
+
+Full documentation: **[pawlo77.github.io/nlp-shap](https://pawlo77.github.io/nlp-shap/)**
+
+- [Getting started](https://pawlo77.github.io/nlp-shap/guides/getting_started.html)
+- [User guide — estimands](https://pawlo77.github.io/nlp-shap/guides/estimands.html)
+- [API reference](https://pawlo77.github.io/nlp-shap/api.html)
 
 ## Development
 

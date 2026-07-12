@@ -2,7 +2,8 @@ Examples
 ========
 
 The ``examples/`` directory contains **Jupyter notebooks** with runnable
-``nlp-shap`` workflows. They complement theory pages and the API reference.
+``nlp-shap`` workflows. They complement guides, theory pages, and the API
+reference.
 
 Setup
 -----
@@ -21,6 +22,18 @@ From a local clone:
 
 Use the project ``.venv`` as the notebook kernel when working from source.
 
+Toy-game walkthrough
+--------------------
+
+The notebook below is rendered inline. It compares Shapley and Banzhaf
+aggregators on a three-player majority game and shows why estimand labelling
+matters.
+
+.. toctree::
+   :maxdepth: 1
+
+   notebooks/estimands_toy_game
+
 Gallery
 -------
 
@@ -31,7 +44,7 @@ Gallery
    :class:`~nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator` directly.
    No optional dependencies beyond ``nlp-shap``.
 
-Source: `examples/estimands_toy_game.ipynb
+Source on GitHub: `examples/estimands_toy_game.ipynb
 <https://github.com/Pawlo77/nlp-shap/blob/main/examples/estimands_toy_game.ipynb>`_
 
 See also `examples/README.md
