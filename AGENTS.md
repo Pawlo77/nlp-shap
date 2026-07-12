@@ -6,7 +6,7 @@
 make check
 ```
 
-Packaging → `make build` · docs → `make docs` · deps → `uv lock`
+Packaging → `make build` · docs → `make docs` (required when public API/algorithms change) · deps → `uv lock`
 
 ## Agent-only
 
@@ -21,6 +21,9 @@ Repo-specific gotchas:
 - Modules under `src/nlp_shap/` use **relative imports**; `tests/` and `examples/` use absolute `from nlp_shap...`
 - Structured dict contracts (manifests, config slices) → `TypedDict` + `Literal` wire types, not `dict[str, Any]` with manual key checks
 - `Protocol`/abstract stubs: docstring-only bodies — no redundant `...` after the docstring
+- Public API or algorithm changes require Sphinx updates (`docs/theory`, `docs/guides`, `docs/api.rst`) and `make docs` before hand-off
+- Before commit/push: `make check` + `make docs`; run `make notebooks` when example notebooks change
+- After push: `gh run watch --exit-status` — fix failures before moving on
 
 ## Load order
 

@@ -14,6 +14,7 @@ Follow rules in `.cursor/rules/*.mdc`. Agent exit criteria in `AGENTS.md`.
 - Task scope only
 - Existing code in `src/nlp_shap/` and `tests/` for conventions; `examples/` for published notebook style
 - MLLM-Shap port → minimum slice, not bulk copy
+- `docs/theory/` and `docs/guides/` for prior theory and citation style
 
 ## 2. Red
 
@@ -28,28 +29,40 @@ Follow rules in `.cursor/rules/*.mdc`. Agent exit criteria in `AGENTS.md`.
 - Relative imports inside `src/nlp_shap/`; absolute `from nlp_shap...` in tests and examples
 - Structured payloads → `TypedDict` with `Literal` wire fields; validate only at external boundaries
 
-## 4. Refactor
+## 4. Document
+
+Ship Sphinx docs with every public API / algorithm change (see `docs.mdc`):
+
+- `docs/theory/<topic>.rst` — definitions, formulas, original paper links
+- `docs/guides/<topic>.rst` — runnable usage aligned with public API
+- `docs/api.rst` — `automodule` for new public modules
+- `docs/index.rst` toctree + `make docs` clean build
+- Notebook in `examples/` when users need an end-to-end story; update `examples/README.md` and `docs/examples.rst`
+
+## 5. Refactor
 
 - Simplify while green; no unrelated cleanup
 
-## 5. Verify
+## 6. Verify
 
 ```bash
+make notebooks   # when examples/*.ipynb changed — commit only with outputs
 make check
+make docs
 ```
 
-Packaging → `make build` · docs → `make docs` · deps → `uv lock`
+Packaging → `make build` · deps → `uv lock`
 
 New connector → `tests/benchmarks/` bench tests + `make bench` (see `connector-benchmarks` rule)
 
-Entirely new public workflow → minimal Jupyter notebook in `examples/` + catalog line in `examples/README.md` (see `examples.mdc`)
+## 7. Hand off
 
-## 6. Hand off
+Stop unless user asks: commit, push, PR.
 
-Stop unless user asks: commit, push, PR, new markdown, doc expansion.
+After push: `gh run watch --exit-status` until remote workflows pass.
 
 New Makefile target → `name: ## help` + `.PHONY`
 
 ## Pitfalls
 
-`pre-commit` → prek · `pip install` → pyproject + `uv lock` · implement before test → back to step 2 · `from nlp_shap...` inside `src/nlp_shap/` → use relative imports · `dict[str, Any]` payload guards → use `TypedDict` · `...` after docstring in Protocol stubs → omit
+`pre-commit` → prek · `pip install` → pyproject + `uv lock` · implement before test → back to step 2 · `from nlp_shap...` inside `src/nlp_shap/` → use relative imports · `dict[str, Any]` payload guards → use `TypedDict` · `...` after docstring in Protocol stubs → omit · public `feat` without `docs/` → incomplete hand-off
