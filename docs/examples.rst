@@ -65,11 +65,9 @@ Gallery
    :class:`~nlp_shap.masking.space.MaskSpace`, plugin registry
    resolution, and validation guards. CPU-only; no optional extras.
 
-Source on GitHub: `examples/estimands_toy_game.ipynb
-<https://github.com/Pawlo77/nlp-shap/blob/main/examples/estimands_toy_game.ipynb>`_
+Source on GitHub
+----------------
 
-`examples/masking_views.ipynb
-<https://github.com/Pawlo77/nlp-shap/blob/main/examples/masking_views.ipynb>`_
-
-See also `examples/README.md
-<https://github.com/Pawlo77/nlp-shap/blob/main/examples/README.md>`_.
+- `estimands_toy_game.ipynb <https://github.com/Pawlo77/nlp-shap/blob/main/examples/estimands_toy_game.ipynb>`_
+- `masking_views.ipynb <https://github.com/Pawlo77/nlp-shap/blob/main/examples/masking_views.ipynb>`_
+- `examples/README.md <https://github.com/Pawlo77/nlp-shap/blob/main/examples/README.md>`_
