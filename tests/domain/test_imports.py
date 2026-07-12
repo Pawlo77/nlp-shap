@@ -19,9 +19,12 @@ def test_domain_modules_do_not_import_backends() -> None:
                 for alias in node.names:
                     if _is_forbidden(alias.name, forbidden_roots):
                         violations.append(f"{path.name}: import {alias.name}")
-            if isinstance(node, ast.ImportFrom) and node.module is not None:
-                if _is_forbidden(node.module, forbidden_roots):
-                    violations.append(f"{path.name}: from {node.module}")
+            elif (
+                isinstance(node, ast.ImportFrom)
+                and node.module is not None
+                and _is_forbidden(node.module, forbidden_roots)
+            ):
+                violations.append(f"{path.name}: from {node.module}")
 
     assert violations == []
 

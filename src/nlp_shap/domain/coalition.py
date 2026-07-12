@@ -10,7 +10,7 @@ from .players import PlayerSet
 
 @dataclass(frozen=True, slots=True)
 class CoalitionMask:
-    """Boolean presence mask aligned with a :class:`~nlp_shap.domain.players.PlayerSet`."""
+    """Boolean presence mask aligned with a player set."""
 
     present: tuple[bool, ...]
     """Presence flags aligned with :class:`~nlp_shap.domain.players.PlayerSet` order."""

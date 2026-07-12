@@ -45,7 +45,7 @@ class PluginRegistry:
         return tuple(sorted(self._factories.get(group_key, {})))
 
     def load_entry_points(self, group: PluginGroup | str) -> None:
-        """Discover and register plugins published under a packaging entry-point group."""
+        """Discover and register plugins from a packaging entry-point group."""
         group_key = str(group)
         discovered = entry_points(group=group_key)
         for entry_point in discovered:
