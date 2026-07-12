@@ -1,5 +1,6 @@
 """Tests for built-in plugin registration."""
 
+from nlp_shap.estimation.exact import ExactEstimator
 from nlp_shap.masking.partitions import TokenPartitioner
 from nlp_shap.masking.policies import DeletePolicy, NeutralPolicy, PadPolicy
 from nlp_shap.pipeline.config import ExplainConfig
@@ -39,3 +40,14 @@ def test_builtin_registers_all_absence_policies() -> None:
         registry.resolve(PluginGroup.ABSENCE_POLICIES, "neutral"),
         NeutralPolicy,
     )
+
+
+def test_builtin_registers_exact_estimator() -> None:
+    """Built-in registration exposes the exact coalition enumerator."""
+    registry = PluginRegistry()
+    register_builtin_plugins(registry)
+    registry.load_entry_points(PluginGroup.ESTIMATORS)
+
+    estimator = registry.resolve(PluginGroup.ESTIMATORS, "exact")
+    assert isinstance(estimator, ExactEstimator)
+    assert estimator.name == "exact"

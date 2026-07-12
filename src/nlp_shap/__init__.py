@@ -14,6 +14,7 @@ from .domain import (
     Turn,
 )
 from .estimation.estimands import BanzhafAggregator, ShapleyAggregator
+from .estimation.exact import ExactEstimator
 from .pipeline import (
     ExplainConfig,
     ExplainResult,
@@ -30,6 +31,7 @@ __all__ = [
     "ConversationSnapshot",
     "CooperativeGame",
     "Estimand",
+    "ExactEstimator",
     "ExplainConfig",
     "ExplainResult",
     "Message",
