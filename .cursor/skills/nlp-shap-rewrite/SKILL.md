@@ -23,13 +23,14 @@ Canonical plan: **[[nlp-shap Package Rewrite]]** in `nlp-shap-research/docs/plan
 Check the plan's first unchecked phase. Implement **only that phase**, then:
 
 ```bash
-make notebooks   # when examples/*.ipynb changed
+make notebooks   # when examples/*.ipynb changed — commit only with outputs
+make docs        # includes release_notes.rst
 make check
-make docs
 # bump version in pyproject.toml
+# add docs/release_notes.rst section; clear Unreleased
 git tag vX.Y.Z
 # publish via CI workflow
-gh run watch <run-id> --exit-status   # after push — all workflows must pass
+gh run watch <run-id> --exit-status   # after push
 ```
 
 ## Text track order (v0.1.x)
@@ -72,7 +73,9 @@ LM Studio: `pytest -m lms` locally. CI: mock only. GPU: `pytest -m gpu` optional
 ## Documentation gate
 
 Each phase must ship Sphinx theory/guides, API entries, and (when applicable) an
-executed `examples/` notebook (`make notebooks`) before the phase tag. See `docs.mdc`.
+executed `examples/` notebook (`make notebooks`) before the phase tag. User-facing
+`docs/` describe the shipped API only — no phase numbers or rewrite progress.
+See `docs.mdc`.
 
 ## 0.x logic checklist
 

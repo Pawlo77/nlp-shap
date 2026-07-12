@@ -32,13 +32,13 @@ marginal contribution is:
 Attribution methods differ in how they **weight** and **aggregate** marginal
 contributions across coalitions — see :doc:`estimands`.
 
-Phase 0 scope
--------------
+Estimand aggregators
+--------------------
 
-Version ``0.1.1`` ships **estimand aggregators** only. Coalition sampling,
-masking, backends, and the full explain pipeline arrive in later phases. The
-aggregators assume you supply coalition masks and aligned payoffs
-:math:`v(S)`.
+The :class:`~nlp_shap.estimation.estimands.shapley.ShapleyAggregator` and
+:class:`~nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator` classes
+aggregate precomputed coalition payoffs. You supply boolean coalition masks and
+aligned values :math:`v(S)`.
 
 References
 ----------

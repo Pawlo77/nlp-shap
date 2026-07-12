@@ -6,12 +6,8 @@ cooperative game theory**. The library separates *what you measure* (estimands),
 *how you sample coalitions* (estimators), and *how you score outputs* (value
 functions).
 
-.. note::
-
-   **Release 0.1.1 (Phase 0)** ships estimand aggregators (Shapley, Banzhaf),
-   result/manifest labelling, and theory documentation. Full explain pipelines,
-   masking, and backends follow in later phases — see the
-   `rewrite plan <https://github.com/Pawlo77/nlp-shap-research/blob/main/docs/plans/infrastructure/nlp-shap%20Package%20Rewrite.md>`_.
+The public API provides **estimand aggregators** (Shapley, Banzhaf), explicit
+estimand labelling on explain results, and typed run-archive manifests.
 
 Installation
 ------------
@@ -57,6 +53,7 @@ Documentation
    :maxdepth: 2
    :caption: Reference
 
+   release_notes
    examples
    api
 

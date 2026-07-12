@@ -7,14 +7,22 @@ description: >-
 
 # nlp-shap development
 
-Follow rules in `.cursor/rules/*.mdc`. Agent exit criteria in `AGENTS.md`.
+Follow rules in `.cursor/rules/*.mdc`. Minimal exit in `AGENTS.md` (`make check`).
+
+## Repo conventions
+
+- Importing `nlp_shap` bootstraps logging from cwd `pyproject.toml` `[tool.logging]`; benchmarks → `make bench`, not `make check`
+- Relative imports inside `src/nlp_shap/`; absolute `from nlp_shap...` in `tests/` and `examples/`
+- Structured payloads → `TypedDict` + `Literal` wire fields; validate only at external boundaries (`docs.mdc`, `python-quality.mdc`)
+- `Protocol` stubs: docstring-only bodies — no redundant `...` (`python-quality.mdc`)
+- User-facing `docs/` and `examples/`: shipped API only — no phases or rewrite progress (`docs.mdc`)
+- MLLM-Shap port → minimum slice from `papers/MLLM-Shap/mllm_shap/`, not bulk copy
 
 ## 1. Read
 
 - Task scope only
-- Existing code in `src/nlp_shap/` and `tests/` for conventions; `examples/` for published notebook style
-- MLLM-Shap port → minimum slice, not bulk copy
-- `docs/theory/` and `docs/guides/` for prior theory and citation style
+- Existing code in `src/nlp_shap/` and `tests/`; `examples/` for notebook style
+- Rewrite work → also load skill `nlp-shap-rewrite` and the plan in `nlp-shap-research`
 
 ## 2. Red
 
@@ -26,18 +34,17 @@ Follow rules in `.cursor/rules/*.mdc`. Agent exit criteria in `AGENTS.md`.
 
 - Smallest typed implementation that passes
 - Reuse before new abstractions; no placeholder packages
-- Relative imports inside `src/nlp_shap/`; absolute `from nlp_shap...` in tests and examples
-- Structured payloads → `TypedDict` with `Literal` wire fields; validate only at external boundaries
 
 ## 4. Document
 
 Ship Sphinx docs with every public API / algorithm change (see `docs.mdc`):
 
-- `docs/theory/<topic>.rst` — definitions, formulas, original paper links
-- `docs/guides/<topic>.rst` — runnable usage aligned with public API
+- `docs/theory/<topic>.rst` — definitions, formulas, paper links
+- `docs/guides/<topic>.rst` — runnable usage
 - `docs/api.rst` — `automodule` for new public modules
-- `docs/index.rst` toctree + `make docs` clean build
-- Notebook in `examples/` when users need an end-to-end story; update `examples/README.md` and `docs/examples.rst`
+- `docs/release_notes.rst` — user-facing bullets per version; `Unreleased` until tag
+- `docs/index.rst` toctree
+- Notebook in `examples/` when users need an end-to-end story; catalog in `examples/README.md` and `docs/examples.rst`
 
 ## 5. Refactor
 
@@ -53,16 +60,18 @@ make docs
 
 Packaging → `make build` · deps → `uv lock`
 
-New connector → `tests/benchmarks/` bench tests + `make bench` (see `connector-benchmarks` rule)
+New connector → `tests/benchmarks/` + `make bench` (`connector-benchmarks.mdc`)
 
 ## 7. Hand off
 
-Stop unless user asks: commit, push, PR.
+Stop unless user asks: commit, push, PR (`git-commits.mdc`).
 
-After push: `gh run watch --exit-status` until remote workflows pass.
+Before push: `make check` green; notebooks executed if changed; `make docs` if docs changed.
+
+After push: `gh run watch <run-id> --exit-status` for each workflow on that commit — fix failures before moving on.
 
 New Makefile target → `name: ## help` + `.PHONY`
 
 ## Pitfalls
 
-`pre-commit` → prek · `pip install` → pyproject + `uv lock` · implement before test → back to step 2 · `from nlp_shap...` inside `src/nlp_shap/` → use relative imports · `dict[str, Any]` payload guards → use `TypedDict` · `...` after docstring in Protocol stubs → omit · public `feat` without `docs/` → incomplete hand-off · push without `make check` → remote Prek Checks fail · notebooks without outputs → do not commit
+`pre-commit` → prek · `pip install` → pyproject + `uv lock` · implement before test → back to step 2 · push without `make check` → remote Prek Checks fail · notebooks without outputs → do not commit · public `feat` without `docs/` → incomplete hand-off · phase/roadmap text in `docs/` → forbidden
