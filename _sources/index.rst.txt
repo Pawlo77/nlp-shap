@@ -23,10 +23,16 @@ functions).
       Work with estimand aggregators, explain results, and run-archive manifests.
 
    .. grid-item-card:: Theory
-      :link: theory/cooperative_games
+      :link: theory/shapley_values
       :link-type: doc
 
-      Cooperative games, Shapley values, Banzhaf indices, and when they diverge.
+      Shapley axioms, cooperative games, estimands, and when they diverge.
+
+   .. grid-item-card:: Applications
+      :link: guides/applications
+      :link-type: doc
+
+      Business, compliance, and LLM operations use cases for attribution.
 
    .. grid-item-card:: API reference
       :link: api
@@ -62,6 +68,8 @@ Requires Python 3.12. See :doc:`guides/getting_started` for a full walkthrough.
 
    guides/getting_started
    guides/estimands
+   guides/config
+   guides/applications
 
 .. toctree::
    :hidden:
@@ -69,6 +77,7 @@ Requires Python 3.12. See :doc:`guides/getting_started` for a full walkthrough.
    :maxdepth: 2
 
    theory/cooperative_games
+   theory/shapley_values
    theory/estimands
 
 .. toctree::

@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="prev" title="Pipeline types" href="pipeline.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Plugins" href="plugins.html"><link rel="prev" title="Domain types" href="domain.html">
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Protocols - nlp-shap 0.1.1</title>
+        <title>Protocols - nlp-shap 0.1.2</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">nlp-shap 0.1.1</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.2</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.1</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.2</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -208,10 +208,13 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
@@ -223,9 +226,10 @@
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../api.html">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="domain.html">Domain types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="estimation.html">Estimand aggregators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pipeline.html">Pipeline types</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html">Estimand aggregators</a></li>
 </ul>
 </li>
 </ul>
@@ -270,9 +274,68 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="module-nlp_shap.protocols.estimand">
-<span id="protocols"></span><h1>Protocols<a class="headerlink" href="#module-nlp_shap.protocols.estimand" title="Link to this heading">¶</a></h1>
-<p>Estimand aggregation protocol.</p>
+          <section id="module-nlp_shap.protocols.backend">
+<span id="protocols"></span><h1>Protocols<a class="headerlink" href="#module-nlp_shap.protocols.backend" title="Link to this heading">¶</a></h1>
+<p>Generative backend protocol.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.protocols.backend.GenerationResult">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.protocols.backend.</span></span><span class="sig-name descname"><span class="pre">GenerationResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/protocols/backend.html#GenerationResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.protocols.backend.GenerationResult" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<p>Minimal generation output consumed by value functions.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.protocols.backend.GenerationResult.text">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.protocols.backend.GenerationResult.text" title="Link to this definition">¶</a></dt>
+<dd><p>Return the generated text payload.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.protocols.backend.GenerativeBackend">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.protocols.backend.</span></span><span class="sig-name descname"><span class="pre">GenerativeBackend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/protocols/backend.html#GenerativeBackend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.protocols.backend.GenerativeBackend" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<p>Execute model generation for a masked conversation snapshot.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.protocols.backend.GenerativeBackend.model_id">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">model_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.protocols.backend.GenerativeBackend.model_id" title="Link to this definition">¶</a></dt>
+<dd><p>Return the backend model identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.protocols.backend.GenerativeBackend.generate">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">snapshot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_new_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nlp_shap.protocols.backend.GenerationResult" title="nlp_shap.protocols.backend.GenerationResult"><span class="pre">GenerationResult</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/protocols/backend.html#GenerativeBackend.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.protocols.backend.GenerativeBackend.generate" title="Link to this definition">¶</a></dt>
+<dd><p>Generate model output for the given snapshot.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-nlp_shap.protocols.estimator">Estimator strategy protocol.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.protocols.estimator.EstimatorStrategy">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.protocols.estimator.</span></span><span class="sig-name descname"><span class="pre">EstimatorStrategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/protocols/estimator.html#EstimatorStrategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.protocols.estimator.EstimatorStrategy" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<p>Sample coalitions and drive coalition evaluation for an explain run.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.protocols.estimator.EstimatorStrategy.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.protocols.estimator.EstimatorStrategy.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the registered estimator identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.protocols.estimator.EstimatorStrategy.sample_masks">
+<span class="sig-name descname"><span class="pre">sample_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.players.PlayerSet" title="nlp_shap.domain.players.PlayerSet"><span class="pre">PlayerSet</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">budget_fraction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_minimal_masks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="domain.html#nlp_shap.domain.coalition.CoalitionMask" title="nlp_shap.domain.coalition.CoalitionMask"><span class="pre">CoalitionMask</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/nlp_shap/protocols/estimator.html#EstimatorStrategy.sample_masks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.protocols.estimator.EstimatorStrategy.sample_masks" title="Link to this definition">¶</a></dt>
+<dd><p>Return coalition masks to evaluate for the player set.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.protocols.estimator.EstimatorStrategy.bind_snapshot">
+<span class="sig-name descname"><span class="pre">bind_snapshot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">snapshot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/protocols/estimator.html#EstimatorStrategy.bind_snapshot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.protocols.estimator.EstimatorStrategy.bind_snapshot" title="Link to this definition">¶</a></dt>
+<dd><p>Attach the conversation snapshot under explanation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-nlp_shap.protocols.estimand">Estimand aggregation protocol.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="nlp_shap.protocols.estimand.EstimandAggregator">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.protocols.estimand.</span></span><span class="sig-name descname"><span class="pre">EstimandAggregator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/protocols/estimand.html#EstimandAggregator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.protocols.estimand.EstimandAggregator" title="Link to this definition">¶</a></dt>
@@ -298,6 +361,86 @@
 
 </dd></dl>
 
+<p id="module-nlp_shap.protocols.value">Value function protocol.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.protocols.value.ValueFunction">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.protocols.value.</span></span><span class="sig-name descname"><span class="pre">ValueFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/protocols/value.html#ValueFunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.protocols.value.ValueFunction" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<p>Score coalition utility relative to a base generation.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.protocols.value.ValueFunction.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.protocols.value.ValueFunction.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the registered value-function identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.protocols.value.ValueFunction.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.protocols.backend.GenerationResult" title="nlp_shap.protocols.backend.GenerationResult"><span class="pre">GenerationResult</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.protocols.backend.GenerationResult" title="nlp_shap.protocols.backend.GenerationResult"><span class="pre">GenerationResult</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/protocols/value.html#ValueFunction.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.protocols.value.ValueFunction.score" title="Link to this definition">¶</a></dt>
+<dd><p>Return utility for <code class="docutils literal notranslate"><span class="pre">candidate</span></code> relative to <code class="docutils literal notranslate"><span class="pre">base</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-nlp_shap.protocols.partition">Player partition protocol.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.protocols.partition.PlayerPartitioner">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.protocols.partition.</span></span><span class="sig-name descname"><span class="pre">PlayerPartitioner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/protocols/partition.html#PlayerPartitioner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.protocols.partition.PlayerPartitioner" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<p>Partition a conversation snapshot into explainability players.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.protocols.partition.PlayerPartitioner.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.protocols.partition.PlayerPartitioner.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the registered partition identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.protocols.partition.PlayerPartitioner.partition">
+<span class="sig-name descname"><span class="pre">partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">snapshot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="domain.html#nlp_shap.domain.players.PlayerSet" title="nlp_shap.domain.players.PlayerSet"><span class="pre">PlayerSet</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/protocols/partition.html#PlayerPartitioner.partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.protocols.partition.PlayerPartitioner.partition" title="Link to this definition">¶</a></dt>
+<dd><p>Derive ordered players from the snapshot.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-nlp_shap.protocols.masking">Masking and absence policy protocols.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.protocols.masking.AbsencePolicy">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.protocols.masking.</span></span><span class="sig-name descname"><span class="pre">AbsencePolicy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/protocols/masking.html#AbsencePolicy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.protocols.masking.AbsencePolicy" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<p>Render absent players when building a masked snapshot view.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.protocols.masking.AbsencePolicy.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.protocols.masking.AbsencePolicy.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the registered absence-policy identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.protocols.masking.AbsencePolicy.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">snapshot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.coalition.CoalitionMask" title="nlp_shap.domain.coalition.CoalitionMask"><span class="pre">CoalitionMask</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/protocols/masking.html#AbsencePolicy.apply"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.protocols.masking.AbsencePolicy.apply" title="Link to this definition">¶</a></dt>
+<dd><p>Return a masked snapshot view for coalition evaluation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-nlp_shap.protocols.embedding">Embedding provider protocol.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.protocols.embedding.EmbeddingProvider">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.protocols.embedding.</span></span><span class="sig-name descname"><span class="pre">EmbeddingProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/protocols/embedding.html#EmbeddingProvider"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.protocols.embedding.EmbeddingProvider" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<p>Expose embeddings for value functions that operate in embedding space.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.protocols.embedding.EmbeddingProvider.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.protocols.embedding.EmbeddingProvider.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the registered embedding provider identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.protocols.embedding.EmbeddingProvider.embed">
+<span class="sig-name descname"><span class="pre">embed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.protocols.backend.GenerationResult" title="nlp_shap.protocols.backend.GenerationResult"><span class="pre">GenerationResult</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/nlp_shap/protocols/embedding.html#EmbeddingProvider.embed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.protocols.embedding.EmbeddingProvider.embed" title="Link to this definition">¶</a></dt>
+<dd><p>Return an embedding vector for the generation.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
         </article>
@@ -305,15 +448,23 @@
       <footer>
         
         <div class="related-pages">
-          
-          <a class="prev-page" href="pipeline.html">
+          <a class="next-page" href="plugins.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Plugins</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="domain.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Pipeline types</div>
+                <div class="title">Domain types</div>
                 
               </div>
             </a>
@@ -356,10 +507,45 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Protocols</a><ul>
+<li><a class="reference internal" href="#nlp_shap.protocols.backend.GenerationResult"><code class="docutils literal notranslate"><span class="pre">GenerationResult</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.protocols.backend.GenerationResult.text"><code class="docutils literal notranslate"><span class="pre">GenerationResult.text</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.protocols.backend.GenerativeBackend"><code class="docutils literal notranslate"><span class="pre">GenerativeBackend</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.protocols.backend.GenerativeBackend.model_id"><code class="docutils literal notranslate"><span class="pre">GenerativeBackend.model_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.protocols.backend.GenerativeBackend.generate"><code class="docutils literal notranslate"><span class="pre">GenerativeBackend.generate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.protocols.estimator.EstimatorStrategy"><code class="docutils literal notranslate"><span class="pre">EstimatorStrategy</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.protocols.estimator.EstimatorStrategy.name"><code class="docutils literal notranslate"><span class="pre">EstimatorStrategy.name</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.protocols.estimator.EstimatorStrategy.sample_masks"><code class="docutils literal notranslate"><span class="pre">EstimatorStrategy.sample_masks()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.protocols.estimator.EstimatorStrategy.bind_snapshot"><code class="docutils literal notranslate"><span class="pre">EstimatorStrategy.bind_snapshot()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#nlp_shap.protocols.estimand.EstimandAggregator"><code class="docutils literal notranslate"><span class="pre">EstimandAggregator</span></code></a><ul>
 <li><a class="reference internal" href="#nlp_shap.protocols.estimand.EstimandAggregator.estimand"><code class="docutils literal notranslate"><span class="pre">EstimandAggregator.estimand</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.protocols.estimand.EstimandAggregator.coalition_weight"><code class="docutils literal notranslate"><span class="pre">EstimandAggregator.coalition_weight()</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.protocols.estimand.EstimandAggregator.aggregate"><code class="docutils literal notranslate"><span class="pre">EstimandAggregator.aggregate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.protocols.value.ValueFunction"><code class="docutils literal notranslate"><span class="pre">ValueFunction</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.protocols.value.ValueFunction.name"><code class="docutils literal notranslate"><span class="pre">ValueFunction.name</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.protocols.value.ValueFunction.score"><code class="docutils literal notranslate"><span class="pre">ValueFunction.score()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.protocols.partition.PlayerPartitioner"><code class="docutils literal notranslate"><span class="pre">PlayerPartitioner</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.protocols.partition.PlayerPartitioner.name"><code class="docutils literal notranslate"><span class="pre">PlayerPartitioner.name</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.protocols.partition.PlayerPartitioner.partition"><code class="docutils literal notranslate"><span class="pre">PlayerPartitioner.partition()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.protocols.masking.AbsencePolicy"><code class="docutils literal notranslate"><span class="pre">AbsencePolicy</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.protocols.masking.AbsencePolicy.name"><code class="docutils literal notranslate"><span class="pre">AbsencePolicy.name</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.protocols.masking.AbsencePolicy.apply"><code class="docutils literal notranslate"><span class="pre">AbsencePolicy.apply()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.protocols.embedding.EmbeddingProvider"><code class="docutils literal notranslate"><span class="pre">EmbeddingProvider</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.protocols.embedding.EmbeddingProvider.name"><code class="docutils literal notranslate"><span class="pre">EmbeddingProvider.name</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.protocols.embedding.EmbeddingProvider.embed"><code class="docutils literal notranslate"><span class="pre">EmbeddingProvider.embed()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -373,7 +559,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+</div><script src="../_static/documentation_options.js?v=92734c54"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Protocols" href="protocols.html"><link rel="prev" title="Estimand aggregators" href="estimation.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Estimand aggregators" href="estimation.html"><link rel="prev" title="Plugins" href="plugins.html">
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Pipeline types - nlp-shap 0.1.1</title>
+        <title>Pipeline configuration - nlp-shap 0.1.2</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">nlp-shap 0.1.1</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.2</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.1</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.2</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -208,10 +208,13 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
@@ -223,9 +226,10 @@
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../api.html">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="domain.html">Domain types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="estimation.html">Estimand aggregators</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Pipeline types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="protocols.html">Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html">Plugins</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html">Estimand aggregators</a></li>
 </ul>
 </li>
 </ul>
@@ -270,9 +274,306 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="module-nlp_shap.pipeline.result">
-<span id="pipeline-types"></span><h1>Pipeline types<a class="headerlink" href="#module-nlp_shap.pipeline.result" title="Link to this heading">¶</a></h1>
-<p>Explain pipeline result types.</p>
+          <section id="module-nlp_shap.pipeline.config">
+<span id="pipeline-configuration"></span><h1>Pipeline configuration<a class="headerlink" href="#module-nlp_shap.pipeline.config" title="Link to this heading">¶</a></h1>
+<p>Explain pipeline configuration schema.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.BackendConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.pipeline.config.</span></span><span class="sig-name descname"><span class="pre">BackendConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/pipeline/config.html#BackendConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.pipeline.config.BackendConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Backend selection and connection parameters.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.BackendConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'frozen':</span> <span class="pre">True}</span></span><a class="headerlink" href="#nlp_shap.pipeline.config.BackendConfig.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.BackendConfig.kind">
+<span class="sig-name descname"><span class="pre">kind</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.BackendConfig.kind" title="Link to this definition">¶</a></dt>
+<dd><p>Registered backend plugin identifier.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.BackendConfig.model_id">
+<span class="sig-name descname"><span class="pre">model_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.BackendConfig.model_id" title="Link to this definition">¶</a></dt>
+<dd><p>Model name or repository id passed to the backend.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.BackendConfig.api_host">
+<span class="sig-name descname"><span class="pre">api_host</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.BackendConfig.api_host" title="Link to this definition">¶</a></dt>
+<dd><p>Optional API host for HTTP-compatible backends.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.GenerationConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.pipeline.config.</span></span><span class="sig-name descname"><span class="pre">GenerationConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_new_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precompute_base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/pipeline/config.html#GenerationConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.pipeline.config.GenerationConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Generation parameters for the base and coalition evaluations.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.GenerationConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'frozen':</span> <span class="pre">True}</span></span><a class="headerlink" href="#nlp_shap.pipeline.config.GenerationConfig.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.GenerationConfig.max_new_tokens">
+<span class="sig-name descname"><span class="pre">max_new_tokens</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.GenerationConfig.max_new_tokens" title="Link to this definition">¶</a></dt>
+<dd><p>Maximum tokens generated per coalition evaluation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.GenerationConfig.temperature">
+<span class="sig-name descname"><span class="pre">temperature</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.GenerationConfig.temperature" title="Link to this definition">¶</a></dt>
+<dd><p>Sampling temperature for model generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.GenerationConfig.top_k">
+<span class="sig-name descname"><span class="pre">top_k</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.GenerationConfig.top_k" title="Link to this definition">¶</a></dt>
+<dd><p>Top-k sampling cutoff for model generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.GenerationConfig.precompute_base">
+<span class="sig-name descname"><span class="pre">precompute_base</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.GenerationConfig.precompute_base" title="Link to this definition">¶</a></dt>
+<dd><p>Whether to generate the grand-coalition reference before explaining.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.BudgetConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.pipeline.config.</span></span><span class="sig-name descname"><span class="pre">BudgetConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">fraction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Gt</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">gt</span></span><span class="o"><span class="pre">=</span></span><span class="pre">0.0</span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Le</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">le</span></span><span class="o"><span class="pre">=</span></span><span class="pre">1.0</span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/pipeline/config.html#BudgetConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.pipeline.config.BudgetConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Estimator budget controls replacing standard/limited split configs.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.BudgetConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'frozen':</span> <span class="pre">True}</span></span><a class="headerlink" href="#nlp_shap.pipeline.config.BudgetConfig.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.BudgetConfig.fraction">
+<span class="sig-name descname"><span class="pre">fraction</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.BudgetConfig.fraction" title="Link to this definition">¶</a></dt>
+<dd><p>Fraction of the full coalition budget used by the estimator.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ArchiveConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.pipeline.config.</span></span><span class="sig-name descname"><span class="pre">ArchiveConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'./runs/{run_id}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flush_every</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ge</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">ge</span></span><span class="o"><span class="pre">=</span></span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/pipeline/config.html#ArchiveConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.pipeline.config.ArchiveConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Run archive persistence options.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ArchiveConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'frozen':</span> <span class="pre">True}</span></span><a class="headerlink" href="#nlp_shap.pipeline.config.ArchiveConfig.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ArchiveConfig.path">
+<span class="sig-name descname"><span class="pre">path</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ArchiveConfig.path" title="Link to this definition">¶</a></dt>
+<dd><p>Filesystem path template for persisted run archives.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ArchiveConfig.flush_every">
+<span class="sig-name descname"><span class="pre">flush_every</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ArchiveConfig.flush_every" title="Link to this definition">¶</a></dt>
+<dd><p>Number of coalition records between archive flushes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.DedupConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.pipeline.config.</span></span><span class="sig-name descname"><span class="pre">DedupConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.14)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'auto'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'on'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'off'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/pipeline/config.html#DedupConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.pipeline.config.DedupConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Coalition deduplication options.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.DedupConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'frozen':</span> <span class="pre">True}</span></span><a class="headerlink" href="#nlp_shap.pipeline.config.DedupConfig.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.DedupConfig.enabled">
+<span class="sig-name descname"><span class="pre">enabled</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'auto'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'on'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'off'</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#nlp_shap.pipeline.config.DedupConfig.enabled" title="Link to this definition">¶</a></dt>
+<dd><p>Deduplication mode for repeated coalition evaluations.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.KvCacheConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.pipeline.config.</span></span><span class="sig-name descname"><span class="pre">KvCacheConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/pipeline/config.html#KvCacheConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.pipeline.config.KvCacheConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Prefix cache options for supported backends.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.KvCacheConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'frozen':</span> <span class="pre">True}</span></span><a class="headerlink" href="#nlp_shap.pipeline.config.KvCacheConfig.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.KvCacheConfig.enabled">
+<span class="sig-name descname"><span class="pre">enabled</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.KvCacheConfig.enabled" title="Link to this definition">¶</a></dt>
+<dd><p>Whether prefix/KV cache reuse is enabled when supported.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.pipeline.config.</span></span><span class="sig-name descname"><span class="pre">ExplanationConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_v2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimand</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.estimands.Estimand" title="nlp_shap.domain.estimands.Estimand"><span class="pre">Estimand</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Estimand.SHAPLEY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'neyman_cc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'tfidf_cosine'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'identity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'tokens'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absence_policy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'delete'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">budget</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.pipeline.config.BudgetConfig" title="nlp_shap.pipeline.config.BudgetConfig"><span class="pre">BudgetConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">BudgetConfig(fraction=1.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_minimal_masks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_inflight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ge</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">ge</span></span><span class="o"><span class="pre">=</span></span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">archive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.pipeline.config.ArchiveConfig" title="nlp_shap.pipeline.config.ArchiveConfig"><span class="pre">ArchiveConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ArchiveConfig(path='./runs/{run_id}',</span> <span class="pre">flush_every=50)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dedup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.pipeline.config.DedupConfig" title="nlp_shap.pipeline.config.DedupConfig"><span class="pre">DedupConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DedupConfig(enabled='auto')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kv_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.pipeline.config.KvCacheConfig" title="nlp_shap.pipeline.config.KvCacheConfig"><span class="pre">KvCacheConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">KvCacheConfig(enabled=True)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.enums.EmbeddingMode" title="nlp_shap.domain.enums.EmbeddingMode"><span class="pre">EmbeddingMode</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">EmbeddingMode.STATIC</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/pipeline/config.html#ExplanationConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Explanation algorithm and runtime controls.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'frozen':</span> <span class="pre">True}</span></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.use_v2">
+<span class="sig-name descname"><span class="pre">use_v2</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.use_v2" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the v2 explain pipeline is active.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.estimand">
+<span class="sig-name descname"><span class="pre">estimand</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../api.html#nlp_shap.Estimand" title="nlp_shap.Estimand"><span class="pre">Estimand</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.estimand" title="Link to this definition">¶</a></dt>
+<dd><p>Cooperative-game value targeted by aggregation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.estimator">
+<span class="sig-name descname"><span class="pre">estimator</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.estimator" title="Link to this definition">¶</a></dt>
+<dd><p>Registered estimator plugin used to sample coalitions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.value_fn">
+<span class="sig-name descname"><span class="pre">value_fn</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.value_fn" title="Link to this definition">¶</a></dt>
+<dd><p>Registered value-function plugin used to score outputs.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.normalizer">
+<span class="sig-name descname"><span class="pre">normalizer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.normalizer" title="Link to this definition">¶</a></dt>
+<dd><p>Registered normalizer applied after estimand aggregation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.players">
+<span class="sig-name descname"><span class="pre">players</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.players" title="Link to this definition">¶</a></dt>
+<dd><p>Registered partition plugin that defines explainability players.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.absence_policy">
+<span class="sig-name descname"><span class="pre">absence_policy</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.absence_policy" title="Link to this definition">¶</a></dt>
+<dd><p>Registered absence policy used to render masked snapshots.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.budget">
+<span class="sig-name descname"><span class="pre">budget</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#nlp_shap.pipeline.config.BudgetConfig" title="nlp_shap.pipeline.config.BudgetConfig"><span class="pre">BudgetConfig</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.budget" title="Link to this definition">¶</a></dt>
+<dd><p>Estimator budget controls.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.include_minimal_masks">
+<span class="sig-name descname"><span class="pre">include_minimal_masks</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.include_minimal_masks" title="Link to this definition">¶</a></dt>
+<dd><p>Whether minimal coalitions are included in estimator sampling.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.max_inflight">
+<span class="sig-name descname"><span class="pre">max_inflight</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.max_inflight" title="Link to this definition">¶</a></dt>
+<dd><p>Maximum concurrent coalition evaluations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.archive">
+<span class="sig-name descname"><span class="pre">archive</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#nlp_shap.pipeline.config.ArchiveConfig" title="nlp_shap.pipeline.config.ArchiveConfig"><span class="pre">ArchiveConfig</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.archive" title="Link to this definition">¶</a></dt>
+<dd><p>Run archive persistence settings.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.dedup">
+<span class="sig-name descname"><span class="pre">dedup</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#nlp_shap.pipeline.config.DedupConfig" title="nlp_shap.pipeline.config.DedupConfig"><span class="pre">DedupConfig</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.dedup" title="Link to this definition">¶</a></dt>
+<dd><p>Coalition deduplication settings.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.kv_cache">
+<span class="sig-name descname"><span class="pre">kv_cache</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#nlp_shap.pipeline.config.KvCacheConfig" title="nlp_shap.pipeline.config.KvCacheConfig"><span class="pre">KvCacheConfig</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.kv_cache" title="Link to this definition">¶</a></dt>
+<dd><p>Prefix cache settings for supported backends.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.embedding_mode">
+<span class="sig-name descname"><span class="pre">embedding_mode</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="domain.html#nlp_shap.domain.enums.EmbeddingMode" title="nlp_shap.domain.enums.EmbeddingMode"><span class="pre">EmbeddingMode</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.embedding_mode" title="Link to this definition">¶</a></dt>
+<dd><p>Embedding mode used by embedding-based value functions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplanationConfig.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplanationConfig.seed" title="Link to this definition">¶</a></dt>
+<dd><p>Random seed for reproducible coalition sampling.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplainConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.pipeline.config.</span></span><span class="sig-name descname"><span class="pre">ExplainConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.pipeline.config.BackendConfig" title="nlp_shap.pipeline.config.BackendConfig"><span class="pre">BackendConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">generation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.pipeline.config.GenerationConfig" title="nlp_shap.pipeline.config.GenerationConfig"><span class="pre">GenerationConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">GenerationConfig(max_new_tokens=128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temperature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precompute_base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig" title="nlp_shap.pipeline.config.ExplanationConfig"><span class="pre">ExplanationConfig</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ExplanationConfig(use_v2=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimand</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;Estimand.SHAPLEY:</span> <span class="pre">'shapley'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'neyman_cc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tfidf_cosine'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'identity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">players</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tokens'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absence_policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'delete'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">budget</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">BudgetConfig(fraction=1.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_minimal_masks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_inflight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">archive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ArchiveConfig(path='./runs/{run_id}'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flush_every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dedup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DedupConfig(enabled='auto')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kv_cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">KvCacheConfig(enabled=True)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;EmbeddingMode.STATIC:</span> <span class="pre">'static'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/pipeline/config.html#ExplainConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.pipeline.config.ExplainConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Top-level explain pipeline configuration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplainConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'frozen':</span> <span class="pre">True}</span></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplainConfig.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplainConfig.backend">
+<span class="sig-name descname"><span class="pre">backend</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#nlp_shap.pipeline.config.BackendConfig" title="nlp_shap.pipeline.config.BackendConfig"><span class="pre">BackendConfig</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplainConfig.backend" title="Link to this definition">¶</a></dt>
+<dd><p>Backend selection and connection parameters.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplainConfig.generation">
+<span class="sig-name descname"><span class="pre">generation</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#nlp_shap.pipeline.config.GenerationConfig" title="nlp_shap.pipeline.config.GenerationConfig"><span class="pre">GenerationConfig</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplainConfig.generation" title="Link to this definition">¶</a></dt>
+<dd><p>Generation parameters for base and coalition evaluations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.ExplainConfig.explanation">
+<span class="sig-name descname"><span class="pre">explanation</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig" title="nlp_shap.pipeline.config.ExplanationConfig"><span class="pre">ExplanationConfig</span></a></span><a class="headerlink" href="#nlp_shap.pipeline.config.ExplainConfig.explanation" title="Link to this definition">¶</a></dt>
+<dd><p>Explanation algorithm and runtime controls.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.explain_config_from_yaml">
+<span class="sig-prename descclassname"><span class="pre">nlp_shap.pipeline.config.</span></span><span class="sig-name descname"><span class="pre">explain_config_from_yaml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nlp_shap.pipeline.config.ExplainConfig" title="nlp_shap.pipeline.config.ExplainConfig"><span class="pre">ExplainConfig</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/pipeline/config.html#explain_config_from_yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.pipeline.config.explain_config_from_yaml" title="Link to this definition">¶</a></dt>
+<dd><p>Parse YAML text into a validated <a class="reference internal" href="#nlp_shap.pipeline.config.ExplainConfig" title="nlp_shap.pipeline.config.ExplainConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainConfig</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nlp_shap.pipeline.config.explain_config_to_yaml">
+<span class="sig-prename descclassname"><span class="pre">nlp_shap.pipeline.config.</span></span><span class="sig-name descname"><span class="pre">explain_config_to_yaml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.pipeline.config.ExplainConfig" title="nlp_shap.pipeline.config.ExplainConfig"><span class="pre">ExplainConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/pipeline/config.html#explain_config_to_yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.pipeline.config.explain_config_to_yaml" title="Link to this definition">¶</a></dt>
+<dd><p>Serialize a config to YAML with stable key ordering within sections.</p>
+</dd></dl>
+
+<p id="module-nlp_shap.pipeline.result">Explain pipeline result types.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="nlp_shap.pipeline.result.ExplainResult">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.pipeline.result.</span></span><span class="sig-name descname"><span class="pre">ExplainResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimand</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.estimands.Estimand" title="nlp_shap.domain.estimands.Estimand"><span class="pre">Estimand</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/pipeline/result.html#ExplainResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.pipeline.result.ExplainResult" title="Link to this definition">¶</a></dt>
@@ -350,23 +651,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="protocols.html">
+          <a class="next-page" href="estimation.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Protocols</div>
+                <div class="title">Estimand aggregators</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="estimation.html">
+          <a class="prev-page" href="plugins.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Estimand aggregators</div>
+                <div class="title">Plugins</div>
                 
               </div>
             </a>
@@ -408,7 +709,71 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Pipeline types</a><ul>
+<li><a class="reference internal" href="#">Pipeline configuration</a><ul>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.BackendConfig"><code class="docutils literal notranslate"><span class="pre">BackendConfig</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.BackendConfig.model_config"><code class="docutils literal notranslate"><span class="pre">BackendConfig.model_config</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.BackendConfig.kind"><code class="docutils literal notranslate"><span class="pre">BackendConfig.kind</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.BackendConfig.model_id"><code class="docutils literal notranslate"><span class="pre">BackendConfig.model_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.BackendConfig.api_host"><code class="docutils literal notranslate"><span class="pre">BackendConfig.api_host</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.GenerationConfig"><code class="docutils literal notranslate"><span class="pre">GenerationConfig</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.GenerationConfig.model_config"><code class="docutils literal notranslate"><span class="pre">GenerationConfig.model_config</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.GenerationConfig.max_new_tokens"><code class="docutils literal notranslate"><span class="pre">GenerationConfig.max_new_tokens</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.GenerationConfig.temperature"><code class="docutils literal notranslate"><span class="pre">GenerationConfig.temperature</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.GenerationConfig.top_k"><code class="docutils literal notranslate"><span class="pre">GenerationConfig.top_k</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.GenerationConfig.precompute_base"><code class="docutils literal notranslate"><span class="pre">GenerationConfig.precompute_base</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.BudgetConfig"><code class="docutils literal notranslate"><span class="pre">BudgetConfig</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.BudgetConfig.model_config"><code class="docutils literal notranslate"><span class="pre">BudgetConfig.model_config</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.BudgetConfig.fraction"><code class="docutils literal notranslate"><span class="pre">BudgetConfig.fraction</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ArchiveConfig"><code class="docutils literal notranslate"><span class="pre">ArchiveConfig</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ArchiveConfig.model_config"><code class="docutils literal notranslate"><span class="pre">ArchiveConfig.model_config</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ArchiveConfig.path"><code class="docutils literal notranslate"><span class="pre">ArchiveConfig.path</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ArchiveConfig.flush_every"><code class="docutils literal notranslate"><span class="pre">ArchiveConfig.flush_every</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.DedupConfig"><code class="docutils literal notranslate"><span class="pre">DedupConfig</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.DedupConfig.model_config"><code class="docutils literal notranslate"><span class="pre">DedupConfig.model_config</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.DedupConfig.enabled"><code class="docutils literal notranslate"><span class="pre">DedupConfig.enabled</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.KvCacheConfig"><code class="docutils literal notranslate"><span class="pre">KvCacheConfig</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.KvCacheConfig.model_config"><code class="docutils literal notranslate"><span class="pre">KvCacheConfig.model_config</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.KvCacheConfig.enabled"><code class="docutils literal notranslate"><span class="pre">KvCacheConfig.enabled</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.model_config"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.model_config</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.use_v2"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.use_v2</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.estimand"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.estimand</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.estimator"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.estimator</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.value_fn"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.value_fn</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.normalizer"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.normalizer</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.players"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.players</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.absence_policy"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.absence_policy</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.budget"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.budget</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.include_minimal_masks"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.include_minimal_masks</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.max_inflight"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.max_inflight</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.archive"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.archive</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.dedup"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.dedup</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.kv_cache"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.kv_cache</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.embedding_mode"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.embedding_mode</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplanationConfig.seed"><code class="docutils literal notranslate"><span class="pre">ExplanationConfig.seed</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplainConfig"><code class="docutils literal notranslate"><span class="pre">ExplainConfig</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplainConfig.model_config"><code class="docutils literal notranslate"><span class="pre">ExplainConfig.model_config</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplainConfig.backend"><code class="docutils literal notranslate"><span class="pre">ExplainConfig.backend</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplainConfig.generation"><code class="docutils literal notranslate"><span class="pre">ExplainConfig.generation</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.ExplainConfig.explanation"><code class="docutils literal notranslate"><span class="pre">ExplainConfig.explanation</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.explain_config_from_yaml"><code class="docutils literal notranslate"><span class="pre">explain_config_from_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.pipeline.config.explain_config_to_yaml"><code class="docutils literal notranslate"><span class="pre">explain_config_to_yaml()</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.pipeline.result.ExplainResult"><code class="docutils literal notranslate"><span class="pre">ExplainResult</span></code></a><ul>
 <li><a class="reference internal" href="#nlp_shap.pipeline.result.ExplainResult.estimand"><code class="docutils literal notranslate"><span class="pre">ExplainResult.estimand</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.pipeline.result.ExplainResult.values"><code class="docutils literal notranslate"><span class="pre">ExplainResult.values</span></code></a></li>
@@ -437,7 +802,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+</div><script src="../_static/documentation_options.js?v=92734c54"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

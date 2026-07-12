@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
-    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.1</title>
+    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.2</title>
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -170,7 +170,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.1</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.2</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.1</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.2</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -206,10 +206,13 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
@@ -221,9 +224,10 @@
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/domain.html">Domain types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pipeline.html">Pipeline types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/protocols.html">Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators</a></li>
 </ul>
 </li>
 </ul>
@@ -261,12 +265,16 @@
           
 <section class="genindex-section">
   <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#V"><strong>V</strong></a></div>
+  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a></div>
 </section>
 <section id="A" class="genindex-section">
   <h2>A</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.absence_policy">absence_policy (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+        <li><a href="api/protocols.html#nlp_shap.protocols.masking.AbsencePolicy">AbsencePolicy (class in nlp_shap.protocols.masking)</a>
+</li>
         <li><a href="api.html#nlp_shap.BanzhafAggregator.aggregate">aggregate() (nlp_shap.BanzhafAggregator method)</a>
 
         <ul>
@@ -280,6 +288,22 @@
 </li>
         </ul></li>
     </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BackendConfig.api_host">api_host (nlp_shap.pipeline.config.BackendConfig attribute)</a>
+</li>
+        <li><a href="api/protocols.html#nlp_shap.protocols.masking.AbsencePolicy.apply">apply() (nlp_shap.protocols.masking.AbsencePolicy method)</a>
+</li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.archive">archive (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ArchiveConfig">ArchiveConfig (class in nlp_shap.pipeline.config)</a>
+</li>
+        <li><a href="api/domain.html#nlp_shap.domain.enums.Role.ASSISTANT">ASSISTANT (nlp_shap.domain.enums.Role attribute)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.Role.ASSISTANT">(nlp_shap.Role attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
   </tr></table>
 </section>
 
@@ -287,6 +311,20 @@
   <h2>B</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api.html#nlp_shap.ExplainConfig.backend">backend (nlp_shap.ExplainConfig attribute)</a>
+
+        <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplainConfig.backend">(nlp_shap.pipeline.config.ExplainConfig attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BackendConfig">BackendConfig (class in nlp_shap.pipeline.config)</a>
+</li>
+        <li><a href="api.html#nlp_shap.PluginGroup.BACKENDS">BACKENDS (nlp_shap.PluginGroup attribute)</a>
+
+        <ul>
+          <li><a href="api/plugins.html#nlp_shap.plugins.groups.PluginGroup.BACKENDS">(nlp_shap.plugins.groups.PluginGroup attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/domain.html#nlp_shap.domain.estimands.Estimand.BANZHAF">BANZHAF (nlp_shap.domain.estimands.Estimand attribute)</a>
 
         <ul>
@@ -301,6 +339,12 @@
           <li><a href="api/estimation.html#nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator">(class in nlp_shap.estimation.estimands.banzhaf)</a>
 </li>
         </ul></li>
+        <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy.bind_snapshot">bind_snapshot() (nlp_shap.protocols.estimator.EstimatorStrategy method)</a>
+</li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.budget">budget (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BudgetConfig">BudgetConfig (class in nlp_shap.pipeline.config)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -309,6 +353,12 @@
   <h2>C</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api.html#nlp_shap.CoalitionMask.coalition_size">coalition_size() (nlp_shap.CoalitionMask method)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.coalition.CoalitionMask.coalition_size">(nlp_shap.domain.coalition.CoalitionMask method)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.BanzhafAggregator.coalition_weight">coalition_weight() (nlp_shap.BanzhafAggregator method)</a>
 
         <ul>
@@ -322,6 +372,42 @@
 </li>
         </ul></li>
     </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api.html#nlp_shap.CoalitionMask">CoalitionMask (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.coalition.CoalitionMask">(class in nlp_shap.domain.coalition)</a>
+</li>
+        </ul></li>
+        <li><a href="api/domain.html#nlp_shap.domain.enums.EmbeddingMode.CONTEXTUAL">CONTEXTUAL (nlp_shap.domain.enums.EmbeddingMode attribute)</a>
+</li>
+        <li><a href="api.html#nlp_shap.ConversationSnapshot">ConversationSnapshot (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.conversation.ConversationSnapshot">(class in nlp_shap.domain.conversation)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.CooperativeGame">CooperativeGame (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.game.CooperativeGame">(class in nlp_shap.domain.game)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="D" class="genindex-section">
+  <h2>D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.dedup">dedup (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.DedupConfig">DedupConfig (class in nlp_shap.pipeline.config)</a>
+</li>
+    </ul></td>
   </tr></table>
 </section>
 
@@ -329,6 +415,26 @@
   <h2>E</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/protocols.html#nlp_shap.protocols.embedding.EmbeddingProvider.embed">embed() (nlp_shap.protocols.embedding.EmbeddingProvider method)</a>
+</li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.embedding_mode">embedding_mode (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+        <li><a href="api/domain.html#nlp_shap.domain.enums.EmbeddingMode">EmbeddingMode (class in nlp_shap.domain.enums)</a>
+</li>
+        <li><a href="api/protocols.html#nlp_shap.protocols.embedding.EmbeddingProvider">EmbeddingProvider (class in nlp_shap.protocols.embedding)</a>
+</li>
+        <li><a href="api.html#nlp_shap.CooperativeGame.empty_value">empty_value (nlp_shap.CooperativeGame attribute)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.game.CooperativeGame.empty_value">(nlp_shap.domain.game.CooperativeGame attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.DedupConfig.enabled">enabled (nlp_shap.pipeline.config.DedupConfig attribute)</a>
+
+        <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.KvCacheConfig.enabled">(nlp_shap.pipeline.config.KvCacheConfig attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.Estimand">Estimand (class in nlp_shap)</a>
 
         <ul>
@@ -343,6 +449,8 @@
           <li><a href="api/estimation.html#nlp_shap.estimation.estimands.shapley.ShapleyAggregator.estimand">(nlp_shap.estimation.estimands.shapley.ShapleyAggregator property)</a>
 </li>
           <li><a href="api.html#nlp_shap.ExplainResult.estimand">(nlp_shap.ExplainResult attribute)</a>
+</li>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.estimand">(nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
           <li><a href="api/pipeline.html#nlp_shap.pipeline.manifest.RunManifest.estimand">(nlp_shap.pipeline.manifest.RunManifest attribute)</a>
 </li>
@@ -363,12 +471,144 @@
 </li>
         <li><a href="api/protocols.html#nlp_shap.protocols.estimand.EstimandAggregator">EstimandAggregator (class in nlp_shap.protocols.estimand)</a>
 </li>
+        <li><a href="api.html#nlp_shap.PluginGroup.ESTIMANDS">ESTIMANDS (nlp_shap.PluginGroup attribute)</a>
+
+        <ul>
+          <li><a href="api/plugins.html#nlp_shap.plugins.groups.PluginGroup.ESTIMANDS">(nlp_shap.plugins.groups.PluginGroup attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/domain.html#nlp_shap.domain.estimands.EstimandWire">EstimandWire (in module nlp_shap.domain.estimands)</a>
 </li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.estimator">estimator (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+        <li><a href="api.html#nlp_shap.PluginGroup.ESTIMATORS">ESTIMATORS (nlp_shap.PluginGroup attribute)</a>
+
+        <ul>
+          <li><a href="api/plugins.html#nlp_shap.plugins.groups.PluginGroup.ESTIMATORS">(nlp_shap.plugins.groups.PluginGroup attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy">EstimatorStrategy (class in nlp_shap.protocols.estimator)</a>
+</li>
+        <li><a href="api.html#nlp_shap.explain_config_from_yaml">explain_config_from_yaml() (in module nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.explain_config_from_yaml">(in module nlp_shap.pipeline.config)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.explain_config_to_yaml">explain_config_to_yaml() (in module nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.explain_config_to_yaml">(in module nlp_shap.pipeline.config)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.ExplainConfig">ExplainConfig (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplainConfig">(class in nlp_shap.pipeline.config)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.ExplainResult">ExplainResult (class in nlp_shap)</a>
 
         <ul>
           <li><a href="api/pipeline.html#nlp_shap.pipeline.result.ExplainResult">(class in nlp_shap.pipeline.result)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.ExplainConfig.explanation">explanation (nlp_shap.ExplainConfig attribute)</a>
+
+        <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplainConfig.explanation">(nlp_shap.pipeline.config.ExplainConfig attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig">ExplanationConfig (class in nlp_shap.pipeline.config)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="F" class="genindex-section">
+  <h2>F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ArchiveConfig.flush_every">flush_every (nlp_shap.pipeline.config.ArchiveConfig attribute)</a>
+</li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BudgetConfig.fraction">fraction (nlp_shap.pipeline.config.BudgetConfig attribute)</a>
+</li>
+        <li><a href="api.html#nlp_shap.CoalitionMask.from_sequence">from_sequence() (nlp_shap.CoalitionMask class method)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.coalition.CoalitionMask.from_sequence">(nlp_shap.domain.coalition.CoalitionMask class method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api.html#nlp_shap.ConversationSnapshot.from_turns">from_turns() (nlp_shap.ConversationSnapshot class method)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.conversation.ConversationSnapshot.from_turns">(nlp_shap.domain.conversation.ConversationSnapshot class method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="G" class="genindex-section">
+  <h2>G</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/protocols.html#nlp_shap.protocols.backend.GenerativeBackend.generate">generate() (nlp_shap.protocols.backend.GenerativeBackend method)</a>
+</li>
+        <li><a href="api.html#nlp_shap.ExplainConfig.generation">generation (nlp_shap.ExplainConfig attribute)</a>
+
+        <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplainConfig.generation">(nlp_shap.pipeline.config.ExplainConfig attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig">GenerationConfig (class in nlp_shap.pipeline.config)</a>
+</li>
+        <li><a href="api/protocols.html#nlp_shap.protocols.backend.GenerationResult">GenerationResult (class in nlp_shap.protocols.backend)</a>
+</li>
+        <li><a href="api/protocols.html#nlp_shap.protocols.backend.GenerativeBackend">GenerativeBackend (class in nlp_shap.protocols.backend)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="I" class="genindex-section">
+  <h2>I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.include_minimal_masks">include_minimal_masks (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="K" class="genindex-section">
+  <h2>K</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BackendConfig.kind">kind (nlp_shap.pipeline.config.BackendConfig attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.kv_cache">kv_cache (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.KvCacheConfig">KvCacheConfig (class in nlp_shap.pipeline.config)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="L" class="genindex-section">
+  <h2>L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api.html#nlp_shap.PluginRegistry.load_entry_points">load_entry_points() (nlp_shap.PluginRegistry method)</a>
+
+        <ul>
+          <li><a href="api/plugins.html#nlp_shap.plugins.registry.PluginRegistry.load_entry_points">(nlp_shap.plugins.registry.PluginRegistry method)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -379,23 +619,97 @@
   <h2>M</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.max_inflight">max_inflight (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig.max_new_tokens">max_new_tokens (nlp_shap.pipeline.config.GenerationConfig attribute)</a>
+</li>
+        <li><a href="api.html#nlp_shap.Message">Message (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.conversation.Message">(class in nlp_shap.domain.conversation)</a>
+</li>
+        </ul></li>
+        <li><a href="api/domain.html#nlp_shap.domain.conversation.Turn.messages">messages (nlp_shap.domain.conversation.Turn attribute)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.Turn.messages">(nlp_shap.Turn attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.ExplainConfig.model_config">model_config (nlp_shap.ExplainConfig attribute)</a>
+
+        <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ArchiveConfig.model_config">(nlp_shap.pipeline.config.ArchiveConfig attribute)</a>
+</li>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BackendConfig.model_config">(nlp_shap.pipeline.config.BackendConfig attribute)</a>
+</li>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BudgetConfig.model_config">(nlp_shap.pipeline.config.BudgetConfig attribute)</a>
+</li>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.DedupConfig.model_config">(nlp_shap.pipeline.config.DedupConfig attribute)</a>
+</li>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplainConfig.model_config">(nlp_shap.pipeline.config.ExplainConfig attribute)</a>
+</li>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.model_config">(nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig.model_config">(nlp_shap.pipeline.config.GenerationConfig attribute)</a>
+</li>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.KvCacheConfig.model_config">(nlp_shap.pipeline.config.KvCacheConfig attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BackendConfig.model_id">model_id (nlp_shap.pipeline.config.BackendConfig attribute)</a>
+
+        <ul>
+          <li><a href="api/protocols.html#nlp_shap.protocols.backend.GenerativeBackend.model_id">(nlp_shap.protocols.backend.GenerativeBackend property)</a>
+</li>
+        </ul></li>
         <li>
     module
 
         <ul>
           <li><a href="api.html#module-nlp_shap">nlp_shap</a>
 </li>
+          <li><a href="api/domain.html#module-nlp_shap.domain.coalition">nlp_shap.domain.coalition</a>
+</li>
+          <li><a href="api/domain.html#module-nlp_shap.domain.conversation">nlp_shap.domain.conversation</a>
+</li>
+          <li><a href="api/domain.html#module-nlp_shap.domain.enums">nlp_shap.domain.enums</a>
+</li>
           <li><a href="api/domain.html#module-nlp_shap.domain.estimands">nlp_shap.domain.estimands</a>
+</li>
+          <li><a href="api/domain.html#module-nlp_shap.domain.game">nlp_shap.domain.game</a>
+</li>
+          <li><a href="api/domain.html#module-nlp_shap.domain.players">nlp_shap.domain.players</a>
 </li>
           <li><a href="api/estimation.html#module-nlp_shap.estimation.estimands.banzhaf">nlp_shap.estimation.estimands.banzhaf</a>
 </li>
           <li><a href="api/estimation.html#module-nlp_shap.estimation.estimands.shapley">nlp_shap.estimation.estimands.shapley</a>
 </li>
+          <li><a href="api/pipeline.html#module-nlp_shap.pipeline.config">nlp_shap.pipeline.config</a>
+</li>
           <li><a href="api/pipeline.html#module-nlp_shap.pipeline.manifest">nlp_shap.pipeline.manifest</a>
 </li>
           <li><a href="api/pipeline.html#module-nlp_shap.pipeline.result">nlp_shap.pipeline.result</a>
 </li>
+          <li><a href="api/plugins.html#module-nlp_shap.plugins.builtin">nlp_shap.plugins.builtin</a>
+</li>
+          <li><a href="api/plugins.html#module-nlp_shap.plugins.context">nlp_shap.plugins.context</a>
+</li>
+          <li><a href="api/plugins.html#module-nlp_shap.plugins.groups">nlp_shap.plugins.groups</a>
+</li>
+          <li><a href="api/plugins.html#module-nlp_shap.plugins.registry">nlp_shap.plugins.registry</a>
+</li>
+          <li><a href="api/protocols.html#module-nlp_shap.protocols.backend">nlp_shap.protocols.backend</a>
+</li>
+          <li><a href="api/protocols.html#module-nlp_shap.protocols.embedding">nlp_shap.protocols.embedding</a>
+</li>
           <li><a href="api/protocols.html#module-nlp_shap.protocols.estimand">nlp_shap.protocols.estimand</a>
+</li>
+          <li><a href="api/protocols.html#module-nlp_shap.protocols.estimator">nlp_shap.protocols.estimator</a>
+</li>
+          <li><a href="api/protocols.html#module-nlp_shap.protocols.masking">nlp_shap.protocols.masking</a>
+</li>
+          <li><a href="api/protocols.html#module-nlp_shap.protocols.partition">nlp_shap.protocols.partition</a>
+</li>
+          <li><a href="api/protocols.html#module-nlp_shap.protocols.value">nlp_shap.protocols.value</a>
 </li>
         </ul></li>
     </ul></td>
@@ -406,6 +720,24 @@
   <h2>N</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/protocols.html#nlp_shap.protocols.embedding.EmbeddingProvider.name">name (nlp_shap.protocols.embedding.EmbeddingProvider property)</a>
+
+        <ul>
+          <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy.name">(nlp_shap.protocols.estimator.EstimatorStrategy property)</a>
+</li>
+          <li><a href="api/protocols.html#nlp_shap.protocols.masking.AbsencePolicy.name">(nlp_shap.protocols.masking.AbsencePolicy property)</a>
+</li>
+          <li><a href="api/protocols.html#nlp_shap.protocols.partition.PlayerPartitioner.name">(nlp_shap.protocols.partition.PlayerPartitioner property)</a>
+</li>
+          <li><a href="api/protocols.html#nlp_shap.protocols.value.ValueFunction.name">(nlp_shap.protocols.value.ValueFunction property)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.PluginRegistry.names">names() (nlp_shap.PluginRegistry method)</a>
+
+        <ul>
+          <li><a href="api/plugins.html#nlp_shap.plugins.registry.PluginRegistry.names">(nlp_shap.plugins.registry.PluginRegistry method)</a>
+</li>
+        </ul></li>
         <li>
     nlp_shap
 
@@ -414,10 +746,45 @@
 </li>
         </ul></li>
         <li>
+    nlp_shap.domain.coalition
+
+        <ul>
+          <li><a href="api/domain.html#module-nlp_shap.domain.coalition">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.domain.conversation
+
+        <ul>
+          <li><a href="api/domain.html#module-nlp_shap.domain.conversation">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.domain.enums
+
+        <ul>
+          <li><a href="api/domain.html#module-nlp_shap.domain.enums">module</a>
+</li>
+        </ul></li>
+        <li>
     nlp_shap.domain.estimands
 
         <ul>
           <li><a href="api/domain.html#module-nlp_shap.domain.estimands">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.domain.game
+
+        <ul>
+          <li><a href="api/domain.html#module-nlp_shap.domain.game">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.domain.players
+
+        <ul>
+          <li><a href="api/domain.html#module-nlp_shap.domain.players">module</a>
 </li>
         </ul></li>
         <li>
@@ -434,8 +801,13 @@
           <li><a href="api/estimation.html#module-nlp_shap.estimation.estimands.shapley">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    nlp_shap.pipeline.config
+
+        <ul>
+          <li><a href="api/pipeline.html#module-nlp_shap.pipeline.config">module</a>
+</li>
+        </ul></li>
         <li>
     nlp_shap.pipeline.manifest
 
@@ -443,6 +815,8 @@
           <li><a href="api/pipeline.html#module-nlp_shap.pipeline.manifest">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     nlp_shap.pipeline.result
 
@@ -451,10 +825,90 @@
 </li>
         </ul></li>
         <li>
+    nlp_shap.plugins.builtin
+
+        <ul>
+          <li><a href="api/plugins.html#module-nlp_shap.plugins.builtin">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.plugins.context
+
+        <ul>
+          <li><a href="api/plugins.html#module-nlp_shap.plugins.context">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.plugins.groups
+
+        <ul>
+          <li><a href="api/plugins.html#module-nlp_shap.plugins.groups">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.plugins.registry
+
+        <ul>
+          <li><a href="api/plugins.html#module-nlp_shap.plugins.registry">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.protocols.backend
+
+        <ul>
+          <li><a href="api/protocols.html#module-nlp_shap.protocols.backend">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.protocols.embedding
+
+        <ul>
+          <li><a href="api/protocols.html#module-nlp_shap.protocols.embedding">module</a>
+</li>
+        </ul></li>
+        <li>
     nlp_shap.protocols.estimand
 
         <ul>
           <li><a href="api/protocols.html#module-nlp_shap.protocols.estimand">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.protocols.estimator
+
+        <ul>
+          <li><a href="api/protocols.html#module-nlp_shap.protocols.estimator">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.protocols.masking
+
+        <ul>
+          <li><a href="api/protocols.html#module-nlp_shap.protocols.masking">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.protocols.partition
+
+        <ul>
+          <li><a href="api/protocols.html#module-nlp_shap.protocols.partition">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.protocols.value
+
+        <ul>
+          <li><a href="api/protocols.html#module-nlp_shap.protocols.value">module</a>
+</li>
+        </ul></li>
+        <li><a href="api/domain.html#nlp_shap.domain.enums.SystemRolesSetup.NONE">NONE (nlp_shap.domain.enums.SystemRolesSetup attribute)</a>
+</li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.normalizer">normalizer (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+        <li><a href="api/domain.html#nlp_shap.domain.players.PlayerSet.num_players">num_players (nlp_shap.domain.players.PlayerSet property)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.PlayerSet.num_players">(nlp_shap.PlayerSet property)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -471,6 +925,64 @@
           <li><a href="api/pipeline.html#nlp_shap.pipeline.manifest.parse_manifest">(in module nlp_shap.pipeline.manifest)</a>
 </li>
         </ul></li>
+        <li><a href="api/protocols.html#nlp_shap.protocols.partition.PlayerPartitioner.partition">partition() (nlp_shap.protocols.partition.PlayerPartitioner method)</a>
+</li>
+        <li><a href="api.html#nlp_shap.PluginGroup.PARTITIONS">PARTITIONS (nlp_shap.PluginGroup attribute)</a>
+
+        <ul>
+          <li><a href="api/plugins.html#nlp_shap.plugins.groups.PluginGroup.PARTITIONS">(nlp_shap.plugins.groups.PluginGroup attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ArchiveConfig.path">path (nlp_shap.pipeline.config.ArchiveConfig attribute)</a>
+</li>
+        <li><a href="api/domain.html#nlp_shap.domain.players.PlayerSet.player_ids">player_ids (nlp_shap.domain.players.PlayerSet attribute)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.PlayerSet.player_ids">(nlp_shap.PlayerSet attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.CooperativeGame.player_set">player_set (nlp_shap.CooperativeGame attribute)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.game.CooperativeGame.player_set">(nlp_shap.domain.game.CooperativeGame attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/protocols.html#nlp_shap.protocols.partition.PlayerPartitioner">PlayerPartitioner (class in nlp_shap.protocols.partition)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.players">players (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+        <li><a href="api.html#nlp_shap.PlayerSet">PlayerSet (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.players.PlayerSet">(class in nlp_shap.domain.players)</a>
+</li>
+        </ul></li>
+        <li><a href="api/plugins.html#nlp_shap.plugins.context.PluginContext">PluginContext (class in nlp_shap.plugins.context)</a>
+</li>
+        <li><a href="api/plugins.html#nlp_shap.plugins.registry.PluginFactory">PluginFactory (in module nlp_shap.plugins.registry)</a>
+</li>
+        <li><a href="api.html#nlp_shap.PluginGroup">PluginGroup (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/plugins.html#nlp_shap.plugins.groups.PluginGroup">(class in nlp_shap.plugins.groups)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.PluginRegistry">PluginRegistry (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/plugins.html#nlp_shap.plugins.registry.PluginRegistry">(class in nlp_shap.plugins.registry)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig.precompute_base">precompute_base (nlp_shap.pipeline.config.GenerationConfig attribute)</a>
+</li>
+        <li><a href="api.html#nlp_shap.CoalitionMask.present">present (nlp_shap.CoalitionMask attribute)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.coalition.CoalitionMask.present">(nlp_shap.domain.coalition.CoalitionMask attribute)</a>
+</li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -479,6 +991,36 @@
   <h2>R</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api.html#nlp_shap.PluginRegistry.register">register() (nlp_shap.PluginRegistry method)</a>
+
+        <ul>
+          <li><a href="api/plugins.html#nlp_shap.plugins.registry.PluginRegistry.register">(nlp_shap.plugins.registry.PluginRegistry method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/plugins.html#nlp_shap.plugins.builtin.register_builtin_plugins">register_builtin_plugins() (in module nlp_shap.plugins.builtin)</a>
+</li>
+        <li><a href="api/plugins.html#nlp_shap.plugins.context.PluginContext.registry">registry (nlp_shap.plugins.context.PluginContext attribute)</a>
+</li>
+        <li><a href="api.html#nlp_shap.PluginRegistry.resolve">resolve() (nlp_shap.PluginRegistry method)</a>
+
+        <ul>
+          <li><a href="api/plugins.html#nlp_shap.plugins.registry.PluginRegistry.resolve">(nlp_shap.plugins.registry.PluginRegistry method)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.Role">Role (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.enums.Role">(class in nlp_shap.domain.enums)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/domain.html#nlp_shap.domain.conversation.Message.role">role (nlp_shap.domain.conversation.Message attribute)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.Message.role">(nlp_shap.Message attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.manifest.RunManifest.run_id">run_id (nlp_shap.pipeline.manifest.RunManifest attribute)</a>
 
         <ul>
@@ -487,8 +1029,6 @@
           <li><a href="api.html#nlp_shap.RunManifest.run_id">(nlp_shap.RunManifest attribute)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api.html#nlp_shap.RunManifest">RunManifest (class in nlp_shap)</a>
 
         <ul>
@@ -505,20 +1045,46 @@
   <h2>S</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy.sample_masks">sample_masks() (nlp_shap.protocols.estimator.EstimatorStrategy method)</a>
+</li>
+        <li><a href="api/protocols.html#nlp_shap.protocols.value.ValueFunction.score">score() (nlp_shap.protocols.value.ValueFunction method)</a>
+</li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.seed">seed (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
         <li><a href="api/domain.html#nlp_shap.domain.estimands.Estimand.SHAPLEY">SHAPLEY (nlp_shap.domain.estimands.Estimand attribute)</a>
 
         <ul>
           <li><a href="api.html#nlp_shap.Estimand.SHAPLEY">(nlp_shap.Estimand attribute)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api.html#nlp_shap.ShapleyAggregator">ShapleyAggregator (class in nlp_shap)</a>
 
         <ul>
           <li><a href="api/estimation.html#nlp_shap.estimation.estimands.shapley.ShapleyAggregator">(class in nlp_shap.estimation.estimands.shapley)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api.html#nlp_shap.ConversationSnapshot.snapshot_id">snapshot_id (nlp_shap.ConversationSnapshot attribute)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.conversation.ConversationSnapshot.snapshot_id">(nlp_shap.domain.conversation.ConversationSnapshot attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/domain.html#nlp_shap.domain.enums.EmbeddingMode.STATIC">STATIC (nlp_shap.domain.enums.EmbeddingMode attribute)</a>
+</li>
+        <li><a href="api/domain.html#nlp_shap.domain.enums.Role.SYSTEM">SYSTEM (nlp_shap.domain.enums.Role attribute)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.enums.SystemRolesSetup.SYSTEM">(nlp_shap.domain.enums.SystemRolesSetup attribute)</a>
+</li>
+          <li><a href="api.html#nlp_shap.Role.SYSTEM">(nlp_shap.Role attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/domain.html#nlp_shap.domain.enums.SystemRolesSetup.SYSTEM_ASSISTANT">SYSTEM_ASSISTANT (nlp_shap.domain.enums.SystemRolesSetup attribute)</a>
+</li>
+        <li><a href="api/domain.html#nlp_shap.domain.enums.SystemRolesSetup">SystemRolesSetup (class in nlp_shap.domain.enums)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -527,10 +1093,54 @@
   <h2>T</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig.temperature">temperature (nlp_shap.pipeline.config.GenerationConfig attribute)</a>
+</li>
+        <li><a href="api/domain.html#nlp_shap.domain.conversation.Message.text">text (nlp_shap.domain.conversation.Message attribute)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.Message.text">(nlp_shap.Message attribute)</a>
+</li>
+          <li><a href="api/protocols.html#nlp_shap.protocols.backend.GenerationResult.text">(nlp_shap.protocols.backend.GenerationResult property)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.manifest.RunManifest.to_dict">to_dict() (nlp_shap.pipeline.manifest.RunManifest method)</a>
 
         <ul>
           <li><a href="api.html#nlp_shap.RunManifest.to_dict">(nlp_shap.RunManifest method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig.top_k">top_k (nlp_shap.pipeline.config.GenerationConfig attribute)</a>
+</li>
+        <li><a href="api.html#nlp_shap.Turn">Turn (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.conversation.Turn">(class in nlp_shap.domain.conversation)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.ConversationSnapshot.turns">turns (nlp_shap.ConversationSnapshot attribute)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.conversation.ConversationSnapshot.turns">(nlp_shap.domain.conversation.ConversationSnapshot attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="U" class="genindex-section">
+  <h2>U</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.use_v2">use_v2 (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/domain.html#nlp_shap.domain.enums.Role.USER">USER (nlp_shap.domain.enums.Role attribute)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.Role.USER">(nlp_shap.Role attribute)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -541,6 +1151,24 @@
   <h2>V</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api.html#nlp_shap.CoalitionMask.validate_against">validate_against() (nlp_shap.CoalitionMask method)</a>
+
+        <ul>
+          <li><a href="api/domain.html#nlp_shap.domain.coalition.CoalitionMask.validate_against">(nlp_shap.domain.coalition.CoalitionMask method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.value_fn">value_fn (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+        <li><a href="api.html#nlp_shap.PluginGroup.VALUE_FNS">VALUE_FNS (nlp_shap.PluginGroup attribute)</a>
+
+        <ul>
+          <li><a href="api/plugins.html#nlp_shap.plugins.groups.PluginGroup.VALUE_FNS">(nlp_shap.plugins.groups.PluginGroup attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/protocols.html#nlp_shap.protocols.value.ValueFunction">ValueFunction (class in nlp_shap.protocols.value)</a>
+</li>
         <li><a href="api.html#nlp_shap.ExplainResult.values">values (nlp_shap.ExplainResult attribute)</a>
 
         <ul>
@@ -591,7 +1219,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=a58bc63e"></script>
+</div><script src="_static/documentation_options.js?v=92734c54"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

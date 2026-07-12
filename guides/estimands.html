@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Cooperative games" href="../theory/cooperative_games.html"><link rel="prev" title="Getting started" href="getting_started.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Configuration" href="config.html"><link rel="prev" title="Getting started" href="getting_started.html">
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Using estimand aggregators - nlp-shap 0.1.1</title>
+        <title>Using estimand aggregators - nlp-shap 0.1.2</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">nlp-shap 0.1.1</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.2</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.1</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.2</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -208,10 +208,13 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
@@ -223,9 +226,10 @@
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api/domain.html">Domain types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/estimation.html">Estimand aggregators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/pipeline.html">Pipeline types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/protocols.html">Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/estimation.html">Estimand aggregators</a></li>
 </ul>
 </li>
 </ul>
@@ -340,7 +344,8 @@ Each aggregator reports which estimand it implements.</p>
 <h2>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="getting_started.html"><span class="doc">Getting started</span></a> — install and first example</p></li>
-<li><p>Theory: <a class="reference internal" href="../theory/estimands.html"><span class="doc">Estimands: Shapley vs Banzhaf</span></a></p></li>
+<li><p><a class="reference internal" href="applications.html"><span class="doc">Business and compliance applications</span></a> — business and compliance use cases</p></li>
+<li><p>Theory: <a class="reference internal" href="../theory/shapley_values.html"><span class="doc">Shapley values and axioms</span></a>, <a class="reference internal" href="../theory/estimands.html"><span class="doc">Estimands: Shapley vs Banzhaf</span></a></p></li>
 <li><p>Cooperative games: <a class="reference internal" href="../theory/cooperative_games.html"><span class="doc">Cooperative games</span></a></p></li>
 <li><p>API: <a class="reference internal" href="../api.html"><span class="doc">API reference</span></a></p></li>
 </ul>
@@ -352,12 +357,12 @@ Each aggregator reports which estimand it implements.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../theory/cooperative_games.html">
+          <a class="next-page" href="config.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Cooperative games</div>
+                <div class="title">Configuration</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -427,7 +432,7 @@ Each aggregator reports which estimand it implements.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+</div><script src="../_static/documentation_options.js?v=92734c54"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

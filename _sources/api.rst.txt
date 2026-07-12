@@ -13,6 +13,22 @@ Public exports
 
    * - Symbol
      - Description
+   * - :class:`~nlp_shap.ExplainConfig`
+     - Top-level explain pipeline configuration. See :doc:`api/pipeline`.
+   * - :func:`~nlp_shap.explain_config_from_yaml`
+     - Parse YAML into :class:`~nlp_shap.ExplainConfig`.
+   * - :func:`~nlp_shap.explain_config_to_yaml`
+     - Serialize :class:`~nlp_shap.ExplainConfig` to YAML.
+   * - :class:`~nlp_shap.ConversationSnapshot`
+     - Frozen conversation input for explainability. See :doc:`api/domain`.
+   * - :class:`~nlp_shap.PlayerSet`
+     - Ordered explainability players. See :doc:`api/domain`.
+   * - :class:`~nlp_shap.CoalitionMask`
+     - Boolean coalition presence mask. See :doc:`api/domain`.
+   * - :class:`~nlp_shap.CooperativeGame`
+     - Cooperative-game player set and references. See :doc:`api/domain`.
+   * - :class:`~nlp_shap.PluginRegistry`
+     - Plugin discovery and resolution. See :doc:`api/plugins`.
    * - :class:`~nlp_shap.Estimand`
      - Estimand label enum (``shapley`` | ``banzhaf``). See :doc:`api/domain`.
    * - :class:`~nlp_shap.ShapleyAggregator`
@@ -33,9 +49,10 @@ Modules
    :maxdepth: 1
 
    api/domain
-   api/estimation
-   api/pipeline
    api/protocols
+   api/plugins
+   api/pipeline
+   api/estimation
 
 Package version
 ---------------

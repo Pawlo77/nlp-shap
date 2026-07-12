@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Estimands: Shapley vs Banzhaf" href="estimands.html"><link rel="prev" title="Using estimand aggregators" href="../guides/estimands.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Shapley values and axioms" href="shapley_values.html"><link rel="prev" title="Business and compliance applications" href="../guides/applications.html">
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Cooperative games - nlp-shap 0.1.1</title>
+        <title>Cooperative games - nlp-shap 0.1.2</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">nlp-shap 0.1.1</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.2</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.1</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.2</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -208,10 +208,13 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="estimands.html">Estimands: Shapley vs Banzhaf</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
@@ -223,9 +226,10 @@
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api/domain.html">Domain types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/estimation.html">Estimand aggregators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/pipeline.html">Pipeline types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/protocols.html">Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/estimation.html">Estimand aggregators</a></li>
 </ul>
 </li>
 </ul>
@@ -273,47 +277,119 @@
           <section id="cooperative-games">
 <h1>Cooperative games<a class="headerlink" href="#cooperative-games" title="Link to this heading">¶</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> explains model behaviour by treating input units (tokens, segments,
-etc.) as <strong>players</strong> in a cooperative game. Each coalition <span class="math notranslate nohighlight">\(S \subseteq N\)</span>
-of players yields a <strong>payoff</strong> <span class="math notranslate nohighlight">\(v(S)\)</span> from a characteristic function
-<span class="math notranslate nohighlight">\(v\)</span> defined by a value function and model inference.</p>
-<section id="characteristic-function">
-<h2>Characteristic function<a class="headerlink" href="#characteristic-function" title="Link to this heading">¶</a></h2>
-<p>A cooperative game is given by:</p>
+or other <strong>players</strong>) as participants in a <strong>cooperative game</strong>. Cooperative game
+theory studies how a total payoff <span class="math notranslate nohighlight">\(v(N)\)</span> should be distributed among
+players when they can form coalitions. In explainability, the payoff comes from
+scoring model outputs under different input subsets.</p>
+<p>This page establishes the game-theoretic objects. For Shapley axioms and
+uniqueness, see <a class="reference internal" href="shapley_values.html"><span class="doc">Shapley values and axioms</span></a>. For Shapley vs Banzhaf in ML pipelines,
+see <a class="reference internal" href="estimands.html"><span class="doc">Estimands: Shapley vs Banzhaf</span></a>. For deployment contexts, see <a class="reference internal" href="../guides/applications.html"><span class="doc">Business and compliance applications</span></a>.</p>
+<section id="players-coalitions-and-payoffs">
+<h2>Players, coalitions, and payoffs<a class="headerlink" href="#players-coalitions-and-payoffs" title="Link to this heading">¶</a></h2>
+<p>A cooperative game is defined by:</p>
 <ul class="simple">
 <li><p>a finite player set <span class="math notranslate nohighlight">\(N = \{1, \dots, n\}\)</span></p></li>
-<li><p>a function <span class="math notranslate nohighlight">\(v : 2^N \to \mathbb{R}\)</span> with <span class="math notranslate nohighlight">\(v(\emptyset)\)</span> as the
-empty-coalition reference</p></li>
+<li><p>a <strong>characteristic function</strong> <span class="math notranslate nohighlight">\(v : 2^N \to \mathbb{R}\)</span></p></li>
 </ul>
-<p>In explainability, <span class="math notranslate nohighlight">\(v(S)\)</span> is the utility of the model output when only
-the players in <span class="math notranslate nohighlight">\(S\)</span> are <strong>present</strong> (others are masked according to an
-absence policy). The grand coalition <span class="math notranslate nohighlight">\(v(N)\)</span> is the unmasked input.</p>
+<p>The value <span class="math notranslate nohighlight">\(v(S)\)</span> is the worth of coalition <span class="math notranslate nohighlight">\(S \subseteq N\)</span>. By
+convention <span class="math notranslate nohighlight">\(v(\emptyset)\)</span> is the <strong>empty-coalition reference</strong> (often
+<span class="math notranslate nohighlight">\(0\)</span> or a baseline utility). The <strong>grand coalition</strong> <span class="math notranslate nohighlight">\(N\)</span> represents
+the fully observed input.</p>
+<p>In NLP explainability:</p>
+<ul class="simple">
+<li><p><strong>Players</strong> may be tokens, spans, retrieved chunks, or multimodal segments.</p></li>
+<li><p><strong>Coalitions</strong> specify which players are <em>present</em>; absent players are removed
+or replaced according to an absence policy (implemented in later pipeline
+stages).</p></li>
+<li><p><strong>Payoffs</strong> <span class="math notranslate nohighlight">\(v(S)\)</span> come from a <strong>value function</strong> applied to model
+outputs when only coalition <span class="math notranslate nohighlight">\(S\)</span> is visible to the model.</p></li>
+</ul>
 </section>
 <section id="marginal-contributions">
 <h2>Marginal contributions<a class="headerlink" href="#marginal-contributions" title="Link to this heading">¶</a></h2>
 <p>For player <span class="math notranslate nohighlight">\(i\)</span> and coalition <span class="math notranslate nohighlight">\(S \subseteq N \setminus \{i\}\)</span> the
-marginal contribution is:</p>
+<strong>marginal contribution</strong> is:</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\Delta_i(S) = v(S \cup \{i\}) - v(S)\]</div>
 </div>
-<p>Attribution methods differ in how they <strong>weight</strong> and <strong>aggregate</strong> marginal
-contributions across coalitions — see <a class="reference internal" href="estimands.html"><span class="doc">Estimands: Shapley vs Banzhaf</span></a>.</p>
+<p>Attribution methods differ in how they <strong>weight</strong> marginal contributions across
+coalitions. The Shapley value uses size-dependent factorial weights; the Banzhaf
+index uses uniform weights over <span class="math notranslate nohighlight">\(S\)</span> (see <a class="reference internal" href="estimands.html"><span class="doc">Estimands: Shapley vs Banzhaf</span></a>).</p>
 </section>
-<section id="estimand-aggregators">
-<h2>Estimand aggregators<a class="headerlink" href="#estimand-aggregators" title="Link to this heading">¶</a></h2>
+<section id="game-classes-relevant-to-explainability">
+<h2>Game classes relevant to explainability<a class="headerlink" href="#game-classes-relevant-to-explainability" title="Link to this heading">¶</a></h2>
+<p><strong>Additive games.</strong>
+If <span class="math notranslate nohighlight">\(v(S) = \sum_{i \in S} a_i\)</span> for fixed coefficients <span class="math notranslate nohighlight">\(a_i\)</span>, then
+every reasonable linear index recovers <span class="math notranslate nohighlight">\(a_i\)</span>. Many tabular explainability
+examples are additive; language games are usually <strong>not</strong>, because token
+interactions are context-dependent.</p>
+<p><strong>Threshold / voting games.</strong>
+Payoff is <span class="math notranslate nohighlight">\(1\)</span> when at least <span class="math notranslate nohighlight">\(t\)</span> players are present and <span class="math notranslate nohighlight">\(0\)</span>
+otherwise. These games illustrate why <strong>estimand choice matters</strong>: Shapley and
+Banzhaf assign different credit on identical coalition samples.</p>
+<p><strong>Non-additive LLM games.</strong>
+When <span class="math notranslate nohighlight">\(v(S)\)</span> is computed by running a language model on a masked prompt,
+payoffs depend on syntax, coreference, and retrieval context. The characteristic
+function is typically neither additive nor symmetric across tokens. Honest
+<strong>estimand labelling</strong> and archived coalition records become essential for audit
+and reproduction.</p>
+</section>
+<section id="mapping-to-nlp-shap-types">
+<h2>Mapping to <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> types<a class="headerlink" href="#mapping-to-nlp-shap-types" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Game-theoretic object</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Player set <span class="math notranslate nohighlight">\(N\)</span></p></td>
+<td><p><a class="reference internal" href="../api.html#nlp_shap.PlayerSet" title="nlp_shap.PlayerSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlayerSet</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Coalition <span class="math notranslate nohighlight">\(S\)</span></p></td>
+<td><p><a class="reference internal" href="../api.html#nlp_shap.CoalitionMask" title="nlp_shap.CoalitionMask"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoalitionMask</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p>Conversation under study</p></td>
+<td><p><a class="reference internal" href="../api.html#nlp_shap.ConversationSnapshot" title="nlp_shap.ConversationSnapshot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConversationSnapshot</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Game <span class="math notranslate nohighlight">\((N, v)\)</span></p></td>
+<td><p><a class="reference internal" href="../api.html#nlp_shap.CooperativeGame" title="nlp_shap.CooperativeGame"><code class="xref py py-class docutils literal notranslate"><span class="pre">CooperativeGame</span></code></a> (+ payoffs)</p></td>
+</tr>
+<tr class="row-even"><td><p>Aggregated attributions</p></td>
+<td><p><a class="reference internal" href="../api/pipeline.html#nlp_shap.pipeline.result.ExplainResult" title="nlp_shap.pipeline.result.ExplainResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainResult</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>The <a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.estimands.shapley.ShapleyAggregator" title="nlp_shap.estimation.estimands.shapley.ShapleyAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapleyAggregator</span></code></a> and
 <a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator" title="nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BanzhafAggregator</span></code></a> classes
-aggregate precomputed coalition payoffs. You supply boolean coalition masks and
-aligned values <span class="math notranslate nohighlight">\(v(S)\)</span>.</p>
+aggregate precomputed coalition masks and payoffs <span class="math notranslate nohighlight">\(v(S)\)</span>; they do not run
+model inference themselves.</p>
+</section>
+<section id="multilinear-extensions-optional">
+<h2>Multilinear extensions (optional)<a class="headerlink" href="#multilinear-extensions-optional" title="Link to this heading">¶</a></h2>
+<p>Owen (1972) introduced <strong>multilinear extensions</strong>, connecting cooperative games
+to expectations over random coalitions. Monte Carlo explainability estimators
+sample coalitions and average marginal contributions; the <strong>estimand</strong> determines
+whether Shapley or Banzhaf weights are applied to those samples. See
+<a class="reference internal" href="shapley_values.html"><span class="doc">Shapley values and axioms</span></a> for the connection to the Shapley formula.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Shapley, L. S. (1953). <em>A Value for n-person Games</em>. In <em>Contributions to the
-Theory of Games II</em>, Annals of Mathematics Studies 28, Princeton University
-Press. <a class="reference external" href="https://projecteuclid.org/journals/contributions-to-the-theory-of-games/volume-2/issue-none/A-Value-for-n-person-Games/10.1215/sm/1175702444.full">Project Euclid</a></p></li>
-<li><p>Owen, G. (1972). <em>Multilinear extensions of games</em>. Management Science.
+<li><p>von Neumann, J., &amp; Morgenstern, O. (1944). <em>Theory of Games and Economic
+Behavior</em>. Princeton University Press.</p></li>
+<li><p>Shapley, L. S. (1953). A value for <em>n</em>-person games. In H. W. Kuhn &amp; A. W.
+Tucker (Eds.), <em>Contributions to the Theory of Games II</em> (Vol. 28, pp.
+307–317). Princeton University Press.
+<a class="reference external" href="https://doi.org/10.1515/9781400881970-018">DOI:10.1515/9781400881970-018</a></p></li>
+<li><p>Owen, G. (1972). Multilinear extensions of games. <em>Management Science</em>, 18(5
+Part 2), 64–79.
 <a class="reference external" href="https://doi.org/10.1287/mnsc.18.5.64">DOI:10.1287/mnsc.18.5.64</a></p></li>
+<li><p>Roth, A. E. (Ed.). (1988). <em>The Shapley Value: Essays in Honor of Lloyd S.
+Shapley</em>. Cambridge University Press.</p></li>
 </ul>
 </section>
 </section>
@@ -323,23 +399,23 @@ Press. <a class="reference external" href="https://projecteuclid.org/journals/co
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="estimands.html">
+          <a class="next-page" href="shapley_values.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Estimands: Shapley vs Banzhaf</div>
+                <div class="title">Shapley values and axioms</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../guides/estimands.html">
+          <a class="prev-page" href="../guides/applications.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Using estimand aggregators</div>
+                <div class="title">Business and compliance applications</div>
                 
               </div>
             </a>
@@ -382,9 +458,11 @@ Press. <a class="reference external" href="https://projecteuclid.org/journals/co
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Cooperative games</a><ul>
-<li><a class="reference internal" href="#characteristic-function">Characteristic function</a></li>
+<li><a class="reference internal" href="#players-coalitions-and-payoffs">Players, coalitions, and payoffs</a></li>
 <li><a class="reference internal" href="#marginal-contributions">Marginal contributions</a></li>
-<li><a class="reference internal" href="#estimand-aggregators">Estimand aggregators</a></li>
+<li><a class="reference internal" href="#game-classes-relevant-to-explainability">Game classes relevant to explainability</a></li>
+<li><a class="reference internal" href="#mapping-to-nlp-shap-types">Mapping to <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> types</a></li>
+<li><a class="reference internal" href="#multilinear-extensions-optional">Multilinear extensions (optional)</a></li>
 <li><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
@@ -397,7 +475,7 @@ Press. <a class="reference external" href="https://projecteuclid.org/journals/co
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+</div><script src="../_static/documentation_options.js?v=92734c54"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

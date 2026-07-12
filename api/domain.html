@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Estimand aggregators" href="estimation.html"><link rel="prev" title="API reference" href="../api.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Protocols" href="protocols.html"><link rel="prev" title="API reference" href="../api.html">
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Domain types - nlp-shap 0.1.1</title>
+        <title>Domain types - nlp-shap 0.1.2</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">nlp-shap 0.1.1</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.2</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.1</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.2</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -208,10 +208,13 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
@@ -223,9 +226,10 @@
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../api.html">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Domain types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="estimation.html">Estimand aggregators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pipeline.html">Pipeline types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="protocols.html">Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html">Estimand aggregators</a></li>
 </ul>
 </li>
 </ul>
@@ -270,9 +274,209 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="module-nlp_shap.domain.estimands">
-<span id="domain-types"></span><h1>Domain types<a class="headerlink" href="#module-nlp_shap.domain.estimands" title="Link to this heading">¶</a></h1>
-<p>Estimand labels for attribution outputs and archive manifests.</p>
+          <section id="module-nlp_shap.domain.enums">
+<span id="domain-types"></span><h1>Domain types<a class="headerlink" href="#module-nlp_shap.domain.enums" title="Link to this heading">¶</a></h1>
+<p>Conversation and explanation enumerations for the text MVP.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.domain.enums.Role">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.domain.enums.</span></span><span class="sig-name descname"><span class="pre">Role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/domain/enums.html#Role"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.enums.Role" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.StrEnum" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></a></p>
+<p>Participant role attached to a message or token.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.enums.Role.USER">
+<span class="sig-name descname"><span class="pre">USER</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'user'</span></span><a class="headerlink" href="#nlp_shap.domain.enums.Role.USER" title="Link to this definition">¶</a></dt>
+<dd><p>End-user or human-provided input.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.enums.Role.ASSISTANT">
+<span class="sig-name descname"><span class="pre">ASSISTANT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'assistant'</span></span><a class="headerlink" href="#nlp_shap.domain.enums.Role.ASSISTANT" title="Link to this definition">¶</a></dt>
+<dd><p>Model-generated output.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.enums.Role.SYSTEM">
+<span class="sig-name descname"><span class="pre">SYSTEM</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'system'</span></span><a class="headerlink" href="#nlp_shap.domain.enums.Role.SYSTEM" title="Link to this definition">¶</a></dt>
+<dd><p>System-level instruction or steering text.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.domain.enums.SystemRolesSetup">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.domain.enums.</span></span><span class="sig-name descname"><span class="pre">SystemRolesSetup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/domain/enums.html#SystemRolesSetup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.enums.SystemRolesSetup" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.StrEnum" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></a></p>
+<p>How system-role tokens participate in explainability.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.enums.SystemRolesSetup.NONE">
+<span class="sig-name descname"><span class="pre">NONE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'none'</span></span><a class="headerlink" href="#nlp_shap.domain.enums.SystemRolesSetup.NONE" title="Link to this definition">¶</a></dt>
+<dd><p>All tokens, including system tokens, are explainable.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.enums.SystemRolesSetup.SYSTEM">
+<span class="sig-name descname"><span class="pre">SYSTEM</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'system'</span></span><a class="headerlink" href="#nlp_shap.domain.enums.SystemRolesSetup.SYSTEM" title="Link to this definition">¶</a></dt>
+<dd><p>System tokens are excluded from explainability.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.enums.SystemRolesSetup.SYSTEM_ASSISTANT">
+<span class="sig-name descname"><span class="pre">SYSTEM_ASSISTANT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'system_assistant'</span></span><a class="headerlink" href="#nlp_shap.domain.enums.SystemRolesSetup.SYSTEM_ASSISTANT" title="Link to this definition">¶</a></dt>
+<dd><p>System and assistant tokens are excluded from explainability.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.domain.enums.EmbeddingMode">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.domain.enums.</span></span><span class="sig-name descname"><span class="pre">EmbeddingMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/domain/enums.html#EmbeddingMode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.enums.EmbeddingMode" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.StrEnum" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></a></p>
+<p>Whether value functions use static or contextual embeddings.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.enums.EmbeddingMode.STATIC">
+<span class="sig-name descname"><span class="pre">STATIC</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'static'</span></span><a class="headerlink" href="#nlp_shap.domain.enums.EmbeddingMode.STATIC" title="Link to this definition">¶</a></dt>
+<dd><p>Embeddings computed from final generated tokens only.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.enums.EmbeddingMode.CONTEXTUAL">
+<span class="sig-name descname"><span class="pre">CONTEXTUAL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'contextual'</span></span><a class="headerlink" href="#nlp_shap.domain.enums.EmbeddingMode.CONTEXTUAL" title="Link to this definition">¶</a></dt>
+<dd><p>Embeddings derived from model internal states.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-nlp_shap.domain.conversation">Immutable conversation snapshots without backend or IO.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.domain.conversation.Message">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.domain.conversation.</span></span><span class="sig-name descname"><span class="pre">Message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.domain.enums.Role" title="nlp_shap.domain.enums.Role"><span class="pre">Role</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/domain/conversation.html#Message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.conversation.Message" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A single explainable text unit with an attached role.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.conversation.Message.role">
+<span class="sig-name descname"><span class="pre">role</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#nlp_shap.domain.enums.Role" title="nlp_shap.domain.enums.Role"><span class="pre">Role</span></a></span><a class="headerlink" href="#nlp_shap.domain.conversation.Message.role" title="Link to this definition">¶</a></dt>
+<dd><p>Participant role for this text unit.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.conversation.Message.text">
+<span class="sig-name descname"><span class="pre">text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.domain.conversation.Message.text" title="Link to this definition">¶</a></dt>
+<dd><p>Token or span text included in the explainability input.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.domain.conversation.Turn">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.domain.conversation.</span></span><span class="sig-name descname"><span class="pre">Turn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">messages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nlp_shap.domain.conversation.Message" title="nlp_shap.domain.conversation.Message"><span class="pre">Message</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/domain/conversation.html#Turn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.conversation.Turn" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>One conversational turn composed of ordered messages.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.conversation.Turn.messages">
+<span class="sig-name descname"><span class="pre">messages</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nlp_shap.domain.conversation.Message" title="nlp_shap.domain.conversation.Message"><span class="pre">Message</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#nlp_shap.domain.conversation.Turn.messages" title="Link to this definition">¶</a></dt>
+<dd><p>Ordered messages that make up this turn.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.domain.conversation.ConversationSnapshot">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.domain.conversation.</span></span><span class="sig-name descname"><span class="pre">ConversationSnapshot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nlp_shap.domain.conversation.Turn" title="nlp_shap.domain.conversation.Turn"><span class="pre">Turn</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/domain/conversation.html#ConversationSnapshot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.conversation.ConversationSnapshot" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Frozen conversation state used as the explainability input.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.conversation.ConversationSnapshot.turns">
+<span class="sig-name descname"><span class="pre">turns</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nlp_shap.domain.conversation.Turn" title="nlp_shap.domain.conversation.Turn"><span class="pre">Turn</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#nlp_shap.domain.conversation.ConversationSnapshot.turns" title="Link to this definition">¶</a></dt>
+<dd><p>Ordered turns that define the conversation under study.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.conversation.ConversationSnapshot.snapshot_id">
+<span class="sig-name descname"><span class="pre">snapshot_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.domain.conversation.ConversationSnapshot.snapshot_id" title="Link to this definition">¶</a></dt>
+<dd><p>Stable identifier used for deduplication and run archives.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.domain.conversation.ConversationSnapshot.from_turns">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_turns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nlp_shap.domain.conversation.Turn" title="nlp_shap.domain.conversation.Turn"><span class="pre">Turn</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/domain/conversation.html#ConversationSnapshot.from_turns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.conversation.ConversationSnapshot.from_turns" title="Link to this definition">¶</a></dt>
+<dd><p>Build a snapshot with a stable content-derived identifier.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-nlp_shap.domain.players">Player indexing for cooperative-game explainability.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.domain.players.PlayerSet">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.domain.players.</span></span><span class="sig-name descname"><span class="pre">PlayerSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/domain/players.html#PlayerSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.players.PlayerSet" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Ordered explainability players aligned with coalition masks.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.players.PlayerSet.player_ids">
+<span class="sig-name descname"><span class="pre">player_ids</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#nlp_shap.domain.players.PlayerSet.player_ids" title="Link to this definition">¶</a></dt>
+<dd><p>Stable player identifiers in coalition-mask order.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.domain.players.PlayerSet.num_players">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">num_players</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.domain.players.PlayerSet.num_players" title="Link to this definition">¶</a></dt>
+<dd><p>Return the number of players in the set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-nlp_shap.domain.coalition">Coalition masks over explainability players.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.domain.coalition.CoalitionMask">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.domain.coalition.</span></span><span class="sig-name descname"><span class="pre">CoalitionMask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">present</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/domain/coalition.html#CoalitionMask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.coalition.CoalitionMask" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Boolean presence mask aligned with a <a class="reference internal" href="#nlp_shap.domain.players.PlayerSet" title="nlp_shap.domain.players.PlayerSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlayerSet</span></code></a>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.coalition.CoalitionMask.present">
+<span class="sig-name descname"><span class="pre">present</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#nlp_shap.domain.coalition.CoalitionMask.present" title="Link to this definition">¶</a></dt>
+<dd><p>Presence flags aligned with <a class="reference internal" href="#nlp_shap.domain.players.PlayerSet" title="nlp_shap.domain.players.PlayerSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlayerSet</span></code></a> order.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.domain.coalition.CoalitionMask.from_sequence">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">present</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nlp_shap.domain.coalition.CoalitionMask" title="nlp_shap.domain.coalition.CoalitionMask"><span class="pre">CoalitionMask</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/domain/coalition.html#CoalitionMask.from_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.coalition.CoalitionMask.from_sequence" title="Link to this definition">¶</a></dt>
+<dd><p>Build a mask from any boolean sequence.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.domain.coalition.CoalitionMask.coalition_size">
+<span class="sig-name descname"><span class="pre">coalition_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/domain/coalition.html#CoalitionMask.coalition_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.coalition.CoalitionMask.coalition_size" title="Link to this definition">¶</a></dt>
+<dd><p>Return the number of present players.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.domain.coalition.CoalitionMask.validate_against">
+<span class="sig-name descname"><span class="pre">validate_against</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.domain.players.PlayerSet" title="nlp_shap.domain.players.PlayerSet"><span class="pre">PlayerSet</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/domain/coalition.html#CoalitionMask.validate_against"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.coalition.CoalitionMask.validate_against" title="Link to this definition">¶</a></dt>
+<dd><p>Ensure the mask length matches the player set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-nlp_shap.domain.game">Cooperative-game domain types.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.domain.game.CooperativeGame">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.domain.game.</span></span><span class="sig-name descname"><span class="pre">CooperativeGame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.domain.players.PlayerSet" title="nlp_shap.domain.players.PlayerSet"><span class="pre">PlayerSet</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/domain/game.html#CooperativeGame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.game.CooperativeGame" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Player set and reference values for a characteristic function.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.game.CooperativeGame.player_set">
+<span class="sig-name descname"><span class="pre">player_set</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#nlp_shap.domain.players.PlayerSet" title="nlp_shap.domain.players.PlayerSet"><span class="pre">PlayerSet</span></a></span><a class="headerlink" href="#nlp_shap.domain.game.CooperativeGame.player_set" title="Link to this definition">¶</a></dt>
+<dd><p>Ordered explainability players that define the game.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.domain.game.CooperativeGame.empty_value">
+<span class="sig-name descname"><span class="pre">empty_value</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#nlp_shap.domain.game.CooperativeGame.empty_value" title="Link to this definition">¶</a></dt>
+<dd><p>Reference payoff <span class="math notranslate nohighlight">\(v(\emptyset)\)</span> for the characteristic function.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-nlp_shap.domain.estimands">Estimand labels for attribution outputs and archive manifests.</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="nlp_shap.domain.estimands.EstimandWire">
 <span class="sig-prename descclassname"><span class="pre">nlp_shap.domain.estimands.</span></span><span class="sig-name descname"><span class="pre">EstimandWire</span></span><a class="headerlink" href="#nlp_shap.domain.estimands.EstimandWire" title="Link to this definition">¶</a></dt>
@@ -312,12 +516,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="estimation.html">
+          <a class="next-page" href="protocols.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Estimand aggregators</div>
+                <div class="title">Protocols</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -371,6 +575,55 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Domain types</a><ul>
+<li><a class="reference internal" href="#nlp_shap.domain.enums.Role"><code class="docutils literal notranslate"><span class="pre">Role</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.domain.enums.Role.USER"><code class="docutils literal notranslate"><span class="pre">Role.USER</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.domain.enums.Role.ASSISTANT"><code class="docutils literal notranslate"><span class="pre">Role.ASSISTANT</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.domain.enums.Role.SYSTEM"><code class="docutils literal notranslate"><span class="pre">Role.SYSTEM</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.domain.enums.SystemRolesSetup"><code class="docutils literal notranslate"><span class="pre">SystemRolesSetup</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.domain.enums.SystemRolesSetup.NONE"><code class="docutils literal notranslate"><span class="pre">SystemRolesSetup.NONE</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.domain.enums.SystemRolesSetup.SYSTEM"><code class="docutils literal notranslate"><span class="pre">SystemRolesSetup.SYSTEM</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.domain.enums.SystemRolesSetup.SYSTEM_ASSISTANT"><code class="docutils literal notranslate"><span class="pre">SystemRolesSetup.SYSTEM_ASSISTANT</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.domain.enums.EmbeddingMode"><code class="docutils literal notranslate"><span class="pre">EmbeddingMode</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.domain.enums.EmbeddingMode.STATIC"><code class="docutils literal notranslate"><span class="pre">EmbeddingMode.STATIC</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.domain.enums.EmbeddingMode.CONTEXTUAL"><code class="docutils literal notranslate"><span class="pre">EmbeddingMode.CONTEXTUAL</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.domain.conversation.Message"><code class="docutils literal notranslate"><span class="pre">Message</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.domain.conversation.Message.role"><code class="docutils literal notranslate"><span class="pre">Message.role</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.domain.conversation.Message.text"><code class="docutils literal notranslate"><span class="pre">Message.text</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.domain.conversation.Turn"><code class="docutils literal notranslate"><span class="pre">Turn</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.domain.conversation.Turn.messages"><code class="docutils literal notranslate"><span class="pre">Turn.messages</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.domain.conversation.ConversationSnapshot"><code class="docutils literal notranslate"><span class="pre">ConversationSnapshot</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.domain.conversation.ConversationSnapshot.turns"><code class="docutils literal notranslate"><span class="pre">ConversationSnapshot.turns</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.domain.conversation.ConversationSnapshot.snapshot_id"><code class="docutils literal notranslate"><span class="pre">ConversationSnapshot.snapshot_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.domain.conversation.ConversationSnapshot.from_turns"><code class="docutils literal notranslate"><span class="pre">ConversationSnapshot.from_turns()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.domain.players.PlayerSet"><code class="docutils literal notranslate"><span class="pre">PlayerSet</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.domain.players.PlayerSet.player_ids"><code class="docutils literal notranslate"><span class="pre">PlayerSet.player_ids</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.domain.players.PlayerSet.num_players"><code class="docutils literal notranslate"><span class="pre">PlayerSet.num_players</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.domain.coalition.CoalitionMask"><code class="docutils literal notranslate"><span class="pre">CoalitionMask</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.domain.coalition.CoalitionMask.present"><code class="docutils literal notranslate"><span class="pre">CoalitionMask.present</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.domain.coalition.CoalitionMask.from_sequence"><code class="docutils literal notranslate"><span class="pre">CoalitionMask.from_sequence()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.domain.coalition.CoalitionMask.coalition_size"><code class="docutils literal notranslate"><span class="pre">CoalitionMask.coalition_size()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.domain.coalition.CoalitionMask.validate_against"><code class="docutils literal notranslate"><span class="pre">CoalitionMask.validate_against()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.domain.game.CooperativeGame"><code class="docutils literal notranslate"><span class="pre">CooperativeGame</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.domain.game.CooperativeGame.player_set"><code class="docutils literal notranslate"><span class="pre">CooperativeGame.player_set</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.domain.game.CooperativeGame.empty_value"><code class="docutils literal notranslate"><span class="pre">CooperativeGame.empty_value</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#nlp_shap.domain.estimands.EstimandWire"><code class="docutils literal notranslate"><span class="pre">EstimandWire</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.domain.estimands.Estimand"><code class="docutils literal notranslate"><span class="pre">Estimand</span></code></a><ul>
 <li><a class="reference internal" href="#nlp_shap.domain.estimands.Estimand.SHAPLEY"><code class="docutils literal notranslate"><span class="pre">Estimand.SHAPLEY</span></code></a></li>
@@ -389,12 +642,13 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+</div><script src="../_static/documentation_options.js?v=92734c54"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=fd10adb8"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     </body>
 </html>

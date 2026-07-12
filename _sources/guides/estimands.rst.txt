@@ -77,6 +77,7 @@ Further reading
 ---------------
 
 - :doc:`getting_started` — install and first example
-- Theory: :doc:`../theory/estimands`
+- :doc:`applications` — business and compliance use cases
+- Theory: :doc:`../theory/shapley_values`, :doc:`../theory/estimands`
 - Cooperative games: :doc:`../theory/cooperative_games`
 - API: :doc:`../api`

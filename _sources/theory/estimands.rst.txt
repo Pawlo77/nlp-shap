@@ -1,19 +1,19 @@
 Estimands: Shapley vs Banzhaf
 ==============================
 
-An **estimand** is the quantity your attribution procedure targets. Monte Carlo
-coalition averaging does **not** automatically estimate Shapley values; unweighted
-means over sampled coalitions estimate the **Banzhaf index** unless Shapley
-weights are applied explicitly.
+An **estimand** is the quantity your attribution procedure targets. In
+``nlp-shap``, estimands are explicit types — not implicit behaviour of an
+estimator. Monte Carlo coalition averaging does **not** automatically estimate
+Shapley values; unweighted means over sampled coalitions estimate the **Banzhaf
+index** unless Shapley weights are applied.
 
-``nlp-shap`` keeps estimands separate from estimators so results and archive
-manifests are honestly labelled. Unweighted averaging over sampled coalitions
-targets the Banzhaf index; Shapley values require explicit Shapley weights.
+For Shapley axioms and uniqueness, see :doc:`shapley_values`. For cooperative-game
+foundations, see :doc:`cooperative_games`.
 
-Shapley value
--------------
+Shapley value (estimand)
+------------------------
 
-The Shapley value :math:`\phi_i(v)` for player :math:`i` is:
+The Shapley estimand uses factorial coalition weights:
 
 .. math::
 
@@ -21,22 +21,22 @@ The Shapley value :math:`\phi_i(v)` for player :math:`i` is:
    \frac{|S|!\,(|N|-|S|-1)!}{|N|!}
    \bigl(v(S \cup \{i\}) - v(S)\bigr)
 
-The weight for a coalition of size :math:`|S| = k` (excluding :math:`i`) is:
-
 .. math::
 
    w_{\mathrm{Shapley}}(k, n) = \frac{k!\,(n-k-1)!}{n!}
 
 Implemented in :class:`~nlp_shap.estimation.estimands.shapley.ShapleyAggregator`.
 
-**Properties (axiomatic):** efficiency, symmetry, dummy player, additivity —
-see Shapley (1953).
+**Axiomatic summary:** efficiency, symmetry, dummy player, additivity — uniquely
+characterizing :math:`\phi` among cooperative-game allocation rules (Shapley,
+1953). See :doc:`shapley_values` for formal statements.
 
-Banzhaf index
--------------
+Banzhaf index (estimand)
+------------------------
 
-The Banzhaf index :math:`\beta_i(v)` uses **uniform** weights over
-:math:`S \subseteq N \setminus \{i\}`:
+The **Banzhaf index** (also called the Banzhaf–Coleman power index in voting
+theory) uses **uniform** weights over coalitions :math:`S \subseteq N \setminus
+\{i\}`:
 
 .. math::
 
@@ -44,33 +44,81 @@ The Banzhaf index :math:`\beta_i(v)` uses **uniform** weights over
    \sum_{S \subseteq N \setminus \{i\}}
    \bigl(v(S \cup \{i\}) - v(S)\bigr)
 
-Equivalently, :math:`w_{\mathrm{Banzhaf}}(k, n) = 2^{-(n-1)}` for every
-coalition size :math:`k`.
+Equivalently, :math:`w_{\mathrm{Banzhaf}}(k, n) = 2^{-(n-1)}` for every coalition
+size :math:`k`.
 
 Implemented in :class:`~nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator`.
 
-When they differ
-----------------
+**Interpretation:** :math:`\beta_i` measures the average marginal contribution
+across all coalitions, or — in threshold games — the probability that player
+:math:`i` is **pivotal** when each player independently joins with probability
+:math:`1/2`. Banzhaf indices need not satisfy **efficiency**:
+:math:`\sum_i \beta_i(v) \neq v(N)` in general.
 
-For **additive** games :math:`v(S) = \sum_{i \in S} a_i`, Shapley and Banzhaf
-coincide (both recover coefficients :math:`a_i`).
+Banzhaf (1965) introduced the index in weighted-voting analysis; Dubey & Shapley
+(1979) developed its mathematical properties on the space of characteristic
+functions.
 
-For **non-additive** games they diverge. A standard toy example is the
-**majority/threshold** game with :math:`|N|=3` and :math:`v(S)=1` iff
+When Shapley and Banzhaf diverge
+--------------------------------
+
+For **additive** games :math:`v(S) = \sum_{i \in S} a_i`, both indices recover
+:math:`a_i`.
+
+For **non-additive** games they can disagree substantially. A standard example is
+the **majority/threshold** game with :math:`|N|=3` and :math:`v(S)=1` iff
 :math:`|S| \ge 2`, else :math:`0`:
 
-- Shapley: each player receives :math:`2/6 \approx 0.333`
-- Banzhaf: each player receives :math:`0.5`
++------------------+----------------------------------+
+| Estimand         | Per-player value                 |
++==================+==================================+
+| Shapley          | :math:`2/6 \approx 0.333`        |
++------------------+----------------------------------+
+| Banzhaf          | :math:`0.5`                      |
++------------------+----------------------------------+
 
 The test suite locks this divergence on identical coalition samples.
 
-Labelling
----------
+Choosing an estimand in practice
+--------------------------------
+
+**Prefer Shapley when:**
+
+- Attributions must sum to the total utility gain (**efficiency**).
+- You need the classical fairness axioms for stakeholder review.
+- Reporting aligns with SHAP literature and local accuracy guarantees.
+
+**Prefer Banzhaf when:**
+
+- You care about *swing* / pivotal influence per token.
+- You want uniform coalition averaging without factorial weights.
+- You explicitly study voting-power-style sensitivity.
+
+Regardless of choice, label outputs honestly. ``nlp-shap`` separates estimands
+from estimators so archives and papers never misreport Banzhaf output as Shapley.
+
+Monte Carlo and estimand confusion
+----------------------------------
+
+A common pitfall in explainability codebases is to:
+
+1. Sample coalitions :math:`S_1, \dots, S_m` with an estimator
+2. Average marginal contributions **without** Shapley weights
+3. Label the result "Shapley"
+
+Step 2 estimates a **Banzhaf-style** quantity (uniform coalition average), not
+:math:`\phi`. Strumbelj & Kononenko (2014) discuss coalition-based feature
+contributions; Fryer et al. (2021) analyze when Shapley axioms justify feature
+selection in ML. Always apply the estimand aggregator that matches the quantity
+you intend to report.
+
+Labelling in ``nlp-shap``
+-------------------------
 
 Every :class:`~nlp_shap.pipeline.result.ExplainResult` carries an
 :class:`~nlp_shap.domain.estimands.Estimand` label. Run archives persist the
 same label in :class:`~nlp_shap.pipeline.manifest.RunManifestPayload` so
-downstream analysis never misreports Banzhaf output as Shapley.
+downstream analysis and compliance reviews can verify which estimand was used.
 
 The :class:`~nlp_shap.protocols.estimand.EstimandAggregator` protocol defines the
 aggregation contract; concrete implementations live in
@@ -79,16 +127,30 @@ aggregation contract; concrete implementations live in
 References
 ----------
 
-- Shapley, L. S. (1953). *A Value for n-person Games*.
-  `Project Euclid <https://projecteuclid.org/journals/contributions-to-the-theory-of-games/volume-2/issue-none/A-Value-for-n-person-Games/10.1215/sm/1175702444.full>`__
-- Banzhaf, J. F. (1965). *Weighted voting doesn't work: A mathematical analysis*.
+- Shapley, L. S. (1953). A value for *n*-person games. In H. W. Kuhn & A. W.
+  Tucker (Eds.), *Contributions to the Theory of Games II* (pp. 307–317).
+  Princeton University Press.
+  `DOI:10.1515/9781400881970-018 <https://doi.org/10.1515/9781400881970-018>`__
+- Banzhaf, J. F. (1965). Weighted voting doesn't work: A mathematical analysis.
   *Rutgers Law Review*, 19(2), 317–343.
-- Strumbelj, E., & Kononenko, I. (2014). *Explaining prediction models and
-  individual predictions with feature contributions*.
+- Dubey, P., & Shapley, L. S. (1979). Mathematical properties of the Banzhaf
+  power index. *Mathematics of Operations Research*, 4(2), 99–131.
+  `DOI:10.1287/moor.4.2.99 <https://doi.org/10.1287/moor.4.2.99>`__
+- Strumbelj, E., & Kononenko, I. (2014). Explaining prediction models and
+  individual predictions with feature contributions.
+  *Knowledge-Based Systems*, 41, 78–84.
   `DOI:10.1016/j.knosys.2013.10.012 <https://doi.org/10.1016/j.knosys.2013.10.012>`__
-  (Banzhaf-style unweighted coalition averages in explainability)
-- Lundberg, S. M., & Lee, S.-I. (2017). *A Unified Approach to Interpreting
-  Model Predictions* (SHAP). NeurIPS.
-  `NeurIPS proceedings <https://papers.nips.cc/paper/7062-a-unified-approach-to-interpreting-model-predictions>`__
-- Fryer, D., Strümke, I., & Nguyen, H. (2021). *Shapley Values for NLP
-  Explainability*. `arXiv:2104.08744 <https://arxiv.org/abs/2104.08744>`__
+- Lundberg, S. M., & Lee, S.-I. (2017). A unified approach to interpreting model
+  predictions. *Advances in Neural Information Processing Systems*, 30.
+  `ML Anthology <https://mlanthology.org/neurips/2017/lundberg2017neurips-unified/>`__;
+  `arXiv:1705.07874 <https://arxiv.org/abs/1705.07874>`__
+- Fryer, D. V., Strümke, I., & Nguyen, H. D. (2021). Shapley values for feature
+  selection: The good, the bad, and the axioms. *IEEE Access*, 9, 144352–144360.
+  `DOI:10.1109/ACCESS.2021.3115252 <https://doi.org/10.1109/ACCESS.2021.3115252>`__;
+  `arXiv:2102.10936 <https://arxiv.org/abs/2102.10936>`__
+- Ethayarajh, K., & Jurafsky, D. (2021). Attention flows are Shapley value
+  explanations. In *Proceedings of the 59th Annual Meeting of the Association for
+  Computational Linguistics and the 11th International Joint Conference on Natural
+  Language Processing (Volume 2: Short Papers)* (pp. 49–54).
+  `ACL Anthology <https://aclanthology.org/2021.acl-short.8/>`__;
+  `arXiv:2105.14652 <https://arxiv.org/abs/2105.14652>`__

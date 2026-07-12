@@ -7,7 +7,7 @@
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Release notes - nlp-shap 0.1.1</title>
+        <title>Release notes - nlp-shap 0.1.2</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.1</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.2</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.1</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.2</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -208,10 +208,13 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
@@ -223,9 +226,10 @@
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/domain.html">Domain types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pipeline.html">Pipeline types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/protocols.html">Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators</a></li>
 </ul>
 </li>
 </ul>
@@ -278,6 +282,31 @@
 <section id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">¶</a></h3>
 <ul class="simple">
+<li><p>Expanded theory: Shapley axioms, uniqueness theorem, cooperative-game foundations.</p></li>
+<li><p>Business and compliance applications guide with verified references.</p></li>
+<li><p>Corrected bibliographic links (Shapley 1953 DOI, SHAP NeurIPS / arXiv).</p></li>
+</ul>
+</section>
+</section>
+<section id="release-0-1-2">
+<span id="id1"></span><h2>0.1.2 (2026-07-12)<a class="headerlink" href="#release-0-1-2" title="Link to this heading">¶</a></h2>
+<section id="added">
+<h3>Added<a class="headerlink" href="#added" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Domain types: <a class="reference internal" href="api.html#nlp_shap.ConversationSnapshot" title="nlp_shap.ConversationSnapshot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConversationSnapshot</span></code></a>,
+<a class="reference internal" href="api.html#nlp_shap.Turn" title="nlp_shap.Turn"><code class="xref py py-class docutils literal notranslate"><span class="pre">Turn</span></code></a>, <a class="reference internal" href="api.html#nlp_shap.Message" title="nlp_shap.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a>,
+<a class="reference internal" href="api.html#nlp_shap.PlayerSet" title="nlp_shap.PlayerSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlayerSet</span></code></a>, <a class="reference internal" href="api.html#nlp_shap.CoalitionMask" title="nlp_shap.CoalitionMask"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoalitionMask</span></code></a>,
+<a class="reference internal" href="api.html#nlp_shap.CooperativeGame" title="nlp_shap.CooperativeGame"><code class="xref py py-class docutils literal notranslate"><span class="pre">CooperativeGame</span></code></a>, and conversation enums.</p></li>
+<li><p>Protocols for backends, estimators, value functions, partitions, absence
+policies, and embedding providers.</p></li>
+<li><p><a class="reference internal" href="api.html#nlp_shap.PluginRegistry" title="nlp_shap.PluginRegistry"><code class="xref py py-class docutils literal notranslate"><span class="pre">PluginRegistry</span></code></a> with packaging entry-point discovery.</p></li>
+<li><p><a class="reference internal" href="api.html#nlp_shap.ExplainConfig" title="nlp_shap.ExplainConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainConfig</span></code></a> (Pydantic v2) with YAML load/save helpers.</p></li>
+<li><p>Configuration guide and expanded API reference pages.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Documentation<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<ul class="simple">
 <li><p>Sphinx theory pages for cooperative games and estimands (Shapley vs Banzhaf).</p></li>
 <li><p>Usage guide for estimand aggregators, results, and manifests.</p></li>
 <li><p>Expanded API reference for public modules.</p></li>
@@ -293,9 +322,9 @@
 </section>
 </section>
 <section id="release-0-1-1">
-<span id="id1"></span><h2>0.1.1 (2026-07-12)<a class="headerlink" href="#release-0-1-1" title="Link to this heading">¶</a></h2>
-<section id="added">
-<h3>Added<a class="headerlink" href="#added" title="Link to this heading">¶</a></h3>
+<span id="id3"></span><h2>0.1.1 (2026-07-12)<a class="headerlink" href="#release-0-1-1" title="Link to this heading">¶</a></h2>
+<section id="id4">
+<h3>Added<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="api/estimation.html#nlp_shap.estimation.estimands.shapley.ShapleyAggregator" title="nlp_shap.estimation.estimands.shapley.ShapleyAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapleyAggregator</span></code></a> and
 <a class="reference internal" href="api/estimation.html#nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator" title="nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BanzhafAggregator</span></code></a> for
@@ -312,9 +341,9 @@ estimand labelling.</p></li>
 </section>
 </section>
 <section id="release-0-1-0">
-<span id="id2"></span><h2>0.1.0 (2026-07-12)<a class="headerlink" href="#release-0-1-0" title="Link to this heading">¶</a></h2>
-<section id="id3">
-<h3>Added<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<span id="id5"></span><h2>0.1.0 (2026-07-12)<a class="headerlink" href="#release-0-1-0" title="Link to this heading">¶</a></h2>
+<section id="id6">
+<h3>Added<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Initial PyPI package layout and <code class="docutils literal notranslate"><span class="pre">nlp_shap</span></code> import surface.</p></li>
 <li><p>Logging bootstrap from <code class="docutils literal notranslate"><span class="pre">[tool.logging]</span></code> in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> via
@@ -390,15 +419,20 @@ estimand labelling.</p></li>
 <li><a class="reference internal" href="#">Release notes</a><ul>
 <li><a class="reference internal" href="#unreleased">Unreleased</a><ul>
 <li><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-0-1-2">0.1.2 (2026-07-12)</a><ul>
+<li><a class="reference internal" href="#added">Added</a></li>
+<li><a class="reference internal" href="#id2">Documentation</a></li>
 <li><a class="reference internal" href="#tooling">Tooling</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-0-1-1">0.1.1 (2026-07-12)</a><ul>
-<li><a class="reference internal" href="#added">Added</a></li>
+<li><a class="reference internal" href="#id4">Added</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-0-1-0">0.1.0 (2026-07-12)</a><ul>
-<li><a class="reference internal" href="#id3">Added</a></li>
+<li><a class="reference internal" href="#id6">Added</a></li>
 </ul>
 </li>
 </ul>
@@ -412,7 +446,7 @@ estimand labelling.</p></li>
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=a58bc63e"></script>
+</div><script src="_static/documentation_options.js?v=92734c54"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

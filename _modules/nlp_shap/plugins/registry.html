@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.pipeline.manifest - nlp-shap 0.1.2</title>
+        <title>nlp_shap.plugins.registry - nlp-shap 0.1.2</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -263,60 +263,78 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for nlp_shap.pipeline.manifest</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Run archive manifest schema stubs.&quot;&quot;&quot;</span>
+          <h1>Source code for nlp_shap.plugins.registry</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Plugin registry with entry-point discovery.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypedDict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.estimands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Estimand</span><span class="p">,</span> <span class="n">EstimandWire</span><span class="p">,</span> <span class="n">estimand_to_wire</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">importlib.metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">entry_points</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">cast</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">.groups</span><span class="w"> </span><span class="kn">import</span> <span class="n">PluginGroup</span>
 
-<div class="viewcode-block" id="RunManifestPayload">
-<a class="viewcode-back" href="../../../api/pipeline.html#nlp_shap.RunManifestPayload">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">RunManifestPayload</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;JSON-compatible manifest payload persisted with a run archive.&quot;&quot;&quot;</span>
-
-    <span class="n">estimand</span><span class="p">:</span> <span class="n">EstimandWire</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimand label recorded for every attribution output.&quot;&quot;&quot;</span>
-
-    <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stable identifier for the explain run.&quot;&quot;&quot;</span></div>
+<span class="n">PluginFactory</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="nb">object</span><span class="p">]</span>
+<span class="sd">&quot;&quot;&quot;Callable that materializes a plugin instance.&quot;&quot;&quot;</span>
 
 
+<div class="viewcode-block" id="PluginRegistry">
+<a class="viewcode-back" href="../../../api/plugins.html#nlp_shap.PluginRegistry">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PluginRegistry</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Register and resolve pipeline plugins by group and name.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="RunManifest">
-<a class="viewcode-back" href="../../../api/pipeline.html#nlp_shap.RunManifest">[docs]</a>
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">RunManifest</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Top-level metadata persisted alongside a run archive.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_factories</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PluginFactory</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class="n">estimand</span><span class="p">:</span> <span class="n">Estimand</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimand label recorded for every attribution output.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PluginRegistry.register">
+<a class="viewcode-back" href="../../../api/plugins.html#nlp_shap.PluginRegistry.register">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">group</span><span class="p">:</span> <span class="n">PluginGroup</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">factory</span><span class="p">:</span> <span class="n">PluginFactory</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a plugin factory under ``group`` and ``name``.&quot;&quot;&quot;</span>
+        <span class="n">group_key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="n">factories</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_factories</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">group_key</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">factories</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">factory</span></div>
 
-    <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stable identifier for the explain run.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="RunManifest.to_dict">
-<a class="viewcode-back" href="../../../api/pipeline.html#nlp_shap.RunManifest.to_dict">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RunManifestPayload</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Serialize manifest fields to JSON-compatible primitives.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;estimand&quot;</span><span class="p">:</span> <span class="n">estimand_to_wire</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">estimand</span><span class="p">),</span>
-            <span class="s2">&quot;run_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
-        <span class="p">}</span></div>
+<div class="viewcode-block" id="PluginRegistry.resolve">
+<a class="viewcode-back" href="../../../api/plugins.html#nlp_shap.PluginRegistry.resolve">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resolve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">PluginGroup</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate a plugin registered under ``group`` and ``name``.&quot;&quot;&quot;</span>
+        <span class="n">group_key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">factory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_factories</span><span class="p">[</span><span class="n">group_key</span><span class="p">][</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;unknown plugin </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> in group </span><span class="si">{</span><span class="n">group_key</span><span class="si">!r}</span><span class="s2">&quot;</span>
+            <span class="k">raise</span> <span class="ne">LookupError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span>
+        <span class="k">return</span> <span class="n">factory</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="PluginRegistry.names">
+<a class="viewcode-back" href="../../../api/plugins.html#nlp_shap.PluginRegistry.names">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">PluginGroup</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return sorted plugin names registered for ``group``.&quot;&quot;&quot;</span>
+        <span class="n">group_key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_factories</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">group_key</span><span class="p">,</span> <span class="p">{})))</span></div>
+
+
+<div class="viewcode-block" id="PluginRegistry.load_entry_points">
+<a class="viewcode-back" href="../../../api/plugins.html#nlp_shap.PluginRegistry.load_entry_points">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_entry_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">PluginGroup</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Discover and register plugins published under a packaging entry-point group.&quot;&quot;&quot;</span>
+        <span class="n">group_key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="n">discovered</span> <span class="o">=</span> <span class="n">entry_points</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="n">group_key</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">entry_point</span> <span class="ow">in</span> <span class="n">discovered</span><span class="p">:</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">entry_point</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+                <span class="n">factory</span><span class="p">:</span> <span class="n">PluginFactory</span> <span class="o">=</span> <span class="n">target</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">factory</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">PluginFactory</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">group_key</span><span class="p">,</span> <span class="n">entry_point</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span></div>
 </div>
-
-
-
-<div class="viewcode-block" id="parse_manifest">
-<a class="viewcode-back" href="../../../api/pipeline.html#nlp_shap.parse_manifest">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">parse_manifest</span><span class="p">(</span><span class="n">payload</span><span class="p">:</span> <span class="n">RunManifestPayload</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RunManifest</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a typed manifest payload into a run manifest.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">RunManifest</span><span class="p">(</span>
-        <span class="n">estimand</span><span class="o">=</span><span class="n">Estimand</span><span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;estimand&quot;</span><span class="p">]),</span>
-        <span class="n">run_id</span><span class="o">=</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;run_id&quot;</span><span class="p">],</span>
-    <span class="p">)</span></div>
 
 </pre></div>
         </article>
