@@ -78,4 +78,5 @@ Further reading
 - Plugin registry: :doc:`../api/plugins`
 - Masking and absence policies: :doc:`masking`
 - Runtime archive and scheduler: :doc:`runtime`
+- Exact estimation: :doc:`exact`
 - Estimand guide: :doc:`estimands`

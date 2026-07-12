@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
-    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.4</title>
+    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.5</title>
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -170,7 +170,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.4</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.5</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.4</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.5</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -206,6 +206,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/exact.html">Using the exact estimator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/runtime.html">Runtime core</a></li>
@@ -216,6 +217,7 @@
 <li class="toctree-l1"><a class="reference internal" href="theory/cooperative_games.html">Cooperative games</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/exact.html">Exact estimation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/masking.html">Masking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/runtime.html">Runtime core</a></li>
 </ul>
@@ -226,6 +228,7 @@
 <li class="toctree-l2"><a class="reference internal" href="notebooks/estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/masking_views.html">Coalition masking and absence policies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/runtime_core.html">Runtime archive, deduplication, and async scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/exact_estimation.html">Exact estimation with estimand plugins</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -235,7 +238,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api/pipeline.html">Pipeline configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/masking.html">Masking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/runtime.html">Runtime</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators and exact estimation</a></li>
 </ul>
 </li>
 </ul>
@@ -385,22 +388,28 @@
           <li><a href="api/estimation.html#nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator">(class in nlp_shap.estimation.estimands.banzhaf)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot.base">base (nlp_shap.masking.builder.MaskedSnapshot attribute)</a>
 
         <ul>
           <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot.base">(nlp_shap.masking.MaskedSnapshot attribute)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot.base_snapshot_id">base_snapshot_id (nlp_shap.masking.builder.MaskedSnapshot property)</a>
 
         <ul>
           <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot.base_snapshot_id">(nlp_shap.masking.MaskedSnapshot property)</a>
 </li>
         </ul></li>
-        <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy.bind_snapshot">bind_snapshot() (nlp_shap.protocols.estimator.EstimatorStrategy method)</a>
+        <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.bind_snapshot">bind_snapshot() (nlp_shap.estimation.exact.ExactEstimator method)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.ExactEstimator.bind_snapshot">(nlp_shap.ExactEstimator method)</a>
 </li>
+          <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy.bind_snapshot">(nlp_shap.protocols.estimator.EstimatorStrategy method)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.budget">budget (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BudgetConfig">BudgetConfig (class in nlp_shap.pipeline.config)</a>
@@ -597,6 +606,12 @@
           <li><a href="api/pipeline.html#nlp_shap.pipeline.config.KvCacheConfig.enabled">(nlp_shap.pipeline.config.KvCacheConfig attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.enumerate_masks">enumerate_masks() (nlp_shap.estimation.exact.ExactEstimator static method)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.ExactEstimator.enumerate_masks">(nlp_shap.ExactEstimator static method)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.Estimand">Estimand (class in nlp_shap)</a>
 
         <ul>
@@ -641,6 +656,12 @@
         </ul></li>
         <li><a href="api/domain.html#nlp_shap.domain.estimands.EstimandWire">EstimandWire (in module nlp_shap.domain.estimands)</a>
 </li>
+        <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.estimate_attributions">estimate_attributions() (nlp_shap.estimation.exact.ExactEstimator method)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.ExactEstimator.estimate_attributions">(nlp_shap.ExactEstimator method)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.estimator">estimator (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
         <li><a href="api.html#nlp_shap.PluginGroup.ESTIMATORS">ESTIMATORS (nlp_shap.PluginGroup attribute)</a>
@@ -651,6 +672,12 @@
         </ul></li>
         <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy">EstimatorStrategy (class in nlp_shap.protocols.estimator)</a>
 </li>
+        <li><a href="api.html#nlp_shap.ExactEstimator">ExactEstimator (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator">(class in nlp_shap.estimation.exact)</a>
+</li>
+        </ul></li>
         <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.SchedulerMetrics.executed">executed (nlp_shap.runtime.scheduler.SchedulerMetrics attribute)</a>
 
         <ul>
@@ -1005,6 +1032,8 @@
 </li>
           <li><a href="api/estimation.html#module-nlp_shap.estimation.estimands.shapley">nlp_shap.estimation.estimands.shapley</a>
 </li>
+          <li><a href="api/estimation.html#module-nlp_shap.estimation.exact">nlp_shap.estimation.exact</a>
+</li>
           <li><a href="api/masking.html#module-nlp_shap.masking">nlp_shap.masking</a>
 </li>
           <li><a href="api/masking.html#module-nlp_shap.masking.builder">nlp_shap.masking.builder</a>
@@ -1076,9 +1105,13 @@
           <li><a href="api/masking.html#nlp_shap.masking.space.MaskSpace.n_features">(nlp_shap.masking.space.MaskSpace property)</a>
 </li>
         </ul></li>
-        <li><a href="api/masking.html#nlp_shap.masking.DeletePolicy.name">name (nlp_shap.masking.DeletePolicy property)</a>
+        <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.name">name (nlp_shap.estimation.exact.ExactEstimator property)</a>
 
         <ul>
+          <li><a href="api.html#nlp_shap.ExactEstimator.name">(nlp_shap.ExactEstimator property)</a>
+</li>
+          <li><a href="api/masking.html#nlp_shap.masking.DeletePolicy.name">(nlp_shap.masking.DeletePolicy property)</a>
+</li>
           <li><a href="api/masking.html#nlp_shap.masking.NeutralPolicy.name">(nlp_shap.masking.NeutralPolicy property)</a>
 </li>
           <li><a href="api/masking.html#nlp_shap.masking.PadPolicy.name">(nlp_shap.masking.PadPolicy property)</a>
@@ -1177,6 +1210,13 @@
 
         <ul>
           <li><a href="api/estimation.html#module-nlp_shap.estimation.estimands.shapley">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.estimation.exact
+
+        <ul>
+          <li><a href="api/estimation.html#module-nlp_shap.estimation.exact">module</a>
 </li>
         </ul></li>
         <li>
@@ -1366,6 +1406,12 @@
         </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.normalizer">normalizer (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
+        <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.num_coalitions">num_coalitions() (nlp_shap.estimation.exact.ExactEstimator static method)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.ExactEstimator.num_coalitions">(nlp_shap.ExactEstimator static method)</a>
+</li>
+        </ul></li>
         <li><a href="api/domain.html#nlp_shap.domain.players.PlayerSet.num_players">num_players (nlp_shap.domain.players.PlayerSet property)</a>
 
         <ul>
@@ -1612,8 +1658,14 @@
   <h2>S</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy.sample_masks">sample_masks() (nlp_shap.protocols.estimator.EstimatorStrategy method)</a>
+        <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.sample_masks">sample_masks() (nlp_shap.estimation.exact.ExactEstimator method)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.ExactEstimator.sample_masks">(nlp_shap.ExactEstimator method)</a>
 </li>
+          <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy.sample_masks">(nlp_shap.protocols.estimator.EstimatorStrategy method)</a>
+</li>
+        </ul></li>
         <li><a href="api/runtime.html#nlp_shap.runtime.SchedulerMetrics">SchedulerMetrics (class in nlp_shap.runtime)</a>
 
         <ul>
@@ -1642,6 +1694,8 @@
           <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.CoalitionJob.snapshot">(nlp_shap.runtime.scheduler.CoalitionJob attribute)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api.html#nlp_shap.ConversationSnapshot.snapshot_id">snapshot_id (nlp_shap.ConversationSnapshot attribute)</a>
 
         <ul>
@@ -1660,8 +1714,6 @@
           <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.CoalitionJob.snapshot_id">(nlp_shap.runtime.scheduler.CoalitionJob attribute)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/domain.html#nlp_shap.domain.enums.EmbeddingMode.STATIC">STATIC (nlp_shap.domain.enums.EmbeddingMode attribute)</a>
 </li>
         <li><a href="api/domain.html#nlp_shap.domain.enums.Role.SYSTEM">SYSTEM (nlp_shap.domain.enums.Role attribute)</a>
@@ -1862,7 +1914,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=fd825880"></script>
+</div><script src="_static/documentation_options.js?v=59fadc99"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

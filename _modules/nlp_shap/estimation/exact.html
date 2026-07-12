@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.masking.partitions - nlp-shap 0.1.5</title>
+        <title>nlp_shap.estimation.exact - nlp-shap 0.1.5</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -274,41 +274,95 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for nlp_shap.masking.partitions</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Player partition plugins for conversation snapshots.&quot;&quot;&quot;</span>
+          <h1>Source code for nlp_shap.estimation.exact</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Exact coalition enumeration estimator.&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">product</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.coalition</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionMask</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..domain.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationSnapshot</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..domain.players</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlayerSet</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.tokens</span><span class="w"> </span><span class="kn">import</span> <span class="n">player_id_for_span</span><span class="p">,</span> <span class="n">tokenize_snapshot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..protocols.estimand</span><span class="w"> </span><span class="kn">import</span> <span class="n">EstimandAggregator</span>
 
 
-<div class="viewcode-block" id="TokenPartitioner">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.TokenPartitioner">[docs]</a>
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">TokenPartitioner</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Partition a snapshot into whitespace-delimited text tokens.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ExactEstimator">
+<a class="viewcode-back" href="../../../api/estimation.html#nlp_shap.ExactEstimator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExactEstimator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enumerate all coalitions and delegate attribution to an estimand plugin.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the registered partition identifier.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;tokens&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the registered estimator identifier.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;exact&quot;</span>
 
-<div class="viewcode-block" id="TokenPartitioner.partition">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.TokenPartitioner.partition">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PlayerSet</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Derive ordered token players from the snapshot text.&quot;&quot;&quot;</span>
-        <span class="n">spans</span> <span class="o">=</span> <span class="n">tokenize_snapshot</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">spans</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;snapshot must contain at least one explainable token&quot;</span>
+<div class="viewcode-block" id="ExactEstimator.num_coalitions">
+<a class="viewcode-back" href="../../../api/estimation.html#nlp_shap.ExactEstimator.num_coalitions">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">num_coalitions</span><span class="p">(</span><span class="n">num_players</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the number of coalitions evaluated by exact enumeration.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">num_players</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;num_players must be at least 1&quot;</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="n">player_ids</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
-            <span class="n">player_id_for_span</span><span class="p">(</span><span class="n">snapshot</span><span class="o">.</span><span class="n">snapshot_id</span><span class="p">,</span> <span class="n">span</span><span class="p">)</span> <span class="k">for</span> <span class="n">span</span> <span class="ow">in</span> <span class="n">spans</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">PlayerSet</span><span class="p">(</span><span class="n">player_ids</span><span class="o">=</span><span class="n">player_ids</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">num_players</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ExactEstimator.bind_snapshot">
+<a class="viewcode-back" href="../../../api/estimation.html#nlp_shap.ExactEstimator.bind_snapshot">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bind_snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Attach the conversation snapshot under explanation.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_snapshot</span> <span class="o">=</span> <span class="n">snapshot</span></div>
+
+
+<div class="viewcode-block" id="ExactEstimator.sample_masks">
+<a class="viewcode-back" href="../../../api/estimation.html#nlp_shap.ExactEstimator.sample_masks">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sample_masks</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">player_set</span><span class="p">:</span> <span class="n">PlayerSet</span><span class="p">,</span>
+        <span class="n">budget_fraction</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">include_minimal_masks</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">CoalitionMask</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return every coalition mask except the grand coalition.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">budget_fraction</span> <span class="o">!=</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;exact estimator requires budget_fraction == 1.0&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">include_minimal_masks</span><span class="p">,</span> <span class="n">seed</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">enumerate_masks</span><span class="p">(</span><span class="n">player_set</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ExactEstimator.enumerate_masks">
+<a class="viewcode-back" href="../../../api/estimation.html#nlp_shap.ExactEstimator.enumerate_masks">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">enumerate_masks</span><span class="p">(</span><span class="n">player_set</span><span class="p">:</span> <span class="n">PlayerSet</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">CoalitionMask</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build all coalition masks except the all-present coalition.&quot;&quot;&quot;</span>
+        <span class="n">num_players</span> <span class="o">=</span> <span class="n">player_set</span><span class="o">.</span><span class="n">num_players</span>
+        <span class="n">masks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">CoalitionMask</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">bits</span> <span class="ow">in</span> <span class="n">product</span><span class="p">([</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="n">num_players</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">bits</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">CoalitionMask</span><span class="o">.</span><span class="n">from_sequence</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span>
+            <span class="n">mask</span><span class="o">.</span><span class="n">validate_against</span><span class="p">(</span><span class="n">player_set</span><span class="p">)</span>
+            <span class="n">masks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">masks</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ExactEstimator.estimate_attributions">
+<a class="viewcode-back" href="../../../api/estimation.html#nlp_shap.ExactEstimator.estimate_attributions">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">estimate_attributions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">masks</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">CoalitionMask</span><span class="p">],</span>
+        <span class="n">payoffs</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+        <span class="n">aggregator</span><span class="p">:</span> <span class="n">EstimandAggregator</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Aggregate coalition payoffs with the selected estimand plugin.&quot;&quot;&quot;</span>
+        <span class="n">bool_masks</span> <span class="o">=</span> <span class="p">[</span><span class="n">mask</span><span class="o">.</span><span class="n">present</span> <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">masks</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">aggregator</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">bool_masks</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">payoffs</span><span class="p">))</span></div>
 </div>
 
 </pre></div>

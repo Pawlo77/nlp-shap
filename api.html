@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Domain types" href="api/domain.html"><link rel="prev" title="Runtime archive, deduplication, and async scheduling" href="notebooks/runtime_core.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Domain types" href="api/domain.html"><link rel="prev" title="Exact estimation with estimand plugins" href="notebooks/exact_estimation.html">
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>API reference - nlp-shap 0.1.4</title>
+        <title>API reference - nlp-shap 0.1.5</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.4</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.5</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.4</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.5</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -208,6 +208,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/exact.html">Using the exact estimator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/runtime.html">Runtime core</a></li>
@@ -218,6 +219,7 @@
 <li class="toctree-l1"><a class="reference internal" href="theory/cooperative_games.html">Cooperative games</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/exact.html">Exact estimation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/masking.html">Masking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/runtime.html">Runtime core</a></li>
 </ul>
@@ -228,6 +230,7 @@
 <li class="toctree-l2"><a class="reference internal" href="notebooks/estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/masking_views.html">Coalition masking and absence policies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/runtime_core.html">Runtime archive, deduplication, and async scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/exact_estimation.html">Exact estimation with estimand plugins</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -237,7 +240,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api/pipeline.html">Pipeline configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/masking.html">Masking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/runtime.html">Runtime</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators and exact estimation</a></li>
 </ul>
 </li>
 </ul>
@@ -340,18 +343,21 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <td><p>Estimand label enum (<code class="docutils literal notranslate"><span class="pre">shapley</span></code> | <code class="docutils literal notranslate"><span class="pre">banzhaf</span></code>). See <a class="reference internal" href="api/domain.html"><span class="doc">Domain types</span></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.ShapleyAggregator" title="nlp_shap.ShapleyAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapleyAggregator</span></code></a></p></td>
-<td><p>Shapley-weighted coalition aggregation. See <a class="reference internal" href="api/estimation.html"><span class="doc">Estimand aggregators</span></a>.</p></td>
+<td><p>Shapley-weighted coalition aggregation. See <a class="reference internal" href="api/estimation.html"><span class="doc">Estimand aggregators and exact estimation</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.BanzhafAggregator" title="nlp_shap.BanzhafAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BanzhafAggregator</span></code></a></p></td>
-<td><p>Uniform Banzhaf coalition aggregation. See <a class="reference internal" href="api/estimation.html"><span class="doc">Estimand aggregators</span></a>.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.ExactEstimator" title="nlp_shap.ExactEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a></p></td>
+<td><p>Exact coalition enumeration. See <a class="reference internal" href="api/estimation.html"><span class="doc">Estimand aggregators and exact estimation</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.ExplainResult" title="nlp_shap.ExplainResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainResult</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.BanzhafAggregator" title="nlp_shap.BanzhafAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BanzhafAggregator</span></code></a></p></td>
+<td><p>Uniform Banzhaf coalition aggregation. See <a class="reference internal" href="api/estimation.html"><span class="doc">Estimand aggregators and exact estimation</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.ExplainResult" title="nlp_shap.ExplainResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainResult</span></code></a></p></td>
 <td><p>Labelled explain output. See <a class="reference internal" href="api/pipeline.html"><span class="doc">Pipeline configuration</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.RunManifest" title="nlp_shap.RunManifest"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunManifest</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.RunManifest" title="nlp_shap.RunManifest"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunManifest</span></code></a></p></td>
 <td><p>Run-archive metadata builder. See <a class="reference internal" href="api/pipeline.html"><span class="doc">Pipeline configuration</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.parse_manifest" title="nlp_shap.parse_manifest"><code class="xref py py-func docutils literal notranslate"><span class="pre">parse_manifest()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.parse_manifest" title="nlp_shap.parse_manifest"><code class="xref py py-func docutils literal notranslate"><span class="pre">parse_manifest()</span></code></a></p></td>
 <td><p>Parse manifest payloads at archive boundaries. See <a class="reference internal" href="api/pipeline.html"><span class="doc">Pipeline configuration</span></a>.</p></td>
 </tr>
 </tbody>
@@ -368,7 +374,7 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <li class="toctree-l1"><a class="reference internal" href="api/pipeline.html">Pipeline configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/masking.html">Masking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/runtime.html">Runtime</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/estimation.html">Estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/estimation.html">Estimand aggregators and exact estimation</a></li>
 </ul>
 </div>
 </section>
@@ -490,6 +496,49 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <dt class="sig sig-object py" id="nlp_shap.Estimand.BANZHAF">
 <span class="sig-name descname"><span class="pre">BANZHAF</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'banzhaf'</span></span><a class="headerlink" href="#nlp_shap.Estimand.BANZHAF" title="Link to this definition">¶</a></dt>
 <dd><p>Banzhaf index with uniform coalition weights 1/2^(n-1).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.ExactEstimator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">ExactEstimator</span></span><a class="reference internal" href="_modules/nlp_shap/estimation/exact.html#ExactEstimator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.ExactEstimator" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Enumerate all coalitions and delegate attribution to an estimand plugin.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.ExactEstimator.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.ExactEstimator.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the registered estimator identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.ExactEstimator.num_coalitions">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">num_coalitions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_players</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></span><a class="reference internal" href="_modules/nlp_shap/estimation/exact.html#ExactEstimator.num_coalitions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.ExactEstimator.num_coalitions" title="Link to this definition">¶</a></dt>
+<dd><p>Return the number of coalitions evaluated by exact enumeration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.ExactEstimator.bind_snapshot">
+<span class="sig-name descname"><span class="pre">bind_snapshot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">snapshot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/nlp_shap/estimation/exact.html#ExactEstimator.bind_snapshot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.ExactEstimator.bind_snapshot" title="Link to this definition">¶</a></dt>
+<dd><p>Attach the conversation snapshot under explanation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.ExactEstimator.sample_masks">
+<span class="sig-name descname"><span class="pre">sample_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/domain.html#nlp_shap.domain.players.PlayerSet" title="nlp_shap.domain.players.PlayerSet"><span class="pre">PlayerSet</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">budget_fraction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_minimal_masks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="api/domain.html#nlp_shap.domain.coalition.CoalitionMask" title="nlp_shap.domain.coalition.CoalitionMask"><span class="pre">CoalitionMask</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nlp_shap/estimation/exact.html#ExactEstimator.sample_masks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.ExactEstimator.sample_masks" title="Link to this definition">¶</a></dt>
+<dd><p>Return every coalition mask except the grand coalition.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.ExactEstimator.enumerate_masks">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">enumerate_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">player_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/domain.html#nlp_shap.domain.players.PlayerSet" title="nlp_shap.domain.players.PlayerSet"><span class="pre">PlayerSet</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="api/domain.html#nlp_shap.domain.coalition.CoalitionMask" title="nlp_shap.domain.coalition.CoalitionMask"><span class="pre">CoalitionMask</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nlp_shap/estimation/exact.html#ExactEstimator.enumerate_masks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.ExactEstimator.enumerate_masks" title="Link to this definition">¶</a></dt>
+<dd><p>Build all coalition masks except the all-present coalition.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.ExactEstimator.estimate_attributions">
+<span class="sig-name descname"><span class="pre">estimate_attributions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">masks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="api/domain.html#nlp_shap.domain.coalition.CoalitionMask" title="nlp_shap.domain.coalition.CoalitionMask"><span class="pre">CoalitionMask</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payoffs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aggregator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/protocols.html#nlp_shap.protocols.estimand.EstimandAggregator" title="nlp_shap.protocols.estimand.EstimandAggregator"><span class="pre">EstimandAggregator</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nlp_shap/estimation/exact.html#ExactEstimator.estimate_attributions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.ExactEstimator.estimate_attributions" title="Link to this definition">¶</a></dt>
+<dd><p>Aggregate coalition payoffs with the selected estimand plugin.</p>
 </dd></dl>
 
 </dd></dl>
@@ -779,14 +828,14 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="notebooks/runtime_core.html">
+          <a class="prev-page" href="notebooks/exact_estimation.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Runtime archive, deduplication, and async scheduling</div>
+                <div class="title">Exact estimation with estimand plugins</div>
                 
               </div>
             </a>
@@ -859,6 +908,15 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <li><a class="reference internal" href="#nlp_shap.Estimand"><code class="docutils literal notranslate"><span class="pre">Estimand</span></code></a><ul>
 <li><a class="reference internal" href="#nlp_shap.Estimand.SHAPLEY"><code class="docutils literal notranslate"><span class="pre">Estimand.SHAPLEY</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.Estimand.BANZHAF"><code class="docutils literal notranslate"><span class="pre">Estimand.BANZHAF</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.ExactEstimator"><code class="docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.ExactEstimator.name"><code class="docutils literal notranslate"><span class="pre">ExactEstimator.name</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.ExactEstimator.num_coalitions"><code class="docutils literal notranslate"><span class="pre">ExactEstimator.num_coalitions()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.ExactEstimator.bind_snapshot"><code class="docutils literal notranslate"><span class="pre">ExactEstimator.bind_snapshot()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.ExactEstimator.sample_masks"><code class="docutils literal notranslate"><span class="pre">ExactEstimator.sample_masks()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.ExactEstimator.enumerate_masks"><code class="docutils literal notranslate"><span class="pre">ExactEstimator.enumerate_masks()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.ExactEstimator.estimate_attributions"><code class="docutils literal notranslate"><span class="pre">ExactEstimator.estimate_attributions()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#nlp_shap.ExplainConfig"><code class="docutils literal notranslate"><span class="pre">ExplainConfig</span></code></a><ul>
@@ -937,7 +995,7 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=fd825880"></script>
+</div><script src="_static/documentation_options.js?v=59fadc99"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

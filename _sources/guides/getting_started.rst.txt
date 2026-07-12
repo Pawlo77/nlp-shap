@@ -71,7 +71,8 @@ Next steps
 - :doc:`../theory/shapley_values` — Shapley axioms and uniqueness
 - :doc:`../theory/estimands` — why Shapley and Banzhaf differ
 - :doc:`applications` — business and compliance use cases
-- :doc:`../examples` — `estimands_toy_game.ipynb`, `masking_views.ipynb`, and `runtime_core.ipynb`
+- :doc:`../examples` — `estimands_toy_game.ipynb`, `masking_views.ipynb`, `runtime_core.ipynb`, and `exact_estimation.ipynb`
 - :doc:`masking` — coalition masking and absence policies
 - :doc:`runtime` — archive persistence, dedup, and async scheduling
+- :doc:`exact` — exact coalition enumeration and estimand wiring
 - :doc:`../api` — module reference

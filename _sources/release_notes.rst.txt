@@ -8,6 +8,27 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-1-5:
+
+0.1.5 (2026-07-13)
+------------------
+
+Added
+~~~~~
+
+- :class:`~nlp_shap.estimation.exact.ExactEstimator` for full coalition
+  enumeration with estimand-plugin aggregation.
+- :meth:`~nlp_shap.estimation.exact.ExactEstimator.estimate_attributions` wires
+  coalition payoffs to Shapley or Banzhaf aggregators.
+- ``exact`` estimator entry point under ``nlp_shap.estimators``.
+
+Documentation
+~~~~~~~~~~~~~
+
+- Theory and usage guides for exact estimation.
+- API reference for :mod:`nlp_shap.estimation.exact`.
+- Example notebook ``examples/exact_estimation.ipynb``.
+
 .. _release-0-1-4:
 
 0.1.4 (2026-07-13)

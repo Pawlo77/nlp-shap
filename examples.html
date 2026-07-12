@@ -7,7 +7,7 @@
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Examples - nlp-shap 0.1.4</title>
+        <title>Examples - nlp-shap 0.1.5</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.4</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.5</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.4</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.5</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -208,6 +208,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/exact.html">Using the exact estimator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/runtime.html">Runtime core</a></li>
@@ -218,6 +219,7 @@
 <li class="toctree-l1"><a class="reference internal" href="theory/cooperative_games.html">Cooperative games</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/exact.html">Exact estimation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/masking.html">Masking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/runtime.html">Runtime core</a></li>
 </ul>
@@ -228,6 +230,7 @@
 <li class="toctree-l2"><a class="reference internal" href="notebooks/estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/masking_views.html">Coalition masking and absence policies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/runtime_core.html">Runtime archive, deduplication, and async scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/exact_estimation.html">Exact estimation with estimand plugins</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -237,7 +240,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api/pipeline.html">Pipeline configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/masking.html">Masking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/runtime.html">Runtime</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators and exact estimation</a></li>
 </ul>
 </li>
 </ul>
@@ -330,6 +333,16 @@ with bounded concurrency.</p>
 </ul>
 </div>
 </section>
+<section id="exact-estimation-walkthrough">
+<h2>Exact estimation walkthrough<a class="headerlink" href="#exact-estimation-walkthrough" title="Link to this heading">¶</a></h2>
+<p>Enumerate every coalition on tiny player sets and delegate attribution to
+Shapley or Banzhaf estimand plugins.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/exact_estimation.html">Exact estimation with estimand plugins</a></li>
+</ul>
+</div>
+</section>
 <section id="gallery">
 <h2>Gallery<a class="headerlink" href="#gallery" title="Link to this heading">¶</a></h2>
 <dl class="simple">
@@ -353,6 +366,12 @@ coalition dedup keys, hot LRU cache, and async
 <a class="reference internal" href="api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler" title="nlp_shap.runtime.scheduler.InferenceScheduler"><code class="xref py py-class docutils literal notranslate"><span class="pre">InferenceScheduler</span></code></a> with scheduler
 metrics. CPU-only; no optional extras.</p>
 </dd>
+<dt><strong>exact_estimation.ipynb</strong></dt><dd><p>End-to-end walkthrough of the 0.1.5 exact estimation API:
+<a class="reference internal" href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator" title="nlp_shap.estimation.exact.ExactEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a> enumeration,
+<a class="reference internal" href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.estimate_attributions" title="nlp_shap.estimation.exact.ExactEstimator.estimate_attributions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_attributions()</span></code></a>
+estimand delegation, budget guard, and plugin resolution. CPU-only; no
+optional extras.</p>
+</dd>
 </dl>
 </section>
 <section id="source-on-github">
@@ -361,6 +380,7 @@ metrics. CPU-only; no optional extras.</p>
 <li><p><a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/estimands_toy_game.ipynb">estimands_toy_game.ipynb</a></p></li>
 <li><p><a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/masking_views.ipynb">masking_views.ipynb</a></p></li>
 <li><p><a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/runtime_core.ipynb">runtime_core.ipynb</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/exact_estimation.ipynb">exact_estimation.ipynb</a></p></li>
 <li><p><a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/README.md">examples/README.md</a></p></li>
 </ul>
 </section>
@@ -434,6 +454,7 @@ metrics. CPU-only; no optional extras.</p>
 <li><a class="reference internal" href="#toy-game-walkthrough">Toy-game walkthrough</a></li>
 <li><a class="reference internal" href="#masking-walkthrough">Masking walkthrough</a></li>
 <li><a class="reference internal" href="#runtime-walkthrough">Runtime walkthrough</a></li>
+<li><a class="reference internal" href="#exact-estimation-walkthrough">Exact estimation walkthrough</a></li>
 <li><a class="reference internal" href="#gallery">Gallery</a></li>
 <li><a class="reference internal" href="#source-on-github">Source on GitHub</a></li>
 </ul>
@@ -447,7 +468,7 @@ metrics. CPU-only; no optional extras.</p>
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=fd825880"></script>
+</div><script src="_static/documentation_options.js?v=59fadc99"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

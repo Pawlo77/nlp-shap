@@ -56,6 +56,17 @@ with bounded concurrency.
 
    notebooks/runtime_core
 
+Exact estimation walkthrough
+----------------------------
+
+Enumerate every coalition on tiny player sets and delegate attribution to
+Shapley or Banzhaf estimand plugins.
+
+.. toctree::
+   :maxdepth: 1
+
+   notebooks/exact_estimation
+
 Gallery
 -------
 
@@ -82,10 +93,18 @@ Gallery
    :class:`~nlp_shap.runtime.scheduler.InferenceScheduler` with scheduler
    metrics. CPU-only; no optional extras.
 
+**exact_estimation.ipynb**
+   End-to-end walkthrough of the 0.1.5 exact estimation API:
+   :class:`~nlp_shap.estimation.exact.ExactEstimator` enumeration,
+   :meth:`~nlp_shap.estimation.exact.ExactEstimator.estimate_attributions`
+   estimand delegation, budget guard, and plugin resolution. CPU-only; no
+   optional extras.
+
 Source on GitHub
 ----------------
 
 - `estimands_toy_game.ipynb <https://github.com/Pawlo77/nlp-shap/blob/main/examples/estimands_toy_game.ipynb>`_
 - `masking_views.ipynb <https://github.com/Pawlo77/nlp-shap/blob/main/examples/masking_views.ipynb>`_
 - `runtime_core.ipynb <https://github.com/Pawlo77/nlp-shap/blob/main/examples/runtime_core.ipynb>`_
+- `exact_estimation.ipynb <https://github.com/Pawlo77/nlp-shap/blob/main/examples/exact_estimation.ipynb>`_
 - `examples/README.md <https://github.com/Pawlo77/nlp-shap/blob/main/examples/README.md>`_

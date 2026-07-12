@@ -41,6 +41,8 @@ Public exports
      - Estimand label enum (``shapley`` | ``banzhaf``). See :doc:`api/domain`.
    * - :class:`~nlp_shap.ShapleyAggregator`
      - Shapley-weighted coalition aggregation. See :doc:`api/estimation`.
+   * - :class:`~nlp_shap.ExactEstimator`
+     - Exact coalition enumeration. See :doc:`api/estimation`.
    * - :class:`~nlp_shap.BanzhafAggregator`
      - Uniform Banzhaf coalition aggregation. See :doc:`api/estimation`.
    * - :class:`~nlp_shap.ExplainResult`

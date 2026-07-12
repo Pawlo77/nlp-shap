@@ -1,19 +1,20 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="../../../">
+<html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html">
-        <link rel="prefetch" href="../../../_static/logo.svg" as="image">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Masking" href="masking.html"><link rel="prev" title="Estimands: Shapley vs Banzhaf" href="estimands.html">
+        <link rel="prefetch" href="../_static/logo.svg" as="image">
 
-    <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.masking.partitions - nlp-shap 0.1.5</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=eb227069" />
+    <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>Exact estimation - nlp-shap 0.1.5</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eb227069" />
     
     
 
@@ -171,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">nlp-shap 0.1.5</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.5</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -182,7 +183,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -190,14 +191,14 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   <div class="sidebar-logo-container">
-    <img class="sidebar-logo" src="../../../_static/logo.svg" alt="Logo"/>
+    <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
   <span class="sidebar-brand-text">nlp-shap 0.1.5</span>
   
-</a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
@@ -205,41 +206,41 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Guides</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../guides/getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../guides/estimands.html">Using estimand aggregators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../guides/exact.html">Using the exact estimator</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../guides/config.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../guides/masking.html">Masking views</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../guides/runtime.html">Runtime core</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../guides/applications.html">Business and compliance applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/exact.html">Using the exact estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/masking.html">Masking views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/runtime.html">Runtime core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../theory/cooperative_games.html">Cooperative games</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../theory/shapley_values.html">Shapley values and axioms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../theory/exact.html">Exact estimation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../theory/masking.html">Masking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../theory/runtime.html">Runtime core</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shapley_values.html">Shapley values and axioms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Exact estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="masking.html">Masking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runtime.html">Runtime core</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../release_notes.html">Release notes</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../examples.html">Examples</a><input aria-label="Toggle navigation of Examples" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/masking_views.html">Coalition masking and absence policies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/runtime_core.html">Runtime archive, deduplication, and async scheduling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/exact_estimation.html">Exact estimation with estimand plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../examples.html">Examples</a><input aria-label="Toggle navigation of Examples" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/masking_views.html">Coalition masking and absence policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/runtime_core.html">Runtime archive, deduplication, and async scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/exact_estimation.html">Exact estimation with estimand plugins</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/domain.html">Domain types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/protocols.html">Protocols</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/plugins.html">Plugins</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/pipeline.html">Pipeline configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/masking.html">Masking</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/runtime.html">Runtime</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/estimation.html">Estimand aggregators and exact estimation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/domain.html">Domain types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/protocols.html">Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/masking.html">Masking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/runtime.html">Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/estimation.html">Estimand aggregators and exact estimation</a></li>
 </ul>
 </li>
 </ul>
@@ -261,7 +262,17 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/blob/main/docs/theory/exact.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/edit/main/docs/theory/exact.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
@@ -269,56 +280,83 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for nlp_shap.masking.partitions</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Player partition plugins for conversation snapshots.&quot;&quot;&quot;</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationSnapshot</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.players</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlayerSet</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.tokens</span><span class="w"> </span><span class="kn">import</span> <span class="n">player_id_for_span</span><span class="p">,</span> <span class="n">tokenize_snapshot</span>
-
-
-<div class="viewcode-block" id="TokenPartitioner">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.TokenPartitioner">[docs]</a>
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">TokenPartitioner</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Partition a snapshot into whitespace-delimited text tokens.&quot;&quot;&quot;</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the registered partition identifier.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;tokens&quot;</span>
-
-<div class="viewcode-block" id="TokenPartitioner.partition">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.TokenPartitioner.partition">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PlayerSet</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Derive ordered token players from the snapshot text.&quot;&quot;&quot;</span>
-        <span class="n">spans</span> <span class="o">=</span> <span class="n">tokenize_snapshot</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">spans</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;snapshot must contain at least one explainable token&quot;</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="n">player_ids</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
-            <span class="n">player_id_for_span</span><span class="p">(</span><span class="n">snapshot</span><span class="o">.</span><span class="n">snapshot_id</span><span class="p">,</span> <span class="n">span</span><span class="p">)</span> <span class="k">for</span> <span class="n">span</span> <span class="ow">in</span> <span class="n">spans</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">PlayerSet</span><span class="p">(</span><span class="n">player_ids</span><span class="o">=</span><span class="n">player_ids</span><span class="p">)</span></div>
+          <section id="exact-estimation">
+<h1>Exact estimation<a class="headerlink" href="#exact-estimation" title="Link to this heading">¶</a></h1>
+<p>The <a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.exact.ExactEstimator" title="nlp_shap.estimation.exact.ExactEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a> enumerates every coalition
+except the grand coalition and delegates attribution to an estimand plugin. Use
+it as ground truth on tiny player sets before trusting approximate samplers.</p>
+<section id="enumeration-scope">
+<h2>Enumeration scope<a class="headerlink" href="#enumeration-scope" title="Link to this heading">¶</a></h2>
+<p>For <span class="math notranslate nohighlight">\(n\)</span> players the estimator evaluates <span class="math notranslate nohighlight">\(2^n - 1\)</span> coalitions — all
+masks except the all-present coalition, which backends often precompute via
+<code class="docutils literal notranslate"><span class="pre">precompute_base</span></code>.</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[|\mathcal{S}_{\mathrm{exact}}| = 2^n - 1\]</div>
 </div>
+<p>Complexity grows exponentially in <span class="math notranslate nohighlight">\(n\)</span>; reserve exact estimation for toy
+models, sanity checks, and estimator validation.</p>
+</section>
+<section id="estimand-delegation">
+<h2>Estimand delegation<a class="headerlink" href="#estimand-delegation" title="Link to this heading">¶</a></h2>
+<p>Exact enumeration produces coalition payoffs <span class="math notranslate nohighlight">\(v(S)\)</span>. The estimand plugin
+(Shapley or Banzhaf) applies coalition weights and marginal contributions:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\text{ExactEstimator} \rightarrow \{v(S)\}_{S}
+\xrightarrow{\text{EstimandAggregator}}
+(\phi_1, \ldots, \phi_n)\]</div>
+</div>
+<p>Monte Carlo and Neyman estimators will reuse the same estimand boundary in later
+releases — exact estimation establishes the reference path.</p>
+</section>
+<section id="legacy-parity">
+<h2>Legacy parity<a class="headerlink" href="#legacy-parity" title="Link to this heading">¶</a></h2>
+<p>The implementation matches legacy <code class="docutils literal notranslate"><span class="pre">PreciseShapExplainer</span></code> Shapley values on
+additive characteristic functions when all <span class="math notranslate nohighlight">\(2^n\)</span> coalitions (including the
+grand coalition) are supplied for aggregation.</p>
+</section>
+<section id="further-reading">
+<h2>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Estimand definitions: <a class="reference internal" href="estimands.html"><span class="doc">Estimands: Shapley vs Banzhaf</span></a></p></li>
+<li><p>Cooperative-game foundations: <a class="reference internal" href="cooperative_games.html"><span class="doc">Cooperative games</span></a></p></li>
+<li><p>Usage: <a class="reference internal" href="../guides/exact.html"><span class="doc">Using the exact estimator</span></a></p></li>
+<li><p>API: <a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.exact.ExactEstimator" title="nlp_shap.estimation.exact.ExactEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a></p></li>
+</ul>
+</section>
+</section>
 
-</pre></div>
         </article>
       </div>
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="masking.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Masking</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="estimands.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Estimands: Shapley vs Banzhaf</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -345,18 +383,41 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Exact estimation</a><ul>
+<li><a class="reference internal" href="#enumeration-scope">Enumeration scope</a></li>
+<li><a class="reference internal" href="#estimand-delegation">Estimand delegation</a></li>
+<li><a class="reference internal" href="#legacy-parity">Legacy parity</a></li>
+<li><a class="reference internal" href="#further-reading">Further reading</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=59fadc99"></script>
-    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
-    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-    <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>
-    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../../../_static/copybutton.js?v=fd10adb8"></script>
-    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+</div><script src="../_static/documentation_options.js?v=59fadc99"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     </body>
 </html>
