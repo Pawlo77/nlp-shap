@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import hashlib
-import json
+import struct
 from dataclasses import dataclass
 
-from ..masking.codec import MaskCodec
+from ..masking.codec import MaskCodec, PackedMask
 from ..pipeline.config import DedupConfig, GenerationConfig
 
 
@@ -23,6 +23,11 @@ def dedup_enabled(config: DedupConfig, generation: GenerationConfig) -> bool:
             raise AssertionError(f"unsupported dedup mode: {unreachable!r}")
 
 
+def _hash_packed_mask(packed: PackedMask) -> bytes:
+    """Return stable bytes for a packed coalition mask."""
+    return struct.pack("<I", packed.n_bits) + packed.words
+
+
 def build_coalition_key(
     snapshot_id: str,
     player_ids: tuple[str, ...],
@@ -33,21 +38,24 @@ def build_coalition_key(
 ) -> str:
     """Build a stable SHA256 coalition key for deduplication."""
     packed = MaskCodec.pack(mask_present)
-    payload = {
-        "snapshot_id": snapshot_id,
-        "player_ids": list(player_ids),
-        "mask_words": packed.words.hex(),
-        "mask_n_bits": packed.n_bits,
-        "absence_policy": absence_policy,
-        "model_id": model_id,
-        "generation": {
-            "max_new_tokens": generation.max_new_tokens,
-            "temperature": generation.temperature,
-            "top_k": generation.top_k,
-        },
-    }
-    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"))
-    return hashlib.sha256(encoded.encode()).hexdigest()
+    hasher = hashlib.sha256()
+    hasher.update(snapshot_id.encode("utf-8"))
+    hasher.update(b"\x1e")
+    for player_id in player_ids:
+        hasher.update(player_id.encode("utf-8"))
+        hasher.update(b"\x1f")
+    hasher.update(_hash_packed_mask(packed))
+    hasher.update(absence_policy.encode("utf-8"))
+    hasher.update(model_id.encode("utf-8"))
+    hasher.update(
+        struct.pack(
+            "<ifi",
+            generation.max_new_tokens,
+            generation.temperature,
+            generation.top_k,
+        )
+    )
+    return hasher.hexdigest()
 
 
 @dataclass

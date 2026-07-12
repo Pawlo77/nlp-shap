@@ -1,5 +1,6 @@
 """Estimator strategy protocol."""
 
+from collections.abc import Iterator
 from typing import Protocol
 
 from ..domain.coalition import CoalitionMask
@@ -20,8 +21,8 @@ class EstimatorStrategy(Protocol):
         budget_fraction: float,
         include_minimal_masks: bool,
         seed: int,
-    ) -> tuple[CoalitionMask, ...]:
-        """Return coalition masks to evaluate for the player set."""
+    ) -> Iterator[CoalitionMask]:
+        """Yield coalition masks to evaluate for the player set."""
 
     def bind_snapshot(self, snapshot: ConversationSnapshot) -> None:
         """Attach the conversation snapshot under explanation."""

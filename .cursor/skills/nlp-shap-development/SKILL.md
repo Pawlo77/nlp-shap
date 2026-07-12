@@ -59,6 +59,7 @@ After each task, **test and analyze your own work** before hand-off:
 - Run `make check`; run `make docs` when API or docs changed; run `make notebooks` when example notebooks changed
 - Confirm tests cover real behavior and meaningful edge cases — not only happy paths or trivia
 - Cross-check consistency with adjacent modules, plugin registration, examples catalog, and release notes
+- **Performance review** — analyze hot paths for time/memory scaling; prefer streaming, batching, and lowest-resource correct implementations (see `performance.mdc`)
 - Fix every issue found during validation; do not hand off known defects
 
 ```bash

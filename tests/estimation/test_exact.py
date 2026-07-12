@@ -64,6 +64,12 @@ def _additive_payoffs(
     ]
 
 
+def test_iter_mask_ints_skips_grand_coalition() -> None:
+    """Bitmask enumeration skips the all-present coalition."""
+    values = list(ExactEstimator.iter_mask_ints(3))
+    assert values == [0, 1, 2, 3, 4, 5, 6]
+
+
 def test_num_coalitions_matches_legacy_formula() -> None:
     """Exact enumeration evaluates 2**n - 1 coalitions (grand coalition excluded)."""
     assert ExactEstimator.num_coalitions(1) == 1
@@ -73,24 +79,37 @@ def test_num_coalitions_matches_legacy_formula() -> None:
 def test_sample_masks_excludes_grand_coalition() -> None:
     """sample_masks omits the all-present coalition for backend evaluation."""
     player_set = PlayerSet(player_ids=("p0", "p1", "p2"))
-    masks = ExactEstimator().sample_masks(
-        player_set,
-        budget_fraction=1.0,
-        include_minimal_masks=False,
-        seed=0,
+    masks = list(
+        ExactEstimator().sample_masks(
+            player_set,
+            budget_fraction=1.0,
+            include_minimal_masks=False,
+            seed=0,
+        )
     )
     assert len(masks) == 7
     assert all(not all(mask.present) for mask in masks)
 
 
+def test_iter_masks_is_lazy() -> None:
+    """iter_masks yields masks without materializing the full coalition set."""
+    player_set = PlayerSet(player_ids=tuple(f"p{index}" for index in range(16)))
+    masks = ExactEstimator.iter_masks(player_set)
+    first = next(masks)
+    assert isinstance(first, CoalitionMask)
+    assert first.present == (False,) * player_set.num_players
+
+
 def test_sample_masks_covers_all_other_coalitions() -> None:
     """Enumerated masks match every coalition except the grand coalition."""
     player_set = PlayerSet(player_ids=("a", "b"))
-    masks = ExactEstimator().sample_masks(
-        player_set,
-        budget_fraction=1.0,
-        include_minimal_masks=True,
-        seed=99,
+    masks = list(
+        ExactEstimator().sample_masks(
+            player_set,
+            budget_fraction=1.0,
+            include_minimal_masks=True,
+            seed=99,
+        )
     )
     expected = {mask for mask in product([False, True], repeat=2) if not all(mask)}
     assert {mask.present for mask in masks} == expected

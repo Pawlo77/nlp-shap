@@ -1,9 +1,9 @@
 Using the exact estimator
 =========================
 
-:class:`~nlp_shap.estimation.exact.ExactEstimator` enumerates every coalition
-mask (except the grand coalition) and delegates attribution to a registered
-estimand plugin.
+:class:`~nlp_shap.estimation.exact.ExactEstimator` lazily enumerates every
+coalition mask (except the grand coalition) and delegates attribution to a
+registered estimand plugin.
 
 Quick start
 -----------
@@ -20,12 +20,12 @@ Quick start
    player_set = PlayerSet(player_ids=("p0", "p1", "p2"))
    estimator = ExactEstimator()
 
-   masks = estimator.sample_masks(
+   masks = list(estimator.sample_masks(
        player_set,
        budget_fraction=1.0,
        include_minimal_masks=False,
        seed=0,
-   )
+   ))
    print("coalitions:", len(masks))  # 7 for three players
 
    all_masks = [
@@ -51,6 +51,19 @@ Quick start
 
    print("Shapley:", shapley)
    print("Banzhaf:", banzhaf)
+
+Bitmask iteration
+-----------------
+
+For large player sets, iterate packed coalition integers and decode only when
+needed:
+
+.. code-block:: python
+
+   from nlp_shap.estimation.exact import ExactEstimator
+
+   for mask_int in ExactEstimator.iter_mask_ints(player_set.num_players):
+       present = ExactEstimator.mask_int_to_present(mask_int, player_set.num_players)
 
 Budget requirement
 ------------------

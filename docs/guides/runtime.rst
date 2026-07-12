@@ -104,6 +104,21 @@ Schedule async coalition jobs
    metrics = asyncio.run(scheduler.run(jobs, generate))
    print(metrics)
 
+Streaming large job sets
+------------------------
+
+For exact enumeration or other large coalition batches, pass a generator to
+:meth:`~nlp_shap.runtime.scheduler.InferenceScheduler.run_iter` so the
+scheduler does not create one coroutine per coalition upfront:
+
+.. code-block:: python
+
+   def job_stream():
+       for mask in ExactEstimator.iter_masks(player_set):
+           yield build_job_for_mask(mask)
+
+   metrics = asyncio.run(scheduler.run_iter(job_stream(), generate))
+
 Notebook
 --------
 

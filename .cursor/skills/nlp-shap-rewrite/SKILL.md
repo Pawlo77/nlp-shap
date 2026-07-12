@@ -70,7 +70,7 @@ Use `nlp-shap-development`: red → green → document → refactor → validate
 
 ## Post-task validation
 
-Before closing a phase or proposing commit: re-read the diff, run `make check` (and `make docs` / `make notebooks` when applicable), and fix style, test, docs, and consistency issues you find. Do not hand off with known defects.
+Before closing a phase or proposing commit: re-read the diff, run `make check` (and `make docs` / `make notebooks` when applicable), analyze performance of hot paths, and fix style, test, docs, consistency, and scalability issues you find. Do not hand off with known defects.
 
 LM Studio: `pytest -m lms` locally. CI: mock only. GPU: `pytest -m gpu` optional.
 

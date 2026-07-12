@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import time
-from collections.abc import Awaitable, Callable, Sequence
+from collections.abc import AsyncIterator, Awaitable, Callable, Iterable, Sequence
 from dataclasses import dataclass
 
 from ..domain.conversation import ConversationSnapshot
@@ -74,6 +74,7 @@ class InferenceScheduler:
         store: HotResultStore,
         dedup: CoalitionDedupRegistry | None = None,
         archive: RunArchive | None = None,
+        pending_limit: int | None = None,
     ) -> None:
         if max_inflight < 1:
             msg = "max_inflight must be at least 1"
@@ -84,6 +85,7 @@ class InferenceScheduler:
         self._dedup = dedup
         self._archive = archive
         self._semaphore = asyncio.Semaphore(max_inflight)
+        self._pending_limit = pending_limit or max(max_inflight * 4, max_inflight)
 
     async def run(
         self,
@@ -91,44 +93,93 @@ class InferenceScheduler:
         generate: GenerateFn,
     ) -> SchedulerMetrics:
         """Execute coalition jobs and return scheduler counters."""
-        metrics = SchedulerMetrics(
-            requested=len(jobs),
-            executed=0,
-            deduplicated=0,
-            cache_hits=0,
-        )
-        mutable = {"executed": 0, "deduplicated": 0, "cache_hits": 0}
+        return await self.run_iter(iter(jobs), generate)
 
-        async def _run_job(job: CoalitionJob) -> None:
-            cached = self._store.get(job.coalition_key)
-            if cached is not None:
-                mutable["cache_hits"] += 1
-                self._maybe_archive(job, cached, cache_hit=True, elapsed_ms=0.0)
-                return
+    async def run_iter(
+        self,
+        jobs: Iterable[CoalitionJob],
+        generate: GenerateFn,
+    ) -> SchedulerMetrics:
+        """Execute jobs from an iterable without creating all coroutines upfront."""
+        mutable = {"executed": 0, "deduplicated": 0, "cache_hits": 0, "requested": 0}
+        pending: set[asyncio.Task[None]] = set()
 
-            if self._dedup is not None and not self._dedup.observe(job.coalition_key):
-                mutable["deduplicated"] += 1
-                return
+        for job in jobs:
+            mutable["requested"] += 1
+            while len(pending) >= self._pending_limit:
+                _done, pending = await asyncio.wait(
+                    pending,
+                    return_when=asyncio.FIRST_COMPLETED,
+                )
+            task = asyncio.create_task(self._process_job(job, generate, mutable))
+            pending.add(task)
 
-            async with self._semaphore:
-                started = time.perf_counter()
-                generation_text = await generate(job.snapshot)
-                elapsed_ms = (time.perf_counter() - started) * 1000.0
-            mutable["executed"] += 1
-            self._store.put(job.coalition_key, generation_text)
-            self._maybe_archive(
-                job,
-                generation_text,
-                cache_hit=False,
-                elapsed_ms=elapsed_ms,
-            )
+        if pending:
+            await asyncio.gather(*pending)
 
-        await asyncio.gather(*(_run_job(job) for job in jobs))
         return SchedulerMetrics(
-            requested=metrics.requested,
+            requested=mutable["requested"],
             executed=mutable["executed"],
             deduplicated=mutable["deduplicated"],
             cache_hits=mutable["cache_hits"],
+        )
+
+    async def run_stream(
+        self,
+        jobs: AsyncIterator[CoalitionJob],
+        generate: GenerateFn,
+    ) -> SchedulerMetrics:
+        """Execute jobs from an async iterator with bounded pending tasks."""
+        mutable = {"executed": 0, "deduplicated": 0, "cache_hits": 0, "requested": 0}
+        pending: set[asyncio.Task[None]] = set()
+
+        async for job in jobs:
+            mutable["requested"] += 1
+            while len(pending) >= self._pending_limit:
+                _done, pending = await asyncio.wait(
+                    pending,
+                    return_when=asyncio.FIRST_COMPLETED,
+                )
+            task = asyncio.create_task(self._process_job(job, generate, mutable))
+            pending.add(task)
+
+        if pending:
+            await asyncio.gather(*pending)
+
+        return SchedulerMetrics(
+            requested=mutable["requested"],
+            executed=mutable["executed"],
+            deduplicated=mutable["deduplicated"],
+            cache_hits=mutable["cache_hits"],
+        )
+
+    async def _process_job(
+        self,
+        job: CoalitionJob,
+        generate: GenerateFn,
+        mutable: dict[str, int],
+    ) -> None:
+        cached = self._store.get(job.coalition_key)
+        if cached is not None:
+            mutable["cache_hits"] += 1
+            self._maybe_archive(job, cached, cache_hit=True, elapsed_ms=0.0)
+            return
+
+        if self._dedup is not None and not self._dedup.observe(job.coalition_key):
+            mutable["deduplicated"] += 1
+            return
+
+        async with self._semaphore:
+            started = time.perf_counter()
+            generation_text = await generate(job.snapshot)
+            elapsed_ms = (time.perf_counter() - started) * 1000.0
+        mutable["executed"] += 1
+        self._store.put(job.coalition_key, generation_text)
+        self._maybe_archive(
+            job,
+            generation_text,
+            cache_hit=False,
+            elapsed_ms=elapsed_ms,
         )
 
     def _maybe_archive(

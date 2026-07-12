@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+from collections.abc import Iterable
 from pathlib import Path
 
 from nlp_shap.domain.conversation import ConversationSnapshot
@@ -10,7 +11,11 @@ from nlp_shap.masking.codec import MaskCodec
 from nlp_shap.pipeline.config import GenerationConfig
 from nlp_shap.runtime.archive import RunArchive
 from nlp_shap.runtime.dedup import CoalitionDedupRegistry, build_coalition_key
-from nlp_shap.runtime.scheduler import CoalitionJob, InferenceScheduler
+from nlp_shap.runtime.scheduler import (
+    CoalitionJob,
+    InferenceScheduler,
+    SchedulerMetrics,
+)
 from nlp_shap.runtime.store import HotResultStore
 
 
@@ -44,6 +49,30 @@ def _make_job(
         model_id="mock",
         utility=1.0,
     )
+
+
+def test_scheduler_run_iter_accepts_job_generator(
+    sample_snapshot: ConversationSnapshot,
+) -> None:
+    """run_iter streams jobs without materializing the full job list."""
+
+    def job_stream() -> Iterable[CoalitionJob]:
+        for index in range(100):
+            yield _make_job(sample_snapshot, coalition_key=f"stream-{index}")
+
+    async def run() -> SchedulerMetrics:
+        scheduler = InferenceScheduler(
+            max_inflight=2,
+            generation=GenerationConfig(temperature=0.0),
+            store=HotResultStore(),
+            dedup=None,
+            pending_limit=4,
+        )
+        return await scheduler.run_iter(job_stream(), _slow_generate)
+
+    metrics = asyncio.run(run())
+    assert metrics.requested == 100
+    assert metrics.executed == 100
 
 
 def test_scheduler_bounds_inflight(sample_snapshot: ConversationSnapshot) -> None:

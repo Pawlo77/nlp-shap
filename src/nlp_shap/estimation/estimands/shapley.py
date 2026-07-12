@@ -3,7 +3,12 @@
 from collections.abc import Sequence
 
 from ...domain.estimands import Estimand
-from ._weights import aggregate_from_marginals, shapley_weight
+from ._weights import (
+    aggregate_from_marginals,
+    aggregate_shapley_exact,
+    is_complete_characteristic_table,
+    shapley_weight,
+)
 
 
 class ShapleyAggregator:
@@ -24,4 +29,6 @@ class ShapleyAggregator:
         payoffs: Sequence[float],
     ) -> list[float]:
         """Aggregate coalition samples into Shapley values."""
+        if is_complete_characteristic_table(masks):
+            return aggregate_shapley_exact(masks, payoffs)
         return aggregate_from_marginals(masks, payoffs, weight_fn=shapley_weight)
