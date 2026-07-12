@@ -16,6 +16,10 @@ alwaysApply: true
 Hook runner is **prek**, not `pre-commit`:
 
 ```bash
-make prek-all    # preferred
+make prek-all    # preferred — must pass before push (matches remote Prek Checks)
 uv run prek run --all-files
 ```
+
+Before push: `make check` · `make docs` (when API/docs change) · `make notebooks` (when `examples/*.ipynb` change).
+
+After push: `gh run list` then `gh run watch <run-id> --exit-status` for each workflow on that commit.

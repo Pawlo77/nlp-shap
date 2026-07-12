@@ -65,4 +65,4 @@ New Makefile target → `name: ## help` + `.PHONY`
 
 ## Pitfalls
 
-`pre-commit` → prek · `pip install` → pyproject + `uv lock` · implement before test → back to step 2 · `from nlp_shap...` inside `src/nlp_shap/` → use relative imports · `dict[str, Any]` payload guards → use `TypedDict` · `...` after docstring in Protocol stubs → omit · public `feat` without `docs/` → incomplete hand-off
+`pre-commit` → prek · `pip install` → pyproject + `uv lock` · implement before test → back to step 2 · `from nlp_shap...` inside `src/nlp_shap/` → use relative imports · `dict[str, Any]` payload guards → use `TypedDict` · `...` after docstring in Protocol stubs → omit · public `feat` without `docs/` → incomplete hand-off · push without `make check` → remote Prek Checks fail · notebooks without outputs → do not commit

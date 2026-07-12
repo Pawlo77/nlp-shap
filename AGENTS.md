@@ -4,9 +4,11 @@
 
 ```bash
 make check
+make docs      # when public API or docs changed
+make notebooks # when examples/*.ipynb changed — commit only with outputs
 ```
 
-Packaging → `make build` · docs → `make docs` (required when public API/algorithms change) · deps → `uv lock`
+Packaging → `make build` · deps → `uv lock`
 
 ## Agent-only
 
@@ -30,4 +32,4 @@ Repo-specific gotchas:
 1. This file (exit + agent-only)
 2. Skill `caveman` (ultra — always active)
 3. `.cursor/rules/*.mdc`
-4. Skill `nlp-shap-development` (steps 1–6)
+4. Skill `nlp-shap-development` (steps 1–7)

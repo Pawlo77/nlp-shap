@@ -25,7 +25,7 @@ Skip for: private refactors, typing-only edits, test-only changes.
 | Theory + formulas + paper links | `docs/theory/<topic>.rst` |
 | Runnable usage / worked examples | `docs/guides/<topic>.rst` |
 | Module reference | `docs/api.rst` (`automodule` per public module) |
-| End-to-end notebook (when workflow exists) | `examples/<name>.ipynb` + catalog in `examples/README.md` and `docs/examples.rst` |
+| End-to-end notebook (when workflow exists) | `examples/<name>.ipynb` (executed via `make notebooks`) + catalog in `examples/README.md` and `docs/examples.rst` |
 | Navigation | `docs/index.rst` toctree |
 
 ## Content standards
@@ -39,6 +39,7 @@ Skip for: private refactors, typing-only edits, test-only changes.
 ## Verify
 
 ```bash
+make notebooks   # when examples/*.ipynb changed — commit only with outputs
 make docs
 make check
 ```

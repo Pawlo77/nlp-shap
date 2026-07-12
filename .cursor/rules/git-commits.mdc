@@ -71,7 +71,9 @@ Same permission gate — **propose title and body; create only when asked.**
 
 ## Test plan
 - [ ] make check
-- [ ] …
+- [ ] make docs (if API/docs changed)
+- [ ] make notebooks (if example notebooks changed)
+- [ ] gh run watch — remote Prek Checks / Pytest / Deploy Docs green
 ```
 
 Keep PRs focused. Large work → suggest stacked commits or multiple PRs. Use `gh pr create` with HEREDOC body when user approves.
