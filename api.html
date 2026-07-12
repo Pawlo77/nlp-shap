@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Domain types" href="api/domain.html"><link rel="prev" title="Shapley vs Banzhaf on a toy majority game" href="notebooks/estimands_toy_game.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Domain types" href="api/domain.html"><link rel="prev" title="Coalition masking and absence policies" href="notebooks/masking_views.html">
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>API reference - nlp-shap 0.1.2</title>
+        <title>API reference - nlp-shap 0.1.3</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.2</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.3</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.2</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.3</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -209,6 +209,7 @@
 <li class="toctree-l1"><a class="reference internal" href="guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
@@ -216,12 +217,14 @@
 <li class="toctree-l1"><a class="reference internal" href="theory/cooperative_games.html">Cooperative games</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/masking.html">Masking</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release notes</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><input aria-label="Toggle navigation of Examples" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/estimands_toy_game.html">Shapley vs Banzhaf on a toy majority game</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/masking_views.html">Coalition masking and absence policies</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -229,6 +232,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api/protocols.html">Protocols</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/plugins.html">Plugins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/masking.html">Masking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators</a></li>
 </ul>
 </li>
@@ -316,6 +320,12 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.PluginRegistry" title="nlp_shap.PluginRegistry"><code class="xref py py-class docutils literal notranslate"><span class="pre">PluginRegistry</span></code></a></p></td>
 <td><p>Plugin discovery and resolution. See <a class="reference internal" href="api/plugins.html"><span class="doc">Plugins</span></a>.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/masking.html#nlp_shap.masking.TokenPartitioner" title="nlp_shap.masking.TokenPartitioner"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenPartitioner</span></code></a></p></td>
+<td><p>Whitespace token partition plugin. See <a class="reference internal" href="api/masking.html"><span class="doc">Masking</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/masking.html#nlp_shap.masking.MaskBuilder" title="nlp_shap.masking.MaskBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskBuilder</span></code></a></p></td>
+<td><p>Shared masked snapshot views. See <a class="reference internal" href="api/masking.html"><span class="doc">Masking</span></a>.</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.Estimand" title="nlp_shap.Estimand"><code class="xref py py-class docutils literal notranslate"><span class="pre">Estimand</span></code></a></p></td>
 <td><p>Estimand label enum (<code class="docutils literal notranslate"><span class="pre">shapley</span></code> | <code class="docutils literal notranslate"><span class="pre">banzhaf</span></code>). See <a class="reference internal" href="api/domain.html"><span class="doc">Domain types</span></a>.</p></td>
 </tr>
@@ -346,6 +356,7 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <li class="toctree-l1"><a class="reference internal" href="api/protocols.html">Protocols</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/plugins.html">Plugins</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/masking.html">Masking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/estimation.html">Estimand aggregators</a></li>
 </ul>
 </div>
@@ -595,6 +606,12 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <dd><p>Player-partitioning plugins for conversation snapshots.</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.PluginGroup.ABSENCE_POLICIES">
+<span class="sig-name descname"><span class="pre">ABSENCE_POLICIES</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'nlp_shap.absence_policies'</span></span><a class="headerlink" href="#nlp_shap.PluginGroup.ABSENCE_POLICIES" title="Link to this definition">¶</a></dt>
+<dd><p>Absence-policy plugins for rendering masked snapshots.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -751,14 +768,14 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="notebooks/estimands_toy_game.html">
+          <a class="prev-page" href="notebooks/masking_views.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Shapley vs Banzhaf on a toy majority game</div>
+                <div class="title">Coalition masking and absence policies</div>
                 
               </div>
             </a>
@@ -861,6 +878,7 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <li><a class="reference internal" href="#nlp_shap.PluginGroup.VALUE_FNS"><code class="docutils literal notranslate"><span class="pre">PluginGroup.VALUE_FNS</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.PluginGroup.BACKENDS"><code class="docutils literal notranslate"><span class="pre">PluginGroup.BACKENDS</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.PluginGroup.PARTITIONS"><code class="docutils literal notranslate"><span class="pre">PluginGroup.PARTITIONS</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.PluginGroup.ABSENCE_POLICIES"><code class="docutils literal notranslate"><span class="pre">PluginGroup.ABSENCE_POLICIES</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#nlp_shap.PluginRegistry"><code class="docutils literal notranslate"><span class="pre">PluginRegistry</span></code></a><ul>
@@ -908,7 +926,7 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=92734c54"></script>
+</div><script src="_static/documentation_options.js?v=360bc84d"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

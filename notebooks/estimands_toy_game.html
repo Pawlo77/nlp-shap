@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="API reference" href="../api.html"><link rel="prev" title="Examples" href="../examples.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Coalition masking and absence policies" href="masking_views.html"><link rel="prev" title="Examples" href="../examples.html">
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Shapley vs Banzhaf on a toy majority game - nlp-shap 0.1.2</title>
+        <title>Shapley vs Banzhaf on toy cooperative games - nlp-shap 0.1.3</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">nlp-shap 0.1.2</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.3</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.2</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.3</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -209,6 +209,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/estimands.html">Using estimand aggregators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
@@ -216,12 +217,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../theory/cooperative_games.html">Cooperative games</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/masking.html">Masking</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../examples.html">Examples</a><input aria-label="Toggle navigation of Examples" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Shapley vs Banzhaf on a toy majority game</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Shapley vs Banzhaf on toy cooperative games</a></li>
+<li class="toctree-l2"><a class="reference internal" href="masking_views.html">Coalition masking and absence policies</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -229,6 +232,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/protocols.html">Protocols</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/plugins.html">Plugins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/masking.html">Masking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/estimation.html">Estimand aggregators</a></li>
 </ul>
 </li>
@@ -274,12 +278,13 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="shapley-vs-banzhaf-on-a-toy-majority-game">
-<h1>Shapley vs Banzhaf on a toy majority game<a class="headerlink" href="#shapley-vs-banzhaf-on-a-toy-majority-game" title="Link to this heading">¶</a></h1>
-<p><strong>Goal:</strong> Show that identical coalition samples yield different attributions depending on the <strong>estimand</strong> (Shapley vs Banzhaf).</p>
+          <section id="shapley-vs-banzhaf-on-toy-cooperative-games">
+<h1>Shapley vs Banzhaf on toy cooperative games<a class="headerlink" href="#shapley-vs-banzhaf-on-toy-cooperative-games" title="Link to this heading">¶</a></h1>
+<p><strong>Business context:</strong> Attribution reports shown to legal, risk, and product teams must name the <strong>estimand</strong> being reported. Shapley and Banzhaf answer different fairness questions; mislabelling one as the other breaks audit trails and can invalidate compliance reviews.</p>
+<p><strong>Goal:</strong> Walk through every public estimand API in <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> 0.1.1 — aggregators, coalition weights, labelled results, manifest wire format, and plugin resolution.</p>
 <p><strong>Prerequisites:</strong> <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> 0.1.1+, Python 3.12.</p>
-<p><strong>Theory:</strong> See the <a class="reference external" href="https://pawlo77.github.io/nlp-shap/theory/estimands.html">estimands theory page</a> in the deployed docs.</p>
-<p><strong>Expected output:</strong> Shapley values ≈ <code class="docutils literal notranslate"><span class="pre">2/6</span></code> per player; Banzhaf indices = <code class="docutils literal notranslate"><span class="pre">0.5</span></code> per player on a 3-player majority game.</p>
+<p><strong>Theory:</strong> See the <a class="reference external" href="https://pawlo77.github.io/nlp-shap/theory/estimands.html">estimands theory page</a>.</p>
+<p><strong>Expected output:</strong> Divergence on a majority game; agreement on an additive game; <code class="docutils literal notranslate"><span class="pre">ExplainResult</span></code> and <code class="docutils literal notranslate"><span class="pre">RunManifest</span></code> carry the estimand label end to end.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">product</span>
@@ -292,13 +297,19 @@
     <span class="n">ShapleyAggregator</span><span class="p">,</span>
     <span class="n">parse_manifest</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.domain.estimands</span><span class="w"> </span><span class="kn">import</span> <span class="n">estimand_to_wire</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.plugins</span><span class="w"> </span><span class="kn">import</span> <span class="n">PluginGroup</span><span class="p">,</span> <span class="n">PluginRegistry</span>
 </pre></div>
 </div>
 </div>
 </div>
-<section id="define-the-characteristic-function">
-<h2>Define the characteristic function<a class="headerlink" href="#define-the-characteristic-function" title="Link to this heading">¶</a></h2>
-<p>Three players; payoff is 1 when at least two are present (majority coalition), else 0. This game is <strong>not additive</strong>, so Shapley and Banzhaf disagree.</p>
+<section id="why-the-estimand-label-matters">
+<h2>Why the estimand label matters<a class="headerlink" href="#why-the-estimand-label-matters" title="Link to this heading">¶</a></h2>
+<p>Regulators and enterprise buyers increasingly ask <em>which</em> cooperative-game value was computed, not only the attribution vector. <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> treats the estimand as first-class metadata so archived runs remain interpretable months later.</p>
+</section>
+<section id="majority-game-non-additive-divergence">
+<h2>Majority game — non-additive divergence<a class="headerlink" href="#majority-game-non-additive-divergence" title="Link to this heading">¶</a></h2>
+<p>Three players; payoff is 1 when at least two are present. Interaction between players means Shapley and Banzhaf generally disagree — a realistic sanity check before trusting LLM attributions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NUM_PLAYERS</span> <span class="o">=</span> <span class="mi">3</span>
@@ -311,20 +322,57 @@
 
 
 <span class="n">payoffs</span> <span class="o">=</span> <span class="p">[</span><span class="n">majority_payoff</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">masks</span><span class="p">]</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">masks</span><span class="p">),</span> <span class="n">payoffs</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;coalitions:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">masks</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;first payoffs:&quot;</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">[:</span><span class="mi">4</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(8, [0.0, 0.0, 0.0, 1.0])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>coalitions: 8
+first payoffs: [0.0, 0.0, 0.0, 1.0]
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="aggregator-labels-and-coalition-weights">
+<h2>Aggregator labels and coalition weights<a class="headerlink" href="#aggregator-labels-and-coalition-weights" title="Link to this heading">¶</a></h2>
+<p>Each aggregator exposes its <code class="docutils literal notranslate"><span class="pre">estimand</span></code> and the coalition weight formula it applies. Weights explain <em>why</em> identical samples can yield different player scores.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shapley</span> <span class="o">=</span> <span class="n">ShapleyAggregator</span><span class="p">()</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">)</span>
-<span class="n">banzhaf</span> <span class="o">=</span> <span class="n">BanzhafAggregator</span><span class="p">()</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shapley_agg</span> <span class="o">=</span> <span class="n">ShapleyAggregator</span><span class="p">()</span>
+<span class="n">banzhaf_agg</span> <span class="o">=</span> <span class="n">BanzhafAggregator</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;labels:&quot;</span><span class="p">,</span> <span class="n">shapley_agg</span><span class="o">.</span><span class="n">estimand</span><span class="p">,</span> <span class="n">banzhaf_agg</span><span class="o">.</span><span class="n">estimand</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">coalition_size</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_PLAYERS</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;size </span><span class="si">{</span><span class="n">coalition_size</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;shapley&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">shapley_agg</span><span class="o">.</span><span class="n">coalition_weight</span><span class="p">(</span><span class="n">coalition_size</span><span class="p">,</span> <span class="n">NUM_PLAYERS</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="s2">&quot;banzhaf&quot;</span><span class="p">,</span>
+        <span class="nb">round</span><span class="p">(</span><span class="n">banzhaf_agg</span><span class="o">.</span><span class="n">coalition_weight</span><span class="p">(</span><span class="n">coalition_size</span><span class="p">,</span> <span class="n">NUM_PLAYERS</span><span class="p">),</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>labels: shapley banzhaf
+size 0: shapley 0.3333 banzhaf 0.25
+size 1: shapley 0.1667 banzhaf 0.25
+size 2: shapley 0.3333 banzhaf 0.25
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="aggregate-identical-samples">
+<h2>Aggregate identical samples<a class="headerlink" href="#aggregate-identical-samples" title="Link to this heading">¶</a></h2>
+<p>Product teams comparing vendors should demand this check: same coalitions, same payoffs, different estimands → different attributions unless the game is additive.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shapley</span> <span class="o">=</span> <span class="n">shapley_agg</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">)</span>
+<span class="n">banzhaf</span> <span class="o">=</span> <span class="n">banzhaf_agg</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shapley:&quot;</span><span class="p">,</span> <span class="n">shapley</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Banzhaf:&quot;</span><span class="p">,</span> <span class="n">banzhaf</span><span class="p">)</span>
@@ -340,21 +388,116 @@ Banzhaf: [0.5, 0.5, 0.5]
 </div>
 </div>
 </section>
-<section id="label-results-for-archives">
-<h2>Label results for archives<a class="headerlink" href="#label-results-for-archives" title="Link to this heading">¶</a></h2>
-<p>Every attribution output records its estimand so downstream analysis cannot mislabel Banzhaf as Shapley.</p>
+<section id="additive-game-when-estimands-agree">
+<h2>Additive game — when estimands agree<a class="headerlink" href="#additive-game-when-estimands-agree" title="Link to this heading">¶</a></h2>
+<p>For linear value functions, both estimands recover the underlying coefficients. This is the case where estimand choice is less consequential — useful when explaining the feature to non-technical stakeholders.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">ExplainResult</span><span class="p">(</span><span class="n">estimand</span><span class="o">=</span><span class="n">Estimand</span><span class="o">.</span><span class="n">SHAPLEY</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">shapley</span><span class="p">))</span>
-<span class="n">manifest</span> <span class="o">=</span> <span class="n">RunManifest</span><span class="p">(</span><span class="n">estimand</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">estimand</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="s2">&quot;toy-majority&quot;</span><span class="p">)</span>
-<span class="n">restored</span> <span class="o">=</span> <span class="n">parse_manifest</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ADDITIVE_PLAYERS</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">coefficients</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)</span>
+<span class="n">additive_masks</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="nb">tuple</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span> <span class="k">for</span> <span class="n">bits</span> <span class="ow">in</span> <span class="n">product</span><span class="p">([</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="n">ADDITIVE_PLAYERS</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">additive_payoffs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="nb">sum</span><span class="p">(</span>
+        <span class="n">coef</span> <span class="k">for</span> <span class="n">coef</span><span class="p">,</span> <span class="n">present</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="n">present</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">additive_masks</span>
+<span class="p">]</span>
 
-<span class="n">result</span><span class="o">.</span><span class="n">estimand</span><span class="p">,</span> <span class="n">restored</span><span class="o">.</span><span class="n">estimand</span><span class="p">,</span> <span class="n">restored</span><span class="o">.</span><span class="n">run_id</span>
+<span class="n">additive_shapley</span> <span class="o">=</span> <span class="n">shapley_agg</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">additive_masks</span><span class="p">,</span> <span class="n">additive_payoffs</span><span class="p">)</span>
+<span class="n">additive_banzhaf</span> <span class="o">=</span> <span class="n">banzhaf_agg</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">additive_masks</span><span class="p">,</span> <span class="n">additive_payoffs</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;additive Shapley:&quot;</span><span class="p">,</span> <span class="n">additive_shapley</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;additive Banzhaf:&quot;</span><span class="p">,</span> <span class="n">additive_banzhaf</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;match:&quot;</span><span class="p">,</span> <span class="n">additive_shapley</span> <span class="o">==</span> <span class="n">additive_banzhaf</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="n">coefficients</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;Estimand.SHAPLEY: &#39;shapley&#39;&gt;, &lt;Estimand.SHAPLEY: &#39;shapley&#39;&gt;, &#39;toy-majority&#39;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>additive Shapley: [1.0, 2.0]
+additive Banzhaf: [1.0, 2.0]
+match: True
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="label-explain-results">
+<h2>Label explain results<a class="headerlink" href="#label-explain-results" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ExplainResult</span></code> stores the estimand beside the attribution vector so dashboards and exports cannot silently swap definitions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shapley_result</span> <span class="o">=</span> <span class="n">ExplainResult</span><span class="p">(</span>
+    <span class="n">estimand</span><span class="o">=</span><span class="n">Estimand</span><span class="o">.</span><span class="n">SHAPLEY</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">shapley</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">banzhaf_result</span> <span class="o">=</span> <span class="n">ExplainResult</span><span class="p">(</span>
+    <span class="n">estimand</span><span class="o">=</span><span class="n">Estimand</span><span class="o">.</span><span class="n">BANZHAF</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">banzhaf</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">shapley_result</span><span class="o">.</span><span class="n">estimand</span><span class="p">,</span> <span class="n">shapley_result</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">banzhaf_result</span><span class="o">.</span><span class="n">estimand</span><span class="p">,</span> <span class="n">banzhaf_result</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">shapley_result</span><span class="o">.</span><span class="n">estimand</span> <span class="o">!=</span> <span class="n">banzhaf_result</span><span class="o">.</span><span class="n">estimand</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>shapley (0.3333333333333333, 0.3333333333333333, 0.3333333333333333)
+banzhaf (0.5, 0.5, 0.5)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="persist-estimand-metadata-in-run-manifests">
+<h2>Persist estimand metadata in run manifests<a class="headerlink" href="#persist-estimand-metadata-in-run-manifests" title="Link to this heading">¶</a></h2>
+<p>Run archives serialize the estimand as a stable wire value for JSON manifests — the hook compliance teams use to verify what was shipped to production.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">manifest</span> <span class="o">=</span> <span class="n">RunManifest</span><span class="p">(</span><span class="n">estimand</span><span class="o">=</span><span class="n">Estimand</span><span class="o">.</span><span class="n">SHAPLEY</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="s2">&quot;toy-majority&quot;</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="n">manifest</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="n">restored</span> <span class="o">=</span> <span class="n">parse_manifest</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;wire:&quot;</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;round-trip estimand:&quot;</span><span class="p">,</span> <span class="n">restored</span><span class="o">.</span><span class="n">estimand</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;estimand_to_wire:&quot;</span><span class="p">,</span> <span class="n">estimand_to_wire</span><span class="p">(</span><span class="n">Estimand</span><span class="o">.</span><span class="n">BANZHAF</span><span class="p">))</span>
+<span class="k">assert</span> <span class="n">restored</span><span class="o">.</span><span class="n">estimand</span> <span class="ow">is</span> <span class="n">Estimand</span><span class="o">.</span><span class="n">SHAPLEY</span>
+<span class="k">assert</span> <span class="n">restored</span><span class="o">.</span><span class="n">run_id</span> <span class="o">==</span> <span class="s2">&quot;toy-majority&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>wire: {&#39;estimand&#39;: &#39;shapley&#39;, &#39;run_id&#39;: &#39;toy-majority&#39;}
+round-trip estimand: shapley
+estimand_to_wire: banzhaf
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="resolve-estimand-plugins-from-packaging-entry-points">
+<h2>Resolve estimand plugins from packaging entry points<a class="headerlink" href="#resolve-estimand-plugins-from-packaging-entry-points" title="Link to this heading">¶</a></h2>
+<p>Downstream apps select <code class="docutils literal notranslate"><span class="pre">shapley</span></code> or <code class="docutils literal notranslate"><span class="pre">banzhaf</span></code> by name through the plugin registry — the same mechanism production configs will use.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">registry</span> <span class="o">=</span> <span class="n">PluginRegistry</span><span class="p">()</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">load_entry_points</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMANDS</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;registered:&quot;</span><span class="p">,</span> <span class="n">registry</span><span class="o">.</span><span class="n">names</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMANDS</span><span class="p">))</span>
+<span class="n">resolved_shapley</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMANDS</span><span class="p">,</span> <span class="s2">&quot;shapley&quot;</span><span class="p">)</span>
+<span class="n">resolved_banzhaf</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMANDS</span><span class="p">,</span> <span class="s2">&quot;banzhaf&quot;</span><span class="p">)</span>
+
+<span class="nb">type</span><span class="p">(</span><span class="n">resolved_shapley</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">resolved_banzhaf</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>registered: (&#39;banzhaf&#39;, &#39;shapley&#39;)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;ShapleyAggregator&#39;, &#39;BanzhafAggregator&#39;)
 </pre></div>
 </div>
 </div>
@@ -367,12 +510,12 @@ Banzhaf: [0.5, 0.5, 0.5]
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../api.html">
+          <a class="next-page" href="masking_views.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">API reference</div>
+                <div class="title">Coalition masking and absence policies</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -425,9 +568,15 @@ Banzhaf: [0.5, 0.5, 0.5]
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Shapley vs Banzhaf on a toy majority game</a><ul>
-<li><a class="reference internal" href="#define-the-characteristic-function">Define the characteristic function</a></li>
-<li><a class="reference internal" href="#label-results-for-archives">Label results for archives</a></li>
+<li><a class="reference internal" href="#">Shapley vs Banzhaf on toy cooperative games</a><ul>
+<li><a class="reference internal" href="#why-the-estimand-label-matters">Why the estimand label matters</a></li>
+<li><a class="reference internal" href="#majority-game-non-additive-divergence">Majority game — non-additive divergence</a></li>
+<li><a class="reference internal" href="#aggregator-labels-and-coalition-weights">Aggregator labels and coalition weights</a></li>
+<li><a class="reference internal" href="#aggregate-identical-samples">Aggregate identical samples</a></li>
+<li><a class="reference internal" href="#additive-game-when-estimands-agree">Additive game — when estimands agree</a></li>
+<li><a class="reference internal" href="#label-explain-results">Label explain results</a></li>
+<li><a class="reference internal" href="#persist-estimand-metadata-in-run-manifests">Persist estimand metadata in run manifests</a></li>
+<li><a class="reference internal" href="#resolve-estimand-plugins-from-packaging-entry-points">Resolve estimand plugins from packaging entry points</a></li>
 </ul>
 </li>
 </ul>
@@ -439,7 +588,7 @@ Banzhaf: [0.5, 0.5, 0.5]
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=92734c54"></script>
+</div><script src="../_static/documentation_options.js?v=360bc84d"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

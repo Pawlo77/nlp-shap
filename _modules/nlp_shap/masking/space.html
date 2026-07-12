@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.domain.estimands - nlp-shap 0.1.3</title>
+        <title>nlp_shap.masking.space - nlp-shap 0.1.3</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -267,40 +267,69 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for nlp_shap.domain.estimands</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Estimand labels for attribution outputs and archive manifests.&quot;&quot;&quot;</span>
+          <h1>Source code for nlp_shap.masking.space</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Mask-space utilities for explainable feature indexing.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">StrEnum</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="n">EstimandWire</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;shapley&quot;</span><span class="p">,</span> <span class="s2">&quot;banzhaf&quot;</span><span class="p">]</span>
-<span class="sd">&quot;&quot;&quot;Wire values used in manifests and configuration payloads.&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 
-
-<div class="viewcode-block" id="Estimand">
-<a class="viewcode-back" href="../../../api/domain.html#nlp_shap.Estimand">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Estimand</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Supported cooperative-game value formulations.&quot;&quot;&quot;</span>
-
-    <span class="n">SHAPLEY</span> <span class="o">=</span> <span class="s2">&quot;shapley&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shapley value with coalition weights k!(n-k-1)!/n!.&quot;&quot;&quot;</span>
-
-    <span class="n">BANZHAF</span> <span class="o">=</span> <span class="s2">&quot;banzhaf&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Banzhaf index with uniform coalition weights 1/2^(n-1).&quot;&quot;&quot;</span></div>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.coalition</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionMask</span>
 
 
+<div class="viewcode-block" id="MaskSpace">
+<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.MaskSpace">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MaskSpace</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Describe explainable feature positions inside a full coalition mask.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="estimand_to_wire">
-<a class="viewcode-back" href="../../../api/domain.html#nlp_shap.estimand_to_wire">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">estimand_to_wire</span><span class="p">(</span><span class="n">estimand</span><span class="p">:</span> <span class="n">Estimand</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EstimandWire</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Serialize an estimand enum member to its wire value.&quot;&quot;&quot;</span>
-    <span class="k">match</span> <span class="n">estimand</span><span class="p">:</span>
-        <span class="k">case</span> <span class="n">Estimand</span><span class="o">.</span><span class="n">SHAPLEY</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;shapley&quot;</span>
-        <span class="k">case</span> <span class="n">Estimand</span><span class="o">.</span><span class="n">BANZHAF</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;banzhaf&quot;</span>
-        <span class="k">case</span><span class="w"> </span><span class="k">_</span> <span class="k">as</span> <span class="n">unreachable</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unsupported estimand: </span><span class="si">{</span><span class="n">unreachable</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+    <span class="n">explainable_mask</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Boolean flags selecting explainable feature positions from the full mask.&quot;&quot;&quot;</span>
+
+    <span class="n">target_length</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Total length of the full coalition mask including fixed positions.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;target_length must be positive&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">explainable_mask</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_length</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;explainable_mask cannot exceed target_length&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">explainable_mask</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;explainable_mask must include at least one explainable position&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_features</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the number of explainable features.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">explainable_mask</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MaskSpace.materialize">
+<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.MaskSpace.materialize">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">materialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">split</span><span class="p">:</span> <span class="n">CoalitionMask</span> <span class="o">|</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Project a split over explainable positions back to the full mask.&quot;&quot;&quot;</span>
+        <span class="n">present</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">split</span><span class="o">.</span><span class="n">present</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">split</span><span class="p">,</span> <span class="n">CoalitionMask</span><span class="p">)</span>
+            <span class="k">else</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">split</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">present</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;split length </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">present</span><span class="p">)</span><span class="si">}</span><span class="s2"> does not match feature count &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="n">prepared</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_length</span>
+        <span class="n">split_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">is_explainable</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">explainable_mask</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">is_explainable</span><span class="p">:</span>
+                <span class="n">prepared</span><span class="p">[</span><span class="n">position</span><span class="p">]</span> <span class="o">=</span> <span class="n">present</span><span class="p">[</span><span class="n">split_index</span><span class="p">]</span>
+                <span class="n">split_index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">prepared</span><span class="p">)</span></div>
+</div>
 
 </pre></div>
         </article>

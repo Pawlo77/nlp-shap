@@ -7,7 +7,7 @@
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Getting started - nlp-shap 0.1.2</title>
+        <title>Getting started - nlp-shap 0.1.3</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">nlp-shap 0.1.2</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.3</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.2</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.3</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -209,6 +209,7 @@
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="estimands.html">Using estimand aggregators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
@@ -216,12 +217,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../theory/cooperative_games.html">Cooperative games</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/masking.html">Masking</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../examples.html">Examples</a><input aria-label="Toggle navigation of Examples" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../notebooks/estimands_toy_game.html">Shapley vs Banzhaf on a toy majority game</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/masking_views.html">Coalition masking and absence policies</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -229,6 +232,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/protocols.html">Protocols</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/plugins.html">Plugins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/masking.html">Masking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/estimation.html">Estimand aggregators</a></li>
 </ul>
 </li>
@@ -337,7 +341,8 @@ make<span class="w"> </span>install
 <li><p><a class="reference internal" href="../theory/shapley_values.html"><span class="doc">Shapley values and axioms</span></a> — Shapley axioms and uniqueness</p></li>
 <li><p><a class="reference internal" href="../theory/estimands.html"><span class="doc">Estimands: Shapley vs Banzhaf</span></a> — why Shapley and Banzhaf differ</p></li>
 <li><p><a class="reference internal" href="applications.html"><span class="doc">Business and compliance applications</span></a> — business and compliance use cases</p></li>
-<li><p><a class="reference internal" href="../examples.html"><span class="doc">Examples</span></a> — embedded toy-game notebook</p></li>
+<li><p><a class="reference internal" href="../examples.html"><span class="doc">Examples</span></a> — <cite>estimands_toy_game.ipynb</cite> and <cite>masking_views.ipynb</cite></p></li>
+<li><p><a class="reference internal" href="masking.html"><span class="doc">Masking views</span></a> — coalition masking and absence policies</p></li>
 <li><p><a class="reference internal" href="../api.html"><span class="doc">API reference</span></a> — module reference</p></li>
 </ul>
 </section>
@@ -422,7 +427,7 @@ make<span class="w"> </span>install
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=92734c54"></script>
+</div><script src="../_static/documentation_options.js?v=360bc84d"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

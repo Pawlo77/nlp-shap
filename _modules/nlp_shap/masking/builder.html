@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.domain.estimands - nlp-shap 0.1.3</title>
+        <title>nlp_shap.masking.builder - nlp-shap 0.1.3</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -267,40 +267,96 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for nlp_shap.domain.estimands</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Estimand labels for attribution outputs and archive manifests.&quot;&quot;&quot;</span>
+          <h1>Source code for nlp_shap.masking.builder</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;View-based masked snapshots with structural sharing.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">StrEnum</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="n">EstimandWire</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;shapley&quot;</span><span class="p">,</span> <span class="s2">&quot;banzhaf&quot;</span><span class="p">]</span>
-<span class="sd">&quot;&quot;&quot;Wire values used in manifests and configuration payloads.&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 
-
-<div class="viewcode-block" id="Estimand">
-<a class="viewcode-back" href="../../../api/domain.html#nlp_shap.Estimand">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Estimand</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Supported cooperative-game value formulations.&quot;&quot;&quot;</span>
-
-    <span class="n">SHAPLEY</span> <span class="o">=</span> <span class="s2">&quot;shapley&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shapley value with coalition weights k!(n-k-1)!/n!.&quot;&quot;&quot;</span>
-
-    <span class="n">BANZHAF</span> <span class="o">=</span> <span class="s2">&quot;banzhaf&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Banzhaf index with uniform coalition weights 1/2^(n-1).&quot;&quot;&quot;</span></div>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.coalition</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionMask</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationSnapshot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.players</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlayerSet</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..protocols.masking</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbsencePolicy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.codec</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaskCodec</span>
 
 
+<div class="viewcode-block" id="MaskedSnapshot">
+<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.MaskedSnapshot">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MaskedSnapshot</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Shared view over a conversation snapshot and coalition mask.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="estimand_to_wire">
-<a class="viewcode-back" href="../../../api/domain.html#nlp_shap.estimand_to_wire">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">estimand_to_wire</span><span class="p">(</span><span class="n">estimand</span><span class="p">:</span> <span class="n">Estimand</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EstimandWire</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Serialize an estimand enum member to its wire value.&quot;&quot;&quot;</span>
-    <span class="k">match</span> <span class="n">estimand</span><span class="p">:</span>
-        <span class="k">case</span> <span class="n">Estimand</span><span class="o">.</span><span class="n">SHAPLEY</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;shapley&quot;</span>
-        <span class="k">case</span> <span class="n">Estimand</span><span class="o">.</span><span class="n">BANZHAF</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;banzhaf&quot;</span>
-        <span class="k">case</span><span class="w"> </span><span class="k">_</span> <span class="k">as</span> <span class="n">unreachable</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unsupported estimand: </span><span class="si">{</span><span class="n">unreachable</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+    <span class="n">base</span><span class="p">:</span> <span class="n">ConversationSnapshot</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Underlying snapshot shared across coalition evaluations.&quot;&quot;&quot;</span>
+
+    <span class="n">players</span><span class="p">:</span> <span class="n">PlayerSet</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ordered players aligned with the coalition mask.&quot;&quot;&quot;</span>
+
+    <span class="n">mask</span><span class="p">:</span> <span class="n">CoalitionMask</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Presence mask selecting which players remain in the coalition.&quot;&quot;&quot;</span>
+
+    <span class="n">policy_name</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Registered absence-policy identifier used to render the view.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">validate_against</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">players</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">base_snapshot_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the shared base snapshot identifier.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">snapshot_id</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mask_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a stable hash for the coalition mask.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">MaskCodec</span><span class="o">.</span><span class="n">hash_mask</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">present</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="MaskBuilder">
+<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.MaskBuilder">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MaskBuilder</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build masked snapshot views without copying the base conversation.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">policy</span><span class="p">:</span> <span class="n">AbsencePolicy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_policy</span> <span class="o">=</span> <span class="n">policy</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">policy_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the configured absence-policy identifier.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">name</span>
+
+<div class="viewcode-block" id="MaskBuilder.view">
+<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.MaskBuilder.view">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">view</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">,</span>
+        <span class="n">players</span><span class="p">:</span> <span class="n">PlayerSet</span><span class="p">,</span>
+        <span class="n">mask</span><span class="p">:</span> <span class="n">CoalitionMask</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MaskedSnapshot</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a masked view that shares ``snapshot`` across coalitions.&quot;&quot;&quot;</span>
+        <span class="n">mask</span><span class="o">.</span><span class="n">validate_against</span><span class="p">(</span><span class="n">players</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">MaskedSnapshot</span><span class="p">(</span>
+            <span class="n">base</span><span class="o">=</span><span class="n">snapshot</span><span class="p">,</span>
+            <span class="n">players</span><span class="o">=</span><span class="n">players</span><span class="p">,</span>
+            <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span>
+            <span class="n">policy_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MaskBuilder.render">
+<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.MaskBuilder.render">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">masked</span><span class="p">:</span> <span class="n">MaskedSnapshot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConversationSnapshot</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Materialize a coalition-specific conversation snapshot.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">masked</span><span class="o">.</span><span class="n">policy_name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;masked view policy </span><span class="si">{</span><span class="n">masked</span><span class="o">.</span><span class="n">policy_name</span><span class="si">!r}</span><span class="s2"> does not match &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;builder policy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_policy</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">masked</span><span class="o">.</span><span class="n">base</span><span class="p">,</span> <span class="n">masked</span><span class="o">.</span><span class="n">players</span><span class="p">,</span> <span class="n">masked</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span></div>
+</div>
 
 </pre></div>
         </article>

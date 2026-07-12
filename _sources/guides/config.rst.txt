@@ -76,4 +76,5 @@ Further reading
 
 - Domain types: :doc:`../api/domain`
 - Plugin registry: :doc:`../api/plugins`
+- Masking and absence policies: :doc:`masking`
 - Estimand guide: :doc:`estimands`

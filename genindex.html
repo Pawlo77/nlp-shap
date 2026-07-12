@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
-    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.2</title>
+    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.3</title>
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -170,7 +170,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.2</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.3</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.2</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.3</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -207,6 +207,7 @@
 <li class="toctree-l1"><a class="reference internal" href="guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
@@ -214,12 +215,14 @@
 <li class="toctree-l1"><a class="reference internal" href="theory/cooperative_games.html">Cooperative games</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/masking.html">Masking</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release notes</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><input aria-label="Toggle navigation of Examples" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/estimands_toy_game.html">Shapley vs Banzhaf on a toy majority game</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/masking_views.html">Coalition masking and absence policies</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -227,6 +230,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api/protocols.html">Protocols</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/plugins.html">Plugins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/masking.html">Masking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators</a></li>
 </ul>
 </li>
@@ -265,12 +269,18 @@
           
 <section class="genindex-section">
   <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a></div>
+  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a></div>
 </section>
 <section id="A" class="genindex-section">
   <h2>A</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api.html#nlp_shap.PluginGroup.ABSENCE_POLICIES">ABSENCE_POLICIES (nlp_shap.PluginGroup attribute)</a>
+
+        <ul>
+          <li><a href="api/plugins.html#nlp_shap.plugins.groups.PluginGroup.ABSENCE_POLICIES">(nlp_shap.plugins.groups.PluginGroup attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.absence_policy">absence_policy (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
         <li><a href="api/protocols.html#nlp_shap.protocols.masking.AbsencePolicy">AbsencePolicy (class in nlp_shap.protocols.masking)</a>
@@ -287,12 +297,26 @@
           <li><a href="api.html#nlp_shap.ShapleyAggregator.aggregate">(nlp_shap.ShapleyAggregator method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BackendConfig.api_host">api_host (nlp_shap.pipeline.config.BackendConfig attribute)</a>
 </li>
-        <li><a href="api/protocols.html#nlp_shap.protocols.masking.AbsencePolicy.apply">apply() (nlp_shap.protocols.masking.AbsencePolicy method)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/masking.html#nlp_shap.masking.DeletePolicy.apply">apply() (nlp_shap.masking.DeletePolicy method)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.NeutralPolicy.apply">(nlp_shap.masking.NeutralPolicy method)</a>
 </li>
+          <li><a href="api/masking.html#nlp_shap.masking.PadPolicy.apply">(nlp_shap.masking.PadPolicy method)</a>
+</li>
+          <li><a href="api/masking.html#nlp_shap.masking.policies.DeletePolicy.apply">(nlp_shap.masking.policies.DeletePolicy method)</a>
+</li>
+          <li><a href="api/masking.html#nlp_shap.masking.policies.NeutralPolicy.apply">(nlp_shap.masking.policies.NeutralPolicy method)</a>
+</li>
+          <li><a href="api/masking.html#nlp_shap.masking.policies.PadPolicy.apply">(nlp_shap.masking.policies.PadPolicy method)</a>
+</li>
+          <li><a href="api/protocols.html#nlp_shap.protocols.masking.AbsencePolicy.apply">(nlp_shap.protocols.masking.AbsencePolicy method)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.archive">archive (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ArchiveConfig">ArchiveConfig (class in nlp_shap.pipeline.config)</a>
@@ -331,12 +355,24 @@
           <li><a href="api.html#nlp_shap.Estimand.BANZHAF">(nlp_shap.Estimand attribute)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api.html#nlp_shap.BanzhafAggregator">BanzhafAggregator (class in nlp_shap)</a>
 
         <ul>
           <li><a href="api/estimation.html#nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator">(class in nlp_shap.estimation.estimands.banzhaf)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot.base">base (nlp_shap.masking.builder.MaskedSnapshot attribute)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot.base">(nlp_shap.masking.MaskedSnapshot attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot.base_snapshot_id">base_snapshot_id (nlp_shap.masking.builder.MaskedSnapshot property)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot.base_snapshot_id">(nlp_shap.masking.MaskedSnapshot property)</a>
 </li>
         </ul></li>
         <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy.bind_snapshot">bind_snapshot() (nlp_shap.protocols.estimator.EstimatorStrategy method)</a>
@@ -403,10 +439,16 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.dedup">dedup (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.DedupConfig">DedupConfig (class in nlp_shap.pipeline.config)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/masking.html#nlp_shap.masking.DeletePolicy">DeletePolicy (class in nlp_shap.masking)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.policies.DeletePolicy">(class in nlp_shap.masking.policies)</a>
+</li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -429,9 +471,11 @@
           <li><a href="api/domain.html#nlp_shap.domain.game.CooperativeGame.empty_value">(nlp_shap.domain.game.CooperativeGame attribute)</a>
 </li>
         </ul></li>
-        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.DedupConfig.enabled">enabled (nlp_shap.pipeline.config.DedupConfig attribute)</a>
+        <li><a href="api/masking.html#nlp_shap.masking.PrefixTreeStub.enabled">enabled (nlp_shap.masking.PrefixTreeStub attribute)</a>
 
         <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.DedupConfig.enabled">(nlp_shap.pipeline.config.DedupConfig attribute)</a>
+</li>
           <li><a href="api/pipeline.html#nlp_shap.pipeline.config.KvCacheConfig.enabled">(nlp_shap.pipeline.config.KvCacheConfig attribute)</a>
 </li>
         </ul></li>
@@ -501,6 +545,12 @@
           <li><a href="api/pipeline.html#nlp_shap.pipeline.config.explain_config_to_yaml">(in module nlp_shap.pipeline.config)</a>
 </li>
         </ul></li>
+        <li><a href="api/masking.html#nlp_shap.masking.MaskSpace.explainable_mask">explainable_mask (nlp_shap.masking.MaskSpace attribute)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.space.MaskSpace.explainable_mask">(nlp_shap.masking.space.MaskSpace attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.ExplainConfig">ExplainConfig (class in nlp_shap)</a>
 
         <ul>
@@ -529,18 +579,24 @@
   <h2>F</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/masking.html#nlp_shap.masking.NeutralPolicy.fill_char">fill_char (nlp_shap.masking.NeutralPolicy attribute)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.policies.NeutralPolicy.fill_char">(nlp_shap.masking.policies.NeutralPolicy attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ArchiveConfig.flush_every">flush_every (nlp_shap.pipeline.config.ArchiveConfig attribute)</a>
 </li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BudgetConfig.fraction">fraction (nlp_shap.pipeline.config.BudgetConfig attribute)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api.html#nlp_shap.CoalitionMask.from_sequence">from_sequence() (nlp_shap.CoalitionMask class method)</a>
 
         <ul>
           <li><a href="api/domain.html#nlp_shap.domain.coalition.CoalitionMask.from_sequence">(nlp_shap.domain.coalition.CoalitionMask class method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api.html#nlp_shap.ConversationSnapshot.from_turns">from_turns() (nlp_shap.ConversationSnapshot class method)</a>
 
         <ul>
@@ -571,6 +627,20 @@
 </li>
         <li><a href="api/protocols.html#nlp_shap.protocols.backend.GenerativeBackend">GenerativeBackend (class in nlp_shap.protocols.backend)</a>
 </li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="H" class="genindex-section">
+  <h2>H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/masking.html#nlp_shap.masking.codec.MaskCodec.hash_mask">hash_mask() (nlp_shap.masking.codec.MaskCodec static method)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.MaskCodec.hash_mask">(nlp_shap.masking.MaskCodec static method)</a>
+</li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -619,6 +689,48 @@
   <h2>M</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot.mask">mask (nlp_shap.masking.builder.MaskedSnapshot attribute)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot.mask">(nlp_shap.masking.MaskedSnapshot attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot.mask_hash">mask_hash (nlp_shap.masking.builder.MaskedSnapshot property)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot.mask_hash">(nlp_shap.masking.MaskedSnapshot property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/masking.html#nlp_shap.masking.MaskBuilder">MaskBuilder (class in nlp_shap.masking)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.builder.MaskBuilder">(class in nlp_shap.masking.builder)</a>
+</li>
+        </ul></li>
+        <li><a href="api/masking.html#nlp_shap.masking.MaskCodec">MaskCodec (class in nlp_shap.masking)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.codec.MaskCodec">(class in nlp_shap.masking.codec)</a>
+</li>
+        </ul></li>
+        <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot">MaskedSnapshot (class in nlp_shap.masking)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot">(class in nlp_shap.masking.builder)</a>
+</li>
+        </ul></li>
+        <li><a href="api/masking.html#nlp_shap.masking.MaskSpace">MaskSpace (class in nlp_shap.masking)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.space.MaskSpace">(class in nlp_shap.masking.space)</a>
+</li>
+        </ul></li>
+        <li><a href="api/masking.html#nlp_shap.masking.MaskSpace.materialize">materialize() (nlp_shap.masking.MaskSpace method)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.space.MaskSpace.materialize">(nlp_shap.masking.space.MaskSpace method)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.max_inflight">max_inflight (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig.max_new_tokens">max_new_tokens (nlp_shap.pipeline.config.GenerationConfig attribute)</a>
@@ -661,6 +773,8 @@
           <li><a href="api/protocols.html#nlp_shap.protocols.backend.GenerativeBackend.model_id">(nlp_shap.protocols.backend.GenerativeBackend property)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     module
 
@@ -682,6 +796,18 @@
           <li><a href="api/estimation.html#module-nlp_shap.estimation.estimands.banzhaf">nlp_shap.estimation.estimands.banzhaf</a>
 </li>
           <li><a href="api/estimation.html#module-nlp_shap.estimation.estimands.shapley">nlp_shap.estimation.estimands.shapley</a>
+</li>
+          <li><a href="api/masking.html#module-nlp_shap.masking">nlp_shap.masking</a>
+</li>
+          <li><a href="api/masking.html#module-nlp_shap.masking.builder">nlp_shap.masking.builder</a>
+</li>
+          <li><a href="api/masking.html#module-nlp_shap.masking.codec">nlp_shap.masking.codec</a>
+</li>
+          <li><a href="api/masking.html#module-nlp_shap.masking.partitions">nlp_shap.masking.partitions</a>
+</li>
+          <li><a href="api/masking.html#module-nlp_shap.masking.policies">nlp_shap.masking.policies</a>
+</li>
+          <li><a href="api/masking.html#module-nlp_shap.masking.space">nlp_shap.masking.space</a>
 </li>
           <li><a href="api/pipeline.html#module-nlp_shap.pipeline.config">nlp_shap.pipeline.config</a>
 </li>
@@ -720,9 +846,37 @@
   <h2>N</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/protocols.html#nlp_shap.protocols.embedding.EmbeddingProvider.name">name (nlp_shap.protocols.embedding.EmbeddingProvider property)</a>
+        <li><a href="api/masking.html#nlp_shap.masking.codec.PackedMask.n_bits">n_bits (nlp_shap.masking.codec.PackedMask attribute)</a>
 
         <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.PackedMask.n_bits">(nlp_shap.masking.PackedMask attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/masking.html#nlp_shap.masking.MaskSpace.n_features">n_features (nlp_shap.masking.MaskSpace property)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.space.MaskSpace.n_features">(nlp_shap.masking.space.MaskSpace property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/masking.html#nlp_shap.masking.DeletePolicy.name">name (nlp_shap.masking.DeletePolicy property)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.NeutralPolicy.name">(nlp_shap.masking.NeutralPolicy property)</a>
+</li>
+          <li><a href="api/masking.html#nlp_shap.masking.PadPolicy.name">(nlp_shap.masking.PadPolicy property)</a>
+</li>
+          <li><a href="api/masking.html#nlp_shap.masking.partitions.TokenPartitioner.name">(nlp_shap.masking.partitions.TokenPartitioner property)</a>
+</li>
+          <li><a href="api/masking.html#nlp_shap.masking.policies.DeletePolicy.name">(nlp_shap.masking.policies.DeletePolicy property)</a>
+</li>
+          <li><a href="api/masking.html#nlp_shap.masking.policies.NeutralPolicy.name">(nlp_shap.masking.policies.NeutralPolicy property)</a>
+</li>
+          <li><a href="api/masking.html#nlp_shap.masking.policies.PadPolicy.name">(nlp_shap.masking.policies.PadPolicy property)</a>
+</li>
+          <li><a href="api/masking.html#nlp_shap.masking.TokenPartitioner.name">(nlp_shap.masking.TokenPartitioner property)</a>
+</li>
+          <li><a href="api/protocols.html#nlp_shap.protocols.embedding.EmbeddingProvider.name">(nlp_shap.protocols.embedding.EmbeddingProvider property)</a>
+</li>
           <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy.name">(nlp_shap.protocols.estimator.EstimatorStrategy property)</a>
 </li>
           <li><a href="api/protocols.html#nlp_shap.protocols.masking.AbsencePolicy.name">(nlp_shap.protocols.masking.AbsencePolicy property)</a>
@@ -736,6 +890,12 @@
 
         <ul>
           <li><a href="api/plugins.html#nlp_shap.plugins.registry.PluginRegistry.names">(nlp_shap.plugins.registry.PluginRegistry method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/masking.html#nlp_shap.masking.NeutralPolicy">NeutralPolicy (class in nlp_shap.masking)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.policies.NeutralPolicy">(class in nlp_shap.masking.policies)</a>
 </li>
         </ul></li>
         <li>
@@ -802,6 +962,50 @@
 </li>
         </ul></li>
         <li>
+    nlp_shap.masking
+
+        <ul>
+          <li><a href="api/masking.html#module-nlp_shap.masking">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.masking.builder
+
+        <ul>
+          <li><a href="api/masking.html#module-nlp_shap.masking.builder">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    nlp_shap.masking.codec
+
+        <ul>
+          <li><a href="api/masking.html#module-nlp_shap.masking.codec">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.masking.partitions
+
+        <ul>
+          <li><a href="api/masking.html#module-nlp_shap.masking.partitions">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.masking.policies
+
+        <ul>
+          <li><a href="api/masking.html#module-nlp_shap.masking.policies">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.masking.space
+
+        <ul>
+          <li><a href="api/masking.html#module-nlp_shap.masking.space">module</a>
+</li>
+        </ul></li>
+        <li>
     nlp_shap.pipeline.config
 
         <ul>
@@ -815,8 +1019,6 @@
           <li><a href="api/pipeline.html#module-nlp_shap.pipeline.manifest">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     nlp_shap.pipeline.result
 
@@ -903,6 +1105,12 @@
         </ul></li>
         <li><a href="api/domain.html#nlp_shap.domain.enums.SystemRolesSetup.NONE">NONE (nlp_shap.domain.enums.SystemRolesSetup attribute)</a>
 </li>
+        <li><a href="api/masking.html#nlp_shap.masking.codec.MaskCodec.normalize">normalize() (nlp_shap.masking.codec.MaskCodec static method)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.MaskCodec.normalize">(nlp_shap.masking.MaskCodec static method)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.normalizer">normalizer (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
         <li><a href="api/domain.html#nlp_shap.domain.players.PlayerSet.num_players">num_players (nlp_shap.domain.players.PlayerSet property)</a>
@@ -919,14 +1127,38 @@
   <h2>P</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/masking.html#nlp_shap.masking.codec.MaskCodec.pack">pack() (nlp_shap.masking.codec.MaskCodec static method)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.MaskCodec.pack">(nlp_shap.masking.MaskCodec static method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/masking.html#nlp_shap.masking.PackedMask">PackedMask (class in nlp_shap.masking)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.codec.PackedMask">(class in nlp_shap.masking.codec)</a>
+</li>
+        </ul></li>
+        <li><a href="api/masking.html#nlp_shap.masking.PadPolicy">PadPolicy (class in nlp_shap.masking)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.policies.PadPolicy">(class in nlp_shap.masking.policies)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.parse_manifest">parse_manifest() (in module nlp_shap)</a>
 
         <ul>
           <li><a href="api/pipeline.html#nlp_shap.pipeline.manifest.parse_manifest">(in module nlp_shap.pipeline.manifest)</a>
 </li>
         </ul></li>
-        <li><a href="api/protocols.html#nlp_shap.protocols.partition.PlayerPartitioner.partition">partition() (nlp_shap.protocols.partition.PlayerPartitioner method)</a>
+        <li><a href="api/masking.html#nlp_shap.masking.partitions.TokenPartitioner.partition">partition() (nlp_shap.masking.partitions.TokenPartitioner method)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.TokenPartitioner.partition">(nlp_shap.masking.TokenPartitioner method)</a>
 </li>
+          <li><a href="api/protocols.html#nlp_shap.protocols.partition.PlayerPartitioner.partition">(nlp_shap.protocols.partition.PlayerPartitioner method)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.PluginGroup.PARTITIONS">PARTITIONS (nlp_shap.PluginGroup attribute)</a>
 
         <ul>
@@ -935,6 +1167,12 @@
         </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ArchiveConfig.path">path (nlp_shap.pipeline.config.ArchiveConfig attribute)</a>
 </li>
+        <li><a href="api/masking.html#nlp_shap.masking.PadPolicy.placeholder">placeholder (nlp_shap.masking.PadPolicy attribute)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.policies.PadPolicy.placeholder">(nlp_shap.masking.policies.PadPolicy attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/domain.html#nlp_shap.domain.players.PlayerSet.player_ids">player_ids (nlp_shap.domain.players.PlayerSet attribute)</a>
 
         <ul>
@@ -947,12 +1185,18 @@
           <li><a href="api/domain.html#nlp_shap.domain.game.CooperativeGame.player_set">(nlp_shap.domain.game.CooperativeGame attribute)</a>
 </li>
         </ul></li>
-        <li><a href="api/protocols.html#nlp_shap.protocols.partition.PlayerPartitioner">PlayerPartitioner (class in nlp_shap.protocols.partition)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.players">players (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+        <li><a href="api/protocols.html#nlp_shap.protocols.partition.PlayerPartitioner">PlayerPartitioner (class in nlp_shap.protocols.partition)</a>
 </li>
+        <li><a href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot.players">players (nlp_shap.masking.builder.MaskedSnapshot attribute)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot.players">(nlp_shap.masking.MaskedSnapshot attribute)</a>
+</li>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.players">(nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.PlayerSet">PlayerSet (class in nlp_shap)</a>
 
         <ul>
@@ -975,7 +1219,19 @@
           <li><a href="api/plugins.html#nlp_shap.plugins.registry.PluginRegistry">(class in nlp_shap.plugins.registry)</a>
 </li>
         </ul></li>
+        <li><a href="api/masking.html#nlp_shap.masking.builder.MaskBuilder.policy_name">policy_name (nlp_shap.masking.builder.MaskBuilder property)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot.policy_name">(nlp_shap.masking.builder.MaskedSnapshot attribute)</a>
+</li>
+          <li><a href="api/masking.html#nlp_shap.masking.MaskBuilder.policy_name">(nlp_shap.masking.MaskBuilder property)</a>
+</li>
+          <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot.policy_name">(nlp_shap.masking.MaskedSnapshot attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig.precompute_base">precompute_base (nlp_shap.pipeline.config.GenerationConfig attribute)</a>
+</li>
+        <li><a href="api/masking.html#nlp_shap.masking.PrefixTreeStub">PrefixTreeStub (class in nlp_shap.masking)</a>
 </li>
         <li><a href="api.html#nlp_shap.CoalitionMask.present">present (nlp_shap.CoalitionMask attribute)</a>
 
@@ -1001,6 +1257,12 @@
 </li>
         <li><a href="api/plugins.html#nlp_shap.plugins.context.PluginContext.registry">registry (nlp_shap.plugins.context.PluginContext attribute)</a>
 </li>
+        <li><a href="api/masking.html#nlp_shap.masking.builder.MaskBuilder.render">render() (nlp_shap.masking.builder.MaskBuilder method)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.MaskBuilder.render">(nlp_shap.masking.MaskBuilder method)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.PluginRegistry.resolve">resolve() (nlp_shap.PluginRegistry method)</a>
 
         <ul>
@@ -1093,6 +1355,12 @@
   <h2>T</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/masking.html#nlp_shap.masking.MaskSpace.target_length">target_length (nlp_shap.masking.MaskSpace attribute)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.space.MaskSpace.target_length">(nlp_shap.masking.space.MaskSpace attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig.temperature">temperature (nlp_shap.pipeline.config.GenerationConfig attribute)</a>
 </li>
         <li><a href="api/domain.html#nlp_shap.domain.conversation.Message.text">text (nlp_shap.domain.conversation.Message attribute)</a>
@@ -1111,6 +1379,12 @@
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/masking.html#nlp_shap.masking.TokenPartitioner">TokenPartitioner (class in nlp_shap.masking)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.partitions.TokenPartitioner">(class in nlp_shap.masking.partitions)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig.top_k">top_k (nlp_shap.pipeline.config.GenerationConfig attribute)</a>
 </li>
         <li><a href="api.html#nlp_shap.Turn">Turn (class in nlp_shap)</a>
@@ -1133,10 +1407,16 @@
   <h2>U</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.use_v2">use_v2 (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+        <li><a href="api/masking.html#nlp_shap.masking.codec.MaskCodec.unpack">unpack() (nlp_shap.masking.codec.MaskCodec static method)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.MaskCodec.unpack">(nlp_shap.masking.MaskCodec static method)</a>
 </li>
+        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.use_v2">use_v2 (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
         <li><a href="api/domain.html#nlp_shap.domain.enums.Role.USER">USER (nlp_shap.domain.enums.Role attribute)</a>
 
         <ul>
@@ -1173,6 +1453,26 @@
 
         <ul>
           <li><a href="api/pipeline.html#nlp_shap.pipeline.result.ExplainResult.values">(nlp_shap.pipeline.result.ExplainResult attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/masking.html#nlp_shap.masking.builder.MaskBuilder.view">view() (nlp_shap.masking.builder.MaskBuilder method)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.MaskBuilder.view">(nlp_shap.masking.MaskBuilder method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="W" class="genindex-section">
+  <h2>W</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/masking.html#nlp_shap.masking.codec.PackedMask.words">words (nlp_shap.masking.codec.PackedMask attribute)</a>
+
+        <ul>
+          <li><a href="api/masking.html#nlp_shap.masking.PackedMask.words">(nlp_shap.masking.PackedMask attribute)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -1219,7 +1519,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=92734c54"></script>
+</div><script src="_static/documentation_options.js?v=360bc84d"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

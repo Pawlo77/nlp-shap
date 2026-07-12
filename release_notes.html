@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Examples" href="examples.html"><link rel="prev" title="Estimands: Shapley vs Banzhaf" href="theory/estimands.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Examples" href="examples.html"><link rel="prev" title="Masking" href="theory/masking.html">
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Release notes - nlp-shap 0.1.2</title>
+        <title>Release notes - nlp-shap 0.1.3</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.2</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.3</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.2</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.3</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -209,6 +209,7 @@
 <li class="toctree-l1"><a class="reference internal" href="guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
@@ -216,12 +217,14 @@
 <li class="toctree-l1"><a class="reference internal" href="theory/cooperative_games.html">Cooperative games</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/masking.html">Masking</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Release notes</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><input aria-label="Toggle navigation of Examples" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/estimands_toy_game.html">Shapley vs Banzhaf on a toy majority game</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/masking_views.html">Coalition masking and absence policies</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -229,6 +232,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api/protocols.html">Protocols</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/plugins.html">Plugins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/masking.html">Masking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators</a></li>
 </ul>
 </li>
@@ -279,19 +283,38 @@
 <p>Changes in each published <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> version. Newest first.</p>
 <section id="unreleased">
 <span id="release-unreleased"></span><h2>Unreleased<a class="headerlink" href="#unreleased" title="Link to this heading">¶</a></h2>
+</section>
+<section id="release-0-1-3">
+<span id="id1"></span><h2>0.1.3 (2026-07-12)<a class="headerlink" href="#release-0-1-3" title="Link to this heading">¶</a></h2>
+<section id="added">
+<h3>Added<a class="headerlink" href="#added" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Masking codec: <a class="reference internal" href="api/masking.html#nlp_shap.masking.codec.PackedMask" title="nlp_shap.masking.codec.PackedMask"><code class="xref py py-class docutils literal notranslate"><span class="pre">PackedMask</span></code></a>,
+<a class="reference internal" href="api/masking.html#nlp_shap.masking.codec.MaskCodec" title="nlp_shap.masking.codec.MaskCodec"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskCodec</span></code></a> with legacy-compatible packed hashing.</p></li>
+<li><p><a class="reference internal" href="api/masking.html#nlp_shap.masking.space.MaskSpace" title="nlp_shap.masking.space.MaskSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskSpace</span></code></a> for projecting feature splits to full masks.</p></li>
+<li><p>View-based <a class="reference internal" href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot" title="nlp_shap.masking.builder.MaskedSnapshot"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskedSnapshot</span></code></a> and
+<a class="reference internal" href="api/masking.html#nlp_shap.masking.builder.MaskBuilder" title="nlp_shap.masking.builder.MaskBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskBuilder</span></code></a> with structural sharing.</p></li>
+<li><p>Absence policies: <a class="reference internal" href="api/masking.html#nlp_shap.masking.policies.DeletePolicy" title="nlp_shap.masking.policies.DeletePolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">DeletePolicy</span></code></a>,
+<a class="reference internal" href="api/masking.html#nlp_shap.masking.policies.PadPolicy" title="nlp_shap.masking.policies.PadPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">PadPolicy</span></code></a>,
+<a class="reference internal" href="api/masking.html#nlp_shap.masking.policies.NeutralPolicy" title="nlp_shap.masking.policies.NeutralPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeutralPolicy</span></code></a>.</p></li>
+<li><p><a class="reference internal" href="api/masking.html#nlp_shap.masking.partitions.TokenPartitioner" title="nlp_shap.masking.partitions.TokenPartitioner"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenPartitioner</span></code></a> and built-in plugin
+registration for <code class="docutils literal notranslate"><span class="pre">tokens</span></code>, <code class="docutils literal notranslate"><span class="pre">delete</span></code>, <code class="docutils literal notranslate"><span class="pre">pad</span></code>, and <code class="docutils literal notranslate"><span class="pre">neutral</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numpy</span></code> core dependency for mask packing.</p></li>
+</ul>
+</section>
 <section id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">¶</a></h3>
 <ul class="simple">
-<li><p>Expanded theory: Shapley axioms, uniqueness theorem, cooperative-game foundations.</p></li>
-<li><p>Business and compliance applications guide with verified references.</p></li>
-<li><p>Corrected bibliographic links (Shapley 1953 DOI, SHAP NeurIPS / arXiv).</p></li>
+<li><p>Theory and usage guides for coalition masking and absence policies.</p></li>
+<li><p>API reference page for <a class="reference internal" href="api/masking.html#module-nlp_shap.masking" title="nlp_shap.masking"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nlp_shap.masking</span></code></a>.</p></li>
+<li><p>Example notebook <code class="docutils literal notranslate"><span class="pre">examples/masking_views.ipynb</span></code>.</p></li>
 </ul>
 </section>
 </section>
 <section id="release-0-1-2">
-<span id="id1"></span><h2>0.1.2 (2026-07-12)<a class="headerlink" href="#release-0-1-2" title="Link to this heading">¶</a></h2>
-<section id="added">
-<h3>Added<a class="headerlink" href="#added" title="Link to this heading">¶</a></h3>
+<span id="id2"></span><h2>0.1.2 (2026-07-12)<a class="headerlink" href="#release-0-1-2" title="Link to this heading">¶</a></h2>
+<section id="id3">
+<h3>Added<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Domain types: <a class="reference internal" href="api.html#nlp_shap.ConversationSnapshot" title="nlp_shap.ConversationSnapshot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConversationSnapshot</span></code></a>,
 <a class="reference internal" href="api.html#nlp_shap.Turn" title="nlp_shap.Turn"><code class="xref py py-class docutils literal notranslate"><span class="pre">Turn</span></code></a>, <a class="reference internal" href="api.html#nlp_shap.Message" title="nlp_shap.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a>,
@@ -304,8 +327,8 @@ policies, and embedding providers.</p></li>
 <li><p>Configuration guide and expanded API reference pages.</p></li>
 </ul>
 </section>
-<section id="id2">
-<h3>Documentation<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<section id="id4">
+<h3>Documentation<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Sphinx theory pages for cooperative games and estimands (Shapley vs Banzhaf).</p></li>
 <li><p>Usage guide for estimand aggregators, results, and manifests.</p></li>
@@ -322,9 +345,9 @@ policies, and embedding providers.</p></li>
 </section>
 </section>
 <section id="release-0-1-1">
-<span id="id3"></span><h2>0.1.1 (2026-07-12)<a class="headerlink" href="#release-0-1-1" title="Link to this heading">¶</a></h2>
-<section id="id4">
-<h3>Added<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<span id="id5"></span><h2>0.1.1 (2026-07-12)<a class="headerlink" href="#release-0-1-1" title="Link to this heading">¶</a></h2>
+<section id="id6">
+<h3>Added<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="api/estimation.html#nlp_shap.estimation.estimands.shapley.ShapleyAggregator" title="nlp_shap.estimation.estimands.shapley.ShapleyAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapleyAggregator</span></code></a> and
 <a class="reference internal" href="api/estimation.html#nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator" title="nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BanzhafAggregator</span></code></a> for
@@ -341,9 +364,9 @@ estimand labelling.</p></li>
 </section>
 </section>
 <section id="release-0-1-0">
-<span id="id5"></span><h2>0.1.0 (2026-07-12)<a class="headerlink" href="#release-0-1-0" title="Link to this heading">¶</a></h2>
-<section id="id6">
-<h3>Added<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<span id="id7"></span><h2>0.1.0 (2026-07-12)<a class="headerlink" href="#release-0-1-0" title="Link to this heading">¶</a></h2>
+<section id="id8">
+<h3>Added<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Initial PyPI package layout and <code class="docutils literal notranslate"><span class="pre">nlp_shap</span></code> import surface.</p></li>
 <li><p>Logging bootstrap from <code class="docutils literal notranslate"><span class="pre">[tool.logging]</span></code> in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> via
@@ -367,14 +390,14 @@ estimand labelling.</p></li>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="theory/estimands.html">
+          <a class="prev-page" href="theory/masking.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Estimands: Shapley vs Banzhaf</div>
+                <div class="title">Masking</div>
                 
               </div>
             </a>
@@ -417,22 +440,24 @@ estimand labelling.</p></li>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Release notes</a><ul>
-<li><a class="reference internal" href="#unreleased">Unreleased</a><ul>
+<li><a class="reference internal" href="#unreleased">Unreleased</a></li>
+<li><a class="reference internal" href="#release-0-1-3">0.1.3 (2026-07-12)</a><ul>
+<li><a class="reference internal" href="#added">Added</a></li>
 <li><a class="reference internal" href="#documentation">Documentation</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-0-1-2">0.1.2 (2026-07-12)</a><ul>
-<li><a class="reference internal" href="#added">Added</a></li>
-<li><a class="reference internal" href="#id2">Documentation</a></li>
+<li><a class="reference internal" href="#id3">Added</a></li>
+<li><a class="reference internal" href="#id4">Documentation</a></li>
 <li><a class="reference internal" href="#tooling">Tooling</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-0-1-1">0.1.1 (2026-07-12)</a><ul>
-<li><a class="reference internal" href="#id4">Added</a></li>
+<li><a class="reference internal" href="#id6">Added</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#release-0-1-0">0.1.0 (2026-07-12)</a><ul>
-<li><a class="reference internal" href="#id6">Added</a></li>
+<li><a class="reference internal" href="#id8">Added</a></li>
 </ul>
 </li>
 </ul>
@@ -446,7 +471,7 @@ estimand labelling.</p></li>
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=92734c54"></script>
+</div><script src="_static/documentation_options.js?v=360bc84d"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>
