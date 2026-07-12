@@ -61,12 +61,12 @@ marginal contribution is:</p>
 <p>Attribution methods differ in how they <strong>weight</strong> and <strong>aggregate</strong> marginal
 contributions across coalitions — see <a class="reference internal" href="estimands.html"><span class="doc">Estimands: Shapley vs Banzhaf</span></a>.</p>
 </section>
-<section id="phase-0-scope">
-<h2>Phase 0 scope<a class="headerlink" href="#phase-0-scope" title="Link to this heading">¶</a></h2>
-<p>Version <code class="docutils literal notranslate"><span class="pre">0.1.1</span></code> ships <strong>estimand aggregators</strong> only. Coalition sampling,
-masking, backends, and the full explain pipeline arrive in later phases. The
-aggregators assume you supply coalition masks and aligned payoffs
-<span class="math notranslate nohighlight">\(v(S)\)</span>.</p>
+<section id="estimand-aggregators">
+<h2>Estimand aggregators<a class="headerlink" href="#estimand-aggregators" title="Link to this heading">¶</a></h2>
+<p>The <a class="reference internal" href="../api.html#nlp_shap.estimation.estimands.shapley.ShapleyAggregator" title="nlp_shap.estimation.estimands.shapley.ShapleyAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapleyAggregator</span></code></a> and
+<a class="reference internal" href="../api.html#nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator" title="nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BanzhafAggregator</span></code></a> classes
+aggregate precomputed coalition payoffs. You supply boolean coalition masks and
+aligned values <span class="math notranslate nohighlight">\(v(S)\)</span>.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
@@ -111,7 +111,7 @@ Press. <a class="reference external" href="https://projecteuclid.org/journals/co
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Cooperative games</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#characteristic-function">Characteristic function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#marginal-contributions">Marginal contributions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#phase-0-scope">Phase 0 scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#estimand-aggregators">Estimand aggregators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
@@ -123,6 +123,7 @@ Press. <a class="reference external" href="https://projecteuclid.org/journals/co
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API reference</a></li>
 </ul>

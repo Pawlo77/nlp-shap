@@ -41,7 +41,8 @@ coalition averaging does <strong>not</strong> automatically estimate Shapley val
 means over sampled coalitions estimate the <strong>Banzhaf index</strong> unless Shapley
 weights are applied explicitly.</p>
 <p><code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> keeps estimands separate from estimators so results and archive
-manifests are honestly labelled.</p>
+manifests are honestly labelled. Unweighted averaging over sampled coalitions
+targets the Banzhaf index; Shapley values require explicit Shapley weights.</p>
 <section id="shapley-value">
 <h2>Shapley value<a class="headerlink" href="#shapley-value" title="Link to this heading">¶</a></h2>
 <p>The Shapley value <span class="math notranslate nohighlight">\(\phi_i(v)\)</span> for player <span class="math notranslate nohighlight">\(i\)</span> is:</p>
@@ -81,19 +82,15 @@ coincide (both recover coefficients <span class="math notranslate nohighlight">\
 </ul>
 <p>The test suite locks this divergence on identical coalition samples.</p>
 </section>
-<section id="labelling-requirement">
-<h2>Labelling requirement<a class="headerlink" href="#labelling-requirement" title="Link to this heading">¶</a></h2>
+<section id="labelling">
+<h2>Labelling<a class="headerlink" href="#labelling" title="Link to this heading">¶</a></h2>
 <p>Every <a class="reference internal" href="../api.html#nlp_shap.pipeline.result.ExplainResult" title="nlp_shap.pipeline.result.ExplainResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainResult</span></code></a> carries an
 <a class="reference internal" href="../api.html#nlp_shap.domain.estimands.Estimand" title="nlp_shap.domain.estimands.Estimand"><code class="xref py py-class docutils literal notranslate"><span class="pre">Estimand</span></code></a> label. Run archives persist the
 same label in <a class="reference internal" href="../api.html#nlp_shap.pipeline.manifest.RunManifestPayload" title="nlp_shap.pipeline.manifest.RunManifestPayload"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunManifestPayload</span></code></a> so
 downstream analysis never misreports Banzhaf output as Shapley.</p>
-</section>
-<section id="x-motivation">
-<h2>0.x motivation<a class="headerlink" href="#x-motivation" title="Link to this heading">¶</a></h2>
-<p>Legacy MLLM-Shap Monte Carlo paths averaged coalition contributions without
-Shapley weights while labelling outputs “Shapley”. Phase 0 fixes this at the
-architecture level by splitting <a class="reference internal" href="../api.html#nlp_shap.protocols.estimand.EstimandAggregator" title="nlp_shap.protocols.estimand.EstimandAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimandAggregator</span></code></a>
-from future estimator plugins.</p>
+<p>The <a class="reference internal" href="../api.html#nlp_shap.protocols.estimand.EstimandAggregator" title="nlp_shap.protocols.estimand.EstimandAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimandAggregator</span></code></a> protocol defines the
+aggregation contract; concrete implementations live in
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">nlp_shap.estimation.estimands</span></code>.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
@@ -148,8 +145,7 @@ Explainability</em>. <a class="reference external" href="https://arxiv.org/abs/2
 <li class="toctree-l2"><a class="reference internal" href="#shapley-value">Shapley value</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#banzhaf-index">Banzhaf index</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#when-they-differ">When they differ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#labelling-requirement">Labelling requirement</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#x-motivation">0.x motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#labelling">Labelling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
@@ -160,6 +156,7 @@ Explainability</em>. <a class="reference external" href="https://arxiv.org/abs/2
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API reference</a></li>
 </ul>

@@ -15,7 +15,7 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Examples" href="../examples.html" />
+    <link rel="next" title="Release notes" href="../release_notes.html" />
     <link rel="prev" title="Estimands: Shapley vs Banzhaf" href="../theory/estimands.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -36,9 +36,9 @@
             
   <section id="using-estimand-aggregators">
 <h1>Using estimand aggregators<a class="headerlink" href="#using-estimand-aggregators" title="Link to this heading">¶</a></h1>
-<p>Phase <code class="docutils literal notranslate"><span class="pre">0.1.1</span></code> exposes standalone <strong>estimand aggregators</strong>. You provide coalition
-masks and payoffs <span class="math notranslate nohighlight">\(v(S)\)</span>; the library returns per-player attributions and
-records which estimand was used.</p>
+<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">nlp_shap.estimation.estimands</span></code> package provides <strong>estimand aggregators</strong>
+that turn coalition masks and payoffs <span class="math notranslate nohighlight">\(v(S)\)</span> into per-player attributions.
+Each aggregator reports which estimand it implements.</p>
 <section id="quick-start">
 <h2>Quick start<a class="headerlink" href="#quick-start" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">product</span>
@@ -154,6 +154,7 @@ records which estimand was used.</p>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API reference</a></li>
 </ul>
@@ -163,7 +164,7 @@ records which estimand was used.</p>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
       <li>Previous: <a href="../theory/estimands.html" title="previous chapter">Estimands: Shapley vs Banzhaf</a></li>
-      <li>Next: <a href="../examples.html" title="next chapter">Examples</a></li>
+      <li>Next: <a href="../release_notes.html" title="next chapter">Release notes</a></li>
   </ul></li>
 </ul>
 </div>

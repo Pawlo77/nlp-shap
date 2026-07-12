@@ -38,13 +38,8 @@
 cooperative game theory</strong>. The library separates <em>what you measure</em> (estimands),
 <em>how you sample coalitions</em> (estimators), and <em>how you score outputs</em> (value
 functions).</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><strong>Release 0.1.1 (Phase 0)</strong> ships estimand aggregators (Shapley, Banzhaf),
-result/manifest labelling, and theory documentation. Full explain pipelines,
-masking, and backends follow in later phases — see the
-<a class="reference external" href="https://github.com/Pawlo77/nlp-shap-research/blob/main/docs/plans/infrastructure/nlp-shap%20Package%20Rewrite.md">rewrite plan</a>.</p>
-</div>
+<p>The public API provides <strong>estimand aggregators</strong> (Shapley, Banzhaf), explicit
+estimand labelling on explain results, and typed run-archive manifests.</p>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>nlp-shap
@@ -73,7 +68,7 @@ make<span class="w"> </span>docs
 <li class="toctree-l1"><a class="reference internal" href="theory/cooperative_games.html">Cooperative games</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="theory/cooperative_games.html#characteristic-function">Characteristic function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="theory/cooperative_games.html#marginal-contributions">Marginal contributions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="theory/cooperative_games.html#phase-0-scope">Phase 0 scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/cooperative_games.html#estimand-aggregators">Estimand aggregators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="theory/cooperative_games.html#references">References</a></li>
 </ul>
 </li>
@@ -81,8 +76,7 @@ make<span class="w"> </span>docs
 <li class="toctree-l2"><a class="reference internal" href="theory/estimands.html#shapley-value">Shapley value</a></li>
 <li class="toctree-l2"><a class="reference internal" href="theory/estimands.html#banzhaf-index">Banzhaf index</a></li>
 <li class="toctree-l2"><a class="reference internal" href="theory/estimands.html#when-they-differ">When they differ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="theory/estimands.html#labelling-requirement">Labelling requirement</a></li>
-<li class="toctree-l2"><a class="reference internal" href="theory/estimands.html#x-motivation">0.x motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory/estimands.html#labelling">Labelling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="theory/estimands.html#references">References</a></li>
 </ul>
 </li>
@@ -104,6 +98,12 @@ make<span class="w"> </span>docs
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#unreleased">Unreleased</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#release-0-1-1">0.1.1 (2026-07-12)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes.html#release-0-1-0">0.1.0 (2026-07-12)</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#setup">Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html#gallery">Gallery</a></li>
@@ -164,6 +164,7 @@ make<span class="w"> </span>docs
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
 </ul>

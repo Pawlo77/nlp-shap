@@ -1,9 +1,9 @@
 Using estimand aggregators
 ==========================
 
-Phase ``0.1.1`` exposes standalone **estimand aggregators**. You provide coalition
-masks and payoffs :math:`v(S)`; the library returns per-player attributions and
-records which estimand was used.
+The :mod:`nlp_shap.estimation.estimands` package provides **estimand aggregators**
+that turn coalition masks and payoffs :math:`v(S)` into per-player attributions.
+Each aggregator reports which estimand it implements.
 
 Quick start
 -----------

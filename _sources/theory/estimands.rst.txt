@@ -7,7 +7,8 @@ means over sampled coalitions estimate the **Banzhaf index** unless Shapley
 weights are applied explicitly.
 
 ``nlp-shap`` keeps estimands separate from estimators so results and archive
-manifests are honestly labelled.
+manifests are honestly labelled. Unweighted averaging over sampled coalitions
+targets the Banzhaf index; Shapley values require explicit Shapley weights.
 
 Shapley value
 -------------
@@ -63,21 +64,17 @@ For **non-additive** games they diverge. A standard toy example is the
 
 The test suite locks this divergence on identical coalition samples.
 
-Labelling requirement
----------------------
+Labelling
+---------
 
 Every :class:`~nlp_shap.pipeline.result.ExplainResult` carries an
 :class:`~nlp_shap.domain.estimands.Estimand` label. Run archives persist the
 same label in :class:`~nlp_shap.pipeline.manifest.RunManifestPayload` so
 downstream analysis never misreports Banzhaf output as Shapley.
 
-0.x motivation
---------------
-
-Legacy MLLM-Shap Monte Carlo paths averaged coalition contributions without
-Shapley weights while labelling outputs "Shapley". Phase 0 fixes this at the
-architecture level by splitting :class:`~nlp_shap.protocols.estimand.EstimandAggregator`
-from future estimator plugins.
+The :class:`~nlp_shap.protocols.estimand.EstimandAggregator` protocol defines the
+aggregation contract; concrete implementations live in
+:mod:`nlp_shap.estimation.estimands`.
 
 References
 ----------
