@@ -66,7 +66,11 @@ gh run watch <run-id> --exit-status   # after push
 
 ## Workflow
 
-Use `nlp-shap-development`: red → green → document → refactor → `make check` + `make docs`.
+Use `nlp-shap-development`: red → green → document → refactor → validate → hand off.
+
+## Post-task validation
+
+Before closing a phase or proposing commit: re-read the diff, run `make check` (and `make docs` / `make notebooks` when applicable), and fix style, test, docs, and consistency issues you find. Do not hand off with known defects.
 
 LM Studio: `pytest -m lms` locally. CI: mock only. GPU: `pytest -m gpu` optional.
 

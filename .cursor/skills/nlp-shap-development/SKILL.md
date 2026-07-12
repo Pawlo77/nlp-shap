@@ -51,7 +51,15 @@ Ship Sphinx docs with every public API / algorithm change (see `docs.mdc`):
 
 - Simplify while green; no unrelated cleanup
 
-## 6. Verify
+## 6. Validate
+
+After each task, **test and analyze your own work** before hand-off:
+
+- Re-read the diff for scope creep, style drift, and rule violations (bare `*`, docstrings, imports, docs scope)
+- Run `make check`; run `make docs` when API or docs changed; run `make notebooks` when example notebooks changed
+- Confirm tests cover real behavior and meaningful edge cases — not only happy paths or trivia
+- Cross-check consistency with adjacent modules, plugin registration, examples catalog, and release notes
+- Fix every issue found during validation; do not hand off known defects
 
 ```bash
 make notebooks   # when examples/*.ipynb changed — commit only with outputs
