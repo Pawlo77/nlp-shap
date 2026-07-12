@@ -1,0 +1,188 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "d8efe835",
+   "metadata": {},
+   "source": [
+    "# Shapley vs Banzhaf on a toy majority game\n",
+    "\n",
+    "**Goal:** Show that identical coalition samples yield different attributions depending on the **estimand** (Shapley vs Banzhaf).\n",
+    "\n",
+    "**Prerequisites:** `nlp-shap` 0.1.1+, Python 3.12.\n",
+    "\n",
+    "**Theory:** See the [estimands theory page](https://pawlo77.github.io/nlp-shap/theory/estimands.html) in the deployed docs.\n",
+    "\n",
+    "**Expected output:** Shapley values ≈ `2/6` per player; Banzhaf indices = `0.5` per player on a 3-player majority game."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "4d0b60d1",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-07-12T19:19:04.502775Z",
+     "iopub.status.busy": "2026-07-12T19:19:04.502639Z",
+     "iopub.status.idle": "2026-07-12T19:19:04.517457Z",
+     "shell.execute_reply": "2026-07-12T19:19:04.516739Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "from itertools import product\n",
+    "\n",
+    "from nlp_shap import (\n",
+    "    BanzhafAggregator,\n",
+    "    Estimand,\n",
+    "    ExplainResult,\n",
+    "    RunManifest,\n",
+    "    ShapleyAggregator,\n",
+    "    parse_manifest,\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "dbcc3cd0",
+   "metadata": {},
+   "source": [
+    "## Define the characteristic function\n",
+    "\n",
+    "Three players; payoff is 1 when at least two are present (majority coalition), else 0. This game is **not additive**, so Shapley and Banzhaf disagree."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "b32ae57d",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-07-12T19:19:04.519227Z",
+     "iopub.status.busy": "2026-07-12T19:19:04.519096Z",
+     "iopub.status.idle": "2026-07-12T19:19:04.524092Z",
+     "shell.execute_reply": "2026-07-12T19:19:04.523486Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(8, [0.0, 0.0, 0.0, 1.0])"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "NUM_PLAYERS = 3\n",
+    "\n",
+    "masks = [tuple(bits) for bits in product([False, True], repeat=NUM_PLAYERS)]\n",
+    "\n",
+    "\n",
+    "def majority_payoff(mask: tuple[bool, ...]) -> float:\n",
+    "    return 1.0 if sum(mask) >= 2 else 0.0\n",
+    "\n",
+    "\n",
+    "payoffs = [majority_payoff(mask) for mask in masks]\n",
+    "len(masks), payoffs[:4]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "4aa21a8d",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-07-12T19:19:04.525483Z",
+     "iopub.status.busy": "2026-07-12T19:19:04.525360Z",
+     "iopub.status.idle": "2026-07-12T19:19:04.527834Z",
+     "shell.execute_reply": "2026-07-12T19:19:04.527292Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Shapley: [0.3333333333333333, 0.3333333333333333, 0.3333333333333333]\n",
+      "Banzhaf: [0.5, 0.5, 0.5]\n"
+     ]
+    }
+   ],
+   "source": [
+    "shapley = ShapleyAggregator().aggregate(masks, payoffs)\n",
+    "banzhaf = BanzhafAggregator().aggregate(masks, payoffs)\n",
+    "\n",
+    "print(\"Shapley:\", shapley)\n",
+    "print(\"Banzhaf:\", banzhaf)\n",
+    "assert shapley != banzhaf"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "191620bd",
+   "metadata": {},
+   "source": [
+    "## Label results for archives\n",
+    "\n",
+    "Every attribution output records its estimand so downstream analysis cannot mislabel Banzhaf as Shapley."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "083be363",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-07-12T19:19:04.529157Z",
+     "iopub.status.busy": "2026-07-12T19:19:04.529051Z",
+     "iopub.status.idle": "2026-07-12T19:19:04.531840Z",
+     "shell.execute_reply": "2026-07-12T19:19:04.531203Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(<Estimand.SHAPLEY: 'shapley'>, <Estimand.SHAPLEY: 'shapley'>, 'toy-majority')"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "result = ExplainResult(estimand=Estimand.SHAPLEY, values=tuple(shapley))\n",
+    "manifest = RunManifest(estimand=result.estimand, run_id=\"toy-majority\")\n",
+    "restored = parse_manifest(manifest.to_dict())\n",
+    "\n",
+    "result.estimand, restored.estimand, restored.run_id"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.12"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
