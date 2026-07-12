@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.masking.policies - nlp-shap 0.1.4</title>
+        <title>nlp_shap.runtime.scheduler - nlp-shap 0.1.4</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -271,134 +271,175 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for nlp_shap.masking.policies</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Absence policies for rendering masked conversation snapshots.&quot;&quot;&quot;</span>
+          <h1>Source code for nlp_shap.runtime.scheduler</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Async coalition inference scheduling with deduplication.&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Awaitable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Sequence</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.coalition</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionMask</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..domain.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationSnapshot</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.players</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlayerSet</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.tokens</span><span class="w"> </span><span class="kn">import</span> <span class="n">rebuild_snapshot</span><span class="p">,</span> <span class="n">tokenize_snapshot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..masking.codec</span><span class="w"> </span><span class="kn">import</span> <span class="n">PackedMask</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..pipeline.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenerationConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.archive</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionRecordDraft</span><span class="p">,</span> <span class="n">RunArchive</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.dedup</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionDedupRegistry</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.store</span><span class="w"> </span><span class="kn">import</span> <span class="n">HotResultStore</span>
+
+<span class="n">GenerateFn</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">ConversationSnapshot</span><span class="p">],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+<span class="sd">&quot;&quot;&quot;Async callable that returns generated text for one snapshot.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="DeletePolicy">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.DeletePolicy">[docs]</a>
+<div class="viewcode-block" id="SchedulerMetrics">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.SchedulerMetrics">[docs]</a>
 <span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">DeletePolicy</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove absent tokens from the rendered conversation.&quot;&quot;&quot;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SchedulerMetrics</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Counters collected while executing coalition jobs.&quot;&quot;&quot;</span>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the registered absence-policy identifier.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;delete&quot;</span>
+    <span class="n">requested</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Number of coalition jobs submitted to the scheduler.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="DeletePolicy.apply">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.DeletePolicy.apply">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">,</span>
-        <span class="n">players</span><span class="p">:</span> <span class="n">PlayerSet</span><span class="p">,</span>
-        <span class="n">mask</span><span class="p">:</span> <span class="n">CoalitionMask</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConversationSnapshot</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Drop absent tokens while preserving turn and message structure.&quot;&quot;&quot;</span>
-        <span class="n">mask</span><span class="o">.</span><span class="n">validate_against</span><span class="p">(</span><span class="n">players</span><span class="p">)</span>
-        <span class="n">spans</span> <span class="o">=</span> <span class="n">tokenize_snapshot</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">spans</span><span class="p">)</span> <span class="o">!=</span> <span class="n">players</span><span class="o">.</span><span class="n">num_players</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;token layout does not match the supplied player set&quot;</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="n">rendered</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
-            <span class="n">span</span><span class="o">.</span><span class="n">text</span>
-            <span class="k">for</span> <span class="n">span</span><span class="p">,</span> <span class="n">present</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">spans</span><span class="p">,</span> <span class="n">mask</span><span class="o">.</span><span class="n">present</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">present</span>
-        <span class="p">)</span>
-        <span class="n">kept_spans</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
-            <span class="n">span</span> <span class="k">for</span> <span class="n">span</span><span class="p">,</span> <span class="n">present</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">spans</span><span class="p">,</span> <span class="n">mask</span><span class="o">.</span><span class="n">present</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="n">present</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">rendered</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;delete policy cannot remove every token&quot;</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">rebuild_snapshot</span><span class="p">(</span><span class="n">snapshot</span><span class="p">,</span> <span class="n">kept_spans</span><span class="p">,</span> <span class="n">rendered</span><span class="p">)</span></div>
-</div>
+    <span class="n">executed</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Number of jobs that invoked the backend generate callable.&quot;&quot;&quot;</span>
+
+    <span class="n">deduplicated</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Number of jobs skipped because the coalition key was already executed.&quot;&quot;&quot;</span>
+
+    <span class="n">cache_hits</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Number of jobs served from the hot result store without backend calls.&quot;&quot;&quot;</span></div>
 
 
 
-<div class="viewcode-block" id="PadPolicy">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.PadPolicy">[docs]</a>
+<div class="viewcode-block" id="CoalitionJob">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.CoalitionJob">[docs]</a>
 <span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">PadPolicy</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Replace absent tokens with a fixed mask placeholder.&quot;&quot;&quot;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CoalitionJob</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;One coalition evaluation request routed through the scheduler.&quot;&quot;&quot;</span>
 
-    <span class="n">placeholder</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;[MASK]&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Placeholder text inserted for absent tokens.&quot;&quot;&quot;</span>
+    <span class="n">coalition_key</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stable deduplication key for the coalition.&quot;&quot;&quot;</span>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the registered absence-policy identifier.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;pad&quot;</span>
+    <span class="n">snapshot_id</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Identifier of the evaluated conversation snapshot.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="PadPolicy.apply">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.PadPolicy.apply">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span>
+    <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Conversation snapshot passed to the backend for generation.&quot;&quot;&quot;</span>
+
+    <span class="n">absence_policy</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Registered absence-policy identifier used for rendering.&quot;&quot;&quot;</span>
+
+    <span class="n">mask_words</span><span class="p">:</span> <span class="nb">bytes</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Packed coalition mask bytes.&quot;&quot;&quot;</span>
+
+    <span class="n">mask_n_bits</span><span class="p">:</span> <span class="nb">int</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Original coalition mask bit length.&quot;&quot;&quot;</span>
+
+    <span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Backend model identifier used for generation.&quot;&quot;&quot;</span>
+
+    <span class="n">utility</span><span class="p">:</span> <span class="nb">float</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Utility score assigned after generation.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="InferenceScheduler">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.InferenceScheduler">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">InferenceScheduler</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Execute coalition jobs with bounded concurrency and optional deduplication.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">,</span>
-        <span class="n">players</span><span class="p">:</span> <span class="n">PlayerSet</span><span class="p">,</span>
-        <span class="n">mask</span><span class="p">:</span> <span class="n">CoalitionMask</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConversationSnapshot</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Substitute absent tokens with :attr:`placeholder`.&quot;&quot;&quot;</span>
-        <span class="n">mask</span><span class="o">.</span><span class="n">validate_against</span><span class="p">(</span><span class="n">players</span><span class="p">)</span>
-        <span class="n">spans</span> <span class="o">=</span> <span class="n">tokenize_snapshot</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">spans</span><span class="p">)</span> <span class="o">!=</span> <span class="n">players</span><span class="o">.</span><span class="n">num_players</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;token layout does not match the supplied player set&quot;</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">max_inflight</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">generation</span><span class="p">:</span> <span class="n">GenerationConfig</span><span class="p">,</span>
+        <span class="n">store</span><span class="p">:</span> <span class="n">HotResultStore</span><span class="p">,</span>
+        <span class="n">dedup</span><span class="p">:</span> <span class="n">CoalitionDedupRegistry</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">archive</span><span class="p">:</span> <span class="n">RunArchive</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">max_inflight</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;max_inflight must be at least 1&quot;</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="n">rendered</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
-            <span class="n">span</span><span class="o">.</span><span class="n">text</span> <span class="k">if</span> <span class="n">present</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">placeholder</span>
-            <span class="k">for</span> <span class="n">span</span><span class="p">,</span> <span class="n">present</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">spans</span><span class="p">,</span> <span class="n">mask</span><span class="o">.</span><span class="n">present</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">rebuild_snapshot</span><span class="p">(</span><span class="n">snapshot</span><span class="p">,</span> <span class="n">spans</span><span class="p">,</span> <span class="n">rendered</span><span class="p">)</span></div>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_inflight</span> <span class="o">=</span> <span class="n">max_inflight</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_generation</span> <span class="o">=</span> <span class="n">generation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_store</span> <span class="o">=</span> <span class="n">store</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dedup</span> <span class="o">=</span> <span class="n">dedup</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_archive</span> <span class="o">=</span> <span class="n">archive</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_semaphore</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">(</span><span class="n">max_inflight</span><span class="p">)</span>
 
-
-
-<div class="viewcode-block" id="NeutralPolicy">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.NeutralPolicy">[docs]</a>
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">NeutralPolicy</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Replace absent tokens with neutral fillers that preserve token width.&quot;&quot;&quot;</span>
-
-    <span class="n">fill_char</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Single character repeated to match each absent token length.&quot;&quot;&quot;</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the registered absence-policy identifier.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;neutral&quot;</span>
-
-<div class="viewcode-block" id="NeutralPolicy.apply">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.NeutralPolicy.apply">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span>
+<div class="viewcode-block" id="InferenceScheduler.run">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.InferenceScheduler.run">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">,</span>
-        <span class="n">players</span><span class="p">:</span> <span class="n">PlayerSet</span><span class="p">,</span>
-        <span class="n">mask</span><span class="p">:</span> <span class="n">CoalitionMask</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConversationSnapshot</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Substitute absent tokens with width-matched neutral fillers.&quot;&quot;&quot;</span>
-        <span class="n">mask</span><span class="o">.</span><span class="n">validate_against</span><span class="p">(</span><span class="n">players</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fill_char</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;fill_char must be exactly one character&quot;</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="n">spans</span> <span class="o">=</span> <span class="n">tokenize_snapshot</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">spans</span><span class="p">)</span> <span class="o">!=</span> <span class="n">players</span><span class="o">.</span><span class="n">num_players</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;token layout does not match the supplied player set&quot;</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="n">rendered</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
-            <span class="n">span</span><span class="o">.</span><span class="n">text</span> <span class="k">if</span> <span class="n">present</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">fill_char</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">span</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">span</span><span class="p">,</span> <span class="n">present</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">spans</span><span class="p">,</span> <span class="n">mask</span><span class="o">.</span><span class="n">present</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">jobs</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">CoalitionJob</span><span class="p">],</span>
+        <span class="n">generate</span><span class="p">:</span> <span class="n">GenerateFn</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SchedulerMetrics</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute coalition jobs and return scheduler counters.&quot;&quot;&quot;</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">SchedulerMetrics</span><span class="p">(</span>
+            <span class="n">requested</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">jobs</span><span class="p">),</span>
+            <span class="n">executed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">deduplicated</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">cache_hits</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">rebuild_snapshot</span><span class="p">(</span><span class="n">snapshot</span><span class="p">,</span> <span class="n">spans</span><span class="p">,</span> <span class="n">rendered</span><span class="p">)</span></div>
-</div>
+        <span class="n">mutable</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;executed&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;deduplicated&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;cache_hits&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+
+        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_run_job</span><span class="p">(</span><span class="n">job</span><span class="p">:</span> <span class="n">CoalitionJob</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_store</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">coalition_key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">cached</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;cache_hits&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_maybe_archive</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">cached</span><span class="p">,</span> <span class="n">cache_hit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">elapsed_ms</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+                <span class="k">return</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dedup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dedup</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">coalition_key</span><span class="p">):</span>
+                <span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;deduplicated&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">return</span>
+
+            <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_semaphore</span><span class="p">:</span>
+                <span class="n">started</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+                <span class="n">generation_text</span> <span class="o">=</span> <span class="k">await</span> <span class="n">generate</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">snapshot</span><span class="p">)</span>
+                <span class="n">elapsed_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">started</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1000.0</span>
+            <span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;executed&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_store</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">coalition_key</span><span class="p">,</span> <span class="n">generation_text</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_maybe_archive</span><span class="p">(</span>
+                <span class="n">job</span><span class="p">,</span>
+                <span class="n">generation_text</span><span class="p">,</span>
+                <span class="n">cache_hit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">elapsed_ms</span><span class="o">=</span><span class="n">elapsed_ms</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">_run_job</span><span class="p">(</span><span class="n">job</span><span class="p">)</span> <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">SchedulerMetrics</span><span class="p">(</span>
+            <span class="n">requested</span><span class="o">=</span><span class="n">metrics</span><span class="o">.</span><span class="n">requested</span><span class="p">,</span>
+            <span class="n">executed</span><span class="o">=</span><span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;executed&quot;</span><span class="p">],</span>
+            <span class="n">deduplicated</span><span class="o">=</span><span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;deduplicated&quot;</span><span class="p">],</span>
+            <span class="n">cache_hits</span><span class="o">=</span><span class="n">mutable</span><span class="p">[</span><span class="s2">&quot;cache_hits&quot;</span><span class="p">],</span>
+        <span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_maybe_archive</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">job</span><span class="p">:</span> <span class="n">CoalitionJob</span><span class="p">,</span>
+        <span class="n">generation_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">cache_hit</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">elapsed_ms</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archive</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_archive</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">CoalitionRecordDraft</span><span class="p">(</span>
+                <span class="n">snapshot_id</span><span class="o">=</span><span class="n">job</span><span class="o">.</span><span class="n">snapshot_id</span><span class="p">,</span>
+                <span class="n">coalition_key</span><span class="o">=</span><span class="n">job</span><span class="o">.</span><span class="n">coalition_key</span><span class="p">,</span>
+                <span class="n">mask</span><span class="o">=</span><span class="n">PackedMask</span><span class="p">(</span><span class="n">words</span><span class="o">=</span><span class="n">job</span><span class="o">.</span><span class="n">mask_words</span><span class="p">,</span> <span class="n">n_bits</span><span class="o">=</span><span class="n">job</span><span class="o">.</span><span class="n">mask_n_bits</span><span class="p">),</span>
+                <span class="n">absence_policy</span><span class="o">=</span><span class="n">job</span><span class="o">.</span><span class="n">absence_policy</span><span class="p">,</span>
+                <span class="n">model_id</span><span class="o">=</span><span class="n">job</span><span class="o">.</span><span class="n">model_id</span><span class="p">,</span>
+                <span class="n">generation_text</span><span class="o">=</span><span class="n">generation_text</span><span class="p">,</span>
+                <span class="n">utility</span><span class="o">=</span><span class="n">job</span><span class="o">.</span><span class="n">utility</span><span class="p">,</span>
+                <span class="n">elapsed_ms</span><span class="o">=</span><span class="n">elapsed_ms</span><span class="p">,</span>
+                <span class="n">cache_hit</span><span class="o">=</span><span class="n">cache_hit</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
 
 </pre></div>
         </article>

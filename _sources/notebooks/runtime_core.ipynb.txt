@@ -1,0 +1,307 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "5e3b6bd9",
+   "metadata": {},
+   "source": [
+    "# Runtime archive, deduplication, and async scheduling\n",
+    "\n",
+    "**Business context:** Production explain runs generate thousands of coalition evaluations. Persisted archives support compliance replay, deduplication avoids redundant API spend, and bounded concurrency keeps latency predictable under load.\n",
+    "\n",
+    "**Goal:** Walk through every public runtime API in `nlp-shap` 0.1.4 — run archive, coalition keys, hot LRU cache, and the async inference scheduler.\n",
+    "\n",
+    "**Prerequisites:** `nlp-shap` 0.1.4+, Python 3.12.\n",
+    "\n",
+    "**Theory:** See the [runtime theory page](https://pawlo77.github.io/nlp-shap/theory/runtime.html).\n",
+    "\n",
+    "**Expected output:** 100 coalition rows round-trip through SQLite; ten unique masks collapse to ten backend calls; scheduler metrics report cache hits and bounded concurrency."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "9c77f9c9",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-07-12T21:09:07.070818Z",
+     "iopub.status.busy": "2026-07-12T21:09:07.070684Z",
+     "iopub.status.idle": "2026-07-12T21:09:07.196173Z",
+     "shell.execute_reply": "2026-07-12T21:09:07.195610Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "import asyncio\n",
+    "import json\n",
+    "from pathlib import Path\n",
+    "import tempfile\n",
+    "\n",
+    "from nlp_shap import Estimand\n",
+    "from nlp_shap.domain.conversation import ConversationSnapshot, Message, Role, Turn\n",
+    "from nlp_shap.domain.estimands import estimand_to_wire\n",
+    "from nlp_shap.masking.codec import MaskCodec\n",
+    "from nlp_shap.pipeline.config import DedupConfig, GenerationConfig\n",
+    "from nlp_shap.pipeline.manifest import RunManifest, parse_manifest\n",
+    "from nlp_shap.runtime import (\n",
+    "    CoalitionDedupRegistry,\n",
+    "    CoalitionJob,\n",
+    "    CoalitionRecordDraft,\n",
+    "    HotResultStore,\n",
+    "    InferenceScheduler,\n",
+    "    RunArchive,\n",
+    "    build_coalition_key,\n",
+    "    dedup_enabled,\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d061a9f4",
+   "metadata": {},
+   "source": [
+    "## Persist coalition history\n",
+    "\n",
+    "**Business:** Audit teams need immutable run folders that pair attribution metadata with the exact generations that produced each coalition utility.\n",
+    "\n",
+    "**Technical:** `RunArchive.open` writes `manifest.json`, SQLite rows, and blob files. `history_lazy` streams records without bulk-loading blobs."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "f957639f",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-07-12T21:09:07.198627Z",
+     "iopub.status.busy": "2026-07-12T21:09:07.198450Z",
+     "iopub.status.idle": "2026-07-12T21:09:07.229043Z",
+     "shell.execute_reply": "2026-07-12T21:09:07.228508Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "shapley shapley 100\n"
+     ]
+    }
+   ],
+   "source": [
+    "turn = Turn(messages=(Message(role=Role.USER, text=\"Who are you?\"),))\n",
+    "snapshot = ConversationSnapshot.from_turns((turn,))\n",
+    "manifest = RunManifest(estimand=Estimand.SHAPLEY, run_id=\"runtime-demo\")\n",
+    "packed = MaskCodec.pack((True, False, True))\n",
+    "\n",
+    "with tempfile.TemporaryDirectory() as tmp:\n",
+    "    root = Path(tmp) / \"runtime-demo\"\n",
+    "    with RunArchive.open(root, manifest, flush_every=25) as archive:\n",
+    "        for index in range(100):\n",
+    "            archive.append(\n",
+    "                CoalitionRecordDraft(\n",
+    "                    snapshot_id=snapshot.snapshot_id,\n",
+    "                    coalition_key=f\"key-{index % 10}\",\n",
+    "                    mask=packed,\n",
+    "                    absence_policy=\"delete\",\n",
+    "                    model_id=\"mock\",\n",
+    "                    generation_text=f\"generation-{index}\",\n",
+    "                    utility=float(index),\n",
+    "                    elapsed_ms=float(index),\n",
+    "                    cache_hit=index % 2 == 0,\n",
+    "                )\n",
+    "            )\n",
+    "\n",
+    "    payload = parse_manifest(json.loads((root / \"manifest.json\").read_text()))\n",
+    "    with RunArchive.open(root, manifest) as archive:\n",
+    "        records = list(archive.history_lazy())\n",
+    "\n",
+    "print(payload.estimand, estimand_to_wire(payload.estimand), len(records))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "59be82ed",
+   "metadata": {},
+   "source": [
+    "## Coalition dedup keys\n",
+    "\n",
+    "**Business:** Identical coalition prompts at temperature zero should not trigger duplicate model calls — a direct infrastructure cost control.\n",
+    "\n",
+    "**Technical:** `build_coalition_key` hashes snapshot, players, packed mask, policy, model, and generation settings. `dedup_enabled` follows config `auto/on/off`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "2581d755",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-07-12T21:09:07.230668Z",
+     "iopub.status.busy": "2026-07-12T21:09:07.230540Z",
+     "iopub.status.idle": "2026-07-12T21:09:07.233633Z",
+     "shell.execute_reply": "2026-07-12T21:09:07.233132Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "dedup auto: True\n",
+      "key prefix: 903952d03ee4df35\n",
+      "new: True\n",
+      "repeat: False\n",
+      "unique: 1\n"
+     ]
+    }
+   ],
+   "source": [
+    "generation = GenerationConfig(temperature=0.0)\n",
+    "key = build_coalition_key(\n",
+    "    snapshot_id=snapshot.snapshot_id,\n",
+    "    player_ids=(\"p0\", \"p1\"),\n",
+    "    mask_present=(True, False),\n",
+    "    absence_policy=\"delete\",\n",
+    "    model_id=\"mock\",\n",
+    "    generation=generation,\n",
+    ")\n",
+    "print(\"dedup auto:\", dedup_enabled(DedupConfig(enabled=\"auto\"), generation))\n",
+    "print(\"key prefix:\", key[:16])\n",
+    "\n",
+    "registry = CoalitionDedupRegistry()\n",
+    "print(\"new:\", registry.observe(key))\n",
+    "print(\"repeat:\", registry.observe(key))\n",
+    "print(\"unique:\", len(registry))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b08dbf1d",
+   "metadata": {},
+   "source": [
+    "## Hot LRU cache\n",
+    "\n",
+    "**Business:** Recent coalitions often repeat within one explain run; an in-memory LRU avoids even hitting the dedup registry on hot paths.\n",
+    "\n",
+    "**Technical:** `HotResultStore` keeps the most recent coalition generations up to `maxsize`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "b2aa330c",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-07-12T21:09:07.235091Z",
+     "iopub.status.busy": "2026-07-12T21:09:07.234994Z",
+     "iopub.status.idle": "2026-07-12T21:09:07.237373Z",
+     "shell.execute_reply": "2026-07-12T21:09:07.236809Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "a one\n",
+      "b None\n",
+      "c three\n"
+     ]
+    }
+   ],
+   "source": [
+    "store = HotResultStore(maxsize=2)\n",
+    "store.put(\"a\", \"one\")\n",
+    "store.put(\"b\", \"two\")\n",
+    "store.get(\"a\")\n",
+    "store.put(\"c\", \"three\")\n",
+    "print(\"a\", store.get(\"a\"))\n",
+    "print(\"b\", store.get(\"b\"))\n",
+    "print(\"c\", store.get(\"c\"))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a20d210b",
+   "metadata": {},
+   "source": [
+    "## Async scheduler with bounded concurrency\n",
+    "\n",
+    "**Business:** Unbounded parallel model calls overwhelm backends and inflate bills; `max_inflight` caps concurrency while metrics expose savings from cache and dedup.\n",
+    "\n",
+    "**Technical:** `InferenceScheduler.run` checks the hot store, dedup registry, then a semaphore before invoking the async generate callable."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "e39d47dc",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-07-12T21:09:07.238659Z",
+     "iopub.status.busy": "2026-07-12T21:09:07.238569Z",
+     "iopub.status.idle": "2026-07-12T21:09:07.247943Z",
+     "shell.execute_reply": "2026-07-12T21:09:07.247471Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "SchedulerMetrics(requested=100, executed=10, deduplicated=90, cache_hits=0)\n"
+     ]
+    }
+   ],
+   "source": [
+    "async def generate(snapshot: ConversationSnapshot) -> str:\n",
+    "    await asyncio.sleep(0.001)\n",
+    "    return snapshot.turns[0].messages[0].text\n",
+    "\n",
+    "scheduler = InferenceScheduler(\n",
+    "    max_inflight=2,\n",
+    "    generation=GenerationConfig(temperature=0.0),\n",
+    "    store=HotResultStore(),\n",
+    "    dedup=CoalitionDedupRegistry(),\n",
+    ")\n",
+    "jobs = [\n",
+    "    CoalitionJob(\n",
+    "        coalition_key=f\"key-{index % 10}\",\n",
+    "        snapshot_id=snapshot.snapshot_id,\n",
+    "        snapshot=snapshot,\n",
+    "        absence_policy=\"delete\",\n",
+    "        mask_words=packed.words,\n",
+    "        mask_n_bits=packed.n_bits,\n",
+    "        model_id=\"mock\",\n",
+    "        utility=1.0,\n",
+    "    )\n",
+    "    for index in range(100)\n",
+    "]\n",
+    "metrics = await scheduler.run(jobs, generate)\n",
+    "print(metrics)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.12"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

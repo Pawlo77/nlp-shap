@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.plugins.context - nlp-shap 0.1.4</title>
+        <title>nlp_shap.runtime.dedup - nlp-shap 0.1.4</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -271,22 +271,95 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for nlp_shap.plugins.context</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Plugin registry context helpers.&quot;&quot;&quot;</span>
+          <h1>Source code for nlp_shap.runtime.dedup</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Coalition deduplication keys and registry.&quot;&quot;&quot;</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">PluginRegistry</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..masking.codec</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaskCodec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..pipeline.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">DedupConfig</span><span class="p">,</span> <span class="n">GenerationConfig</span>
 
 
-<div class="viewcode-block" id="PluginContext">
-<a class="viewcode-back" href="../../../api/plugins.html#nlp_shap.plugins.context.PluginContext">[docs]</a>
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">PluginContext</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Registry handle passed through pipeline setup.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="dedup_enabled">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.dedup_enabled">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">dedup_enabled</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">DedupConfig</span><span class="p">,</span> <span class="n">generation</span><span class="p">:</span> <span class="n">GenerationConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return whether coalition deduplication should be active.&quot;&quot;&quot;</span>
+    <span class="k">match</span> <span class="n">config</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+        <span class="k">case</span> <span class="s2">&quot;on&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">case</span> <span class="s2">&quot;off&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">case</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">generation</span><span class="o">.</span><span class="n">temperature</span> <span class="o">==</span> <span class="mf">0.0</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span> <span class="k">as</span> <span class="n">unreachable</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unsupported dedup mode: </span><span class="si">{</span><span class="n">unreachable</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-    <span class="n">registry</span><span class="p">:</span> <span class="n">PluginRegistry</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plugin registry used to resolve pipeline components.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="build_coalition_key">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.build_coalition_key">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_coalition_key</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">snapshot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">player_ids</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+    <span class="n">mask_present</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+    <span class="n">absence_policy</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">generation</span><span class="p">:</span> <span class="n">GenerationConfig</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build a stable SHA256 coalition key for deduplication.&quot;&quot;&quot;</span>
+    <span class="n">packed</span> <span class="o">=</span> <span class="n">MaskCodec</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">mask_present</span><span class="p">)</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;snapshot_id&quot;</span><span class="p">:</span> <span class="n">snapshot_id</span><span class="p">,</span>
+        <span class="s2">&quot;player_ids&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">player_ids</span><span class="p">),</span>
+        <span class="s2">&quot;mask_words&quot;</span><span class="p">:</span> <span class="n">packed</span><span class="o">.</span><span class="n">words</span><span class="o">.</span><span class="n">hex</span><span class="p">(),</span>
+        <span class="s2">&quot;mask_n_bits&quot;</span><span class="p">:</span> <span class="n">packed</span><span class="o">.</span><span class="n">n_bits</span><span class="p">,</span>
+        <span class="s2">&quot;absence_policy&quot;</span><span class="p">:</span> <span class="n">absence_policy</span><span class="p">,</span>
+        <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="n">model_id</span><span class="p">,</span>
+        <span class="s2">&quot;generation&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;max_new_tokens&quot;</span><span class="p">:</span> <span class="n">generation</span><span class="o">.</span><span class="n">max_new_tokens</span><span class="p">,</span>
+            <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="n">generation</span><span class="o">.</span><span class="n">temperature</span><span class="p">,</span>
+            <span class="s2">&quot;top_k&quot;</span><span class="p">:</span> <span class="n">generation</span><span class="o">.</span><span class="n">top_k</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+    <span class="n">encoded</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">encoded</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="CoalitionDedupRegistry">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.CoalitionDedupRegistry">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CoalitionDedupRegistry</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Track coalition keys that already required backend execution.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_seen</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CoalitionDedupRegistry.observe">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.CoalitionDedupRegistry.observe">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">observe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coalition_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Record a coalition key and return whether it is newly observed.&quot;&quot;&quot;</span>
+        <span class="n">is_new</span> <span class="o">=</span> <span class="n">coalition_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_seen</span>
+        <span class="k">if</span> <span class="n">is_new</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">coalition_key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">is_new</span></div>
+
+
+<div class="viewcode-block" id="CoalitionDedupRegistry.contains">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.CoalitionDedupRegistry.contains">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">contains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coalition_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return whether a coalition key was already observed.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">coalition_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_seen</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the number of unique coalition keys observed.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_seen</span><span class="p">)</span></div>
 
 </pre></div>
         </article>

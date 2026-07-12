@@ -2,11 +2,12 @@
 <html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Release notes" href="../release_notes.html"><link rel="prev" title="Masking" href="masking.html">
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Overview: module code - nlp-shap 0.1.4</title>
+        <title>Runtime core - nlp-shap 0.1.4</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -182,7 +183,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -213,12 +214,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../guides/applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../theory/cooperative_games.html">Cooperative games</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../theory/shapley_values.html">Shapley values and axioms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../theory/masking.html">Masking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../theory/runtime.html">Runtime core</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shapley_values.html">Shapley values and axioms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="masking.html">Masking</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Runtime core</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
@@ -258,7 +259,17 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/blob/main/docs/theory/runtime.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/edit/main/docs/theory/runtime.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
@@ -266,52 +277,79 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>All modules for which code is available</h1>
-<ul><li><a href="nlp_shap/domain/coalition.html">nlp_shap.domain.coalition</a></li>
-<li><a href="nlp_shap/domain/conversation.html">nlp_shap.domain.conversation</a></li>
-<li><a href="nlp_shap/domain/enums.html">nlp_shap.domain.enums</a></li>
-<li><a href="nlp_shap/domain/estimands.html">nlp_shap.domain.estimands</a></li>
-<li><a href="nlp_shap/domain/game.html">nlp_shap.domain.game</a></li>
-<li><a href="nlp_shap/domain/players.html">nlp_shap.domain.players</a></li>
-<li><a href="nlp_shap/estimation/estimands/banzhaf.html">nlp_shap.estimation.estimands.banzhaf</a></li>
-<li><a href="nlp_shap/estimation/estimands/shapley.html">nlp_shap.estimation.estimands.shapley</a></li>
-<li><a href="nlp_shap/masking/builder.html">nlp_shap.masking.builder</a></li>
-<li><a href="nlp_shap/masking/codec.html">nlp_shap.masking.codec</a></li>
-<li><a href="nlp_shap/masking/partitions.html">nlp_shap.masking.partitions</a></li>
-<li><a href="nlp_shap/masking/policies.html">nlp_shap.masking.policies</a></li>
-<li><a href="nlp_shap/masking/prefix_tree.html">nlp_shap.masking.prefix_tree</a></li>
-<li><a href="nlp_shap/masking/space.html">nlp_shap.masking.space</a></li>
-<li><a href="nlp_shap/pipeline/config.html">nlp_shap.pipeline.config</a></li>
-<li><a href="nlp_shap/pipeline/manifest.html">nlp_shap.pipeline.manifest</a></li>
-<li><a href="nlp_shap/pipeline/result.html">nlp_shap.pipeline.result</a></li>
-<li><a href="nlp_shap/plugins/builtin.html">nlp_shap.plugins.builtin</a></li>
-<li><a href="nlp_shap/plugins/context.html">nlp_shap.plugins.context</a></li>
-<li><a href="nlp_shap/plugins/groups.html">nlp_shap.plugins.groups</a></li>
-<li><a href="nlp_shap/plugins/registry.html">nlp_shap.plugins.registry</a></li>
-<li><a href="nlp_shap/protocols/backend.html">nlp_shap.protocols.backend</a></li>
-<li><a href="nlp_shap/protocols/embedding.html">nlp_shap.protocols.embedding</a></li>
-<li><a href="nlp_shap/protocols/estimand.html">nlp_shap.protocols.estimand</a></li>
-<li><a href="nlp_shap/protocols/estimator.html">nlp_shap.protocols.estimator</a></li>
-<li><a href="nlp_shap/protocols/masking.html">nlp_shap.protocols.masking</a></li>
-<li><a href="nlp_shap/protocols/partition.html">nlp_shap.protocols.partition</a></li>
-<li><a href="nlp_shap/protocols/value.html">nlp_shap.protocols.value</a></li>
-<li><a href="nlp_shap/runtime/archive.html">nlp_shap.runtime.archive</a></li>
-<li><a href="nlp_shap/runtime/dedup.html">nlp_shap.runtime.dedup</a></li>
-<li><a href="nlp_shap/runtime/scheduler.html">nlp_shap.runtime.scheduler</a></li>
-<li><a href="nlp_shap/runtime/store.html">nlp_shap.runtime.store</a></li>
+          <section id="runtime-core">
+<h1>Runtime core<a class="headerlink" href="#runtime-core" title="Link to this heading">¶</a></h1>
+<p>Phase 3 introduces the execution substrate for coalition evaluations:</p>
+<ol class="arabic simple">
+<li><p><strong>Run archive</strong> — SQLite index plus blob storage for generation text.</p></li>
+<li><p><strong>Dedup registry</strong> — SHA256 coalition keys that collapse repeated work.</p></li>
+<li><p><strong>Hot store</strong> — in-memory LRU for recent generations.</p></li>
+<li><p><strong>Inference scheduler</strong> — async execution with bounded <code class="docutils literal notranslate"><span class="pre">max_inflight</span></code>.</p></li>
+</ol>
+<section id="run-archive">
+<h2>Run archive<a class="headerlink" href="#run-archive" title="Link to this heading">¶</a></h2>
+<p><a class="reference internal" href="../api/runtime.html#nlp_shap.runtime.archive.RunArchive" title="nlp_shap.runtime.archive.RunArchive"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunArchive</span></code></a> persists <a class="reference internal" href="../api/runtime.html#nlp_shap.runtime.archive.CoalitionRecord" title="nlp_shap.runtime.archive.CoalitionRecord"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoalitionRecord</span></code></a>
+rows with mask bytes, utility, timing, and cache-hit flags. Generation text is
+stored under <code class="docutils literal notranslate"><span class="pre">blobs/</span></code> so <a class="reference internal" href="../api/runtime.html#nlp_shap.runtime.archive.RunArchive.history_lazy" title="nlp_shap.runtime.archive.RunArchive.history_lazy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">history_lazy()</span></code></a>
+can stream rows without loading every blob into memory. Each archive directory
+also contains <code class="docutils literal notranslate"><span class="pre">manifest.json</span></code> from <a class="reference internal" href="../api/pipeline.html#nlp_shap.pipeline.manifest.RunManifest" title="nlp_shap.pipeline.manifest.RunManifest"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunManifest</span></code></a>.</p>
+</section>
+<section id="coalition-deduplication">
+<h2>Coalition deduplication<a class="headerlink" href="#coalition-deduplication" title="Link to this heading">¶</a></h2>
+<p><a class="reference internal" href="../api/runtime.html#nlp_shap.runtime.dedup.build_coalition_key" title="nlp_shap.runtime.dedup.build_coalition_key"><code class="xref py py-class docutils literal notranslate"><span class="pre">build_coalition_key</span></code></a> hashes snapshot id, player
+order, packed mask bytes, absence policy, model id, and generation settings.
+<a class="reference internal" href="../api/runtime.html#nlp_shap.runtime.dedup.CoalitionDedupRegistry" title="nlp_shap.runtime.dedup.CoalitionDedupRegistry"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoalitionDedupRegistry</span></code></a> tracks which keys already
+required backend execution. <a class="reference internal" href="../api/runtime.html#nlp_shap.runtime.dedup.dedup_enabled" title="nlp_shap.runtime.dedup.dedup_enabled"><code class="xref py py-func docutils literal notranslate"><span class="pre">dedup_enabled()</span></code></a> maps
+<code class="docutils literal notranslate"><span class="pre">ExplainConfig</span></code> dedup mode to deterministic generation (<code class="docutils literal notranslate"><span class="pre">auto</span></code> follows
+<code class="docutils literal notranslate"><span class="pre">temperature</span> <span class="pre">==</span> <span class="pre">0</span></code>).</p>
+</section>
+<section id="scheduling">
+<h2>Scheduling<a class="headerlink" href="#scheduling" title="Link to this heading">¶</a></h2>
+<p><a class="reference internal" href="../api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler" title="nlp_shap.runtime.scheduler.InferenceScheduler"><code class="xref py py-class docutils literal notranslate"><span class="pre">InferenceScheduler</span></code></a> checks the hot store,
+then the dedup registry, then acquires a concurrency semaphore before calling
+the backend. <a class="reference internal" href="../api/runtime.html#nlp_shap.runtime.scheduler.SchedulerMetrics" title="nlp_shap.runtime.scheduler.SchedulerMetrics"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchedulerMetrics</span></code></a> reports
+<code class="docutils literal notranslate"><span class="pre">requested</span></code>, <code class="docutils literal notranslate"><span class="pre">executed</span></code>, <code class="docutils literal notranslate"><span class="pre">deduplicated</span></code>, and <code class="docutils literal notranslate"><span class="pre">cache_hits</span></code>.</p>
+</section>
+<section id="see-also">
+<h2>See also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../guides/runtime.html"><span class="doc">Runtime core</span></a> — usage examples</p></li>
+<li><p><a class="reference internal" href="../api/runtime.html"><span class="doc">Runtime</span></a> — module reference</p></li>
+<li><p><a class="reference internal" href="../guides/config.html"><span class="doc">Configuration</span></a> — <code class="docutils literal notranslate"><span class="pre">archive</span></code>, <code class="docutils literal notranslate"><span class="pre">dedup</span></code>, and <code class="docutils literal notranslate"><span class="pre">max_inflight</span></code> settings</p></li>
 </ul>
+</section>
+</section>
+
         </article>
       </div>
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="../release_notes.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Release notes</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="masking.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Masking</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -338,8 +376,30 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Runtime core</a><ul>
+<li><a class="reference internal" href="#run-archive">Run archive</a></li>
+<li><a class="reference internal" href="#coalition-deduplication">Coalition deduplication</a></li>
+<li><a class="reference internal" href="#scheduling">Scheduling</a></li>
+<li><a class="reference internal" href="#see-also">See also</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

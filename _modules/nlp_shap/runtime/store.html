@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.plugins.context - nlp-shap 0.1.4</title>
+        <title>nlp_shap.runtime.store - nlp-shap 0.1.4</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -271,22 +271,51 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for nlp_shap.plugins.context</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Plugin registry context helpers.&quot;&quot;&quot;</span>
+          <h1>Source code for nlp_shap.runtime.store</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Hot LRU cache for coalition generation results.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">PluginRegistry</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
 
 
-<div class="viewcode-block" id="PluginContext">
-<a class="viewcode-back" href="../../../api/plugins.html#nlp_shap.plugins.context.PluginContext">[docs]</a>
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">PluginContext</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Registry handle passed through pipeline setup.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="HotResultStore">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.HotResultStore">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HotResultStore</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;In-memory LRU store for recently generated coalition outputs.&quot;&quot;&quot;</span>
 
-    <span class="n">registry</span><span class="p">:</span> <span class="n">PluginRegistry</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plugin registry used to resolve pipeline components.&quot;&quot;&quot;</span></div>
+    <span class="n">maxsize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Maximum number of coalition results retained in memory.&quot;&quot;&quot;</span>
+
+    <span class="n">_values</span><span class="p">:</span> <span class="n">OrderedDict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">OrderedDict</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LRU mapping from coalition key to generated text.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="HotResultStore.get">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.HotResultStore.get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coalition_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a cached generation or ``None`` when absent.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">coalition_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="o">.</span><span class="n">move_to_end</span><span class="p">(</span><span class="n">coalition_key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="p">[</span><span class="n">coalition_key</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="HotResultStore.put">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.HotResultStore.put">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coalition_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">generation_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Insert or refresh a cached generation result.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">coalition_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="o">.</span><span class="n">move_to_end</span><span class="p">(</span><span class="n">coalition_key</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="p">[</span><span class="n">coalition_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">generation_text</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxsize</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="o">.</span><span class="n">popitem</span><span class="p">(</span><span class="n">last</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the number of cached coalition results.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="p">)</span></div>
 
 </pre></div>
         </article>

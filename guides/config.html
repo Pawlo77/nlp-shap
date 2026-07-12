@@ -7,7 +7,7 @@
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Configuration - nlp-shap 0.1.3</title>
+        <title>Configuration - nlp-shap 0.1.4</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">nlp-shap 0.1.3</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.4</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.3</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.4</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -210,6 +210,7 @@
 <li class="toctree-l1"><a class="reference internal" href="estimands.html">Using estimand aggregators</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="masking.html">Masking views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runtime.html">Runtime core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
@@ -218,6 +219,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/masking.html">Masking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/runtime.html">Runtime core</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
@@ -225,6 +227,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../examples.html">Examples</a><input aria-label="Toggle navigation of Examples" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../notebooks/estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../notebooks/masking_views.html">Coalition masking and absence policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/runtime_core.html">Runtime archive, deduplication, and async scheduling</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -233,6 +236,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/plugins.html">Plugins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/pipeline.html">Pipeline configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/masking.html">Masking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/runtime.html">Runtime</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/estimation.html">Estimand aggregators</a></li>
 </ul>
 </li>
@@ -353,6 +357,7 @@ objects from legacy explain pipelines.</p>
 <li><p>Domain types: <a class="reference internal" href="../api/domain.html"><span class="doc">Domain types</span></a></p></li>
 <li><p>Plugin registry: <a class="reference internal" href="../api/plugins.html"><span class="doc">Plugins</span></a></p></li>
 <li><p>Masking and absence policies: <a class="reference internal" href="masking.html"><span class="doc">Masking views</span></a></p></li>
+<li><p>Runtime archive and scheduler: <a class="reference internal" href="runtime.html"><span class="doc">Runtime core</span></a></p></li>
 <li><p>Estimand guide: <a class="reference internal" href="estimands.html"><span class="doc">Using estimand aggregators</span></a></p></li>
 </ul>
 </section>
@@ -437,7 +442,7 @@ objects from legacy explain pipelines.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=360bc84d"></script>
+</div><script src="../_static/documentation_options.js?v=fd825880"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

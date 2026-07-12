@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
-    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.3</title>
+    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.4</title>
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -170,7 +170,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.3</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.4</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.3</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.4</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -208,6 +208,7 @@
 <li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/masking.html">Masking views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/runtime.html">Runtime core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
@@ -216,6 +217,7 @@
 <li class="toctree-l1"><a class="reference internal" href="theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/masking.html">Masking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/runtime.html">Runtime core</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
@@ -223,6 +225,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples.html">Examples</a><input aria-label="Toggle navigation of Examples" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/masking_views.html">Coalition masking and absence policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/runtime_core.html">Runtime archive, deduplication, and async scheduling</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -231,6 +234,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api/plugins.html">Plugins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/pipeline.html">Pipeline configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/masking.html">Masking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/runtime.html">Runtime</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators</a></li>
 </ul>
 </li>
@@ -269,7 +273,7 @@
           
 <section class="genindex-section">
   <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a></div>
+  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a></div>
 </section>
 <section id="A" class="genindex-section">
   <h2>A</h2>
@@ -282,7 +286,21 @@
 </li>
         </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.absence_policy">absence_policy (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecord.absence_policy">(nlp_shap.runtime.archive.CoalitionRecord attribute)</a>
 </li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecordDraft.absence_policy">(nlp_shap.runtime.archive.CoalitionRecordDraft attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionJob.absence_policy">(nlp_shap.runtime.CoalitionJob attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecord.absence_policy">(nlp_shap.runtime.CoalitionRecord attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecordDraft.absence_policy">(nlp_shap.runtime.CoalitionRecordDraft attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.CoalitionJob.absence_policy">(nlp_shap.runtime.scheduler.CoalitionJob attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/protocols.html#nlp_shap.protocols.masking.AbsencePolicy">AbsencePolicy (class in nlp_shap.protocols.masking)</a>
 </li>
         <li><a href="api.html#nlp_shap.BanzhafAggregator.aggregate">aggregate() (nlp_shap.BanzhafAggregator method)</a>
@@ -297,10 +315,16 @@
           <li><a href="api.html#nlp_shap.ShapleyAggregator.aggregate">(nlp_shap.ShapleyAggregator method)</a>
 </li>
         </ul></li>
-        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BackendConfig.api_host">api_host (nlp_shap.pipeline.config.BackendConfig attribute)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BackendConfig.api_host">api_host (nlp_shap.pipeline.config.BackendConfig attribute)</a>
+</li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.archive.RunArchive.append">append() (nlp_shap.runtime.archive.RunArchive method)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.RunArchive.append">(nlp_shap.runtime.RunArchive method)</a>
+</li>
+        </ul></li>
         <li><a href="api/masking.html#nlp_shap.masking.DeletePolicy.apply">apply() (nlp_shap.masking.DeletePolicy method)</a>
 
         <ul>
@@ -381,6 +405,12 @@
 </li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BudgetConfig">BudgetConfig (class in nlp_shap.pipeline.config)</a>
 </li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.build_coalition_key">build_coalition_key() (in module nlp_shap.runtime)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.dedup.build_coalition_key">(in module nlp_shap.runtime.dedup)</a>
+</li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -389,6 +419,42 @@
   <h2>C</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecord.cache_hit">cache_hit (nlp_shap.runtime.archive.CoalitionRecord attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecordDraft.cache_hit">(nlp_shap.runtime.archive.CoalitionRecordDraft attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecord.cache_hit">(nlp_shap.runtime.CoalitionRecord attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecordDraft.cache_hit">(nlp_shap.runtime.CoalitionRecordDraft attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.SchedulerMetrics.cache_hits">cache_hits (nlp_shap.runtime.scheduler.SchedulerMetrics attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.SchedulerMetrics.cache_hits">(nlp_shap.runtime.SchedulerMetrics attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.archive.RunArchive.close">close() (nlp_shap.runtime.archive.RunArchive method)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.RunArchive.close">(nlp_shap.runtime.RunArchive method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecord.coalition_key">coalition_key (nlp_shap.runtime.archive.CoalitionRecord attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecordDraft.coalition_key">(nlp_shap.runtime.archive.CoalitionRecordDraft attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionJob.coalition_key">(nlp_shap.runtime.CoalitionJob attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecord.coalition_key">(nlp_shap.runtime.CoalitionRecord attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecordDraft.coalition_key">(nlp_shap.runtime.CoalitionRecordDraft attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.CoalitionJob.coalition_key">(nlp_shap.runtime.scheduler.CoalitionJob attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.CoalitionMask.coalition_size">coalition_size() (nlp_shap.CoalitionMask method)</a>
 
         <ul>
@@ -409,10 +475,40 @@
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionDedupRegistry">CoalitionDedupRegistry (class in nlp_shap.runtime)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.dedup.CoalitionDedupRegistry">(class in nlp_shap.runtime.dedup)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionJob">CoalitionJob (class in nlp_shap.runtime)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.CoalitionJob">(class in nlp_shap.runtime.scheduler)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.CoalitionMask">CoalitionMask (class in nlp_shap)</a>
 
         <ul>
           <li><a href="api/domain.html#nlp_shap.domain.coalition.CoalitionMask">(class in nlp_shap.domain.coalition)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecord">CoalitionRecord (class in nlp_shap.runtime)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecord">(class in nlp_shap.runtime.archive)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecordDraft">CoalitionRecordDraft (class in nlp_shap.runtime)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecordDraft">(class in nlp_shap.runtime.archive)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionDedupRegistry.contains">contains() (nlp_shap.runtime.CoalitionDedupRegistry method)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.dedup.CoalitionDedupRegistry.contains">(nlp_shap.runtime.dedup.CoalitionDedupRegistry method)</a>
 </li>
         </ul></li>
         <li><a href="api/domain.html#nlp_shap.domain.enums.EmbeddingMode.CONTEXTUAL">CONTEXTUAL (nlp_shap.domain.enums.EmbeddingMode attribute)</a>
@@ -439,10 +535,22 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.dedup">dedup (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.dedup_enabled">dedup_enabled() (in module nlp_shap.runtime)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.dedup.dedup_enabled">(in module nlp_shap.runtime.dedup)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.DedupConfig">DedupConfig (class in nlp_shap.pipeline.config)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.SchedulerMetrics.deduplicated">deduplicated (nlp_shap.runtime.scheduler.SchedulerMetrics attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.SchedulerMetrics.deduplicated">(nlp_shap.runtime.SchedulerMetrics attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/masking.html#nlp_shap.masking.DeletePolicy">DeletePolicy (class in nlp_shap.masking)</a>
 
         <ul>
@@ -457,6 +565,16 @@
   <h2>E</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecord.elapsed_ms">elapsed_ms (nlp_shap.runtime.archive.CoalitionRecord attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecordDraft.elapsed_ms">(nlp_shap.runtime.archive.CoalitionRecordDraft attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecord.elapsed_ms">(nlp_shap.runtime.CoalitionRecord attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecordDraft.elapsed_ms">(nlp_shap.runtime.CoalitionRecordDraft attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/protocols.html#nlp_shap.protocols.embedding.EmbeddingProvider.embed">embed() (nlp_shap.protocols.embedding.EmbeddingProvider method)</a>
 </li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.embedding_mode">embedding_mode (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
@@ -533,6 +651,12 @@
         </ul></li>
         <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy">EstimatorStrategy (class in nlp_shap.protocols.estimator)</a>
 </li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.SchedulerMetrics.executed">executed (nlp_shap.runtime.scheduler.SchedulerMetrics attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.SchedulerMetrics.executed">(nlp_shap.runtime.SchedulerMetrics attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.explain_config_from_yaml">explain_config_from_yaml() (in module nlp_shap)</a>
 
         <ul>
@@ -585,12 +709,18 @@
           <li><a href="api/masking.html#nlp_shap.masking.policies.NeutralPolicy.fill_char">(nlp_shap.masking.policies.NeutralPolicy attribute)</a>
 </li>
         </ul></li>
-        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ArchiveConfig.flush_every">flush_every (nlp_shap.pipeline.config.ArchiveConfig attribute)</a>
+        <li><a href="api/runtime.html#nlp_shap.runtime.archive.RunArchive.flush">flush() (nlp_shap.runtime.archive.RunArchive method)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.RunArchive.flush">(nlp_shap.runtime.RunArchive method)</a>
 </li>
-        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BudgetConfig.fraction">fraction (nlp_shap.pipeline.config.BudgetConfig attribute)</a>
+        </ul></li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ArchiveConfig.flush_every">flush_every (nlp_shap.pipeline.config.ArchiveConfig attribute)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BudgetConfig.fraction">fraction (nlp_shap.pipeline.config.BudgetConfig attribute)</a>
+</li>
         <li><a href="api.html#nlp_shap.CoalitionMask.from_sequence">from_sequence() (nlp_shap.CoalitionMask class method)</a>
 
         <ul>
@@ -613,10 +743,22 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/protocols.html#nlp_shap.protocols.backend.GenerativeBackend.generate">generate() (nlp_shap.protocols.backend.GenerativeBackend method)</a>
 </li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.GenerateFn">GenerateFn (in module nlp_shap.runtime.scheduler)</a>
+</li>
         <li><a href="api.html#nlp_shap.ExplainConfig.generation">generation (nlp_shap.ExplainConfig attribute)</a>
 
         <ul>
           <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplainConfig.generation">(nlp_shap.pipeline.config.ExplainConfig attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecord.generation_text">generation_text (nlp_shap.runtime.archive.CoalitionRecord attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecordDraft.generation_text">(nlp_shap.runtime.archive.CoalitionRecordDraft attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecord.generation_text">(nlp_shap.runtime.CoalitionRecord attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecordDraft.generation_text">(nlp_shap.runtime.CoalitionRecordDraft attribute)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -627,6 +769,12 @@
 </li>
         <li><a href="api/protocols.html#nlp_shap.protocols.backend.GenerativeBackend">GenerativeBackend (class in nlp_shap.protocols.backend)</a>
 </li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.HotResultStore.get">get() (nlp_shap.runtime.HotResultStore method)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.store.HotResultStore.get">(nlp_shap.runtime.store.HotResultStore method)</a>
+</li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -641,6 +789,20 @@
           <li><a href="api/masking.html#nlp_shap.masking.MaskCodec.hash_mask">(nlp_shap.masking.MaskCodec static method)</a>
 </li>
         </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.archive.RunArchive.history_lazy">history_lazy() (nlp_shap.runtime.archive.RunArchive method)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.RunArchive.history_lazy">(nlp_shap.runtime.RunArchive method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/runtime.html#nlp_shap.runtime.HotResultStore">HotResultStore (class in nlp_shap.runtime)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.store.HotResultStore">(class in nlp_shap.runtime.store)</a>
+</li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -651,6 +813,14 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.include_minimal_masks">include_minimal_masks (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/runtime.html#nlp_shap.runtime.InferenceScheduler">InferenceScheduler (class in nlp_shap.runtime)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler">(class in nlp_shap.runtime.scheduler)</a>
+</li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -694,11 +864,31 @@
         <ul>
           <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot.mask">(nlp_shap.masking.MaskedSnapshot attribute)</a>
 </li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecord.mask">(nlp_shap.runtime.archive.CoalitionRecord attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecordDraft.mask">(nlp_shap.runtime.archive.CoalitionRecordDraft attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecord.mask">(nlp_shap.runtime.CoalitionRecord attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecordDraft.mask">(nlp_shap.runtime.CoalitionRecordDraft attribute)</a>
+</li>
         </ul></li>
         <li><a href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot.mask_hash">mask_hash (nlp_shap.masking.builder.MaskedSnapshot property)</a>
 
         <ul>
           <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot.mask_hash">(nlp_shap.masking.MaskedSnapshot property)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionJob.mask_n_bits">mask_n_bits (nlp_shap.runtime.CoalitionJob attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.CoalitionJob.mask_n_bits">(nlp_shap.runtime.scheduler.CoalitionJob attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionJob.mask_words">mask_words (nlp_shap.runtime.CoalitionJob attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.CoalitionJob.mask_words">(nlp_shap.runtime.scheduler.CoalitionJob attribute)</a>
 </li>
         </ul></li>
         <li><a href="api/masking.html#nlp_shap.masking.MaskBuilder">MaskBuilder (class in nlp_shap.masking)</a>
@@ -735,6 +925,12 @@
 </li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig.max_new_tokens">max_new_tokens (nlp_shap.pipeline.config.GenerationConfig attribute)</a>
 </li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.HotResultStore.maxsize">maxsize (nlp_shap.runtime.HotResultStore attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.store.HotResultStore.maxsize">(nlp_shap.runtime.store.HotResultStore attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.Message">Message (class in nlp_shap)</a>
 
         <ul>
@@ -771,6 +967,18 @@
 
         <ul>
           <li><a href="api/protocols.html#nlp_shap.protocols.backend.GenerativeBackend.model_id">(nlp_shap.protocols.backend.GenerativeBackend property)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecord.model_id">(nlp_shap.runtime.archive.CoalitionRecord attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecordDraft.model_id">(nlp_shap.runtime.archive.CoalitionRecordDraft attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionJob.model_id">(nlp_shap.runtime.CoalitionJob attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecord.model_id">(nlp_shap.runtime.CoalitionRecord attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecordDraft.model_id">(nlp_shap.runtime.CoalitionRecordDraft attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.CoalitionJob.model_id">(nlp_shap.runtime.scheduler.CoalitionJob attribute)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -836,6 +1044,16 @@
           <li><a href="api/protocols.html#module-nlp_shap.protocols.partition">nlp_shap.protocols.partition</a>
 </li>
           <li><a href="api/protocols.html#module-nlp_shap.protocols.value">nlp_shap.protocols.value</a>
+</li>
+          <li><a href="api/runtime.html#module-nlp_shap.runtime">nlp_shap.runtime</a>
+</li>
+          <li><a href="api/runtime.html#module-nlp_shap.runtime.archive">nlp_shap.runtime.archive</a>
+</li>
+          <li><a href="api/runtime.html#module-nlp_shap.runtime.dedup">nlp_shap.runtime.dedup</a>
+</li>
+          <li><a href="api/runtime.html#module-nlp_shap.runtime.scheduler">nlp_shap.runtime.scheduler</a>
+</li>
+          <li><a href="api/runtime.html#module-nlp_shap.runtime.store">nlp_shap.runtime.store</a>
 </li>
         </ul></li>
     </ul></td>
@@ -975,8 +1193,6 @@
           <li><a href="api/masking.html#module-nlp_shap.masking.builder">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     nlp_shap.masking.codec
 
@@ -991,6 +1207,8 @@
           <li><a href="api/masking.html#module-nlp_shap.masking.partitions">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     nlp_shap.masking.policies
 
@@ -1103,6 +1321,41 @@
           <li><a href="api/protocols.html#module-nlp_shap.protocols.value">module</a>
 </li>
         </ul></li>
+        <li>
+    nlp_shap.runtime
+
+        <ul>
+          <li><a href="api/runtime.html#module-nlp_shap.runtime">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.runtime.archive
+
+        <ul>
+          <li><a href="api/runtime.html#module-nlp_shap.runtime.archive">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.runtime.dedup
+
+        <ul>
+          <li><a href="api/runtime.html#module-nlp_shap.runtime.dedup">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.runtime.scheduler
+
+        <ul>
+          <li><a href="api/runtime.html#module-nlp_shap.runtime.scheduler">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.runtime.store
+
+        <ul>
+          <li><a href="api/runtime.html#module-nlp_shap.runtime.store">module</a>
+</li>
+        </ul></li>
         <li><a href="api/domain.html#nlp_shap.domain.enums.SystemRolesSetup.NONE">NONE (nlp_shap.domain.enums.SystemRolesSetup attribute)</a>
 </li>
         <li><a href="api/masking.html#nlp_shap.masking.codec.MaskCodec.normalize">normalize() (nlp_shap.masking.codec.MaskCodec static method)</a>
@@ -1117,6 +1370,28 @@
 
         <ul>
           <li><a href="api.html#nlp_shap.PlayerSet.num_players">(nlp_shap.PlayerSet property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="O" class="genindex-section">
+  <h2>O</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionDedupRegistry.observe">observe() (nlp_shap.runtime.CoalitionDedupRegistry method)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.dedup.CoalitionDedupRegistry.observe">(nlp_shap.runtime.dedup.CoalitionDedupRegistry method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/runtime.html#nlp_shap.runtime.archive.RunArchive.open">open() (nlp_shap.runtime.archive.RunArchive class method)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.RunArchive.open">(nlp_shap.runtime.RunArchive class method)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -1185,10 +1460,10 @@
           <li><a href="api/domain.html#nlp_shap.domain.game.CooperativeGame.player_set">(nlp_shap.domain.game.CooperativeGame attribute)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/protocols.html#nlp_shap.protocols.partition.PlayerPartitioner">PlayerPartitioner (class in nlp_shap.protocols.partition)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot.players">players (nlp_shap.masking.builder.MaskedSnapshot attribute)</a>
 
         <ul>
@@ -1239,6 +1514,12 @@
           <li><a href="api/domain.html#nlp_shap.domain.coalition.CoalitionMask.present">(nlp_shap.domain.coalition.CoalitionMask attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.HotResultStore.put">put() (nlp_shap.runtime.HotResultStore method)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.store.HotResultStore.put">(nlp_shap.runtime.store.HotResultStore method)</a>
+</li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -1247,6 +1528,12 @@
   <h2>R</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecord.record_id">record_id (nlp_shap.runtime.archive.CoalitionRecord attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecord.record_id">(nlp_shap.runtime.CoalitionRecord attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.PluginRegistry.register">register() (nlp_shap.PluginRegistry method)</a>
 
         <ul>
@@ -1261,6 +1548,12 @@
 
         <ul>
           <li><a href="api/masking.html#nlp_shap.masking.MaskBuilder.render">(nlp_shap.masking.MaskBuilder method)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.SchedulerMetrics.requested">requested (nlp_shap.runtime.scheduler.SchedulerMetrics attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.SchedulerMetrics.requested">(nlp_shap.runtime.SchedulerMetrics attribute)</a>
 </li>
         </ul></li>
         <li><a href="api.html#nlp_shap.PluginRegistry.resolve">resolve() (nlp_shap.PluginRegistry method)</a>
@@ -1283,12 +1576,24 @@
           <li><a href="api.html#nlp_shap.Message.role">(nlp_shap.Message attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.InferenceScheduler.run">run() (nlp_shap.runtime.InferenceScheduler method)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler.run">(nlp_shap.runtime.scheduler.InferenceScheduler method)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.manifest.RunManifest.run_id">run_id (nlp_shap.pipeline.manifest.RunManifest attribute)</a>
 
         <ul>
           <li><a href="api/pipeline.html#nlp_shap.pipeline.manifest.RunManifestPayload.run_id">(nlp_shap.pipeline.manifest.RunManifestPayload attribute)</a>
 </li>
           <li><a href="api.html#nlp_shap.RunManifest.run_id">(nlp_shap.RunManifest attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.RunArchive">RunArchive (class in nlp_shap.runtime)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.RunArchive">(class in nlp_shap.runtime.archive)</a>
 </li>
         </ul></li>
         <li><a href="api.html#nlp_shap.RunManifest">RunManifest (class in nlp_shap)</a>
@@ -1309,6 +1614,12 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy.sample_masks">sample_masks() (nlp_shap.protocols.estimator.EstimatorStrategy method)</a>
 </li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.SchedulerMetrics">SchedulerMetrics (class in nlp_shap.runtime)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.SchedulerMetrics">(class in nlp_shap.runtime.scheduler)</a>
+</li>
+        </ul></li>
         <li><a href="api/protocols.html#nlp_shap.protocols.value.ValueFunction.score">score() (nlp_shap.protocols.value.ValueFunction method)</a>
 </li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.seed">seed (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
@@ -1325,14 +1636,32 @@
           <li><a href="api/estimation.html#nlp_shap.estimation.estimands.shapley.ShapleyAggregator">(class in nlp_shap.estimation.estimands.shapley)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionJob.snapshot">snapshot (nlp_shap.runtime.CoalitionJob attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.CoalitionJob.snapshot">(nlp_shap.runtime.scheduler.CoalitionJob attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.ConversationSnapshot.snapshot_id">snapshot_id (nlp_shap.ConversationSnapshot attribute)</a>
 
         <ul>
           <li><a href="api/domain.html#nlp_shap.domain.conversation.ConversationSnapshot.snapshot_id">(nlp_shap.domain.conversation.ConversationSnapshot attribute)</a>
 </li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecord.snapshot_id">(nlp_shap.runtime.archive.CoalitionRecord attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecordDraft.snapshot_id">(nlp_shap.runtime.archive.CoalitionRecordDraft attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionJob.snapshot_id">(nlp_shap.runtime.CoalitionJob attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecord.snapshot_id">(nlp_shap.runtime.CoalitionRecord attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecordDraft.snapshot_id">(nlp_shap.runtime.CoalitionRecordDraft attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.CoalitionJob.snapshot_id">(nlp_shap.runtime.scheduler.CoalitionJob attribute)</a>
+</li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/domain.html#nlp_shap.domain.enums.EmbeddingMode.STATIC">STATIC (nlp_shap.domain.enums.EmbeddingMode attribute)</a>
 </li>
         <li><a href="api/domain.html#nlp_shap.domain.enums.Role.SYSTEM">SYSTEM (nlp_shap.domain.enums.Role attribute)</a>
@@ -1413,14 +1742,28 @@
           <li><a href="api/masking.html#nlp_shap.masking.MaskCodec.unpack">(nlp_shap.masking.MaskCodec static method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.use_v2">use_v2 (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
         <li><a href="api/domain.html#nlp_shap.domain.enums.Role.USER">USER (nlp_shap.domain.enums.Role attribute)</a>
 
         <ul>
           <li><a href="api.html#nlp_shap.Role.USER">(nlp_shap.Role attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecord.utility">utility (nlp_shap.runtime.archive.CoalitionRecord attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecordDraft.utility">(nlp_shap.runtime.archive.CoalitionRecordDraft attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionJob.utility">(nlp_shap.runtime.CoalitionJob attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecord.utility">(nlp_shap.runtime.CoalitionRecord attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecordDraft.utility">(nlp_shap.runtime.CoalitionRecordDraft attribute)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.CoalitionJob.utility">(nlp_shap.runtime.scheduler.CoalitionJob attribute)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -1519,7 +1862,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=360bc84d"></script>
+</div><script src="_static/documentation_options.js?v=fd825880"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

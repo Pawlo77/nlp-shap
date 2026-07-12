@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Masking" href="masking.html"><link rel="prev" title="Shapley values and axioms" href="shapley_values.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Business and compliance applications" href="applications.html"><link rel="prev" title="Masking views" href="masking.html">
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Estimands: Shapley vs Banzhaf - nlp-shap 0.1.4</title>
+        <title>Runtime core - nlp-shap 0.1.4</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -205,21 +205,21 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../guides/getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/estimands.html">Using estimand aggregators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/config.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/masking.html">Masking views</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/runtime.html">Runtime core</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/applications.html">Business and compliance applications</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="masking.html">Masking views</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Runtime core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="cooperative_games.html">Cooperative games</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shapley_values.html">Shapley values and axioms</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Estimands: Shapley vs Banzhaf</a></li>
-<li class="toctree-l1"><a class="reference internal" href="masking.html">Masking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="runtime.html">Runtime core</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/shapley_values.html">Shapley values and axioms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/masking.html">Masking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/runtime.html">Runtime core</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
@@ -260,12 +260,12 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/blob/main/docs/theory/estimands.rst?plain=true" title="View this page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/blob/main/docs/guides/runtime.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
 </div><div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/edit/main/docs/theory/estimands.rst" rel="edit" title="Edit this page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/edit/main/docs/guides/runtime.rst" rel="edit" title="Edit this page">
     <svg><use href="#svg-pencil"></use></svg>
     <span class="visually-hidden">Edit this page</span>
   </a>
@@ -282,154 +282,111 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="estimands-shapley-vs-banzhaf">
-<h1>Estimands: Shapley vs Banzhaf<a class="headerlink" href="#estimands-shapley-vs-banzhaf" title="Link to this heading">¶</a></h1>
-<p>An <strong>estimand</strong> is the quantity your attribution procedure targets. In
-<code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code>, estimands are explicit types — not implicit behaviour of an
-estimator. Monte Carlo coalition averaging does <strong>not</strong> automatically estimate
-Shapley values; unweighted means over sampled coalitions estimate the <strong>Banzhaf
-index</strong> unless Shapley weights are applied.</p>
-<p>For Shapley axioms and uniqueness, see <a class="reference internal" href="shapley_values.html"><span class="doc">Shapley values and axioms</span></a>. For cooperative-game
-foundations, see <a class="reference internal" href="cooperative_games.html"><span class="doc">Cooperative games</span></a>.</p>
-<section id="shapley-value-estimand">
-<h2>Shapley value (estimand)<a class="headerlink" href="#shapley-value-estimand" title="Link to this heading">¶</a></h2>
-<p>The Shapley estimand uses factorial coalition weights:</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[\phi_i(v) = \sum_{S \subseteq N \setminus \{i\}}
-\frac{|S|!\,(|N|-|S|-1)!}{|N|!}
-\bigl(v(S \cup \{i\}) - v(S)\bigr)\]</div>
+          <section id="runtime-core">
+<h1>Runtime core<a class="headerlink" href="#runtime-core" title="Link to this heading">¶</a></h1>
+<p>This guide shows how to persist coalition history, deduplicate repeated masks,
+and schedule async coalition generation with bounded concurrency.</p>
+<section id="open-a-run-archive">
+<h2>Open a run archive<a class="headerlink" href="#open-a-run-archive" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap</span><span class="w"> </span><span class="kn">import</span> <span class="n">Estimand</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.masking.codec</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaskCodec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.pipeline.manifest</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunManifest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.runtime</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionRecordDraft</span><span class="p">,</span> <span class="n">RunArchive</span>
+
+<span class="n">manifest</span> <span class="o">=</span> <span class="n">RunManifest</span><span class="p">(</span><span class="n">estimand</span><span class="o">=</span><span class="n">Estimand</span><span class="o">.</span><span class="n">SHAPLEY</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="s2">&quot;demo-run&quot;</span><span class="p">)</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;./runs/demo-run&quot;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">RunArchive</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">manifest</span><span class="p">,</span> <span class="n">flush_every</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span> <span class="k">as</span> <span class="n">archive</span><span class="p">:</span>
+    <span class="n">packed</span> <span class="o">=</span> <span class="n">MaskCodec</span><span class="o">.</span><span class="n">pack</span><span class="p">((</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+    <span class="n">archive</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">CoalitionRecordDraft</span><span class="p">(</span>
+            <span class="n">snapshot_id</span><span class="o">=</span><span class="s2">&quot;snap-1&quot;</span><span class="p">,</span>
+            <span class="n">coalition_key</span><span class="o">=</span><span class="s2">&quot;coalition-1&quot;</span><span class="p">,</span>
+            <span class="n">mask</span><span class="o">=</span><span class="n">packed</span><span class="p">,</span>
+            <span class="n">absence_policy</span><span class="o">=</span><span class="s2">&quot;delete&quot;</span><span class="p">,</span>
+            <span class="n">model_id</span><span class="o">=</span><span class="s2">&quot;mock&quot;</span><span class="p">,</span>
+            <span class="n">generation_text</span><span class="o">=</span><span class="s2">&quot;Who you?&quot;</span><span class="p">,</span>
+            <span class="n">utility</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+            <span class="n">elapsed_ms</span><span class="o">=</span><span class="mf">12.5</span><span class="p">,</span>
+            <span class="n">cache_hit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="k">with</span> <span class="n">RunArchive</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">manifest</span><span class="p">)</span> <span class="k">as</span> <span class="n">archive</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">archive</span><span class="o">.</span><span class="n">history_lazy</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">record_id</span><span class="p">,</span> <span class="n">record</span><span class="o">.</span><span class="n">generation_text</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[w_{\mathrm{Shapley}}(k, n) = \frac{k!\,(n-k-1)!}{n!}\]</div>
+</section>
+<section id="build-coalition-dedup-keys">
+<h2>Build coalition dedup keys<a class="headerlink" href="#build-coalition-dedup-keys" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.pipeline.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">DedupConfig</span><span class="p">,</span> <span class="n">GenerationConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.runtime</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_coalition_key</span><span class="p">,</span> <span class="n">dedup_enabled</span>
+
+<span class="n">generation</span> <span class="o">=</span> <span class="n">GenerationConfig</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">key</span> <span class="o">=</span> <span class="n">build_coalition_key</span><span class="p">(</span>
+    <span class="n">snapshot_id</span><span class="o">=</span><span class="s2">&quot;snap-1&quot;</span><span class="p">,</span>
+    <span class="n">player_ids</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;snap-1:0:0:0&quot;</span><span class="p">,</span> <span class="s2">&quot;snap-1:0:0:1&quot;</span><span class="p">),</span>
+    <span class="n">mask_present</span><span class="o">=</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+    <span class="n">absence_policy</span><span class="o">=</span><span class="s2">&quot;delete&quot;</span><span class="p">,</span>
+    <span class="n">model_id</span><span class="o">=</span><span class="s2">&quot;mock&quot;</span><span class="p">,</span>
+    <span class="n">generation</span><span class="o">=</span><span class="n">generation</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dedup_enabled</span><span class="p">(</span><span class="n">DedupConfig</span><span class="p">(</span><span class="n">enabled</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">),</span> <span class="n">generation</span><span class="p">),</span> <span class="n">key</span><span class="p">[:</span><span class="mi">12</span><span class="p">])</span>
+</pre></div>
 </div>
-<p>Implemented in <a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.estimands.shapley.ShapleyAggregator" title="nlp_shap.estimation.estimands.shapley.ShapleyAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapleyAggregator</span></code></a>.</p>
-<p><strong>Axiomatic summary:</strong> efficiency, symmetry, dummy player, additivity — uniquely
-characterizing <span class="math notranslate nohighlight">\(\phi\)</span> among cooperative-game allocation rules (Shapley,
-1953). See <a class="reference internal" href="shapley_values.html"><span class="doc">Shapley values and axioms</span></a> for formal statements.</p>
 </section>
-<section id="banzhaf-index-estimand">
-<h2>Banzhaf index (estimand)<a class="headerlink" href="#banzhaf-index-estimand" title="Link to this heading">¶</a></h2>
-<p>The <strong>Banzhaf index</strong> (also called the Banzhaf–Coleman power index in voting
-theory) uses <strong>uniform</strong> weights over coalitions <span class="math notranslate nohighlight">\(S \subseteq N \setminus
-\{i\}\)</span>:</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[\beta_i(v) = \frac{1}{2^{|N|-1}}
-\sum_{S \subseteq N \setminus \{i\}}
-\bigl(v(S \cup \{i\}) - v(S)\bigr)\]</div>
+<section id="schedule-async-coalition-jobs">
+<h2>Schedule async coalition jobs<a class="headerlink" href="#schedule-async-coalition-jobs" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.domain.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationSnapshot</span><span class="p">,</span> <span class="n">Message</span><span class="p">,</span> <span class="n">Role</span><span class="p">,</span> <span class="n">Turn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.masking.codec</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaskCodec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.pipeline.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenerationConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.runtime</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CoalitionDedupRegistry</span><span class="p">,</span>
+    <span class="n">CoalitionJob</span><span class="p">,</span>
+    <span class="n">HotResultStore</span><span class="p">,</span>
+    <span class="n">InferenceScheduler</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">turn</span> <span class="o">=</span> <span class="n">Turn</span><span class="p">(</span><span class="n">messages</span><span class="o">=</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="n">Role</span><span class="o">.</span><span class="n">USER</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Who are you?&quot;</span><span class="p">),))</span>
+<span class="n">snapshot</span> <span class="o">=</span> <span class="n">ConversationSnapshot</span><span class="o">.</span><span class="n">from_turns</span><span class="p">((</span><span class="n">turn</span><span class="p">,))</span>
+<span class="n">packed</span> <span class="o">=</span> <span class="n">MaskCodec</span><span class="o">.</span><span class="n">pack</span><span class="p">((</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">snapshot</span><span class="o">.</span><span class="n">turns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">messages</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">InferenceScheduler</span><span class="p">(</span>
+    <span class="n">max_inflight</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">generation</span><span class="o">=</span><span class="n">GenerationConfig</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>
+    <span class="n">store</span><span class="o">=</span><span class="n">HotResultStore</span><span class="p">(),</span>
+    <span class="n">dedup</span><span class="o">=</span><span class="n">CoalitionDedupRegistry</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">jobs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">CoalitionJob</span><span class="p">(</span>
+        <span class="n">coalition_key</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;key-</span><span class="si">{</span><span class="n">index</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">snapshot_id</span><span class="o">=</span><span class="n">snapshot</span><span class="o">.</span><span class="n">snapshot_id</span><span class="p">,</span>
+        <span class="n">snapshot</span><span class="o">=</span><span class="n">snapshot</span><span class="p">,</span>
+        <span class="n">absence_policy</span><span class="o">=</span><span class="s2">&quot;delete&quot;</span><span class="p">,</span>
+        <span class="n">mask_words</span><span class="o">=</span><span class="n">packed</span><span class="o">.</span><span class="n">words</span><span class="p">,</span>
+        <span class="n">mask_n_bits</span><span class="o">=</span><span class="n">packed</span><span class="o">.</span><span class="n">n_bits</span><span class="p">,</span>
+        <span class="n">model_id</span><span class="o">=</span><span class="s2">&quot;mock&quot;</span><span class="p">,</span>
+        <span class="n">utility</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">jobs</span><span class="p">,</span> <span class="n">generate</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+</pre></div>
 </div>
-<p>Equivalently, <span class="math notranslate nohighlight">\(w_{\mathrm{Banzhaf}}(k, n) = 2^{-(n-1)}\)</span> for every coalition
-size <span class="math notranslate nohighlight">\(k\)</span>.</p>
-<p>Implemented in <a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator" title="nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BanzhafAggregator</span></code></a>.</p>
-<p><strong>Interpretation:</strong> <span class="math notranslate nohighlight">\(\beta_i\)</span> measures the average marginal contribution
-across all coalitions, or — in threshold games — the probability that player
-<span class="math notranslate nohighlight">\(i\)</span> is <strong>pivotal</strong> when each player independently joins with probability
-<span class="math notranslate nohighlight">\(1/2\)</span>. Banzhaf indices need not satisfy <strong>efficiency</strong>:
-<span class="math notranslate nohighlight">\(\sum_i \beta_i(v) \neq v(N)\)</span> in general.</p>
-<p>Banzhaf (1965) introduced the index in weighted-voting analysis; Dubey &amp; Shapley
-(1979) developed its mathematical properties on the space of characteristic
-functions.</p>
 </section>
-<section id="when-shapley-and-banzhaf-diverge">
-<h2>When Shapley and Banzhaf diverge<a class="headerlink" href="#when-shapley-and-banzhaf-diverge" title="Link to this heading">¶</a></h2>
-<p>For <strong>additive</strong> games <span class="math notranslate nohighlight">\(v(S) = \sum_{i \in S} a_i\)</span>, both indices recover
-<span class="math notranslate nohighlight">\(a_i\)</span>.</p>
-<p>For <strong>non-additive</strong> games they can disagree substantially. A standard example is
-the <strong>majority/threshold</strong> game with <span class="math notranslate nohighlight">\(|N|=3\)</span> and <span class="math notranslate nohighlight">\(v(S)=1\)</span> iff
-<span class="math notranslate nohighlight">\(|S| \ge 2\)</span>, else <span class="math notranslate nohighlight">\(0\)</span>:</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Estimand</p></th>
-<th class="head"><p>Per-player value</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Shapley</p></td>
-<td><p><span class="math notranslate nohighlight">\(2/6 \approx 0.333\)</span></p></td>
-</tr>
-<tr class="row-odd"><td><p>Banzhaf</p></td>
-<td><p><span class="math notranslate nohighlight">\(0.5\)</span></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>The test suite locks this divergence on identical coalition samples.</p>
-</section>
-<section id="choosing-an-estimand-in-practice">
-<h2>Choosing an estimand in practice<a class="headerlink" href="#choosing-an-estimand-in-practice" title="Link to this heading">¶</a></h2>
-<p><strong>Prefer Shapley when:</strong></p>
-<ul class="simple">
-<li><p>Attributions must sum to the total utility gain (<strong>efficiency</strong>).</p></li>
-<li><p>You need the classical fairness axioms for stakeholder review.</p></li>
-<li><p>Reporting aligns with SHAP literature and local accuracy guarantees.</p></li>
-</ul>
-<p><strong>Prefer Banzhaf when:</strong></p>
-<ul class="simple">
-<li><p>You care about <em>swing</em> / pivotal influence per token.</p></li>
-<li><p>You want uniform coalition averaging without factorial weights.</p></li>
-<li><p>You explicitly study voting-power-style sensitivity.</p></li>
-</ul>
-<p>Regardless of choice, label outputs honestly. <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> separates estimands
-from estimators so archives and papers never misreport Banzhaf output as Shapley.</p>
-</section>
-<section id="monte-carlo-and-estimand-confusion">
-<h2>Monte Carlo and estimand confusion<a class="headerlink" href="#monte-carlo-and-estimand-confusion" title="Link to this heading">¶</a></h2>
-<p>A common pitfall in explainability codebases is to:</p>
-<ol class="arabic simple">
-<li><p>Sample coalitions <span class="math notranslate nohighlight">\(S_1, \dots, S_m\)</span> with an estimator</p></li>
-<li><p>Average marginal contributions <strong>without</strong> Shapley weights</p></li>
-<li><p>Label the result “Shapley”</p></li>
-</ol>
-<p>Step 2 estimates a <strong>Banzhaf-style</strong> quantity (uniform coalition average), not
-<span class="math notranslate nohighlight">\(\phi\)</span>. Strumbelj &amp; Kononenko (2014) discuss coalition-based feature
-contributions; Fryer et al. (2021) analyze when Shapley axioms justify feature
-selection in ML. Always apply the estimand aggregator that matches the quantity
-you intend to report.</p>
-</section>
-<section id="labelling-in-nlp-shap">
-<h2>Labelling in <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code><a class="headerlink" href="#labelling-in-nlp-shap" title="Link to this heading">¶</a></h2>
-<p>Every <a class="reference internal" href="../api/pipeline.html#nlp_shap.pipeline.result.ExplainResult" title="nlp_shap.pipeline.result.ExplainResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainResult</span></code></a> carries an
-<a class="reference internal" href="../api/domain.html#nlp_shap.domain.estimands.Estimand" title="nlp_shap.domain.estimands.Estimand"><code class="xref py py-class docutils literal notranslate"><span class="pre">Estimand</span></code></a> label. Run archives persist the
-same label in <a class="reference internal" href="../api/pipeline.html#nlp_shap.pipeline.manifest.RunManifestPayload" title="nlp_shap.pipeline.manifest.RunManifestPayload"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunManifestPayload</span></code></a> so
-downstream analysis and compliance reviews can verify which estimand was used.</p>
-<p>The <a class="reference internal" href="../api/protocols.html#nlp_shap.protocols.estimand.EstimandAggregator" title="nlp_shap.protocols.estimand.EstimandAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimandAggregator</span></code></a> protocol defines the
-aggregation contract; concrete implementations live in
-<code class="xref py py-mod docutils literal notranslate"><span class="pre">nlp_shap.estimation.estimands</span></code>.</p>
-</section>
-<section id="references">
-<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p>Shapley, L. S. (1953). A value for <em>n</em>-person games. In H. W. Kuhn &amp; A. W.
-Tucker (Eds.), <em>Contributions to the Theory of Games II</em> (pp. 307–317).
-Princeton University Press.
-<a class="reference external" href="https://doi.org/10.1515/9781400881970-018">DOI:10.1515/9781400881970-018</a></p></li>
-<li><p>Banzhaf, J. F. (1965). Weighted voting doesn’t work: A mathematical analysis.
-<em>Rutgers Law Review</em>, 19(2), 317–343.</p></li>
-<li><p>Dubey, P., &amp; Shapley, L. S. (1979). Mathematical properties of the Banzhaf
-power index. <em>Mathematics of Operations Research</em>, 4(2), 99–131.
-<a class="reference external" href="https://doi.org/10.1287/moor.4.2.99">DOI:10.1287/moor.4.2.99</a></p></li>
-<li><p>Strumbelj, E., &amp; Kononenko, I. (2014). Explaining prediction models and
-individual predictions with feature contributions.
-<em>Knowledge-Based Systems</em>, 41, 78–84.
-<a class="reference external" href="https://doi.org/10.1016/j.knosys.2013.10.012">DOI:10.1016/j.knosys.2013.10.012</a></p></li>
-<li><p>Lundberg, S. M., &amp; Lee, S.-I. (2017). A unified approach to interpreting model
-predictions. <em>Advances in Neural Information Processing Systems</em>, 30.
-<a class="reference external" href="https://mlanthology.org/neurips/2017/lundberg2017neurips-unified/">ML Anthology</a>;
-<a class="reference external" href="https://arxiv.org/abs/1705.07874">arXiv:1705.07874</a></p></li>
-<li><p>Fryer, D. V., Strümke, I., &amp; Nguyen, H. D. (2021). Shapley values for feature
-selection: The good, the bad, and the axioms. <em>IEEE Access</em>, 9, 144352–144360.
-<a class="reference external" href="https://doi.org/10.1109/ACCESS.2021.3115252">DOI:10.1109/ACCESS.2021.3115252</a>;
-<a class="reference external" href="https://arxiv.org/abs/2102.10936">arXiv:2102.10936</a></p></li>
-<li><p>Ethayarajh, K., &amp; Jurafsky, D. (2021). Attention flows are Shapley value
-explanations. In <em>Proceedings of the 59th Annual Meeting of the Association for
-Computational Linguistics and the 11th International Joint Conference on Natural
-Language Processing (Volume 2: Short Papers)</em> (pp. 49–54).
-<a class="reference external" href="https://aclanthology.org/2021.acl-short.8/">ACL Anthology</a>;
-<a class="reference external" href="https://arxiv.org/abs/2105.14652">arXiv:2105.14652</a></p></li>
-</ul>
+<section id="notebook">
+<h2>Notebook<a class="headerlink" href="#notebook" title="Link to this heading">¶</a></h2>
+<p>For a runnable walkthrough with stored outputs, see
+<code class="docutils literal notranslate"><span class="pre">examples/runtime_core.ipynb</span></code> (also embedded on <a class="reference internal" href="../examples.html"><span class="doc">Examples</span></a>).</p>
 </section>
 </section>
 
@@ -438,23 +395,23 @@ Language Processing (Volume 2: Short Papers)</em> (pp. 49–54).
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="masking.html">
+          <a class="next-page" href="applications.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Masking</div>
+                <div class="title">Business and compliance applications</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="shapley_values.html">
+          <a class="prev-page" href="masking.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Shapley values and axioms</div>
+                <div class="title">Masking views</div>
                 
               </div>
             </a>
@@ -496,14 +453,11 @@ Language Processing (Volume 2: Short Papers)</em> (pp. 49–54).
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Estimands: Shapley vs Banzhaf</a><ul>
-<li><a class="reference internal" href="#shapley-value-estimand">Shapley value (estimand)</a></li>
-<li><a class="reference internal" href="#banzhaf-index-estimand">Banzhaf index (estimand)</a></li>
-<li><a class="reference internal" href="#when-shapley-and-banzhaf-diverge">When Shapley and Banzhaf diverge</a></li>
-<li><a class="reference internal" href="#choosing-an-estimand-in-practice">Choosing an estimand in practice</a></li>
-<li><a class="reference internal" href="#monte-carlo-and-estimand-confusion">Monte Carlo and estimand confusion</a></li>
-<li><a class="reference internal" href="#labelling-in-nlp-shap">Labelling in <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code></a></li>
-<li><a class="reference internal" href="#references">References</a></li>
+<li><a class="reference internal" href="#">Runtime core</a><ul>
+<li><a class="reference internal" href="#open-a-run-archive">Open a run archive</a></li>
+<li><a class="reference internal" href="#build-coalition-dedup-keys">Build coalition dedup keys</a></li>
+<li><a class="reference internal" href="#schedule-async-coalition-jobs">Schedule async coalition jobs</a></li>
+<li><a class="reference internal" href="#notebook">Notebook</a></li>
 </ul>
 </li>
 </ul>
@@ -522,6 +476,5 @@ Language Processing (Volume 2: Short Papers)</em> (pp. 49–54).
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=fd10adb8"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     </body>
 </html>

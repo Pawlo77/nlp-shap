@@ -1,0 +1,1161 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Estimand aggregators" href="estimation.html"><link rel="prev" title="Masking" href="masking.html">
+        <link rel="prefetch" href="../_static/logo.svg" as="image">
+
+    <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>Runtime - nlp-shap 0.1.4</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eb227069" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #1d4ed8;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #93c5fd;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #93c5fd;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.4</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">nlp-shap 0.1.4</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/masking.html">Masking views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/runtime.html">Runtime core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/applications.html">Business and compliance applications</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/shapley_values.html">Shapley values and axioms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/masking.html">Masking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/runtime.html">Runtime core</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../examples.html">Examples</a><input aria-label="Toggle navigation of Examples" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/masking_views.html">Coalition masking and absence policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/runtime_core.html">Runtime archive, deduplication, and async scheduling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../api.html">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="domain.html">Domain types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="protocols.html">Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="masking.html">Masking</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html">Estimand aggregators</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/blob/main/docs/api/runtime.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/edit/main/docs/api/runtime.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="module-nlp_shap.runtime">
+<span id="runtime"></span><h1>Runtime<a class="headerlink" href="#module-nlp_shap.runtime" title="Link to this heading">¶</a></h1>
+<p>Runtime archive, deduplication, caching, and scheduling.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionDedupRegistry">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.</span></span><span class="sig-name descname"><span class="pre">CoalitionDedupRegistry</span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/dedup.html#CoalitionDedupRegistry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.CoalitionDedupRegistry" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Track coalition keys that already required backend execution.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionDedupRegistry.observe">
+<span class="sig-name descname"><span class="pre">observe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coalition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/dedup.html#CoalitionDedupRegistry.observe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.CoalitionDedupRegistry.observe" title="Link to this definition">¶</a></dt>
+<dd><p>Record a coalition key and return whether it is newly observed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionDedupRegistry.contains">
+<span class="sig-name descname"><span class="pre">contains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coalition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/dedup.html#CoalitionDedupRegistry.contains"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.CoalitionDedupRegistry.contains" title="Link to this definition">¶</a></dt>
+<dd><p>Return whether a coalition key was already observed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionJob">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.</span></span><span class="sig-name descname"><span class="pre">CoalitionJob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coalition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">absence_policy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_words</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)"><span class="pre">bytes</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_n_bits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">utility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/runtime/scheduler.html#CoalitionJob"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.CoalitionJob" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>One coalition evaluation request routed through the scheduler.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionJob.coalition_key">
+<span class="sig-name descname"><span class="pre">coalition_key</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionJob.coalition_key" title="Link to this definition">¶</a></dt>
+<dd><p>Stable deduplication key for the coalition.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionJob.snapshot_id">
+<span class="sig-name descname"><span class="pre">snapshot_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionJob.snapshot_id" title="Link to this definition">¶</a></dt>
+<dd><p>Identifier of the evaluated conversation snapshot.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionJob.snapshot">
+<span class="sig-name descname"><span class="pre">snapshot</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionJob.snapshot" title="Link to this definition">¶</a></dt>
+<dd><p>Conversation snapshot passed to the backend for generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionJob.absence_policy">
+<span class="sig-name descname"><span class="pre">absence_policy</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionJob.absence_policy" title="Link to this definition">¶</a></dt>
+<dd><p>Registered absence-policy identifier used for rendering.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionJob.mask_words">
+<span class="sig-name descname"><span class="pre">mask_words</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)"><span class="pre">bytes</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionJob.mask_words" title="Link to this definition">¶</a></dt>
+<dd><p>Packed coalition mask bytes.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionJob.mask_n_bits">
+<span class="sig-name descname"><span class="pre">mask_n_bits</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionJob.mask_n_bits" title="Link to this definition">¶</a></dt>
+<dd><p>Original coalition mask bit length.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionJob.model_id">
+<span class="sig-name descname"><span class="pre">model_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionJob.model_id" title="Link to this definition">¶</a></dt>
+<dd><p>Backend model identifier used for generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionJob.utility">
+<span class="sig-name descname"><span class="pre">utility</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionJob.utility" title="Link to this definition">¶</a></dt>
+<dd><p>Utility score assigned after generation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecord">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.</span></span><span class="sig-name descname"><span class="pre">CoalitionRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">coalition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="masking.html#nlp_shap.masking.codec.PackedMask" title="nlp_shap.masking.codec.PackedMask"><span class="pre">PackedMask</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">absence_policy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">generation_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">utility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">elapsed_ms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_hit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#CoalitionRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecord" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>One persisted coalition evaluation row.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecord.record_id">
+<span class="sig-name descname"><span class="pre">record_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecord.record_id" title="Link to this definition">¶</a></dt>
+<dd><p>Monotonic archive identifier for the coalition row.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecord.snapshot_id">
+<span class="sig-name descname"><span class="pre">snapshot_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecord.snapshot_id" title="Link to this definition">¶</a></dt>
+<dd><p>Conversation snapshot identifier evaluated for this coalition.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecord.coalition_key">
+<span class="sig-name descname"><span class="pre">coalition_key</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecord.coalition_key" title="Link to this definition">¶</a></dt>
+<dd><p>Stable deduplication key for the coalition evaluation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecord.mask">
+<span class="sig-name descname"><span class="pre">mask</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="masking.html#nlp_shap.masking.codec.PackedMask" title="nlp_shap.masking.codec.PackedMask"><span class="pre">PackedMask</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecord.mask" title="Link to this definition">¶</a></dt>
+<dd><p>Packed coalition mask bytes and original bit length.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecord.absence_policy">
+<span class="sig-name descname"><span class="pre">absence_policy</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecord.absence_policy" title="Link to this definition">¶</a></dt>
+<dd><p>Registered absence-policy identifier used for rendering.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecord.model_id">
+<span class="sig-name descname"><span class="pre">model_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecord.model_id" title="Link to this definition">¶</a></dt>
+<dd><p>Backend model identifier used for generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecord.generation_text">
+<span class="sig-name descname"><span class="pre">generation_text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecord.generation_text" title="Link to this definition">¶</a></dt>
+<dd><p>Generated model text for the coalition.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecord.utility">
+<span class="sig-name descname"><span class="pre">utility</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecord.utility" title="Link to this definition">¶</a></dt>
+<dd><p>Utility score assigned to the generated output.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecord.elapsed_ms">
+<span class="sig-name descname"><span class="pre">elapsed_ms</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecord.elapsed_ms" title="Link to this definition">¶</a></dt>
+<dd><p>Wall-clock generation time in milliseconds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecord.cache_hit">
+<span class="sig-name descname"><span class="pre">cache_hit</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecord.cache_hit" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the generation was served from an in-memory cache.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecordDraft">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.</span></span><span class="sig-name descname"><span class="pre">CoalitionRecordDraft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">snapshot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">coalition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="masking.html#nlp_shap.masking.codec.PackedMask" title="nlp_shap.masking.codec.PackedMask"><span class="pre">PackedMask</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">absence_policy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">generation_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">utility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">elapsed_ms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_hit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#CoalitionRecordDraft"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecordDraft" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Input payload used when appending a coalition record.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecordDraft.snapshot_id">
+<span class="sig-name descname"><span class="pre">snapshot_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecordDraft.snapshot_id" title="Link to this definition">¶</a></dt>
+<dd><p>Conversation snapshot identifier evaluated for this coalition.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecordDraft.coalition_key">
+<span class="sig-name descname"><span class="pre">coalition_key</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecordDraft.coalition_key" title="Link to this definition">¶</a></dt>
+<dd><p>Stable deduplication key for the coalition evaluation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecordDraft.mask">
+<span class="sig-name descname"><span class="pre">mask</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="masking.html#nlp_shap.masking.codec.PackedMask" title="nlp_shap.masking.codec.PackedMask"><span class="pre">PackedMask</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecordDraft.mask" title="Link to this definition">¶</a></dt>
+<dd><p>Packed coalition mask bytes and original bit length.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecordDraft.absence_policy">
+<span class="sig-name descname"><span class="pre">absence_policy</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecordDraft.absence_policy" title="Link to this definition">¶</a></dt>
+<dd><p>Registered absence-policy identifier used for rendering.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecordDraft.model_id">
+<span class="sig-name descname"><span class="pre">model_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecordDraft.model_id" title="Link to this definition">¶</a></dt>
+<dd><p>Backend model identifier used for generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecordDraft.generation_text">
+<span class="sig-name descname"><span class="pre">generation_text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecordDraft.generation_text" title="Link to this definition">¶</a></dt>
+<dd><p>Generated model text for the coalition.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecordDraft.utility">
+<span class="sig-name descname"><span class="pre">utility</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecordDraft.utility" title="Link to this definition">¶</a></dt>
+<dd><p>Utility score assigned to the generated output.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecordDraft.elapsed_ms">
+<span class="sig-name descname"><span class="pre">elapsed_ms</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecordDraft.elapsed_ms" title="Link to this definition">¶</a></dt>
+<dd><p>Wall-clock generation time in milliseconds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.CoalitionRecordDraft.cache_hit">
+<span class="sig-name descname"><span class="pre">cache_hit</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><a class="headerlink" href="#nlp_shap.runtime.CoalitionRecordDraft.cache_hit" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the generation was served from an in-memory cache.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.HotResultStore">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.</span></span><span class="sig-name descname"><span class="pre">HotResultStore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">OrderedDict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str]</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/runtime/store.html#HotResultStore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.HotResultStore" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>In-memory LRU store for recently generated coalition outputs.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.HotResultStore.maxsize">
+<span class="sig-name descname"><span class="pre">maxsize</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">128</span></span><a class="headerlink" href="#nlp_shap.runtime.HotResultStore.maxsize" title="Link to this definition">¶</a></dt>
+<dd><p>Maximum number of coalition results retained in memory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.HotResultStore.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coalition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/store.html#HotResultStore.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.HotResultStore.get" title="Link to this definition">¶</a></dt>
+<dd><p>Return a cached generation or <code class="docutils literal notranslate"><span class="pre">None</span></code> when absent.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.HotResultStore.put">
+<span class="sig-name descname"><span class="pre">put</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coalition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">generation_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/store.html#HotResultStore.put"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.HotResultStore.put" title="Link to this definition">¶</a></dt>
+<dd><p>Insert or refresh a cached generation result.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.InferenceScheduler">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.</span></span><span class="sig-name descname"><span class="pre">InferenceScheduler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_inflight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">generation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pipeline.html#nlp_shap.pipeline.config.GenerationConfig" title="nlp_shap.pipeline.config.GenerationConfig"><span class="pre">GenerationConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">store</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.runtime.store.HotResultStore" title="nlp_shap.runtime.store.HotResultStore"><span class="pre">HotResultStore</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dedup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.runtime.dedup.CoalitionDedupRegistry" title="nlp_shap.runtime.dedup.CoalitionDedupRegistry"><span class="pre">CoalitionDedupRegistry</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">archive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.runtime.archive.RunArchive" title="nlp_shap.runtime.archive.RunArchive"><span class="pre">RunArchive</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/runtime/scheduler.html#InferenceScheduler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.InferenceScheduler" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Execute coalition jobs with bounded concurrency and optional deduplication.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.InferenceScheduler.run">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nlp_shap.runtime.scheduler.CoalitionJob" title="nlp_shap.runtime.scheduler.CoalitionJob"><span class="pre">CoalitionJob</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.14)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Awaitable" title="(in Python v3.14)"><span class="pre">Awaitable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nlp_shap.runtime.scheduler.SchedulerMetrics" title="nlp_shap.runtime.scheduler.SchedulerMetrics"><span class="pre">SchedulerMetrics</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/scheduler.html#InferenceScheduler.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.InferenceScheduler.run" title="Link to this definition">¶</a></dt>
+<dd><p>Execute coalition jobs and return scheduler counters.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.RunArchive">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.</span></span><span class="sig-name descname"><span class="pre">RunArchive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">manifest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pipeline.html#nlp_shap.pipeline.manifest.RunManifest" title="nlp_shap.pipeline.manifest.RunManifest"><span class="pre">RunManifest</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">flush_every</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#RunArchive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.RunArchive" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Persist coalition records to SQLite with generation text stored as blobs.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.RunArchive.open">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">manifest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pipeline.html#nlp_shap.pipeline.manifest.RunManifest" title="nlp_shap.pipeline.manifest.RunManifest"><span class="pre">RunManifest</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">flush_every</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nlp_shap.runtime.archive.RunArchive" title="nlp_shap.runtime.archive.RunArchive"><span class="pre">RunArchive</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#RunArchive.open"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.RunArchive.open" title="Link to this definition">¶</a></dt>
+<dd><p>Create a run archive directory and open its SQLite database.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.RunArchive.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">draft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecordDraft" title="nlp_shap.runtime.archive.CoalitionRecordDraft"><span class="pre">CoalitionRecordDraft</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#RunArchive.append"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.RunArchive.append" title="Link to this definition">¶</a></dt>
+<dd><p>Append one coalition record and return its archive identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.RunArchive.flush">
+<span class="sig-name descname"><span class="pre">flush</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#RunArchive.flush"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.RunArchive.flush" title="Link to this definition">¶</a></dt>
+<dd><p>Commit pending archive writes to disk.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.RunArchive.history_lazy">
+<span class="sig-name descname"><span class="pre">history_lazy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.14)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecord" title="nlp_shap.runtime.archive.CoalitionRecord"><span class="pre">CoalitionRecord</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#RunArchive.history_lazy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.RunArchive.history_lazy" title="Link to this definition">¶</a></dt>
+<dd><p>Iterate coalition records one row at a time without bulk preloading.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.RunArchive.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#RunArchive.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.RunArchive.close" title="Link to this definition">¶</a></dt>
+<dd><p>Flush and close the archive database connection.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.SchedulerMetrics">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.</span></span><span class="sig-name descname"><span class="pre">SchedulerMetrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">requested</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">executed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">deduplicated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_hits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/runtime/scheduler.html#SchedulerMetrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.SchedulerMetrics" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Counters collected while executing coalition jobs.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.SchedulerMetrics.requested">
+<span class="sig-name descname"><span class="pre">requested</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.runtime.SchedulerMetrics.requested" title="Link to this definition">¶</a></dt>
+<dd><p>Number of coalition jobs submitted to the scheduler.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.SchedulerMetrics.executed">
+<span class="sig-name descname"><span class="pre">executed</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.runtime.SchedulerMetrics.executed" title="Link to this definition">¶</a></dt>
+<dd><p>Number of jobs that invoked the backend generate callable.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.SchedulerMetrics.deduplicated">
+<span class="sig-name descname"><span class="pre">deduplicated</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.runtime.SchedulerMetrics.deduplicated" title="Link to this definition">¶</a></dt>
+<dd><p>Number of jobs skipped because the coalition key was already executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.SchedulerMetrics.cache_hits">
+<span class="sig-name descname"><span class="pre">cache_hits</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.runtime.SchedulerMetrics.cache_hits" title="Link to this definition">¶</a></dt>
+<dd><p>Number of jobs served from the hot result store without backend calls.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nlp_shap.runtime.build_coalition_key">
+<span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.</span></span><span class="sig-name descname"><span class="pre">build_coalition_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">player_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_present</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absence_policy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">generation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pipeline.html#nlp_shap.pipeline.config.GenerationConfig" title="nlp_shap.pipeline.config.GenerationConfig"><span class="pre">GenerationConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/dedup.html#build_coalition_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.build_coalition_key" title="Link to this definition">¶</a></dt>
+<dd><p>Build a stable SHA256 coalition key for deduplication.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nlp_shap.runtime.dedup_enabled">
+<span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.</span></span><span class="sig-name descname"><span class="pre">dedup_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pipeline.html#nlp_shap.pipeline.config.DedupConfig" title="nlp_shap.pipeline.config.DedupConfig"><span class="pre">DedupConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">generation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pipeline.html#nlp_shap.pipeline.config.GenerationConfig" title="nlp_shap.pipeline.config.GenerationConfig"><span class="pre">GenerationConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/dedup.html#dedup_enabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.dedup_enabled" title="Link to this definition">¶</a></dt>
+<dd><p>Return whether coalition deduplication should be active.</p>
+</dd></dl>
+
+<p id="module-nlp_shap.runtime.archive">SQLite-backed run archive for coalition evaluation history.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecord">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.archive.</span></span><span class="sig-name descname"><span class="pre">CoalitionRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">coalition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="masking.html#nlp_shap.masking.codec.PackedMask" title="nlp_shap.masking.codec.PackedMask"><span class="pre">PackedMask</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">absence_policy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">generation_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">utility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">elapsed_ms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_hit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#CoalitionRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecord" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>One persisted coalition evaluation row.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecord.record_id">
+<span class="sig-name descname"><span class="pre">record_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecord.record_id" title="Link to this definition">¶</a></dt>
+<dd><p>Monotonic archive identifier for the coalition row.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecord.snapshot_id">
+<span class="sig-name descname"><span class="pre">snapshot_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecord.snapshot_id" title="Link to this definition">¶</a></dt>
+<dd><p>Conversation snapshot identifier evaluated for this coalition.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecord.coalition_key">
+<span class="sig-name descname"><span class="pre">coalition_key</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecord.coalition_key" title="Link to this definition">¶</a></dt>
+<dd><p>Stable deduplication key for the coalition evaluation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecord.mask">
+<span class="sig-name descname"><span class="pre">mask</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="masking.html#nlp_shap.masking.codec.PackedMask" title="nlp_shap.masking.codec.PackedMask"><span class="pre">PackedMask</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecord.mask" title="Link to this definition">¶</a></dt>
+<dd><p>Packed coalition mask bytes and original bit length.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecord.absence_policy">
+<span class="sig-name descname"><span class="pre">absence_policy</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecord.absence_policy" title="Link to this definition">¶</a></dt>
+<dd><p>Registered absence-policy identifier used for rendering.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecord.model_id">
+<span class="sig-name descname"><span class="pre">model_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecord.model_id" title="Link to this definition">¶</a></dt>
+<dd><p>Backend model identifier used for generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecord.generation_text">
+<span class="sig-name descname"><span class="pre">generation_text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecord.generation_text" title="Link to this definition">¶</a></dt>
+<dd><p>Generated model text for the coalition.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecord.utility">
+<span class="sig-name descname"><span class="pre">utility</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecord.utility" title="Link to this definition">¶</a></dt>
+<dd><p>Utility score assigned to the generated output.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecord.elapsed_ms">
+<span class="sig-name descname"><span class="pre">elapsed_ms</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecord.elapsed_ms" title="Link to this definition">¶</a></dt>
+<dd><p>Wall-clock generation time in milliseconds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecord.cache_hit">
+<span class="sig-name descname"><span class="pre">cache_hit</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecord.cache_hit" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the generation was served from an in-memory cache.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecordDraft">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.archive.</span></span><span class="sig-name descname"><span class="pre">CoalitionRecordDraft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">snapshot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">coalition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="masking.html#nlp_shap.masking.codec.PackedMask" title="nlp_shap.masking.codec.PackedMask"><span class="pre">PackedMask</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">absence_policy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">generation_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">utility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">elapsed_ms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_hit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#CoalitionRecordDraft"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecordDraft" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Input payload used when appending a coalition record.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecordDraft.snapshot_id">
+<span class="sig-name descname"><span class="pre">snapshot_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.snapshot_id" title="Link to this definition">¶</a></dt>
+<dd><p>Conversation snapshot identifier evaluated for this coalition.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecordDraft.coalition_key">
+<span class="sig-name descname"><span class="pre">coalition_key</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.coalition_key" title="Link to this definition">¶</a></dt>
+<dd><p>Stable deduplication key for the coalition evaluation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecordDraft.mask">
+<span class="sig-name descname"><span class="pre">mask</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="masking.html#nlp_shap.masking.codec.PackedMask" title="nlp_shap.masking.codec.PackedMask"><span class="pre">PackedMask</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.mask" title="Link to this definition">¶</a></dt>
+<dd><p>Packed coalition mask bytes and original bit length.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecordDraft.absence_policy">
+<span class="sig-name descname"><span class="pre">absence_policy</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.absence_policy" title="Link to this definition">¶</a></dt>
+<dd><p>Registered absence-policy identifier used for rendering.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecordDraft.model_id">
+<span class="sig-name descname"><span class="pre">model_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.model_id" title="Link to this definition">¶</a></dt>
+<dd><p>Backend model identifier used for generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecordDraft.generation_text">
+<span class="sig-name descname"><span class="pre">generation_text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.generation_text" title="Link to this definition">¶</a></dt>
+<dd><p>Generated model text for the coalition.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecordDraft.utility">
+<span class="sig-name descname"><span class="pre">utility</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.utility" title="Link to this definition">¶</a></dt>
+<dd><p>Utility score assigned to the generated output.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecordDraft.elapsed_ms">
+<span class="sig-name descname"><span class="pre">elapsed_ms</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.elapsed_ms" title="Link to this definition">¶</a></dt>
+<dd><p>Wall-clock generation time in milliseconds.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.CoalitionRecordDraft.cache_hit">
+<span class="sig-name descname"><span class="pre">cache_hit</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><a class="headerlink" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.cache_hit" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the generation was served from an in-memory cache.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.RunArchive">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.archive.</span></span><span class="sig-name descname"><span class="pre">RunArchive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">manifest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pipeline.html#nlp_shap.pipeline.manifest.RunManifest" title="nlp_shap.pipeline.manifest.RunManifest"><span class="pre">RunManifest</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">flush_every</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#RunArchive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.archive.RunArchive" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Persist coalition records to SQLite with generation text stored as blobs.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.RunArchive.open">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><span class="pre">Path</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">manifest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pipeline.html#nlp_shap.pipeline.manifest.RunManifest" title="nlp_shap.pipeline.manifest.RunManifest"><span class="pre">RunManifest</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">flush_every</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nlp_shap.runtime.archive.RunArchive" title="nlp_shap.runtime.archive.RunArchive"><span class="pre">RunArchive</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#RunArchive.open"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.archive.RunArchive.open" title="Link to this definition">¶</a></dt>
+<dd><p>Create a run archive directory and open its SQLite database.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.RunArchive.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">draft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecordDraft" title="nlp_shap.runtime.archive.CoalitionRecordDraft"><span class="pre">CoalitionRecordDraft</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#RunArchive.append"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.archive.RunArchive.append" title="Link to this definition">¶</a></dt>
+<dd><p>Append one coalition record and return its archive identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.RunArchive.flush">
+<span class="sig-name descname"><span class="pre">flush</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#RunArchive.flush"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.archive.RunArchive.flush" title="Link to this definition">¶</a></dt>
+<dd><p>Commit pending archive writes to disk.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.RunArchive.history_lazy">
+<span class="sig-name descname"><span class="pre">history_lazy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.14)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecord" title="nlp_shap.runtime.archive.CoalitionRecord"><span class="pre">CoalitionRecord</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#RunArchive.history_lazy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.archive.RunArchive.history_lazy" title="Link to this definition">¶</a></dt>
+<dd><p>Iterate coalition records one row at a time without bulk preloading.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.archive.RunArchive.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/archive.html#RunArchive.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.archive.RunArchive.close" title="Link to this definition">¶</a></dt>
+<dd><p>Flush and close the archive database connection.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-nlp_shap.runtime.dedup">Coalition deduplication keys and registry.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="nlp_shap.runtime.dedup.dedup_enabled">
+<span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.dedup.</span></span><span class="sig-name descname"><span class="pre">dedup_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pipeline.html#nlp_shap.pipeline.config.DedupConfig" title="nlp_shap.pipeline.config.DedupConfig"><span class="pre">DedupConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">generation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pipeline.html#nlp_shap.pipeline.config.GenerationConfig" title="nlp_shap.pipeline.config.GenerationConfig"><span class="pre">GenerationConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/dedup.html#dedup_enabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.dedup.dedup_enabled" title="Link to this definition">¶</a></dt>
+<dd><p>Return whether coalition deduplication should be active.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="nlp_shap.runtime.dedup.build_coalition_key">
+<span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.dedup.</span></span><span class="sig-name descname"><span class="pre">build_coalition_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">player_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_present</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absence_policy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">generation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pipeline.html#nlp_shap.pipeline.config.GenerationConfig" title="nlp_shap.pipeline.config.GenerationConfig"><span class="pre">GenerationConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/dedup.html#build_coalition_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.dedup.build_coalition_key" title="Link to this definition">¶</a></dt>
+<dd><p>Build a stable SHA256 coalition key for deduplication.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.dedup.CoalitionDedupRegistry">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.dedup.</span></span><span class="sig-name descname"><span class="pre">CoalitionDedupRegistry</span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/dedup.html#CoalitionDedupRegistry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.dedup.CoalitionDedupRegistry" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Track coalition keys that already required backend execution.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.dedup.CoalitionDedupRegistry.observe">
+<span class="sig-name descname"><span class="pre">observe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coalition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/dedup.html#CoalitionDedupRegistry.observe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.dedup.CoalitionDedupRegistry.observe" title="Link to this definition">¶</a></dt>
+<dd><p>Record a coalition key and return whether it is newly observed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.dedup.CoalitionDedupRegistry.contains">
+<span class="sig-name descname"><span class="pre">contains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coalition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/dedup.html#CoalitionDedupRegistry.contains"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.dedup.CoalitionDedupRegistry.contains" title="Link to this definition">¶</a></dt>
+<dd><p>Return whether a coalition key was already observed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-nlp_shap.runtime.store">Hot LRU cache for coalition generation results.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.store.HotResultStore">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.store.</span></span><span class="sig-name descname"><span class="pre">HotResultStore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">OrderedDict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str]</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/runtime/store.html#HotResultStore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.store.HotResultStore" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>In-memory LRU store for recently generated coalition outputs.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.store.HotResultStore.maxsize">
+<span class="sig-name descname"><span class="pre">maxsize</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">128</span></span><a class="headerlink" href="#nlp_shap.runtime.store.HotResultStore.maxsize" title="Link to this definition">¶</a></dt>
+<dd><p>Maximum number of coalition results retained in memory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.store.HotResultStore.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coalition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/store.html#HotResultStore.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.store.HotResultStore.get" title="Link to this definition">¶</a></dt>
+<dd><p>Return a cached generation or <code class="docutils literal notranslate"><span class="pre">None</span></code> when absent.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.store.HotResultStore.put">
+<span class="sig-name descname"><span class="pre">put</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coalition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">generation_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/store.html#HotResultStore.put"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.store.HotResultStore.put" title="Link to this definition">¶</a></dt>
+<dd><p>Insert or refresh a cached generation result.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-nlp_shap.runtime.scheduler">Async coalition inference scheduling with deduplication.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.GenerateFn">
+<span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.scheduler.</span></span><span class="sig-name descname"><span class="pre">GenerateFn</span></span><a class="headerlink" href="#nlp_shap.runtime.scheduler.GenerateFn" title="Link to this definition">¶</a></dt>
+<dd><p>Async callable that returns generated text for one snapshot.</p>
+<p>alias of <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<a class="reference internal" href="domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConversationSnapshot</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Awaitable" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Awaitable</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.SchedulerMetrics">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.scheduler.</span></span><span class="sig-name descname"><span class="pre">SchedulerMetrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">requested</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">executed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">deduplicated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_hits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/runtime/scheduler.html#SchedulerMetrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.scheduler.SchedulerMetrics" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Counters collected while executing coalition jobs.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.SchedulerMetrics.requested">
+<span class="sig-name descname"><span class="pre">requested</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.runtime.scheduler.SchedulerMetrics.requested" title="Link to this definition">¶</a></dt>
+<dd><p>Number of coalition jobs submitted to the scheduler.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.SchedulerMetrics.executed">
+<span class="sig-name descname"><span class="pre">executed</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.runtime.scheduler.SchedulerMetrics.executed" title="Link to this definition">¶</a></dt>
+<dd><p>Number of jobs that invoked the backend generate callable.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.SchedulerMetrics.deduplicated">
+<span class="sig-name descname"><span class="pre">deduplicated</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.runtime.scheduler.SchedulerMetrics.deduplicated" title="Link to this definition">¶</a></dt>
+<dd><p>Number of jobs skipped because the coalition key was already executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.SchedulerMetrics.cache_hits">
+<span class="sig-name descname"><span class="pre">cache_hits</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.runtime.scheduler.SchedulerMetrics.cache_hits" title="Link to this definition">¶</a></dt>
+<dd><p>Number of jobs served from the hot result store without backend calls.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.CoalitionJob">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.scheduler.</span></span><span class="sig-name descname"><span class="pre">CoalitionJob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coalition_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">absence_policy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_words</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)"><span class="pre">bytes</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_n_bits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">utility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/runtime/scheduler.html#CoalitionJob"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.scheduler.CoalitionJob" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>One coalition evaluation request routed through the scheduler.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.CoalitionJob.coalition_key">
+<span class="sig-name descname"><span class="pre">coalition_key</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.scheduler.CoalitionJob.coalition_key" title="Link to this definition">¶</a></dt>
+<dd><p>Stable deduplication key for the coalition.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.CoalitionJob.snapshot_id">
+<span class="sig-name descname"><span class="pre">snapshot_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.scheduler.CoalitionJob.snapshot_id" title="Link to this definition">¶</a></dt>
+<dd><p>Identifier of the evaluated conversation snapshot.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.CoalitionJob.snapshot">
+<span class="sig-name descname"><span class="pre">snapshot</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a></span><a class="headerlink" href="#nlp_shap.runtime.scheduler.CoalitionJob.snapshot" title="Link to this definition">¶</a></dt>
+<dd><p>Conversation snapshot passed to the backend for generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.CoalitionJob.absence_policy">
+<span class="sig-name descname"><span class="pre">absence_policy</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.scheduler.CoalitionJob.absence_policy" title="Link to this definition">¶</a></dt>
+<dd><p>Registered absence-policy identifier used for rendering.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.CoalitionJob.mask_words">
+<span class="sig-name descname"><span class="pre">mask_words</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)"><span class="pre">bytes</span></a></span><a class="headerlink" href="#nlp_shap.runtime.scheduler.CoalitionJob.mask_words" title="Link to this definition">¶</a></dt>
+<dd><p>Packed coalition mask bytes.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.CoalitionJob.mask_n_bits">
+<span class="sig-name descname"><span class="pre">mask_n_bits</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#nlp_shap.runtime.scheduler.CoalitionJob.mask_n_bits" title="Link to this definition">¶</a></dt>
+<dd><p>Original coalition mask bit length.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.CoalitionJob.model_id">
+<span class="sig-name descname"><span class="pre">model_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.runtime.scheduler.CoalitionJob.model_id" title="Link to this definition">¶</a></dt>
+<dd><p>Backend model identifier used for generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.CoalitionJob.utility">
+<span class="sig-name descname"><span class="pre">utility</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#nlp_shap.runtime.scheduler.CoalitionJob.utility" title="Link to this definition">¶</a></dt>
+<dd><p>Utility score assigned after generation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.InferenceScheduler">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.runtime.scheduler.</span></span><span class="sig-name descname"><span class="pre">InferenceScheduler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_inflight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">generation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pipeline.html#nlp_shap.pipeline.config.GenerationConfig" title="nlp_shap.pipeline.config.GenerationConfig"><span class="pre">GenerationConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">store</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.runtime.store.HotResultStore" title="nlp_shap.runtime.store.HotResultStore"><span class="pre">HotResultStore</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dedup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.runtime.dedup.CoalitionDedupRegistry" title="nlp_shap.runtime.dedup.CoalitionDedupRegistry"><span class="pre">CoalitionDedupRegistry</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">archive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.runtime.archive.RunArchive" title="nlp_shap.runtime.archive.RunArchive"><span class="pre">RunArchive</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/runtime/scheduler.html#InferenceScheduler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.scheduler.InferenceScheduler" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Execute coalition jobs with bounded concurrency and optional deduplication.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.runtime.scheduler.InferenceScheduler.run">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nlp_shap.runtime.scheduler.CoalitionJob" title="nlp_shap.runtime.scheduler.CoalitionJob"><span class="pre">CoalitionJob</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.14)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Awaitable" title="(in Python v3.14)"><span class="pre">Awaitable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nlp_shap.runtime.scheduler.SchedulerMetrics" title="nlp_shap.runtime.scheduler.SchedulerMetrics"><span class="pre">SchedulerMetrics</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/runtime/scheduler.html#InferenceScheduler.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.runtime.scheduler.InferenceScheduler.run" title="Link to this definition">¶</a></dt>
+<dd><p>Execute coalition jobs and return scheduler counters.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="estimation.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Estimand aggregators</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="masking.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Masking</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, Paweł Pozorski
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/Pawlo77/nlp-shap" aria-label="GitHub"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+              <a class="muted-link " href="https://pypi.org/project/nlp-shap/" aria-label="PyPI"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5L4.5 6.9V12L12 16.5 19.5 12V6.9L12 9.5zm0 5.5l-7.5-3.75V17l7.5 4.25L19.5 17v-5.75L12 15z"/></svg>
+</a>
+              <a class="muted-link " href="https://github.com/Pawlo77/nlp-shap/issues" aria-label="Issues"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"><path d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/><path fill-rule="evenodd" d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zm7.25-3.25v2a.75.75 0 001.5 0v-2a.75.75 0 00-1.5 0zm0 7a.75.75 0 00-1.5 0v2a.75.75 0 001.5 0v-2z"/></svg>
+</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Runtime</a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionDedupRegistry"><code class="docutils literal notranslate"><span class="pre">CoalitionDedupRegistry</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionDedupRegistry.observe"><code class="docutils literal notranslate"><span class="pre">CoalitionDedupRegistry.observe()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionDedupRegistry.contains"><code class="docutils literal notranslate"><span class="pre">CoalitionDedupRegistry.contains()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionJob"><code class="docutils literal notranslate"><span class="pre">CoalitionJob</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionJob.coalition_key"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.coalition_key</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionJob.snapshot_id"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.snapshot_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionJob.snapshot"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.snapshot</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionJob.absence_policy"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.absence_policy</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionJob.mask_words"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.mask_words</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionJob.mask_n_bits"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.mask_n_bits</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionJob.model_id"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.model_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionJob.utility"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.utility</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecord"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecord.record_id"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.record_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecord.snapshot_id"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.snapshot_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecord.coalition_key"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.coalition_key</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecord.mask"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.mask</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecord.absence_policy"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.absence_policy</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecord.model_id"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.model_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecord.generation_text"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.generation_text</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecord.utility"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.utility</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecord.elapsed_ms"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.elapsed_ms</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecord.cache_hit"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.cache_hit</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecordDraft"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecordDraft.snapshot_id"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.snapshot_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecordDraft.coalition_key"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.coalition_key</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecordDraft.mask"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.mask</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecordDraft.absence_policy"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.absence_policy</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecordDraft.model_id"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.model_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecordDraft.generation_text"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.generation_text</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecordDraft.utility"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.utility</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecordDraft.elapsed_ms"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.elapsed_ms</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.CoalitionRecordDraft.cache_hit"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.cache_hit</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.runtime.HotResultStore"><code class="docutils literal notranslate"><span class="pre">HotResultStore</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.HotResultStore.maxsize"><code class="docutils literal notranslate"><span class="pre">HotResultStore.maxsize</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.HotResultStore.get"><code class="docutils literal notranslate"><span class="pre">HotResultStore.get()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.HotResultStore.put"><code class="docutils literal notranslate"><span class="pre">HotResultStore.put()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.runtime.InferenceScheduler"><code class="docutils literal notranslate"><span class="pre">InferenceScheduler</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.InferenceScheduler.run"><code class="docutils literal notranslate"><span class="pre">InferenceScheduler.run()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.runtime.RunArchive"><code class="docutils literal notranslate"><span class="pre">RunArchive</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.RunArchive.open"><code class="docutils literal notranslate"><span class="pre">RunArchive.open()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.RunArchive.append"><code class="docutils literal notranslate"><span class="pre">RunArchive.append()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.RunArchive.flush"><code class="docutils literal notranslate"><span class="pre">RunArchive.flush()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.RunArchive.history_lazy"><code class="docutils literal notranslate"><span class="pre">RunArchive.history_lazy()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.RunArchive.close"><code class="docutils literal notranslate"><span class="pre">RunArchive.close()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.runtime.SchedulerMetrics"><code class="docutils literal notranslate"><span class="pre">SchedulerMetrics</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.SchedulerMetrics.requested"><code class="docutils literal notranslate"><span class="pre">SchedulerMetrics.requested</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.SchedulerMetrics.executed"><code class="docutils literal notranslate"><span class="pre">SchedulerMetrics.executed</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.SchedulerMetrics.deduplicated"><code class="docutils literal notranslate"><span class="pre">SchedulerMetrics.deduplicated</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.SchedulerMetrics.cache_hits"><code class="docutils literal notranslate"><span class="pre">SchedulerMetrics.cache_hits</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.runtime.build_coalition_key"><code class="docutils literal notranslate"><span class="pre">build_coalition_key()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.dedup_enabled"><code class="docutils literal notranslate"><span class="pre">dedup_enabled()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecord"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecord.record_id"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.record_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecord.snapshot_id"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.snapshot_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecord.coalition_key"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.coalition_key</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecord.mask"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.mask</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecord.absence_policy"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.absence_policy</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecord.model_id"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.model_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecord.generation_text"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.generation_text</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecord.utility"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.utility</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecord.elapsed_ms"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.elapsed_ms</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecord.cache_hit"><code class="docutils literal notranslate"><span class="pre">CoalitionRecord.cache_hit</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecordDraft"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.snapshot_id"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.snapshot_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.coalition_key"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.coalition_key</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.mask"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.mask</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.absence_policy"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.absence_policy</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.model_id"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.model_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.generation_text"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.generation_text</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.utility"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.utility</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.elapsed_ms"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.elapsed_ms</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.CoalitionRecordDraft.cache_hit"><code class="docutils literal notranslate"><span class="pre">CoalitionRecordDraft.cache_hit</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.RunArchive"><code class="docutils literal notranslate"><span class="pre">RunArchive</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.RunArchive.open"><code class="docutils literal notranslate"><span class="pre">RunArchive.open()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.RunArchive.append"><code class="docutils literal notranslate"><span class="pre">RunArchive.append()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.RunArchive.flush"><code class="docutils literal notranslate"><span class="pre">RunArchive.flush()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.RunArchive.history_lazy"><code class="docutils literal notranslate"><span class="pre">RunArchive.history_lazy()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.archive.RunArchive.close"><code class="docutils literal notranslate"><span class="pre">RunArchive.close()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.runtime.dedup.dedup_enabled"><code class="docutils literal notranslate"><span class="pre">dedup_enabled()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.dedup.build_coalition_key"><code class="docutils literal notranslate"><span class="pre">build_coalition_key()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.dedup.CoalitionDedupRegistry"><code class="docutils literal notranslate"><span class="pre">CoalitionDedupRegistry</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.dedup.CoalitionDedupRegistry.observe"><code class="docutils literal notranslate"><span class="pre">CoalitionDedupRegistry.observe()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.dedup.CoalitionDedupRegistry.contains"><code class="docutils literal notranslate"><span class="pre">CoalitionDedupRegistry.contains()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.runtime.store.HotResultStore"><code class="docutils literal notranslate"><span class="pre">HotResultStore</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.store.HotResultStore.maxsize"><code class="docutils literal notranslate"><span class="pre">HotResultStore.maxsize</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.store.HotResultStore.get"><code class="docutils literal notranslate"><span class="pre">HotResultStore.get()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.store.HotResultStore.put"><code class="docutils literal notranslate"><span class="pre">HotResultStore.put()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.GenerateFn"><code class="docutils literal notranslate"><span class="pre">GenerateFn</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.SchedulerMetrics"><code class="docutils literal notranslate"><span class="pre">SchedulerMetrics</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.SchedulerMetrics.requested"><code class="docutils literal notranslate"><span class="pre">SchedulerMetrics.requested</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.SchedulerMetrics.executed"><code class="docutils literal notranslate"><span class="pre">SchedulerMetrics.executed</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.SchedulerMetrics.deduplicated"><code class="docutils literal notranslate"><span class="pre">SchedulerMetrics.deduplicated</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.SchedulerMetrics.cache_hits"><code class="docutils literal notranslate"><span class="pre">SchedulerMetrics.cache_hits</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.CoalitionJob"><code class="docutils literal notranslate"><span class="pre">CoalitionJob</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.CoalitionJob.coalition_key"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.coalition_key</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.CoalitionJob.snapshot_id"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.snapshot_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.CoalitionJob.snapshot"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.snapshot</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.CoalitionJob.absence_policy"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.absence_policy</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.CoalitionJob.mask_words"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.mask_words</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.CoalitionJob.mask_n_bits"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.mask_n_bits</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.CoalitionJob.model_id"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.model_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.CoalitionJob.utility"><code class="docutils literal notranslate"><span class="pre">CoalitionJob.utility</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.InferenceScheduler"><code class="docutils literal notranslate"><span class="pre">InferenceScheduler</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.runtime.scheduler.InferenceScheduler.run"><code class="docutils literal notranslate"><span class="pre">InferenceScheduler.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=fd825880"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    </body>
+</html>

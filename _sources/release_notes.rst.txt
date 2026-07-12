@@ -8,6 +8,31 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-1-4:
+
+0.1.4 (2026-07-13)
+------------------
+
+Added
+~~~~~
+
+- :class:`~nlp_shap.runtime.archive.RunArchive` with SQLite index, blob storage,
+  and lazy :meth:`~nlp_shap.runtime.archive.RunArchive.history_lazy` iteration.
+- :class:`~nlp_shap.runtime.archive.CoalitionRecord` rows with mask bytes,
+  utility, timing, and cache-hit metadata.
+- :class:`~nlp_shap.runtime.dedup.CoalitionDedupRegistry` and
+  :func:`~nlp_shap.runtime.dedup.build_coalition_key` SHA256 coalition keys.
+- :class:`~nlp_shap.runtime.store.HotResultStore` LRU cache for recent generations.
+- :class:`~nlp_shap.runtime.scheduler.InferenceScheduler` with bounded
+  ``max_inflight`` concurrency and :class:`~nlp_shap.runtime.scheduler.SchedulerMetrics`.
+
+Documentation
+~~~~~~~~~~~~~
+
+- Theory and usage guides for the runtime archive, dedup, and scheduler.
+- API reference page for :mod:`nlp_shap.runtime`.
+- Example notebook ``examples/runtime_core.ipynb``.
+
 .. _release-0-1-3:
 
 0.1.3 (2026-07-12)
