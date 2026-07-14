@@ -1,5 +1,6 @@
 """Tests for plugin registry entry-point loading."""
 
+from nlp_shap.backends.mock import MockBackend
 from nlp_shap.estimation.estimands.banzhaf import BanzhafAggregator
 from nlp_shap.estimation.estimands.shapley import ShapleyAggregator
 from nlp_shap.plugins import PluginGroup, PluginRegistry
@@ -31,6 +32,17 @@ def test_registry_loads_value_fn_and_normalizer_entry_points() -> None:
     assert normalizer.name == "identity"
     assert "logprob" in registry.names(PluginGroup.VALUE_FNS)
     assert "min_max" in registry.names(PluginGroup.NORMALIZERS)
+
+
+def test_registry_loads_backend_entry_points() -> None:
+    """Packaging entry points resolve to backend constructors."""
+    registry = PluginRegistry()
+    registry.load_entry_points(PluginGroup.BACKENDS)
+
+    backend_type = registry.resolve_type(PluginGroup.BACKENDS, "mock")
+    backend = backend_type("stub")
+    assert isinstance(backend, MockBackend)
+    assert backend.model_id == "stub"
 
 
 def test_registry_register_and_resolve_round_trip() -> None:

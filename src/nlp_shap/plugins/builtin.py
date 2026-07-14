@@ -1,5 +1,6 @@
 """Built-in plugin registration hooks."""
 
+from ..backends.mock import MockBackend
 from ..estimation.complementary import ComplementaryEstimator
 from ..estimation.exact import ExactEstimator
 from ..estimation.monte_carlo import MonteCarloEstimator
@@ -25,6 +26,7 @@ def register_builtin_plugins(registry: PluginRegistry) -> None:
     registry.register(PluginGroup.ESTIMATORS, "mc", MonteCarloEstimator)
     registry.register(PluginGroup.ESTIMATORS, "complementary", ComplementaryEstimator)
     registry.register(PluginGroup.ESTIMATORS, "neyman_cc", NeymanEstimator)
+    registry.register(PluginGroup.BACKENDS, "mock", MockBackend)
     registry.register(PluginGroup.VALUE_FNS, "tfidf_cosine", TfIdfCosineValue)
     registry.register(PluginGroup.VALUE_FNS, "embedding_cosine", CosineEmbeddingValue)
     registry.register(

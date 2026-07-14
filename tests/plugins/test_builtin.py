@@ -1,5 +1,6 @@
 """Tests for built-in plugin registration."""
 
+from nlp_shap.backends.mock import MockBackend
 from nlp_shap.estimation.complementary import ComplementaryEstimator
 from nlp_shap.estimation.exact import ExactEstimator
 from nlp_shap.estimation.monte_carlo import MonteCarloEstimator
@@ -9,6 +10,7 @@ from nlp_shap.masking.partitions import TokenPartitioner
 from nlp_shap.masking.policies import DeletePolicy, NeutralPolicy, PadPolicy
 from nlp_shap.pipeline.config import ExplainConfig
 from nlp_shap.plugins import PluginGroup, PluginRegistry, register_builtin_plugins
+from nlp_shap.plugins.backends import instantiate_backend
 from nlp_shap.value.tfidf import TfIdfCosineValue
 
 
@@ -122,3 +124,19 @@ def test_builtin_registers_value_functions_and_normalizers() -> None:
         registry.resolve(PluginGroup.NORMALIZERS, "identity"),
         IdentityNormalizer,
     )
+
+
+def test_builtin_registers_mock_backend() -> None:
+    """Built-in registration exposes the mock backend class."""
+    registry = PluginRegistry()
+    register_builtin_plugins(registry)
+    registry.load_entry_points(PluginGroup.BACKENDS)
+
+    backend = instantiate_backend(
+        ExplainConfig.model_validate({
+            "backend": {"kind": "mock", "model_id": "stub"},
+        }).backend,
+        registry,
+    )
+    assert isinstance(backend, MockBackend)
+    assert backend.model_id == "stub"

@@ -23,6 +23,8 @@ from .estimation.normalizers import IdentityNormalizer, MinMaxNormalizer
 from .pipeline import (
     ExplainConfig,
     ExplainResult,
+    ExplainRunner,
+    ExplainRunOutput,
     RunManifest,
     explain_config_from_yaml,
     explain_config_to_yaml,
@@ -42,6 +44,8 @@ __all__ = [
     "ExactEstimator",
     "ExplainConfig",
     "ExplainResult",
+    "ExplainRunOutput",
+    "ExplainRunner",
     "GenerationRecord",
     "IdentityNormalizer",
     "LogprobValue",

@@ -6,11 +6,14 @@ from .config import (
     explain_config_to_yaml,
 )
 from .manifest import RunManifest, RunManifestPayload, parse_manifest
-from .result import ExplainResult
+from .result import ExplainResult, ExplainRunOutput
+from .runner import ExplainRunner
 
 __all__ = [
     "ExplainConfig",
     "ExplainResult",
+    "ExplainRunOutput",
+    "ExplainRunner",
     "RunManifest",
     "RunManifestPayload",
     "explain_config_from_yaml",

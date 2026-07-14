@@ -1,6 +1,6 @@
 [project]
 name = "nlp-shap"
-version = "0.1.7"
+version = "0.1.8"
 description = "Multimodal explainability tool for NLP based on Shapley value."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
@@ -74,6 +74,9 @@ identity = "nlp_shap.estimation.normalizers:IdentityNormalizer"
 abs_sum = "nlp_shap.estimation.normalizers:AbsSumNormalizer"
 power_shift = "nlp_shap.estimation.normalizers:PowerShiftNormalizer"
 min_max = "nlp_shap.estimation.normalizers:MinMaxNormalizer"
+
+[project.entry-points."nlp_shap.backends"]
+mock = "nlp_shap.backends.mock:MockBackend"
 
 [build-system]
 requires = ["uv_build>=0.11.0,<0.12.0"]

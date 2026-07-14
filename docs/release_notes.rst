@@ -8,6 +8,23 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-1-8:
+
+0.1.8 (2026-07-14)
+------------------
+
+Added
+~~~~~
+
+- :class:`~nlp_shap.pipeline.runner.ExplainRunner` with ``explain`` and
+  ``explain_sync`` entry points.
+- :class:`~nlp_shap.pipeline.orchestrator.ExplainOrchestrator` wiring partition,
+  estimation, generation, value functions, and normalizers.
+- :class:`~nlp_shap.backends.mock.MockBackend` for deterministic CI-safe E2E runs.
+- :class:`~nlp_shap.pipeline.result.ExplainRunOutput` with scheduler metrics and
+  run manifest metadata.
+- ``mock`` backend entry point and :meth:`~nlp_shap.plugins.registry.PluginRegistry.resolve_type`.
+
 .. _release-0-1-7:
 
 0.1.7 (2026-07-14)

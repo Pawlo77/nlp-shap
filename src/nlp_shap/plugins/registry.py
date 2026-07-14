@@ -29,13 +29,24 @@ class PluginRegistry:
 
     def resolve(self, group: PluginGroup | str, name: str) -> object:
         """Instantiate a plugin registered under ``group`` and ``name``."""
+        return self.resolve_factory(group, name)()
+
+    def resolve_factory(self, group: PluginGroup | str, name: str) -> PluginFactory:
+        """Return the factory registered under ``group`` and ``name``."""
         group_key = str(group)
         try:
-            factory = self._factories[group_key][name]
+            return self._factories[group_key][name]
         except KeyError as error:
             msg = f"unknown plugin {name!r} in group {group_key!r}"
             raise LookupError(msg) from error
-        return factory()
+
+    def resolve_type(self, group: PluginGroup | str, name: str) -> type:
+        """Return a plugin class registered under ``group`` and ``name``."""
+        factory = self.resolve_factory(group, name)
+        if not isinstance(factory, type):
+            msg = f"plugin {name!r} in group {group!r} is not a class constructor"
+            raise TypeError(msg)
+        return factory
 
     def names(self, group: PluginGroup | str) -> tuple[str, ...]:
         """Return sorted plugin names registered for ``group``."""
