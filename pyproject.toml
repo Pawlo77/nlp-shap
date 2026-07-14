@@ -1,6 +1,6 @@
 [project]
 name = "nlp-shap"
-version = "0.1.5"
+version = "0.1.6"
 description = "Multimodal explainability tool for NLP based on Shapley value."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
@@ -47,6 +47,9 @@ Issues = "https://github.com/Pawlo77/nlp-shap/issues"
 
 [project.entry-points."nlp_shap.estimators"]
 exact = "nlp_shap.estimation.exact:ExactEstimator"
+mc = "nlp_shap.estimation.monte_carlo:MonteCarloEstimator"
+complementary = "nlp_shap.estimation.complementary:ComplementaryEstimator"
+neyman_cc = "nlp_shap.estimation.neyman:NeymanEstimator"
 
 [project.entry-points."nlp_shap.estimands"]
 shapley = "nlp_shap.estimation.estimands.shapley:ShapleyAggregator"

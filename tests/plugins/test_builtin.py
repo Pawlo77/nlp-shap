@@ -1,6 +1,9 @@
 """Tests for built-in plugin registration."""
 
+from nlp_shap.estimation.complementary import ComplementaryEstimator
 from nlp_shap.estimation.exact import ExactEstimator
+from nlp_shap.estimation.monte_carlo import MonteCarloEstimator
+from nlp_shap.estimation.neyman import NeymanEstimator
 from nlp_shap.masking.partitions import TokenPartitioner
 from nlp_shap.masking.policies import DeletePolicy, NeutralPolicy, PadPolicy
 from nlp_shap.pipeline.config import ExplainConfig
@@ -51,3 +54,28 @@ def test_builtin_registers_exact_estimator() -> None:
     estimator = registry.resolve(PluginGroup.ESTIMATORS, "exact")
     assert isinstance(estimator, ExactEstimator)
     assert estimator.name == "exact"
+
+
+def test_builtin_registers_approximate_estimators() -> None:
+    """Built-in registration exposes MC, complementary, and Neyman estimators."""
+    registry = PluginRegistry()
+    register_builtin_plugins(registry)
+    registry.load_entry_points(PluginGroup.ESTIMATORS)
+
+    assert registry.names(PluginGroup.ESTIMATORS) == (
+        "complementary",
+        "exact",
+        "mc",
+        "neyman_cc",
+    )
+    assert isinstance(
+        registry.resolve(PluginGroup.ESTIMATORS, "mc"), MonteCarloEstimator
+    )
+    assert isinstance(
+        registry.resolve(PluginGroup.ESTIMATORS, "complementary"),
+        ComplementaryEstimator,
+    )
+    assert isinstance(
+        registry.resolve(PluginGroup.ESTIMATORS, "neyman_cc"),
+        NeymanEstimator,
+    )

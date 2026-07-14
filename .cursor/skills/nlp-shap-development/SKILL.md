@@ -15,6 +15,7 @@ Follow rules in `.cursor/rules/*.mdc`. Minimal exit in `AGENTS.md` (`make check`
 - Relative imports inside `src/nlp_shap/`; absolute `from nlp_shap...` in `tests/` and `examples/`
 - Structured payloads → `TypedDict` + `Literal` wire fields; validate only at external boundaries (`docs.mdc`, `python-quality.mdc`); **every class field gets a one-line docstring** (`python-quality.mdc`)
 - `Protocol` stubs: docstring-only bodies — no redundant `...` (`python-quality.mdc`)
+- No `from __future__ import annotations` unless required — use `Self` or quoted forward refs (`python-quality.mdc`)
 - User-facing `docs/` and `examples/`: shipped API only — no phases or rewrite progress (`docs.mdc`)
 - MLLM-Shap port → minimum slice from `papers/MLLM-Shap/mllm_shap/`, not bulk copy
 
@@ -56,6 +57,7 @@ Ship Sphinx docs with every public API / algorithm change (see `docs.mdc`):
 After each task, **test and analyze your own work** before hand-off:
 
 - Re-read the diff for scope creep, style drift, and rule violations (bare `*`, docstrings, imports, docs scope)
+- No `from __future__ import annotations` unless required (`python-quality.mdc`)
 - Run `make check`; run `make docs` when API or docs changed; run `make notebooks` when example notebooks changed
 - Confirm tests cover real behavior and meaningful edge cases — not only happy paths or trivia
 - Cross-check consistency with adjacent modules, plugin registration, examples catalog, and release notes

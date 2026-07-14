@@ -1,7 +1,5 @@
 """Player indexing for cooperative-game explainability."""
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 
 

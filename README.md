@@ -34,6 +34,7 @@ Full documentation: **[pawlo77.github.io/nlp-shap](https://pawlo77.github.io/nlp
 - [User guide — masking](https://pawlo77.github.io/nlp-shap/guides/masking.html)
 - [User guide — runtime](https://pawlo77.github.io/nlp-shap/guides/runtime.html)
 - [User guide — exact estimation](https://pawlo77.github.io/nlp-shap/guides/exact.html)
+- [User guide — approximate estimation](https://pawlo77.github.io/nlp-shap/guides/approximation.html)
 - [Examples (notebooks)](https://pawlo77.github.io/nlp-shap/examples.html)
 - [API reference](https://pawlo77.github.io/nlp-shap/api.html)
 
@@ -47,6 +48,7 @@ Runnable **Jupyter notebooks** in [`examples/`](examples/):
 | [`masking_views.ipynb`](examples/masking_views.ipynb) | Token partitioning, absence policies, masked views, mask codec, mask space, plugin registry |
 | [`runtime_core.ipynb`](examples/runtime_core.ipynb) | Run archive, coalition dedup, hot LRU cache, async scheduler with bounded concurrency |
 | [`exact_estimation.ipynb`](examples/exact_estimation.ipynb) | Exact coalition enumeration, estimand delegation, budget guard, plugin resolution |
+| [`estimator_comparison.ipynb`](examples/estimator_comparison.ipynb) | Eight-player cap≤20 benchmark + five-player fraction sweep 0.1–0.5, MC bias analysis |
 
 Setup and details: [`examples/README.md`](examples/README.md). Embedded walkthroughs: [docs/examples](https://pawlo77.github.io/nlp-shap/examples.html).
 

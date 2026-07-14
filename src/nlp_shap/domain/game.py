@@ -1,7 +1,5 @@
 """Cooperative-game domain types."""
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 
 from .players import PlayerSet

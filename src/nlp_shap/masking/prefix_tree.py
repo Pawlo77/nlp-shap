@@ -4,8 +4,6 @@ Phase 2 reserves this module for prefix-aware coalition batching. Concrete
 prefix-tree logic arrives with the runtime scheduler in a later release.
 """
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 
 

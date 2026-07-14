@@ -1,10 +1,9 @@
 """Immutable conversation snapshots without backend or IO."""
 
-from __future__ import annotations
-
 import hashlib
 import json
 from dataclasses import dataclass
+from typing import Self
 
 from .enums import Role
 
@@ -52,7 +51,7 @@ class ConversationSnapshot:
             raise ValueError(msg)
 
     @classmethod
-    def from_turns(cls, turns: tuple[Turn, ...]) -> ConversationSnapshot:
+    def from_turns(cls, turns: tuple[Turn, ...]) -> Self:
         """Build a snapshot with a stable content-derived identifier."""
         return cls(turns=turns, snapshot_id=_digest_turns(turns))
 

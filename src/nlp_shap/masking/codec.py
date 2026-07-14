@@ -1,7 +1,5 @@
 """Packed bitset encoding and stable hashing for coalition masks."""
 
-from __future__ import annotations
-
 from collections.abc import Sequence
 from dataclasses import dataclass
 

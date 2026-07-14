@@ -1,7 +1,5 @@
 """Coalition deduplication keys and registry."""
 
-from __future__ import annotations
-
 import hashlib
 import struct
 from dataclasses import dataclass

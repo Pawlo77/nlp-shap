@@ -1,7 +1,5 @@
 """Tests for run archive persistence."""
 
-from __future__ import annotations
-
 import json
 from pathlib import Path
 

@@ -1,7 +1,5 @@
 """Plugin registry with entry-point discovery."""
 
-from __future__ import annotations
-
 from collections.abc import Callable
 from importlib.metadata import entry_points
 from typing import cast

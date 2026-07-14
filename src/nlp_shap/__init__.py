@@ -13,8 +13,11 @@ from .domain import (
     Role,
     Turn,
 )
+from .estimation.complementary import ComplementaryEstimator
 from .estimation.estimands import BanzhafAggregator, ShapleyAggregator
 from .estimation.exact import ExactEstimator
+from .estimation.monte_carlo import MonteCarloEstimator
+from .estimation.neyman import NeymanEstimator
 from .pipeline import (
     ExplainConfig,
     ExplainResult,
@@ -28,6 +31,7 @@ from .plugins import PluginGroup, PluginRegistry
 __all__ = [
     "BanzhafAggregator",
     "CoalitionMask",
+    "ComplementaryEstimator",
     "ConversationSnapshot",
     "CooperativeGame",
     "Estimand",
@@ -35,6 +39,8 @@ __all__ = [
     "ExplainConfig",
     "ExplainResult",
     "Message",
+    "MonteCarloEstimator",
+    "NeymanEstimator",
     "PlayerSet",
     "PluginGroup",
     "PluginRegistry",

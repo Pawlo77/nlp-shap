@@ -8,6 +8,34 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-1-6:
+
+0.1.6 (2026-07-14)
+------------------
+
+Added
+~~~~~
+
+- :class:`~nlp_shap.estimation.monte_carlo.MonteCarloEstimator` for budgeted
+  random coalition sampling with estimand-plugin aggregation.
+- :class:`~nlp_shap.estimation.complementary.ComplementaryEstimator` for
+  complementary-pair sampling and CC Shapley aggregation.
+- :class:`~nlp_shap.estimation.neyman.NeymanEstimator` for two-phase Neyman-CC
+  sampling with :class:`~nlp_shap.pipeline.config.NeymanConfig` controls.
+- Shared sampling helpers in ``nlp_shap.estimation._shared``.
+- ``mc``, ``complementary``, and ``neyman_cc`` estimator entry points.
+- Theory and guide pages for approximate estimation.
+- ``estimator_comparison.ipynb`` comparing budget, sample count, and accuracy.
+
+Changed
+~~~~~~~
+
+- :class:`~nlp_shap.pipeline.config.ExplanationConfig` adds ``neyman`` settings
+  for Neyman-CC runs.
+- Drop unnecessary ``from __future__ import annotations`` across the package;
+  document the policy in development rules.
+- Consolidate :doc:`examples` into a single list-table with hidden toctree.
+
 .. _release-0-1-5:
 
 0.1.5 (2026-07-13)

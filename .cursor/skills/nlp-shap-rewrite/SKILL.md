@@ -17,6 +17,7 @@ Canonical plan: **[[nlp-shap Package Rewrite]]** in `nlp-shap-research/docs/plan
 4. **Text track first** (Phases 0–13, `v0.1.1`–`v0.1.14`); **audio track** (Phases 14–20, `v0.2.0`–`v0.2.6`) only after text sign-off
 5. **Deps:** torch / transformers / liquid-audio in extras only
 6. **Imports:** relative inside `src/nlp_shap/`; absolute `from nlp_shap...` in tests and examples
+7. **No `from __future__ import annotations`** unless required — use `Self` or quoted forward refs (`python-quality.mdc`)
 
 ## Current phase gate
 

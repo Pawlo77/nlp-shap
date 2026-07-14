@@ -1,7 +1,5 @@
 """Async coalition inference scheduling with deduplication."""
 
-from __future__ import annotations
-
 import asyncio
 import time
 from collections.abc import AsyncIterator, Awaitable, Callable, Iterable, Sequence

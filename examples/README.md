@@ -29,3 +29,4 @@ Use the project `.venv` as the notebook kernel when working from source.
 - `masking_views.ipynb` — Full 0.1.3 masking walkthrough: token partition, delete/pad/neutral policies (including custom parameters), `MaskedSnapshot`/`MaskBuilder`, `MaskCodec`, `MaskSpace`, plugin registry, and validation guards. CPU-only; no optional extras.
 - `runtime_core.ipynb` — Full 0.1.4 runtime walkthrough: `RunArchive`, coalition dedup keys, `HotResultStore`, `InferenceScheduler`, and scheduler metrics. CPU-only; no optional extras.
 - `exact_estimation.ipynb` — Full 0.1.5 exact estimation walkthrough: `ExactEstimator`, coalition enumeration, estimand delegation, budget guard, and plugin resolution. CPU-only; no optional extras.
+- `estimator_comparison.ipynb` — Eight-player benchmark (≤20 evals) plus five-player fraction sweep 0.1–0.5; MC bias analysis; multi-seed L1 vs exact Shapley. CPU-only.

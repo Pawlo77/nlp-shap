@@ -1,12 +1,11 @@
 """SQLite-backed run archive for coalition evaluation history."""
 
-from __future__ import annotations
-
 import json
 import sqlite3
 from collections.abc import Iterator
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Self
 
 from ..masking.codec import PackedMask
 from ..pipeline.manifest import RunManifest
@@ -104,7 +103,7 @@ class RunArchive:
         root: Path,
         manifest: RunManifest,
         flush_every: int = 50,
-    ) -> RunArchive:
+    ) -> Self:
         """Create a run archive directory and open its SQLite database."""
         root.mkdir(parents=True, exist_ok=True)
         archive = cls(root, manifest, flush_every=flush_every)
@@ -210,7 +209,7 @@ class RunArchive:
         self.flush()
         self._conn.close()
 
-    def __enter__(self) -> RunArchive:
+    def __enter__(self) -> Self:
         return self
 
     def __exit__(self, *_exc: object) -> None:

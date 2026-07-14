@@ -22,89 +22,57 @@ From a local clone:
 
 Use the project ``.venv`` as the notebook kernel when working from source.
 
-Toy-game walkthrough
---------------------
+Notebooks
+---------
 
-The notebook below is rendered inline. It compares Shapley and Banzhaf
-aggregators on a three-player majority game and shows why estimand labelling
-matters.
+Each row links to the **rendered walkthrough** in these docs. Use **Source** to
+open the ``.ipynb`` on GitHub or browse the full catalog in
+`examples/README.md <https://github.com/Pawlo77/nlp-shap/blob/main/examples/README.md>`_.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 24 56 20
+
+   * - Notebook
+     - What it demonstrates
+     - Source
+
+   * - :doc:`notebooks/estimands_toy_game`
+     - Shapley and Banzhaf aggregators on majority vs additive games;
+       :class:`~nlp_shap.pipeline.result.ExplainResult` labelling and
+       :class:`~nlp_shap.pipeline.manifest.RunManifest` wire format. CPU-only.
+     - `GitHub <https://github.com/Pawlo77/nlp-shap/blob/main/examples/estimands_toy_game.ipynb>`_
+
+   * - :doc:`notebooks/masking_views`
+     - Token partition, delete/pad/neutral absence policies,
+       :class:`~nlp_shap.masking.builder.MaskedSnapshot`,
+       :class:`~nlp_shap.masking.codec.MaskCodec`, and
+       :class:`~nlp_shap.masking.space.MaskSpace`. CPU-only.
+     - `GitHub <https://github.com/Pawlo77/nlp-shap/blob/main/examples/masking_views.ipynb>`_
+
+   * - :doc:`notebooks/runtime_core`
+     - Run archive persistence, coalition dedup keys, hot LRU cache, and async
+       :class:`~nlp_shap.runtime.scheduler.InferenceScheduler` metrics.
+       CPU-only.
+     - `GitHub <https://github.com/Pawlo77/nlp-shap/blob/main/examples/runtime_core.ipynb>`_
+
+   * - :doc:`notebooks/exact_estimation`
+     - :class:`~nlp_shap.estimation.exact.ExactEstimator` coalition enumeration
+       and :meth:`~nlp_shap.estimation.exact.ExactEstimator.estimate_attributions`
+       estimand delegation with budget guards. CPU-only.
+     - `GitHub <https://github.com/Pawlo77/nlp-shap/blob/main/examples/exact_estimation.ipynb>`_
+
+   * - :doc:`notebooks/estimator_comparison`
+     - Eight-player benchmark (cap ≤ 20) plus five-player fraction sweep
+       0.1–0.5, MC bias analysis, multi-seed L1 vs exact Shapley. CPU-only.
+     - `GitHub <https://github.com/Pawlo77/nlp-shap/blob/main/examples/estimator_comparison.ipynb>`_
 
 .. toctree::
+   :hidden:
    :maxdepth: 1
 
    notebooks/estimands_toy_game
-
-Masking walkthrough
--------------------
-
-Partition a conversation into token players, build shared masked views, and
-compare delete, pad, and neutral absence policies.
-
-.. toctree::
-   :maxdepth: 1
-
    notebooks/masking_views
-
-Runtime walkthrough
--------------------
-
-Persist coalition rows, deduplicate repeated masks, and schedule async generation
-with bounded concurrency.
-
-.. toctree::
-   :maxdepth: 1
-
    notebooks/runtime_core
-
-Exact estimation walkthrough
-----------------------------
-
-Enumerate every coalition on tiny player sets and delegate attribution to
-Shapley or Banzhaf estimand plugins.
-
-.. toctree::
-   :maxdepth: 1
-
    notebooks/exact_estimation
-
-Gallery
--------
-
-**estimands_toy_game.ipynb**
-   End-to-end walkthrough of the 0.1.1 estimand API: Shapley and Banzhaf
-   aggregators (labels, coalition weights, aggregation), majority vs additive
-   games, :class:`~nlp_shap.pipeline.result.ExplainResult` labelling,
-   :class:`~nlp_shap.pipeline.manifest.RunManifest` wire format, and plugin
-   entry-point resolution. CPU-only; no optional extras.
-
-**masking_views.ipynb**
-   End-to-end walkthrough of the 0.1.3 masking API: token partition,
-   :class:`~nlp_shap.masking.policies.DeletePolicy`,
-   :class:`~nlp_shap.masking.policies.PadPolicy`, and
-   :class:`~nlp_shap.masking.policies.NeutralPolicy` (defaults and custom
-   parameters), :class:`~nlp_shap.masking.builder.MaskedSnapshot`,
-   :class:`~nlp_shap.masking.codec.MaskCodec`,
-   :class:`~nlp_shap.masking.space.MaskSpace`, plugin registry
-   resolution, and validation guards. CPU-only; no optional extras.
-
-**runtime_core.ipynb**
-   End-to-end walkthrough of the 0.1.4 runtime API: run archive persistence,
-   coalition dedup keys, hot LRU cache, and async
-   :class:`~nlp_shap.runtime.scheduler.InferenceScheduler` with scheduler
-   metrics. CPU-only; no optional extras.
-
-**exact_estimation.ipynb**
-   End-to-end walkthrough of the 0.1.5 exact estimation API:
-   :class:`~nlp_shap.estimation.exact.ExactEstimator` enumeration,
-   :meth:`~nlp_shap.estimation.exact.ExactEstimator.estimate_attributions`
-   estimand delegation, budget guard, and plugin resolution. CPU-only; no
-   optional extras.
-
-Source on GitHub
-----------------
-
-- `estimands_toy_game.ipynb <https://github.com/Pawlo77/nlp-shap/blob/main/examples/estimands_toy_game.ipynb>`_
-- `masking_views.ipynb <https://github.com/Pawlo77/nlp-shap/blob/main/examples/masking_views.ipynb>`_
-- `runtime_core.ipynb <https://github.com/Pawlo77/nlp-shap/blob/main/examples/runtime_core.ipynb>`_
-- `exact_estimation.ipynb <https://github.com/Pawlo77/nlp-shap/blob/main/examples/exact_estimation.ipynb>`_
-- `examples/README.md <https://github.com/Pawlo77/nlp-shap/blob/main/examples/README.md>`_
+   notebooks/estimator_comparison

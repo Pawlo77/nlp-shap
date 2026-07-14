@@ -1,7 +1,5 @@
 """Absence policies for rendering masked conversation snapshots."""
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 
 from ..domain.coalition import CoalitionMask

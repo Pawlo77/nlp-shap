@@ -1,7 +1,5 @@
 """Mask-space utilities for explainable feature indexing."""
 
-from __future__ import annotations
-
 from collections.abc import Sequence
 from dataclasses import dataclass
 

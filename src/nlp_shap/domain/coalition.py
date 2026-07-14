@@ -1,9 +1,8 @@
 """Coalition masks over explainability players."""
 
-from __future__ import annotations
-
 from collections.abc import Sequence
 from dataclasses import dataclass
+from typing import Self
 
 from .players import PlayerSet
 
@@ -21,7 +20,7 @@ class CoalitionMask:
             raise ValueError(msg)
 
     @classmethod
-    def from_sequence(cls, present: Sequence[bool]) -> CoalitionMask:
+    def from_sequence(cls, present: Sequence[bool]) -> Self:
         """Build a mask from any boolean sequence."""
         return cls(present=tuple(present))
 

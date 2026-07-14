@@ -1,7 +1,5 @@
 """Player partition plugins for conversation snapshots."""
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 
 from ..domain.conversation import ConversationSnapshot

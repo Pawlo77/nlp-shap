@@ -1,7 +1,5 @@
 """View-based masked snapshots with structural sharing."""
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 
 from ..domain.coalition import CoalitionMask

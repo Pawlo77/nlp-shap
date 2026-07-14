@@ -1,7 +1,5 @@
 """Exact coalition enumeration estimator."""
 
-from __future__ import annotations
-
 from collections.abc import Iterator, Sequence
 
 from ..domain.coalition import CoalitionMask

@@ -1,7 +1,5 @@
 """Tests for async coalition inference scheduling."""
 
-from __future__ import annotations
-
 import asyncio
 from collections.abc import Iterable
 from pathlib import Path

@@ -1,7 +1,5 @@
 """Tests for exact coalition enumeration and estimand wiring."""
 
-from __future__ import annotations
-
 from itertools import product
 
 import numpy as np

@@ -1,7 +1,5 @@
 """Shared conversation fixtures for masking tests."""
 
-from __future__ import annotations
-
 import pytest
 
 from nlp_shap.domain.conversation import ConversationSnapshot, Message, Turn

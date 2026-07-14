@@ -1,7 +1,5 @@
 """Whitespace token layout shared by partition and absence policies."""
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 
 from ..domain.conversation import ConversationSnapshot, Message, Turn

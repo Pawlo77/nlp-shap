@@ -1,7 +1,5 @@
 """Explain pipeline configuration schema."""
 
-from __future__ import annotations
-
 from typing import Literal
 
 import yaml
@@ -83,6 +81,21 @@ class KvCacheConfig(BaseModel):
     """Whether prefix/KV cache reuse is enabled when supported."""
 
 
+class NeymanConfig(BaseModel):
+    """Neyman-CC estimator controls used when ``estimator`` is ``neyman_cc``."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    use_standard_method: bool = False
+    """Whether phase-one sampling uses unstructured random coalitions."""
+
+    initial_fraction: float | None = None
+    """Fraction of the total budget used during phase-one initialization."""
+
+    initial_num_samples: int | None = None
+    """Explicit phase-one pair budget overriding ``initial_fraction``."""
+
+
 class ExplanationConfig(BaseModel):
     """Explanation algorithm and runtime controls."""
 
@@ -114,6 +127,9 @@ class ExplanationConfig(BaseModel):
 
     include_minimal_masks: bool = False
     """Whether minimal coalitions are included in estimator sampling."""
+
+    neyman: NeymanConfig = NeymanConfig()
+    """Neyman-CC controls applied when the Neyman estimator is selected."""
 
     max_inflight: int = Field(default=2, ge=1)
     """Maximum concurrent coalition evaluations."""
