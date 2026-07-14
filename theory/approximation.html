@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Using approximate estimators" href="approximation.html"><link rel="prev" title="Using estimand aggregators" href="estimands.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Masking" href="masking.html"><link rel="prev" title="Exact estimation" href="exact.html">
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Using the exact estimator - nlp-shap 0.1.6</title>
+        <title>Approximate estimation - nlp-shap 0.1.6</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -205,25 +205,25 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Guides</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="estimands.html">Using estimand aggregators</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Using the exact estimator</a></li>
-<li class="toctree-l1"><a class="reference internal" href="approximation.html">Using approximate estimators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="masking.html">Masking views</a></li>
-<li class="toctree-l1"><a class="reference internal" href="runtime.html">Runtime core</a></li>
-<li class="toctree-l1"><a class="reference internal" href="applications.html">Business and compliance applications</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/exact.html">Using the exact estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/approximation.html">Using approximate estimators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/masking.html">Masking views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/runtime.html">Runtime core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../theory/cooperative_games.html">Cooperative games</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../theory/shapley_values.html">Shapley values and axioms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../theory/exact.html">Exact estimation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../theory/approximation.html">Approximate estimation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../theory/masking.html">Masking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../theory/runtime.html">Runtime core</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shapley_values.html">Shapley values and axioms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exact.html">Exact estimation</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Approximate estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="masking.html">Masking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runtime.html">Runtime core</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
@@ -266,12 +266,12 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/blob/main/docs/guides/exact.rst?plain=true" title="View this page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/blob/main/docs/theory/approximation.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
 </div><div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/edit/main/docs/guides/exact.rst" rel="edit" title="Edit this page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/edit/main/docs/theory/approximation.rst" rel="edit" title="Edit this page">
     <svg><use href="#svg-pencil"></use></svg>
     <span class="visually-hidden">Edit this page</span>
   </a>
@@ -288,112 +288,107 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="using-the-exact-estimator">
-<h1>Using the exact estimator<a class="headerlink" href="#using-the-exact-estimator" title="Link to this heading">¶</a></h1>
-<p><a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.exact.ExactEstimator" title="nlp_shap.estimation.exact.ExactEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a> lazily enumerates every
-coalition mask (except the grand coalition) and delegates attribution to a
-registered estimand plugin.</p>
-<section id="quick-start">
-<h2>Quick start<a class="headerlink" href="#quick-start" title="Link to this heading">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">product</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.domain.coalition</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionMask</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.domain.players</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlayerSet</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.estimation.estimands</span><span class="w"> </span><span class="kn">import</span> <span class="n">BanzhafAggregator</span><span class="p">,</span> <span class="n">ShapleyAggregator</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.estimation.exact</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExactEstimator</span>
-
-<span class="n">player_set</span> <span class="o">=</span> <span class="n">PlayerSet</span><span class="p">(</span><span class="n">player_ids</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;p0&quot;</span><span class="p">,</span> <span class="s2">&quot;p1&quot;</span><span class="p">,</span> <span class="s2">&quot;p2&quot;</span><span class="p">))</span>
-<span class="n">estimator</span> <span class="o">=</span> <span class="n">ExactEstimator</span><span class="p">()</span>
-
-<span class="n">masks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">sample_masks</span><span class="p">(</span>
-    <span class="n">player_set</span><span class="p">,</span>
-    <span class="n">budget_fraction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-    <span class="n">include_minimal_masks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-<span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;coalitions:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">masks</span><span class="p">))</span>  <span class="c1"># 7 for three players</span>
-
-<span class="n">all_masks</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="nb">tuple</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span> <span class="k">for</span> <span class="n">bits</span> <span class="ow">in</span> <span class="n">product</span><span class="p">([</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="n">player_set</span><span class="o">.</span><span class="n">num_players</span><span class="p">)</span>
-<span class="p">]</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">majority_payoff</span><span class="p">(</span><span class="n">mask</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-    <span class="k">return</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="k">else</span> <span class="mf">0.0</span>
-
-<span class="n">payoffs</span> <span class="o">=</span> <span class="p">[</span><span class="n">majority_payoff</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">all_masks</span><span class="p">]</span>
-<span class="n">coalition_masks</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">CoalitionMask</span><span class="o">.</span><span class="n">from_sequence</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">all_masks</span><span class="p">)</span>
-
-<span class="n">shapley</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">estimate_attributions</span><span class="p">(</span>
-    <span class="n">coalition_masks</span><span class="p">,</span>
-    <span class="n">payoffs</span><span class="p">,</span>
-    <span class="n">ShapleyAggregator</span><span class="p">(),</span>
-<span class="p">)</span>
-<span class="n">banzhaf</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">estimate_attributions</span><span class="p">(</span>
-    <span class="n">coalition_masks</span><span class="p">,</span>
-    <span class="n">payoffs</span><span class="p">,</span>
-    <span class="n">BanzhafAggregator</span><span class="p">(),</span>
-<span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shapley:&quot;</span><span class="p">,</span> <span class="n">shapley</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Banzhaf:&quot;</span><span class="p">,</span> <span class="n">banzhaf</span><span class="p">)</span>
-</pre></div>
+          <section id="approximate-estimation">
+<h1>Approximate estimation<a class="headerlink" href="#approximate-estimation" title="Link to this heading">¶</a></h1>
+<p>When <span class="math notranslate nohighlight">\(n\)</span> players make exact enumeration infeasible, <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> approximates
+Shapley-style attributions by sampling coalitions. Three built-in estimators trade
+budget for accuracy:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.monte_carlo.MonteCarloEstimator" title="nlp_shap.estimation.monte_carlo.MonteCarloEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">MonteCarloEstimator</span></code></a> — uniform random
+coalitions; attributions come from estimand plugins (Shapley or Banzhaf).</p></li>
+<li><p><a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.complementary.ComplementaryEstimator" title="nlp_shap.estimation.complementary.ComplementaryEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ComplementaryEstimator</span></code></a> — symmetric
+pairs <span class="math notranslate nohighlight">\((S, N\setminus S)\)</span> with complementary-contribution (CC) aggregation.</p></li>
+<li><p><a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.neyman.NeymanEstimator" title="nlp_shap.estimation.neyman.NeymanEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeymanEstimator</span></code></a> — two-phase CC sampling with
+Neyman allocation over coalition sizes.</p></li>
+</ul>
+<section id="budget-model">
+<h2>Budget model<a class="headerlink" href="#budget-model" title="Link to this heading">¶</a></h2>
+<p>All estimators read <code class="docutils literal notranslate"><span class="pre">ExplainConfig.explanation.budget.fraction</span></code> in
+<span class="math notranslate nohighlight">\((0, 1]\)</span>. The fraction scales a method-specific maximum:</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Estimator</p></th>
+<th class="head"><p>Maximum coalitions</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Monte Carlo</p></td>
+<td><p><span class="math notranslate nohighlight">\(2^n - 1\)</span> (grand coalition excluded)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Complementary / Neyman</p></td>
+<td><p><span class="math notranslate nohighlight">\(2^n - 2\)</span> (empty and grand masks excluded; pairs are even)</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </section>
-<section id="bitmask-iteration">
-<h2>Bitmask iteration<a class="headerlink" href="#bitmask-iteration" title="Link to this heading">¶</a></h2>
-<p>For large player sets, iterate packed coalition integers and decode only when
-needed:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.estimation.exact</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExactEstimator</span>
-
-<span class="k">for</span> <span class="n">mask_int</span> <span class="ow">in</span> <span class="n">ExactEstimator</span><span class="o">.</span><span class="n">iter_mask_ints</span><span class="p">(</span><span class="n">player_set</span><span class="o">.</span><span class="n">num_players</span><span class="p">):</span>
-    <span class="n">present</span> <span class="o">=</span> <span class="n">ExactEstimator</span><span class="o">.</span><span class="n">mask_int_to_present</span><span class="p">(</span><span class="n">mask_int</span><span class="p">,</span> <span class="n">player_set</span><span class="o">.</span><span class="n">num_players</span><span class="p">)</span>
-</pre></div>
+<section id="monte-carlo-and-estimand-delegation">
+<h2>Monte Carlo and estimand delegation<a class="headerlink" href="#monte-carlo-and-estimand-delegation" title="Link to this heading">¶</a></h2>
+<p>Monte Carlo draws random coalitions and <strong>does not</strong> embed Shapley weights.
+Coalition payoffs <span class="math notranslate nohighlight">\(v(S)\)</span> are aggregated by the selected estimand plugin:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\text{MC} \rightarrow \{v(S_k)\}_{k=1}^{m}
+\xrightarrow{\text{EstimandAggregator}}
+(\phi_1, \ldots, \phi_n)\]</div>
 </div>
+<p>The same sampled masks yield different attributions under Shapley vs Banzhaf —
+a useful sanity check that estimand wiring is correct.</p>
 </section>
-<section id="budget-requirement">
-<h2>Budget requirement<a class="headerlink" href="#budget-requirement" title="Link to this heading">¶</a></h2>
-<p>Exact enumeration requires a full budget fraction:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.domain.players</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlayerSet</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.estimation.exact</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExactEstimator</span>
-
-<span class="n">player_set</span> <span class="o">=</span> <span class="n">PlayerSet</span><span class="p">(</span><span class="n">player_ids</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;p0&quot;</span><span class="p">,))</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">ExactEstimator</span><span class="p">()</span><span class="o">.</span><span class="n">sample_masks</span><span class="p">(</span>
-        <span class="n">player_set</span><span class="p">,</span>
-        <span class="n">budget_fraction</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-        <span class="n">include_minimal_masks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="p">)</span>
-<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>  <span class="c1"># exact estimator requires budget_fraction == 1.0</span>
-</pre></div>
+<section id="complementary-contributions">
+<h2>Complementary contributions<a class="headerlink" href="#complementary-contributions" title="Link to this heading">¶</a></h2>
+<p>Complementary sampling evaluates symmetric pairs and accumulates CC statistics in
+<span class="math notranslate nohighlight">\(M_{i,j}\)</span> (how often player <span class="math notranslate nohighlight">\(i\)</span> appears in size-<span class="math notranslate nohighlight">\(j\)</span> coalitions)
+and <span class="math notranslate nohighlight">\(C_{i,j}\)</span> (summed complementary contributions). For pair
+<span class="math notranslate nohighlight">\((S, N\setminus S)\)</span> with payoffs <span class="math notranslate nohighlight">\(v(S)\)</span> and <span class="math notranslate nohighlight">\(v(N\setminus S)\)</span>:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[u = v(S) - v(N\setminus S)\]</div>
 </div>
+<p>Each <span class="math notranslate nohighlight">\(u\)</span> updates <span class="math notranslate nohighlight">\(C\)</span> for players present in <span class="math notranslate nohighlight">\(S\)</span> and
+<span class="math notranslate nohighlight">\(N\setminus S\)</span>. Final attributions combine element-wise ratios
+<span class="math notranslate nohighlight">\(C_{i,j}/M_{i,j}\)</span> across coalition sizes.</p>
 </section>
-<section id="plugin-resolution">
-<h2>Plugin resolution<a class="headerlink" href="#plugin-resolution" title="Link to this heading">¶</a></h2>
-<p>Resolve the estimator from packaging entry points:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.plugins</span><span class="w"> </span><span class="kn">import</span> <span class="n">PluginGroup</span><span class="p">,</span> <span class="n">PluginRegistry</span><span class="p">,</span> <span class="n">register_builtin_plugins</span>
-
-<span class="n">registry</span> <span class="o">=</span> <span class="n">PluginRegistry</span><span class="p">()</span>
-<span class="n">register_builtin_plugins</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
-<span class="n">registry</span><span class="o">.</span><span class="n">load_entry_points</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMATORS</span><span class="p">)</span>
-
-<span class="n">estimator</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMATORS</span><span class="p">,</span> <span class="s2">&quot;exact&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># exact</span>
-</pre></div>
+<section id="neyman-allocation">
+<h2>Neyman allocation<a class="headerlink" href="#neyman-allocation" title="Link to this heading">¶</a></h2>
+<p>Neyman-CC extends complementary sampling with two phases:</p>
+<ol class="arabic simple">
+<li><p><strong>Initial sampling</strong> — structured draws that fill every <span class="math notranslate nohighlight">\(M_{i,j}\)</span> cell
+at least <span class="math notranslate nohighlight">\(m_{\text{init}}\)</span> times (unless the total budget is exhausted).</p></li>
+<li><p><strong>Neyman allocation</strong> — remaining budget is split across coalition sizes
+<span class="math notranslate nohighlight">\(j \ge \lceil n/2 \rceil\)</span> proportional to estimated standard deviations
+<span class="math notranslate nohighlight">\(\hat\sigma_{i,j}\)</span>.</p></li>
+</ol>
+<p>Variance estimates use the complementary sample variance:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat\sigma^2_{i,j} = \frac{1}{M_{i,j}-1}
+\left(\sum u^2 - \frac{(\sum u)^2}{M_{i,j}}\right)\]</div>
 </div>
-</section>
-<section id="notebook">
-<h2>Notebook<a class="headerlink" href="#notebook" title="Link to this heading">¶</a></h2>
-<p>See the runnable walkthrough in <a class="reference internal" href="../examples.html"><span class="doc">Examples</span></a> —
-<code class="docutils literal notranslate"><span class="pre">examples/exact_estimation.ipynb</span></code>.</p>
+<p>Allocation follows the Neyman rule (symmetric halves summed):</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\hat M_j \propto
+\sqrt{
+  \sum_{i} \frac{\hat\sigma^2_{i,j}}{j+1}
+  + \sum_{i} \frac{\hat\sigma^2_{i,n-j-1}}{n-j}
+}\]</div>
+</div>
+<p><strong>Approximation floor:</strong> when the total budget is small, phase one may consume the
+entire allowance before Neyman allocation begins. In that regime the estimator
+behaves like complementary sampling — a useful lower bound on accuracy per call.</p>
+<p>Because allocation depends on phase-one payoffs, Neyman requires a two-step API:
+<a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.neyman.NeymanEstimator.sample_masks" title="nlp_shap.estimation.neyman.NeymanEstimator.sample_masks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sample_masks()</span></code></a> (phase one),
+<a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.neyman.NeymanEstimator.begin_allocation" title="nlp_shap.estimation.neyman.NeymanEstimator.begin_allocation"><code class="xref py py-meth docutils literal notranslate"><span class="pre">begin_allocation()</span></code></a>, then
+<a class="reference internal" href="../api/estimation.html#nlp_shap.estimation.neyman.NeymanEstimator.sample_allocation_masks" title="nlp_shap.estimation.neyman.NeymanEstimator.sample_allocation_masks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sample_allocation_masks()</span></code></a>.</p>
 </section>
 <section id="further-reading">
 <h2>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><a class="reference internal" href="estimands.html"><span class="doc">Using estimand aggregators</span></a> — Shapley and Banzhaf aggregators</p></li>
-<li><p><a class="reference internal" href="config.html"><span class="doc">Configuration</span></a> — <code class="docutils literal notranslate"><span class="pre">explanation.estimator</span></code> key</p></li>
-<li><p>Theory: <a class="reference internal" href="../theory/exact.html"><span class="doc">Exact estimation</span></a></p></li>
+<li><p>Exact reference path: <a class="reference internal" href="exact.html"><span class="doc">Exact estimation</span></a></p></li>
+<li><p>Estimand definitions: <a class="reference internal" href="estimands.html"><span class="doc">Estimands: Shapley vs Banzhaf</span></a></p></li>
+<li><p>Usage: <a class="reference internal" href="../guides/approximation.html"><span class="doc">Using approximate estimators</span></a></p></li>
 <li><p>API: <a class="reference internal" href="../api/estimation.html"><span class="doc">Estimand aggregators and estimation</span></a></p></li>
 </ul>
 </section>
@@ -404,23 +399,23 @@ needed:</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="approximation.html">
+          <a class="next-page" href="masking.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Using approximate estimators</div>
+                <div class="title">Masking</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="estimands.html">
+          <a class="prev-page" href="exact.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Using estimand aggregators</div>
+                <div class="title">Exact estimation</div>
                 
               </div>
             </a>
@@ -462,12 +457,11 @@ needed:</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Using the exact estimator</a><ul>
-<li><a class="reference internal" href="#quick-start">Quick start</a></li>
-<li><a class="reference internal" href="#bitmask-iteration">Bitmask iteration</a></li>
-<li><a class="reference internal" href="#budget-requirement">Budget requirement</a></li>
-<li><a class="reference internal" href="#plugin-resolution">Plugin resolution</a></li>
-<li><a class="reference internal" href="#notebook">Notebook</a></li>
+<li><a class="reference internal" href="#">Approximate estimation</a><ul>
+<li><a class="reference internal" href="#budget-model">Budget model</a></li>
+<li><a class="reference internal" href="#monte-carlo-and-estimand-delegation">Monte Carlo and estimand delegation</a></li>
+<li><a class="reference internal" href="#complementary-contributions">Complementary contributions</a></li>
+<li><a class="reference internal" href="#neyman-allocation">Neyman allocation</a></li>
 <li><a class="reference internal" href="#further-reading">Further reading</a></li>
 </ul>
 </li>
@@ -487,5 +481,6 @@ needed:</p>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=fd10adb8"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     </body>
 </html>

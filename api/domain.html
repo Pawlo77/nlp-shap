@@ -7,7 +7,7 @@
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Domain types - nlp-shap 0.1.5</title>
+        <title>Domain types - nlp-shap 0.1.6</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">nlp-shap 0.1.5</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.6</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.5</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.6</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -209,6 +209,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/estimands.html">Using estimand aggregators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/exact.html">Using the exact estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/approximation.html">Using approximate estimators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/runtime.html">Runtime core</a></li>
@@ -220,6 +221,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/exact.html">Exact estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/approximation.html">Approximate estimation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/masking.html">Masking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/runtime.html">Runtime core</a></li>
 </ul>
@@ -231,6 +233,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../notebooks/masking_views.html">Coalition masking and absence policies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../notebooks/runtime_core.html">Runtime archive, deduplication, and async scheduling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../notebooks/exact_estimation.html">Exact estimation with estimand plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/estimator_comparison.html">Estimator comparison: budget, variance, and accuracy</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../api.html">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -240,7 +243,7 @@
 <li class="toctree-l2"><a class="reference internal" href="pipeline.html">Pipeline configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="masking.html">Masking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="runtime.html">Runtime</a></li>
-<li class="toctree-l2"><a class="reference internal" href="estimation.html">Estimand aggregators and exact estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="estimation.html">Estimand aggregators and estimation</a></li>
 </ul>
 </li>
 </ul>
@@ -409,7 +412,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="nlp_shap.domain.conversation.ConversationSnapshot.from_turns">
-<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_turns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nlp_shap.domain.conversation.Turn" title="nlp_shap.domain.conversation.Turn"><span class="pre">Turn</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/domain/conversation.html#ConversationSnapshot.from_turns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.conversation.ConversationSnapshot.from_turns" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_turns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">turns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nlp_shap.domain.conversation.Turn" title="nlp_shap.domain.conversation.Turn"><span class="pre">Turn</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Self" title="(in Python v3.14)"><span class="pre">Self</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/domain/conversation.html#ConversationSnapshot.from_turns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.conversation.ConversationSnapshot.from_turns" title="Link to this definition">¶</a></dt>
 <dd><p>Build a snapshot with a stable content-derived identifier.</p>
 </dd></dl>
 
@@ -449,7 +452,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="nlp_shap.domain.coalition.CoalitionMask.from_sequence">
-<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">present</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#nlp_shap.domain.coalition.CoalitionMask" title="nlp_shap.domain.coalition.CoalitionMask"><span class="pre">CoalitionMask</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/domain/coalition.html#CoalitionMask.from_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.coalition.CoalitionMask.from_sequence" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">present</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Self" title="(in Python v3.14)"><span class="pre">Self</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/domain/coalition.html#CoalitionMask.from_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.domain.coalition.CoalitionMask.from_sequence" title="Link to this definition">¶</a></dt>
 <dd><p>Build a mask from any boolean sequence.</p>
 </dd></dl>
 
@@ -653,7 +656,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=59fadc99"></script>
+</div><script src="../_static/documentation_options.js?v=6e0256f3"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

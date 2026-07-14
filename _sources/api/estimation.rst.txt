@@ -1,7 +1,19 @@
-Estimand aggregators and exact estimation
-=========================================
+Estimand aggregators and estimation
+===================================
 
 .. automodule:: nlp_shap.estimation.exact
+   :members:
+   :undoc-members:
+
+.. automodule:: nlp_shap.estimation.monte_carlo
+   :members:
+   :undoc-members:
+
+.. automodule:: nlp_shap.estimation.complementary
+   :members:
+   :undoc-members:
+
+.. automodule:: nlp_shap.estimation.neyman
    :members:
    :undoc-members:
 

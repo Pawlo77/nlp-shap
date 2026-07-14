@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
-    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.5</title>
+    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.6</title>
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -170,7 +170,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.5</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.6</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.5</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.6</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -207,6 +207,7 @@
 <li class="toctree-l1"><a class="reference internal" href="guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/exact.html">Using the exact estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/approximation.html">Using approximate estimators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/runtime.html">Runtime core</a></li>
@@ -218,6 +219,7 @@
 <li class="toctree-l1"><a class="reference internal" href="theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/exact.html">Exact estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/approximation.html">Approximate estimation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/masking.html">Masking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/runtime.html">Runtime core</a></li>
 </ul>
@@ -229,6 +231,7 @@
 <li class="toctree-l2"><a class="reference internal" href="notebooks/masking_views.html">Coalition masking and absence policies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/runtime_core.html">Runtime archive, deduplication, and async scheduling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/exact_estimation.html">Exact estimation with estimand plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/estimator_comparison.html">Estimator comparison: budget, variance, and accuracy</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -238,7 +241,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api/pipeline.html">Pipeline configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/masking.html">Masking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/runtime.html">Runtime</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators and exact estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators and estimation</a></li>
 </ul>
 </li>
 </ul>
@@ -394,18 +397,36 @@
           <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot.base">(nlp_shap.masking.MaskedSnapshot attribute)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot.base_snapshot_id">base_snapshot_id (nlp_shap.masking.builder.MaskedSnapshot property)</a>
 
         <ul>
           <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot.base_snapshot_id">(nlp_shap.masking.MaskedSnapshot property)</a>
 </li>
         </ul></li>
-        <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.bind_snapshot">bind_snapshot() (nlp_shap.estimation.exact.ExactEstimator method)</a>
+        <li><a href="api/estimation.html#nlp_shap.estimation.neyman.NeymanEstimator.begin_allocation">begin_allocation() (nlp_shap.estimation.neyman.NeymanEstimator method)</a>
 
         <ul>
+          <li><a href="api.html#nlp_shap.NeymanEstimator.begin_allocation">(nlp_shap.NeymanEstimator method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api.html#nlp_shap.ComplementaryEstimator.bind_snapshot">bind_snapshot() (nlp_shap.ComplementaryEstimator method)</a>
+
+        <ul>
+          <li><a href="api/estimation.html#nlp_shap.estimation.complementary.ComplementaryEstimator.bind_snapshot">(nlp_shap.estimation.complementary.ComplementaryEstimator method)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.bind_snapshot">(nlp_shap.estimation.exact.ExactEstimator method)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.monte_carlo.MonteCarloEstimator.bind_snapshot">(nlp_shap.estimation.monte_carlo.MonteCarloEstimator method)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.neyman.NeymanEstimator.bind_snapshot">(nlp_shap.estimation.neyman.NeymanEstimator method)</a>
+</li>
           <li><a href="api.html#nlp_shap.ExactEstimator.bind_snapshot">(nlp_shap.ExactEstimator method)</a>
+</li>
+          <li><a href="api.html#nlp_shap.MonteCarloEstimator.bind_snapshot">(nlp_shap.MonteCarloEstimator method)</a>
+</li>
+          <li><a href="api.html#nlp_shap.NeymanEstimator.bind_snapshot">(nlp_shap.NeymanEstimator method)</a>
 </li>
           <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy.bind_snapshot">(nlp_shap.protocols.estimator.EstimatorStrategy method)</a>
 </li>
@@ -512,6 +533,12 @@
 
         <ul>
           <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecordDraft">(class in nlp_shap.runtime.archive)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.ComplementaryEstimator">ComplementaryEstimator (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/estimation.html#nlp_shap.estimation.complementary.ComplementaryEstimator">(class in nlp_shap.estimation.complementary)</a>
 </li>
         </ul></li>
         <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionDedupRegistry.contains">contains() (nlp_shap.runtime.CoalitionDedupRegistry method)</a>
@@ -638,8 +665,6 @@
         </ul></li>
         <li><a href="api/domain.html#nlp_shap.domain.estimands.estimand_to_wire">estimand_to_wire() (in module nlp_shap.domain.estimands)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/protocols.html#nlp_shap.protocols.estimand.EstimandAggregator">EstimandAggregator (class in nlp_shap.protocols.estimand)</a>
 </li>
         <li><a href="api.html#nlp_shap.PluginGroup.ESTIMANDS">ESTIMANDS (nlp_shap.PluginGroup attribute)</a>
@@ -648,12 +673,26 @@
           <li><a href="api/plugins.html#nlp_shap.plugins.groups.PluginGroup.ESTIMANDS">(nlp_shap.plugins.groups.PluginGroup attribute)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/domain.html#nlp_shap.domain.estimands.EstimandWire">EstimandWire (in module nlp_shap.domain.estimands)</a>
 </li>
-        <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.estimate_attributions">estimate_attributions() (nlp_shap.estimation.exact.ExactEstimator method)</a>
+        <li><a href="api.html#nlp_shap.ComplementaryEstimator.estimate_attributions">estimate_attributions() (nlp_shap.ComplementaryEstimator method)</a>
 
         <ul>
+          <li><a href="api/estimation.html#nlp_shap.estimation.complementary.ComplementaryEstimator.estimate_attributions">(nlp_shap.estimation.complementary.ComplementaryEstimator method)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.estimate_attributions">(nlp_shap.estimation.exact.ExactEstimator method)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.monte_carlo.MonteCarloEstimator.estimate_attributions">(nlp_shap.estimation.monte_carlo.MonteCarloEstimator method)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.neyman.NeymanEstimator.estimate_attributions">(nlp_shap.estimation.neyman.NeymanEstimator method)</a>
+</li>
           <li><a href="api.html#nlp_shap.ExactEstimator.estimate_attributions">(nlp_shap.ExactEstimator method)</a>
+</li>
+          <li><a href="api.html#nlp_shap.MonteCarloEstimator.estimate_attributions">(nlp_shap.MonteCarloEstimator method)</a>
+</li>
+          <li><a href="api.html#nlp_shap.NeymanEstimator.estimate_attributions">(nlp_shap.NeymanEstimator method)</a>
 </li>
         </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.estimator">estimator (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
@@ -840,8 +879,12 @@
           <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler">(class in nlp_shap.runtime.scheduler)</a>
 </li>
         </ul></li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.NeymanConfig.initial_fraction">initial_fraction (nlp_shap.pipeline.config.NeymanConfig attribute)</a>
+</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.NeymanConfig.initial_num_samples">initial_num_samples (nlp_shap.pipeline.config.NeymanConfig attribute)</a>
+</li>
         <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.iter_mask_ints">iter_mask_ints() (nlp_shap.estimation.exact.ExactEstimator static method)</a>
 
         <ul>
@@ -892,6 +935,12 @@
   <h2>M</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api.html#nlp_shap.ComplementaryEstimator.m_counts">m_counts (nlp_shap.ComplementaryEstimator property)</a>
+
+        <ul>
+          <li><a href="api/estimation.html#nlp_shap.estimation.complementary.ComplementaryEstimator.m_counts">(nlp_shap.estimation.complementary.ComplementaryEstimator property)</a>
+</li>
+        </ul></li>
         <li><a href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot.mask">mask (nlp_shap.masking.builder.MaskedSnapshot attribute)</a>
 
         <ul>
@@ -1001,6 +1050,8 @@
 </li>
           <li><a href="api/pipeline.html#nlp_shap.pipeline.config.KvCacheConfig.model_config">(nlp_shap.pipeline.config.KvCacheConfig attribute)</a>
 </li>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.NeymanConfig.model_config">(nlp_shap.pipeline.config.NeymanConfig attribute)</a>
+</li>
         </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BackendConfig.model_id">model_id (nlp_shap.pipeline.config.BackendConfig attribute)</a>
 
@@ -1040,11 +1091,17 @@
 </li>
           <li><a href="api/domain.html#module-nlp_shap.domain.players">nlp_shap.domain.players</a>
 </li>
+          <li><a href="api/estimation.html#module-nlp_shap.estimation.complementary">nlp_shap.estimation.complementary</a>
+</li>
           <li><a href="api/estimation.html#module-nlp_shap.estimation.estimands.banzhaf">nlp_shap.estimation.estimands.banzhaf</a>
 </li>
           <li><a href="api/estimation.html#module-nlp_shap.estimation.estimands.shapley">nlp_shap.estimation.estimands.shapley</a>
 </li>
           <li><a href="api/estimation.html#module-nlp_shap.estimation.exact">nlp_shap.estimation.exact</a>
+</li>
+          <li><a href="api/estimation.html#module-nlp_shap.estimation.monte_carlo">nlp_shap.estimation.monte_carlo</a>
+</li>
+          <li><a href="api/estimation.html#module-nlp_shap.estimation.neyman">nlp_shap.estimation.neyman</a>
 </li>
           <li><a href="api/masking.html#module-nlp_shap.masking">nlp_shap.masking</a>
 </li>
@@ -1097,6 +1154,12 @@
           <li><a href="api/runtime.html#module-nlp_shap.runtime.store">nlp_shap.runtime.store</a>
 </li>
         </ul></li>
+        <li><a href="api.html#nlp_shap.MonteCarloEstimator">MonteCarloEstimator (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/estimation.html#nlp_shap.estimation.monte_carlo.MonteCarloEstimator">(class in nlp_shap.estimation.monte_carlo)</a>
+</li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -1117,9 +1180,17 @@
           <li><a href="api/masking.html#nlp_shap.masking.space.MaskSpace.n_features">(nlp_shap.masking.space.MaskSpace property)</a>
 </li>
         </ul></li>
-        <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.name">name (nlp_shap.estimation.exact.ExactEstimator property)</a>
+        <li><a href="api.html#nlp_shap.ComplementaryEstimator.name">name (nlp_shap.ComplementaryEstimator property)</a>
 
         <ul>
+          <li><a href="api/estimation.html#nlp_shap.estimation.complementary.ComplementaryEstimator.name">(nlp_shap.estimation.complementary.ComplementaryEstimator property)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.name">(nlp_shap.estimation.exact.ExactEstimator property)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.monte_carlo.MonteCarloEstimator.name">(nlp_shap.estimation.monte_carlo.MonteCarloEstimator property)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.neyman.NeymanEstimator.name">(nlp_shap.estimation.neyman.NeymanEstimator property)</a>
+</li>
           <li><a href="api.html#nlp_shap.ExactEstimator.name">(nlp_shap.ExactEstimator property)</a>
 </li>
           <li><a href="api/masking.html#nlp_shap.masking.DeletePolicy.name">(nlp_shap.masking.DeletePolicy property)</a>
@@ -1137,6 +1208,10 @@
           <li><a href="api/masking.html#nlp_shap.masking.policies.PadPolicy.name">(nlp_shap.masking.policies.PadPolicy property)</a>
 </li>
           <li><a href="api/masking.html#nlp_shap.masking.TokenPartitioner.name">(nlp_shap.masking.TokenPartitioner property)</a>
+</li>
+          <li><a href="api.html#nlp_shap.MonteCarloEstimator.name">(nlp_shap.MonteCarloEstimator property)</a>
+</li>
+          <li><a href="api.html#nlp_shap.NeymanEstimator.name">(nlp_shap.NeymanEstimator property)</a>
 </li>
           <li><a href="api/protocols.html#nlp_shap.protocols.embedding.EmbeddingProvider.name">(nlp_shap.protocols.embedding.EmbeddingProvider property)</a>
 </li>
@@ -1159,6 +1234,16 @@
 
         <ul>
           <li><a href="api/masking.html#nlp_shap.masking.policies.NeutralPolicy">(class in nlp_shap.masking.policies)</a>
+</li>
+        </ul></li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.neyman">neyman (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
+</li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.NeymanConfig">NeymanConfig (class in nlp_shap.pipeline.config)</a>
+</li>
+        <li><a href="api.html#nlp_shap.NeymanEstimator">NeymanEstimator (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/estimation.html#nlp_shap.estimation.neyman.NeymanEstimator">(class in nlp_shap.estimation.neyman)</a>
 </li>
         </ul></li>
         <li>
@@ -1211,6 +1296,13 @@
 </li>
         </ul></li>
         <li>
+    nlp_shap.estimation.complementary
+
+        <ul>
+          <li><a href="api/estimation.html#module-nlp_shap.estimation.complementary">module</a>
+</li>
+        </ul></li>
+        <li>
     nlp_shap.estimation.estimands.banzhaf
 
         <ul>
@@ -1231,6 +1323,22 @@
           <li><a href="api/estimation.html#module-nlp_shap.estimation.exact">module</a>
 </li>
         </ul></li>
+        <li>
+    nlp_shap.estimation.monte_carlo
+
+        <ul>
+          <li><a href="api/estimation.html#module-nlp_shap.estimation.monte_carlo">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.estimation.neyman
+
+        <ul>
+          <li><a href="api/estimation.html#module-nlp_shap.estimation.neyman">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     nlp_shap.masking
 
@@ -1259,8 +1367,6 @@
           <li><a href="api/masking.html#module-nlp_shap.masking.partitions">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     nlp_shap.masking.policies
 
@@ -1614,6 +1720,12 @@
           <li><a href="api/runtime.html#nlp_shap.runtime.SchedulerMetrics.requested">(nlp_shap.runtime.SchedulerMetrics attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api.html#nlp_shap.ComplementaryEstimator.reset_sampling_state">reset_sampling_state() (nlp_shap.ComplementaryEstimator method)</a>
+
+        <ul>
+          <li><a href="api/estimation.html#nlp_shap.estimation.complementary.ComplementaryEstimator.reset_sampling_state">(nlp_shap.estimation.complementary.ComplementaryEstimator method)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.PluginRegistry.resolve">resolve() (nlp_shap.PluginRegistry method)</a>
 
         <ul>
@@ -1626,14 +1738,14 @@
           <li><a href="api/domain.html#nlp_shap.domain.enums.Role">(class in nlp_shap.domain.enums)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/domain.html#nlp_shap.domain.conversation.Message.role">role (nlp_shap.domain.conversation.Message attribute)</a>
 
         <ul>
           <li><a href="api.html#nlp_shap.Message.role">(nlp_shap.Message attribute)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/runtime.html#nlp_shap.runtime.InferenceScheduler.run">run() (nlp_shap.runtime.InferenceScheduler method)</a>
 
         <ul>
@@ -1682,10 +1794,28 @@
   <h2>S</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.sample_masks">sample_masks() (nlp_shap.estimation.exact.ExactEstimator method)</a>
+        <li><a href="api/estimation.html#nlp_shap.estimation.neyman.NeymanEstimator.sample_allocation_masks">sample_allocation_masks() (nlp_shap.estimation.neyman.NeymanEstimator method)</a>
 
         <ul>
+          <li><a href="api.html#nlp_shap.NeymanEstimator.sample_allocation_masks">(nlp_shap.NeymanEstimator method)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.ComplementaryEstimator.sample_masks">sample_masks() (nlp_shap.ComplementaryEstimator method)</a>
+
+        <ul>
+          <li><a href="api/estimation.html#nlp_shap.estimation.complementary.ComplementaryEstimator.sample_masks">(nlp_shap.estimation.complementary.ComplementaryEstimator method)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.sample_masks">(nlp_shap.estimation.exact.ExactEstimator method)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.monte_carlo.MonteCarloEstimator.sample_masks">(nlp_shap.estimation.monte_carlo.MonteCarloEstimator method)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.neyman.NeymanEstimator.sample_masks">(nlp_shap.estimation.neyman.NeymanEstimator method)</a>
+</li>
           <li><a href="api.html#nlp_shap.ExactEstimator.sample_masks">(nlp_shap.ExactEstimator method)</a>
+</li>
+          <li><a href="api.html#nlp_shap.MonteCarloEstimator.sample_masks">(nlp_shap.MonteCarloEstimator method)</a>
+</li>
+          <li><a href="api.html#nlp_shap.NeymanEstimator.sample_masks">(nlp_shap.NeymanEstimator method)</a>
 </li>
           <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy.sample_masks">(nlp_shap.protocols.estimator.EstimatorStrategy method)</a>
 </li>
@@ -1706,6 +1836,8 @@
           <li><a href="api.html#nlp_shap.Estimand.SHAPLEY">(nlp_shap.Estimand attribute)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api.html#nlp_shap.ShapleyAggregator">ShapleyAggregator (class in nlp_shap)</a>
 
         <ul>
@@ -1718,8 +1850,6 @@
           <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.CoalitionJob.snapshot">(nlp_shap.runtime.scheduler.CoalitionJob attribute)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api.html#nlp_shap.ConversationSnapshot.snapshot_id">snapshot_id (nlp_shap.ConversationSnapshot attribute)</a>
 
         <ul>
@@ -1818,6 +1948,8 @@
           <li><a href="api/masking.html#nlp_shap.masking.MaskCodec.unpack">(nlp_shap.masking.MaskCodec static method)</a>
 </li>
         </ul></li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.NeymanConfig.use_standard_method">use_standard_method (nlp_shap.pipeline.config.NeymanConfig attribute)</a>
+</li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.use_v2">use_v2 (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
         <li><a href="api/domain.html#nlp_shap.domain.enums.Role.USER">USER (nlp_shap.domain.enums.Role attribute)</a>
@@ -1938,7 +2070,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=59fadc99"></script>
+</div><script src="_static/documentation_options.js?v=6e0256f3"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

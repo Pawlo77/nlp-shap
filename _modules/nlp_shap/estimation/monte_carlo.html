@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.plugins.registry - nlp-shap 0.1.6</title>
+        <title>nlp_shap.estimation.monte_carlo - nlp-shap 0.1.6</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -277,75 +277,102 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for nlp_shap.plugins.registry</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Plugin registry with entry-point discovery.&quot;&quot;&quot;</span>
+          <h1>Source code for nlp_shap.estimation.monte_carlo</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Monte Carlo coalition sampling estimator.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">importlib.metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">entry_points</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">cast</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Sequence</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.groups</span><span class="w"> </span><span class="kn">import</span> <span class="n">PluginGroup</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="n">PluginFactory</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="nb">object</span><span class="p">]</span>
-<span class="sd">&quot;&quot;&quot;Callable that materializes a plugin instance.&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.coalition</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionMask</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationSnapshot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.players</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlayerSet</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..protocols.estimand</span><span class="w"> </span><span class="kn">import</span> <span class="n">EstimandAggregator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._shared</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">compute_mc_num_samples</span><span class="p">,</span>
+    <span class="n">is_empty_or_grand</span><span class="p">,</span>
+    <span class="n">iter_minimal_masks</span><span class="p">,</span>
+    <span class="n">present_to_mask_int</span><span class="p">,</span>
+    <span class="n">random_present</span><span class="p">,</span>
+<span class="p">)</span>
 
 
-<div class="viewcode-block" id="PluginRegistry">
-<a class="viewcode-back" href="../../../api/plugins.html#nlp_shap.PluginRegistry">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">PluginRegistry</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Register and resolve pipeline plugins by group and name.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MonteCarloEstimator">
+<a class="viewcode-back" href="../../../api/estimation.html#nlp_shap.MonteCarloEstimator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MonteCarloEstimator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sample random coalitions and delegate attribution to an estimand plugin.&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_factories</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PluginFactory</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="PluginRegistry.register">
-<a class="viewcode-back" href="../../../api/plugins.html#nlp_shap.PluginRegistry.register">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the registered estimator identifier.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;mc&quot;</span>
+
+<div class="viewcode-block" id="MonteCarloEstimator.bind_snapshot">
+<a class="viewcode-back" href="../../../api/estimation.html#nlp_shap.MonteCarloEstimator.bind_snapshot">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bind_snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Attach the conversation snapshot under explanation.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_snapshot</span> <span class="o">=</span> <span class="n">snapshot</span></div>
+
+
+<div class="viewcode-block" id="MonteCarloEstimator.sample_masks">
+<a class="viewcode-back" href="../../../api/estimation.html#nlp_shap.MonteCarloEstimator.sample_masks">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sample_masks</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">group</span><span class="p">:</span> <span class="n">PluginGroup</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">factory</span><span class="p">:</span> <span class="n">PluginFactory</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a plugin factory under ``group`` and ``name``.&quot;&quot;&quot;</span>
-        <span class="n">group_key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
-        <span class="n">factories</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_factories</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">group_key</span><span class="p">,</span> <span class="p">{})</span>
-        <span class="n">factories</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">factory</span></div>
+        <span class="n">player_set</span><span class="p">:</span> <span class="n">PlayerSet</span><span class="p">,</span>
+        <span class="n">budget_fraction</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">include_minimal_masks</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">CoalitionMask</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Yield random coalition masks up to the configured budget.&quot;&quot;&quot;</span>
+        <span class="n">num_players</span> <span class="o">=</span> <span class="n">player_set</span><span class="o">.</span><span class="n">num_players</span>
+        <span class="n">num_samples</span> <span class="o">=</span> <span class="n">compute_mc_num_samples</span><span class="p">(</span>
+            <span class="n">num_players</span><span class="p">,</span>
+            <span class="n">budget_fraction</span><span class="p">,</span>
+            <span class="n">include_minimal_masks</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">seen</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">generated</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">grand_mask</span> <span class="o">=</span> <span class="n">present_to_mask_int</span><span class="p">((</span><span class="kc">True</span><span class="p">,)</span> <span class="o">*</span> <span class="n">num_players</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">include_minimal_masks</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">present</span> <span class="ow">in</span> <span class="n">iter_minimal_masks</span><span class="p">(</span><span class="n">num_players</span><span class="p">):</span>
+                <span class="n">mask_int</span> <span class="o">=</span> <span class="n">present_to_mask_int</span><span class="p">(</span><span class="n">present</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">mask_int</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mask_int</span><span class="p">)</span>
+                <span class="n">generated</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">yield</span> <span class="n">CoalitionMask</span><span class="o">.</span><span class="n">from_sequence</span><span class="p">(</span><span class="n">present</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">generated</span> <span class="o">&gt;=</span> <span class="n">num_samples</span><span class="p">:</span>
+                    <span class="k">return</span>
+
+        <span class="k">while</span> <span class="n">generated</span> <span class="o">&lt;</span> <span class="n">num_samples</span><span class="p">:</span>
+            <span class="n">present</span> <span class="o">=</span> <span class="n">random_present</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">num_players</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">is_empty_or_grand</span><span class="p">(</span><span class="n">present</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">mask_int</span> <span class="o">=</span> <span class="n">present_to_mask_int</span><span class="p">(</span><span class="n">present</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mask_int</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">mask_int</span> <span class="o">==</span> <span class="n">grand_mask</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mask_int</span><span class="p">)</span>
+            <span class="n">generated</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">yield</span> <span class="n">CoalitionMask</span><span class="o">.</span><span class="n">from_sequence</span><span class="p">(</span><span class="n">present</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="PluginRegistry.resolve">
-<a class="viewcode-back" href="../../../api/plugins.html#nlp_shap.PluginRegistry.resolve">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">resolve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">PluginGroup</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate a plugin registered under ``group`` and ``name``.&quot;&quot;&quot;</span>
-        <span class="n">group_key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">factory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_factories</span><span class="p">[</span><span class="n">group_key</span><span class="p">][</span><span class="n">name</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;unknown plugin </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> in group </span><span class="si">{</span><span class="n">group_key</span><span class="si">!r}</span><span class="s2">&quot;</span>
-            <span class="k">raise</span> <span class="ne">LookupError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span>
-        <span class="k">return</span> <span class="n">factory</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="PluginRegistry.names">
-<a class="viewcode-back" href="../../../api/plugins.html#nlp_shap.PluginRegistry.names">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">PluginGroup</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return sorted plugin names registered for ``group``.&quot;&quot;&quot;</span>
-        <span class="n">group_key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_factories</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">group_key</span><span class="p">,</span> <span class="p">{})))</span></div>
-
-
-<div class="viewcode-block" id="PluginRegistry.load_entry_points">
-<a class="viewcode-back" href="../../../api/plugins.html#nlp_shap.PluginRegistry.load_entry_points">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">load_entry_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">PluginGroup</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Discover and register plugins from a packaging entry-point group.&quot;&quot;&quot;</span>
-        <span class="n">group_key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
-        <span class="n">discovered</span> <span class="o">=</span> <span class="n">entry_points</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="n">group_key</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">entry_point</span> <span class="ow">in</span> <span class="n">discovered</span><span class="p">:</span>
-            <span class="n">target</span> <span class="o">=</span> <span class="n">entry_point</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
-                <span class="n">factory</span><span class="p">:</span> <span class="n">PluginFactory</span> <span class="o">=</span> <span class="n">target</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">factory</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">PluginFactory</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">group_key</span><span class="p">,</span> <span class="n">entry_point</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span></div>
+<div class="viewcode-block" id="MonteCarloEstimator.estimate_attributions">
+<a class="viewcode-back" href="../../../api/estimation.html#nlp_shap.MonteCarloEstimator.estimate_attributions">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">estimate_attributions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">masks</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">CoalitionMask</span><span class="p">],</span>
+        <span class="n">payoffs</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+        <span class="n">aggregator</span><span class="p">:</span> <span class="n">EstimandAggregator</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Aggregate sampled coalition payoffs with the selected estimand plugin.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">aggregator</span><span class="o">.</span><span class="n">aggregate</span><span class="p">([</span><span class="n">mask</span><span class="o">.</span><span class="n">present</span> <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">masks</span><span class="p">],</span> <span class="n">payoffs</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

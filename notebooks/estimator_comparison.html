@@ -1,0 +1,831 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="API reference" href="../api.html"><link rel="prev" title="Exact estimation with estimand plugins" href="exact_estimation.html">
+        <link rel="prefetch" href="../_static/logo.svg" as="image">
+
+    <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>Estimator comparison: budget, variance, and accuracy - nlp-shap 0.1.6</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eb227069" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #2563eb;
+  --color-brand-content: #1d4ed8;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #93c5fd;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #60a5fa;
+  --color-brand-content: #93c5fd;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.6</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">nlp-shap 0.1.6</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/exact.html">Using the exact estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/approximation.html">Using approximate estimators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/masking.html">Masking views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/runtime.html">Runtime core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/applications.html">Business and compliance applications</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/shapley_values.html">Shapley values and axioms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/exact.html">Exact estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/approximation.html">Approximate estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/masking.html">Masking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/runtime.html">Runtime core</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../examples.html">Examples</a><input aria-label="Toggle navigation of Examples" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
+<li class="toctree-l2"><a class="reference internal" href="masking_views.html">Coalition masking and absence policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime_core.html">Runtime archive, deduplication, and async scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exact_estimation.html">Exact estimation with estimand plugins</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Estimator comparison: budget, variance, and accuracy</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/domain.html">Domain types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/protocols.html">Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/masking.html">Masking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/runtime.html">Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/estimation.html">Estimand aggregators and estimation</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/blob/main/docs/notebooks/estimator_comparison.ipynb?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/edit/main/docs/notebooks/estimator_comparison.ipynb" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="estimator-comparison-budget-variance-and-accuracy">
+<h1>Estimator comparison: budget, variance, and accuracy<a class="headerlink" href="#estimator-comparison-budget-variance-and-accuracy" title="Link to this heading">¶</a></h1>
+<p><strong>Business context:</strong> Attribution quality must be judged against <strong>exact Shapley</strong> with realistic player counts and tight call budgets — not from a single seed.</p>
+<p><strong>Goal:</strong> (1) Benchmark <strong>eight players</strong> with at most <strong>20 coalition evaluations</strong>; (2) sweep <strong>budget.fraction</strong> up to <strong>0.5</strong> where that cap allows; (3) explain why Monte Carlo can show <strong>high error with tiny variance</strong>.</p>
+<p><strong>Prerequisites:</strong> <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> 0.1.6+, Python 3.12.</p>
+<p><strong>Theory:</strong> <a class="reference external" href="https://pawlo77.github.io/nlp-shap/theory/approximation.html">Approximation methods</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">product</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ComplementaryEstimator</span><span class="p">,</span>
+    <span class="n">ExactEstimator</span><span class="p">,</span>
+    <span class="n">MonteCarloEstimator</span><span class="p">,</span>
+    <span class="n">NeymanEstimator</span><span class="p">,</span>
+    <span class="n">ShapleyAggregator</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.domain.coalition</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionMask</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.domain.players</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlayerSet</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.estimation._shared</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">compute_complementary_num_splits</span><span class="p">,</span>
+    <span class="n">compute_mc_num_samples</span><span class="p">,</span>
+    <span class="n">present_to_mask_int</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.estimation.neyman</span><span class="w"> </span><span class="kn">import</span> <span class="n">_NeymanStep</span>
+
+<span class="n">MAX_EVALUATIONS</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">SEED_COUNT</span> <span class="o">=</span> <span class="mi">32</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="shared-benchmark-utilities">
+<h2>Shared benchmark utilities<a class="headerlink" href="#shared-benchmark-utilities" title="Link to this heading">¶</a></h2>
+<p><strong>Technical:</strong> Nonlinear characteristic function, exact enumeration reference, and helpers that map a <strong>target cap</strong> (≤ 20) to the <code class="docutils literal notranslate"><span class="pre">budget.fraction</span></code> each estimator needs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PayoffFn</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="o">...</span><span class="p">]],</span> <span class="nb">float</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">interaction_payoff</span><span class="p">(</span><span class="n">present</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">num_players</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">coefficients</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_players</span><span class="p">))</span>
+    <span class="n">linear</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+        <span class="n">coefficient</span>
+        <span class="k">for</span> <span class="n">coefficient</span><span class="p">,</span> <span class="n">is_present</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">present</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_present</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">linear</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="p">(</span><span class="n">linear</span> <span class="o">*</span> <span class="n">linear</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_players</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">exact_reference</span><span class="p">(</span><span class="n">num_players</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">CoalitionMask</span><span class="p">,</span> <span class="o">...</span><span class="p">]]:</span>
+    <span class="n">player_set</span> <span class="o">=</span> <span class="n">PlayerSet</span><span class="p">(</span><span class="n">player_ids</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;p</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_players</span><span class="p">)))</span>
+    <span class="n">payoff_fn</span><span class="p">:</span> <span class="n">PayoffFn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">present</span><span class="p">:</span> <span class="n">interaction_payoff</span><span class="p">(</span><span class="n">present</span><span class="p">,</span> <span class="n">num_players</span><span class="p">)</span>
+    <span class="n">all_masks</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+        <span class="n">CoalitionMask</span><span class="o">.</span><span class="n">from_sequence</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">product</span><span class="p">([</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="n">num_players</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">all_payoffs</span> <span class="o">=</span> <span class="p">[</span><span class="n">payoff_fn</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">present</span><span class="p">)</span> <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">all_masks</span><span class="p">]</span>
+    <span class="n">exact_values</span> <span class="o">=</span> <span class="n">ExactEstimator</span><span class="p">()</span><span class="o">.</span><span class="n">estimate_attributions</span><span class="p">(</span>
+        <span class="n">all_masks</span><span class="p">,</span>
+        <span class="n">all_payoffs</span><span class="p">,</span>
+        <span class="n">ShapleyAggregator</span><span class="p">(),</span>
+    <span class="p">)</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">exact_values</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">exact_values</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">all_masks</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">mc_fraction_for_cap</span><span class="p">(</span><span class="n">num_players</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target_cap</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">maximum</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">num_players</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">target_cap</span> <span class="o">/</span> <span class="n">maximum</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">cc_fraction_for_cap</span><span class="p">(</span><span class="n">num_players</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target_cap</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">maximum</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">num_players</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">target_cap</span> <span class="o">/</span> <span class="n">maximum</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">l1_error</span><span class="p">(</span><span class="n">estimated</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">reference</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span>
+        <span class="nb">abs</span><span class="p">(</span><span class="n">left</span> <span class="o">-</span> <span class="n">right</span><span class="p">)</span> <span class="k">for</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">estimated</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">run_monte_carlo</span><span class="p">(</span>
+    <span class="n">player_set</span><span class="p">:</span> <span class="n">PlayerSet</span><span class="p">,</span>
+    <span class="n">exact_values</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">budget_fraction</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">payoff_fn</span><span class="p">:</span> <span class="n">PayoffFn</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">include_minimal_masks</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">estimator</span> <span class="o">=</span> <span class="n">MonteCarloEstimator</span><span class="p">()</span>
+    <span class="n">masks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="n">estimator</span><span class="o">.</span><span class="n">sample_masks</span><span class="p">(</span>
+            <span class="n">player_set</span><span class="p">,</span>
+            <span class="n">budget_fraction</span><span class="o">=</span><span class="n">budget_fraction</span><span class="p">,</span>
+            <span class="n">include_minimal_masks</span><span class="o">=</span><span class="n">include_minimal_masks</span><span class="p">,</span>
+            <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">payoffs</span> <span class="o">=</span> <span class="p">[</span><span class="n">payoff_fn</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">present</span><span class="p">)</span> <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">masks</span><span class="p">]</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">estimate_attributions</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">,</span> <span class="n">ShapleyAggregator</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">l1_error</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">exact_values</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">run_complementary</span><span class="p">(</span>
+    <span class="n">player_set</span><span class="p">:</span> <span class="n">PlayerSet</span><span class="p">,</span>
+    <span class="n">exact_values</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">budget_fraction</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">payoff_fn</span><span class="p">:</span> <span class="n">PayoffFn</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">estimator</span> <span class="o">=</span> <span class="n">ComplementaryEstimator</span><span class="p">()</span>
+    <span class="n">masks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="n">estimator</span><span class="o">.</span><span class="n">sample_masks</span><span class="p">(</span>
+            <span class="n">player_set</span><span class="p">,</span>
+            <span class="n">budget_fraction</span><span class="o">=</span><span class="n">budget_fraction</span><span class="p">,</span>
+            <span class="n">include_minimal_masks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">payoffs</span> <span class="o">=</span> <span class="p">[</span><span class="n">payoff_fn</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">present</span><span class="p">)</span> <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">masks</span><span class="p">]</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">estimate_attributions</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">l1_error</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">exact_values</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">run_neyman</span><span class="p">(</span>
+    <span class="n">player_set</span><span class="p">:</span> <span class="n">PlayerSet</span><span class="p">,</span>
+    <span class="n">exact_values</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">budget_fraction</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">payoff_fn</span><span class="p">:</span> <span class="n">PayoffFn</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="n">estimator</span> <span class="o">=</span> <span class="n">NeymanEstimator</span><span class="p">(</span><span class="n">use_standard_method</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">phase_one</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="n">estimator</span><span class="o">.</span><span class="n">sample_masks</span><span class="p">(</span>
+            <span class="n">player_set</span><span class="p">,</span>
+            <span class="n">budget_fraction</span><span class="o">=</span><span class="n">budget_fraction</span><span class="p">,</span>
+            <span class="n">include_minimal_masks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">payoffs_one</span> <span class="o">=</span> <span class="p">[</span><span class="n">payoff_fn</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">present</span><span class="p">)</span> <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">phase_one</span><span class="p">]</span>
+    <span class="n">masks</span> <span class="o">=</span> <span class="n">phase_one</span>
+    <span class="n">payoffs</span> <span class="o">=</span> <span class="n">payoffs_one</span>
+    <span class="k">if</span> <span class="n">estimator</span><span class="o">.</span><span class="n">_step</span> <span class="o">==</span> <span class="n">_NeymanStep</span><span class="o">.</span><span class="n">NEYMAN_ALLOCATION</span><span class="p">:</span>
+        <span class="n">estimator</span><span class="o">.</span><span class="n">begin_allocation</span><span class="p">(</span><span class="n">phase_one</span><span class="p">,</span> <span class="n">payoffs_one</span><span class="p">)</span>
+        <span class="n">phase_two</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">sample_allocation_masks</span><span class="p">())</span>
+        <span class="n">masks</span> <span class="o">=</span> <span class="n">phase_one</span> <span class="o">+</span> <span class="n">phase_two</span>
+        <span class="n">payoffs</span> <span class="o">=</span> <span class="n">payoffs_one</span> <span class="o">+</span> <span class="p">[</span><span class="n">payoff_fn</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">present</span><span class="p">)</span> <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">phase_two</span><span class="p">]</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">estimate_attributions</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">l1_error</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">exact_values</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluate_all</span><span class="p">(</span>
+    <span class="n">num_players</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">mc_fraction</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">cc_fraction</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">seed_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">]]:</span>
+    <span class="n">player_set</span> <span class="o">=</span> <span class="n">PlayerSet</span><span class="p">(</span><span class="n">player_ids</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;p</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_players</span><span class="p">)))</span>
+    <span class="n">exact_values</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">exact_reference</span><span class="p">(</span><span class="n">num_players</span><span class="p">)</span>
+    <span class="n">payoff_fn</span><span class="p">:</span> <span class="n">PayoffFn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">present</span><span class="p">:</span> <span class="n">interaction_payoff</span><span class="p">(</span><span class="n">present</span><span class="p">,</span> <span class="n">num_players</span><span class="p">)</span>
+    <span class="n">mc_cap</span> <span class="o">=</span> <span class="n">compute_mc_num_samples</span><span class="p">(</span><span class="n">num_players</span><span class="p">,</span> <span class="n">mc_fraction</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">cc_cap</span> <span class="o">=</span> <span class="n">compute_complementary_num_splits</span><span class="p">(</span><span class="n">num_players</span><span class="p">,</span> <span class="n">cc_fraction</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">runner</span><span class="p">,</span> <span class="n">cap</span> <span class="ow">in</span> <span class="p">(</span>
+        <span class="p">(</span><span class="s2">&quot;mc&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">seed</span><span class="p">:</span> <span class="n">run_monte_carlo</span><span class="p">(</span><span class="n">player_set</span><span class="p">,</span> <span class="n">exact_values</span><span class="p">,</span> <span class="n">mc_fraction</span><span class="p">,</span> <span class="n">payoff_fn</span><span class="p">,</span> <span class="n">seed</span><span class="p">),</span> <span class="n">mc_cap</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;complementary&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">seed</span><span class="p">:</span> <span class="n">run_complementary</span><span class="p">(</span><span class="n">player_set</span><span class="p">,</span> <span class="n">exact_values</span><span class="p">,</span> <span class="n">cc_fraction</span><span class="p">,</span> <span class="n">payoff_fn</span><span class="p">,</span> <span class="n">seed</span><span class="p">),</span> <span class="n">cc_cap</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;neyman_cc&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">seed</span><span class="p">:</span> <span class="n">run_neyman</span><span class="p">(</span><span class="n">player_set</span><span class="p">,</span> <span class="n">exact_values</span><span class="p">,</span> <span class="n">cc_fraction</span><span class="p">,</span> <span class="n">payoff_fn</span><span class="p">,</span> <span class="n">seed</span><span class="p">),</span> <span class="n">cc_cap</span><span class="p">),</span>
+    <span class="p">):</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">[</span><span class="n">runner</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span> <span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seed_count</span><span class="p">)]</span>
+        <span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">errors</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;estimator&quot;</span><span class="p">:</span> <span class="n">label</span><span class="p">,</span>
+                <span class="s2">&quot;cap&quot;</span><span class="p">:</span> <span class="n">cap</span><span class="p">,</span>
+                <span class="s2">&quot;mean_l1&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">mean</span><span class="p">()),</span>
+                <span class="s2">&quot;std_l1&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">std</span><span class="p">()),</span>
+                <span class="s2">&quot;mean_rel&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">/</span> <span class="n">scale</span><span class="p">),</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">rows</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">print_rows</span><span class="p">(</span><span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">rows</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">]],</span> <span class="n">extra</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">extra</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;estimator&#39;</span><span class="si">:</span><span class="s2">13s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;cap&#39;</span><span class="si">:</span><span class="s2">&gt;4s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;mean L1&#39;</span><span class="si">:</span><span class="s2">&gt;9s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;std L1&#39;</span><span class="si">:</span><span class="s2">&gt;8s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;mean rel&#39;</span><span class="si">:</span><span class="s2">&gt;9s</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;estimator&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">13s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;cap&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">4d</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;mean_l1&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">9.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;std_l1&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">8.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;mean_rel&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">9.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="eight-players-cap-20-primary-benchmark">
+<h2>Eight players, cap ≤ 20 (primary benchmark)<a class="headerlink" href="#eight-players-cap-20-primary-benchmark" title="Link to this heading">¶</a></h2>
+<p><strong>Business:</strong> Eight tokens is a realistic sentence slice. We cap coalition evaluations at <strong>20</strong> and ladder toward that maximum.</p>
+<p><strong>Technical:</strong> At <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">8</span></code> a <code class="docutils literal notranslate"><span class="pre">budget.fraction</span></code> of <code class="docutils literal notranslate"><span class="pre">0.5</span></code> would imply ~127 calls — above the cap — so we convert target caps <code class="docutils literal notranslate"><span class="pre">{8,</span> <span class="pre">12,</span> <span class="pre">16,</span> <span class="pre">20}</span></code> into equivalent fractions (~<code class="docutils literal notranslate"><span class="pre">0.03</span></code>–<code class="docutils literal notranslate"><span class="pre">0.08</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NUM_PLAYERS_EIGHT</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">TARGET_CAPS</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="n">exact_eight</span><span class="p">,</span> <span class="n">scale_eight</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">exact_reference</span><span class="p">(</span><span class="n">NUM_PLAYERS_EIGHT</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;exact Shapley (</span><span class="si">{</span><span class="n">NUM_PLAYERS_EIGHT</span><span class="si">}</span><span class="s2"> players): &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">exact_eight</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;reference L1 scale: </span><span class="si">{</span><span class="n">scale_eight</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">target_cap</span> <span class="ow">in</span> <span class="n">TARGET_CAPS</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="n">target_cap</span> <span class="o">&lt;=</span> <span class="n">MAX_EVALUATIONS</span>
+    <span class="n">mc_fraction</span> <span class="o">=</span> <span class="n">mc_fraction_for_cap</span><span class="p">(</span><span class="n">NUM_PLAYERS_EIGHT</span><span class="p">,</span> <span class="n">target_cap</span><span class="p">)</span>
+    <span class="n">cc_fraction</span> <span class="o">=</span> <span class="n">cc_fraction_for_cap</span><span class="p">(</span><span class="n">NUM_PLAYERS_EIGHT</span><span class="p">,</span> <span class="n">target_cap</span><span class="p">)</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">evaluate_all</span><span class="p">(</span><span class="n">NUM_PLAYERS_EIGHT</span><span class="p">,</span> <span class="n">mc_fraction</span><span class="p">,</span> <span class="n">cc_fraction</span><span class="p">,</span> <span class="n">SEED_COUNT</span><span class="p">)</span>
+    <span class="n">print_rows</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">target cap </span><span class="si">{</span><span class="n">target_cap</span><span class="si">}</span><span class="s2"> (mc_fraction=</span><span class="si">{</span><span class="n">mc_fraction</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, cc_fraction=</span><span class="si">{</span><span class="n">cc_fraction</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+        <span class="n">rows</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>exact Shapley (8 players): [1.553, 3.112, 4.678, 6.25, 7.828, 9.412, 11.003, 12.6]
+reference L1 scale: 56.437
+
+target cap 8 (mc_fraction=0.031, cc_fraction=0.031)
+estimator      cap   mean L1   std L1  mean rel
+-----------------------------------------------
+mc               9    51.300    0.000     0.909
+complementary   16    54.688    6.080     0.969
+neyman_cc       16    35.682   10.753     0.632
+
+target cap 12 (mc_fraction=0.047, cc_fraction=0.047)
+estimator      cap   mean L1   std L1  mean rel
+-----------------------------------------------
+mc              12    51.240    0.087     0.908
+complementary   16    54.688    6.080     0.969
+neyman_cc       16    35.682   10.753     0.632
+
+target cap 16 (mc_fraction=0.063, cc_fraction=0.063)
+estimator      cap   mean L1   std L1  mean rel
+-----------------------------------------------
+mc              16    51.083    0.187     0.905
+complementary   16    54.688    6.080     0.969
+neyman_cc       16    35.682   10.753     0.632
+
+target cap 20 (mc_fraction=0.078, cc_fraction=0.079)
+estimator      cap   mean L1   std L1  mean rel
+-----------------------------------------------
+mc              20    50.961    0.213     0.903
+complementary   20    48.080   10.109     0.852
+neyman_cc       20    36.634    8.686     0.649
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="why-monte-carlo-shows-high-error-but-tiny-variance">
+<h2>Why Monte Carlo shows high error but tiny variance<a class="headerlink" href="#why-monte-carlo-shows-high-error-but-tiny-variance" title="Link to this heading">¶</a></h2>
+<p><strong>Business:</strong> A narrow error band is <strong>not</strong> proof of accuracy — MC can be confidently wrong.</p>
+<p><strong>Technical:</strong></p>
+<ol class="arabic simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">include_minimal_masks=True</span></code></strong> emits the same empty/singleton prefix on every seed. When the cap is ≤ <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">+</span> <span class="pre">1</span></code>, the sample is <strong>deterministic</strong>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ShapleyAggregator.aggregate_from_marginals</span></code></strong> skips Shapley terms unless both <code class="docutils literal notranslate"><span class="pre">S</span></code> and <code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">∪</span> <span class="pre">{i}</span></code> were sampled — most terms never enter the sum.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">shapley_marginal_coverage</span><span class="p">(</span>
+    <span class="n">masks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">CoalitionMask</span><span class="p">],</span>
+    <span class="n">num_players</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="n">present_lookup</span> <span class="o">=</span> <span class="p">{</span><span class="n">present_to_mask_int</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">present</span><span class="p">)</span> <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">masks</span><span class="p">}</span>
+    <span class="n">resolved</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">possible</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">player_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_players</span><span class="p">):</span>
+        <span class="n">player_bit</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">player_index</span>
+        <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">masks</span><span class="p">:</span>
+            <span class="n">mask_int</span> <span class="o">=</span> <span class="n">present_to_mask_int</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">present</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mask_int</span> <span class="o">&amp;</span> <span class="n">player_bit</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">possible</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">mask_int</span> <span class="o">|</span> <span class="n">player_bit</span><span class="p">)</span> <span class="ow">in</span> <span class="n">present_lookup</span><span class="p">:</span>
+                <span class="n">resolved</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">resolved</span><span class="p">,</span> <span class="n">possible</span>
+
+
+<span class="n">player_set_eight</span> <span class="o">=</span> <span class="n">PlayerSet</span><span class="p">(</span>
+    <span class="n">player_ids</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;p</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_PLAYERS_EIGHT</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="n">payoff_eight</span><span class="p">:</span> <span class="n">PayoffFn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">present</span><span class="p">:</span> <span class="n">interaction_payoff</span><span class="p">(</span><span class="n">present</span><span class="p">,</span> <span class="n">NUM_PLAYERS_EIGHT</span><span class="p">)</span>
+<span class="n">analysis_fraction</span> <span class="o">=</span> <span class="n">mc_fraction_for_cap</span><span class="p">(</span><span class="n">NUM_PLAYERS_EIGHT</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+
+<span class="n">prefix_a</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">mask</span><span class="o">.</span><span class="n">present</span>
+    <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="n">MonteCarloEstimator</span><span class="p">()</span><span class="o">.</span><span class="n">sample_masks</span><span class="p">(</span>
+            <span class="n">player_set_eight</span><span class="p">,</span> <span class="n">analysis_fraction</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span>
+        <span class="p">)</span>
+    <span class="p">)[:</span> <span class="n">NUM_PLAYERS_EIGHT</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">]</span>
+<span class="n">prefix_b</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">mask</span><span class="o">.</span><span class="n">present</span>
+    <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="n">MonteCarloEstimator</span><span class="p">()</span><span class="o">.</span><span class="n">sample_masks</span><span class="p">(</span>
+            <span class="n">player_set_eight</span><span class="p">,</span> <span class="n">analysis_fraction</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">99</span>
+        <span class="p">)</span>
+    <span class="p">)[:</span> <span class="n">NUM_PLAYERS_EIGHT</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;minimal prefix identical across seeds: </span><span class="si">{</span><span class="n">prefix_a</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">prefix_b</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">sample_masks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+    <span class="n">MonteCarloEstimator</span><span class="p">()</span><span class="o">.</span><span class="n">sample_masks</span><span class="p">(</span>
+        <span class="n">player_set_eight</span><span class="p">,</span>
+        <span class="n">budget_fraction</span><span class="o">=</span><span class="n">analysis_fraction</span><span class="p">,</span>
+        <span class="n">include_minimal_masks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+<span class="n">resolved</span><span class="p">,</span> <span class="n">possible</span> <span class="o">=</span> <span class="n">shapley_marginal_coverage</span><span class="p">(</span><span class="n">sample_masks</span><span class="p">,</span> <span class="n">NUM_PLAYERS_EIGHT</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Shapley marginals resolved: </span><span class="si">{</span><span class="n">resolved</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">possible</span><span class="si">}</span><span class="s2"> &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">resolved</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">possible</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%) at cap=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">sample_masks</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">include_minimal_masks</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">run_monte_carlo</span><span class="p">(</span>
+            <span class="n">player_set_eight</span><span class="p">,</span>
+            <span class="n">exact_eight</span><span class="p">,</span>
+            <span class="n">analysis_fraction</span><span class="p">,</span>
+            <span class="n">payoff_eight</span><span class="p">,</span>
+            <span class="n">seed</span><span class="p">,</span>
+            <span class="n">include_minimal_masks</span><span class="o">=</span><span class="n">include_minimal_masks</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">SEED_COUNT</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">cap</span> <span class="o">=</span> <span class="n">compute_mc_num_samples</span><span class="p">(</span>
+        <span class="n">NUM_PLAYERS_EIGHT</span><span class="p">,</span> <span class="n">analysis_fraction</span><span class="p">,</span> <span class="n">include_minimal_masks</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;include_minimal_masks=</span><span class="si">{</span><span class="n">include_minimal_masks</span><span class="si">}</span><span class="s2"> cap=</span><span class="si">{</span><span class="n">cap</span><span class="si">}</span><span class="s2"> &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;mean L1=</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> std L1=</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimal prefix identical across seeds: True
+Shapley marginals resolved: 9/73 (12.3%) at cap=12
+include_minimal_masks=True cap=12 mean L1=51.240 std L1=0.087
+include_minimal_masks=False cap=12 mean L1=56.358 std L1=0.071
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fraction-sweep-0-10-5-at-cap-20-five-players">
+<h2>Fraction sweep 0.1–0.5 at cap ≤ 20 (five players)<a class="headerlink" href="#fraction-sweep-0-10-5-at-cap-20-five-players" title="Link to this heading">¶</a></h2>
+<p><strong>Business:</strong> Product configs often speak in <code class="docutils literal notranslate"><span class="pre">budget.fraction</span></code>, not coalition counts. At <strong>eight players</strong>, <code class="docutils literal notranslate"><span class="pre">fraction</span> <span class="pre">=</span> <span class="pre">0.5</span></code> would exceed 20 calls, so we repeat the sweep on <strong>five players</strong> where <code class="docutils literal notranslate"><span class="pre">0.1</span></code>–<code class="docutils literal notranslate"><span class="pre">0.5</span></code> all stay within the cap.</p>
+<p><strong>Technical:</strong> Same nonlinear game and estimators; exact reference recomputed for <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">5</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NUM_PLAYERS_FIVE</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">BUDGET_FRACTIONS</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">exact_five</span><span class="p">,</span> <span class="n">scale_five</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">exact_reference</span><span class="p">(</span><span class="n">NUM_PLAYERS_FIVE</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;exact Shapley (</span><span class="si">{</span><span class="n">NUM_PLAYERS_FIVE</span><span class="si">}</span><span class="s2"> players): &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">exact_five</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">budget_fraction</span> <span class="ow">in</span> <span class="n">BUDGET_FRACTIONS</span><span class="p">:</span>
+    <span class="n">mc_cap</span> <span class="o">=</span> <span class="n">compute_mc_num_samples</span><span class="p">(</span><span class="n">NUM_PLAYERS_FIVE</span><span class="p">,</span> <span class="n">budget_fraction</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">cc_cap</span> <span class="o">=</span> <span class="n">compute_complementary_num_splits</span><span class="p">(</span><span class="n">NUM_PLAYERS_FIVE</span><span class="p">,</span> <span class="n">budget_fraction</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">mc_cap</span> <span class="o">&lt;=</span> <span class="n">MAX_EVALUATIONS</span>
+    <span class="k">assert</span> <span class="n">cc_cap</span> <span class="o">&lt;=</span> <span class="n">MAX_EVALUATIONS</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">evaluate_all</span><span class="p">(</span>
+        <span class="n">NUM_PLAYERS_FIVE</span><span class="p">,</span>
+        <span class="n">budget_fraction</span><span class="p">,</span>
+        <span class="n">budget_fraction</span><span class="p">,</span>
+        <span class="n">SEED_COUNT</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">print_rows</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">budget.fraction = </span><span class="si">{</span><span class="n">budget_fraction</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">rows</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">exact reference: L1 = 0.000 (by definition)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>exact Shapley (5 players): [1.168, 2.352, 3.552, 4.768, 6.0]
+
+budget.fraction = 0.1
+estimator      cap   mean L1   std L1  mean rel
+-----------------------------------------------
+mc               6    14.400    0.000     0.807
+complementary   10    15.754    3.250     0.883
+neyman_cc       10    10.595    2.017     0.594
+
+budget.fraction = 0.2
+estimator      cap   mean L1   std L1  mean rel
+-----------------------------------------------
+mc               6    14.400    0.000     0.807
+complementary   10    15.754    3.250     0.883
+neyman_cc       10    10.595    2.017     0.594
+
+budget.fraction = 0.3
+estimator      cap   mean L1   std L1  mean rel
+-----------------------------------------------
+mc               9    13.901    0.316     0.779
+complementary   10    15.754    3.250     0.883
+neyman_cc       10    10.595    2.017     0.594
+
+budget.fraction = 0.4
+estimator      cap   mean L1   std L1  mean rel
+-----------------------------------------------
+mc              12    12.844    0.446     0.720
+complementary   12    12.933    3.600     0.725
+neyman_cc       12    11.357    1.999     0.637
+
+budget.fraction = 0.5
+estimator      cap   mean L1   std L1  mean rel
+-----------------------------------------------
+mc              15    11.754    0.465     0.659
+complementary   14    11.142    2.085     0.625
+neyman_cc       14    12.589    1.983     0.706
+
+exact reference: L1 = 0.000 (by definition)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="reading-the-results">
+<h2>Reading the results<a class="headerlink" href="#reading-the-results" title="Link to this heading">¶</a></h2>
+<p><strong>Business:</strong> On eight players with ≤ 20 calls, <strong>Neyman-CC</strong> and <strong>complementary</strong> track exact Shapley more closely than MC. Do not trust MC’s small variance — it reflects a <strong>fixed, incomplete</strong> sample, not convergence.</p>
+<p><strong>Technical:</strong> On the five-player fraction ladder, Neyman leads at low fractions; complementary catches up near <code class="docutils literal notranslate"><span class="pre">0.5</span></code>. MC improves with cap but remains biased while <code class="docutils literal notranslate"><span class="pre">aggregate_from_marginals</span></code> drops unresolved terms.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../api.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">API reference</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="exact_estimation.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Exact estimation with estimand plugins</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, Paweł Pozorski
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/Pawlo77/nlp-shap" aria-label="GitHub"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+              <a class="muted-link " href="https://pypi.org/project/nlp-shap/" aria-label="PyPI"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5L4.5 6.9V12L12 16.5 19.5 12V6.9L12 9.5zm0 5.5l-7.5-3.75V17l7.5 4.25L19.5 17v-5.75L12 15z"/></svg>
+</a>
+              <a class="muted-link " href="https://github.com/Pawlo77/nlp-shap/issues" aria-label="Issues"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1.5em" width="1.5em" xmlns="http://www.w3.org/2000/svg"><path d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/><path fill-rule="evenodd" d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zm7.25-3.25v2a.75.75 0 001.5 0v-2a.75.75 0 00-1.5 0zm0 7a.75.75 0 00-1.5 0v2a.75.75 0 001.5 0v-2z"/></svg>
+</a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Estimator comparison: budget, variance, and accuracy</a><ul>
+<li><a class="reference internal" href="#shared-benchmark-utilities">Shared benchmark utilities</a></li>
+<li><a class="reference internal" href="#eight-players-cap-20-primary-benchmark">Eight players, cap ≤ 20 (primary benchmark)</a></li>
+<li><a class="reference internal" href="#why-monte-carlo-shows-high-error-but-tiny-variance">Why Monte Carlo shows high error but tiny variance</a></li>
+<li><a class="reference internal" href="#fraction-sweep-0-10-5-at-cap-20-five-players">Fraction sweep 0.1–0.5 at cap ≤ 20 (five players)</a></li>
+<li><a class="reference internal" href="#reading-the-results">Reading the results</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=6e0256f3"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    </body>
+</html>

@@ -7,7 +7,7 @@
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Examples - nlp-shap 0.1.5</title>
+        <title>Examples - nlp-shap 0.1.6</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.5</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.6</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.5</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.6</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -209,6 +209,7 @@
 <li class="toctree-l1"><a class="reference internal" href="guides/getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/exact.html">Using the exact estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/approximation.html">Using approximate estimators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/runtime.html">Runtime core</a></li>
@@ -220,6 +221,7 @@
 <li class="toctree-l1"><a class="reference internal" href="theory/shapley_values.html">Shapley values and axioms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/exact.html">Exact estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/approximation.html">Approximate estimation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/masking.html">Masking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/runtime.html">Runtime core</a></li>
 </ul>
@@ -231,6 +233,7 @@
 <li class="toctree-l2"><a class="reference internal" href="notebooks/masking_views.html">Coalition masking and absence policies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/runtime_core.html">Runtime archive, deduplication, and async scheduling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/exact_estimation.html">Exact estimation with estimand plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/estimator_comparison.html">Estimator comparison: budget, variance, and accuracy</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -240,7 +243,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api/pipeline.html">Pipeline configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/masking.html">Masking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/runtime.html">Runtime</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators and exact estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators and estimation</a></li>
 </ul>
 </li>
 </ul>
@@ -302,87 +305,60 @@ reference.</p>
 </div>
 <p>Use the project <code class="docutils literal notranslate"><span class="pre">.venv</span></code> as the notebook kernel when working from source.</p>
 </section>
-<section id="toy-game-walkthrough">
-<h2>Toy-game walkthrough<a class="headerlink" href="#toy-game-walkthrough" title="Link to this heading">¶</a></h2>
-<p>The notebook below is rendered inline. It compares Shapley and Banzhaf
-aggregators on a three-player majority game and shows why estimand labelling
-matters.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="notebooks/estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
-</ul>
+<section id="notebooks">
+<h2>Notebooks<a class="headerlink" href="#notebooks" title="Link to this heading">¶</a></h2>
+<p>Each row links to the <strong>rendered walkthrough</strong> in these docs. Use <strong>Source</strong> to
+open the <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code> on GitHub or browse the full catalog in
+<a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/README.md">examples/README.md</a>.</p>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24.0%" />
+<col style="width: 56.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Notebook</p></th>
+<th class="head"><p>What it demonstrates</p></th>
+<th class="head"><p>Source</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="notebooks/estimands_toy_game.html"><span class="doc">Shapley vs Banzhaf on toy cooperative games</span></a></p></td>
+<td><p>Shapley and Banzhaf aggregators on majority vs additive games;
+<a class="reference internal" href="api/pipeline.html#nlp_shap.pipeline.result.ExplainResult" title="nlp_shap.pipeline.result.ExplainResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainResult</span></code></a> labelling and
+<a class="reference internal" href="api/pipeline.html#nlp_shap.pipeline.manifest.RunManifest" title="nlp_shap.pipeline.manifest.RunManifest"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunManifest</span></code></a> wire format. CPU-only.</p></td>
+<td><p><a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/estimands_toy_game.ipynb">GitHub</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="notebooks/masking_views.html"><span class="doc">Coalition masking and absence policies</span></a></p></td>
+<td><p>Token partition, delete/pad/neutral absence policies,
+<a class="reference internal" href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot" title="nlp_shap.masking.builder.MaskedSnapshot"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskedSnapshot</span></code></a>,
+<a class="reference internal" href="api/masking.html#nlp_shap.masking.codec.MaskCodec" title="nlp_shap.masking.codec.MaskCodec"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskCodec</span></code></a>, and
+<a class="reference internal" href="api/masking.html#nlp_shap.masking.space.MaskSpace" title="nlp_shap.masking.space.MaskSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskSpace</span></code></a>. CPU-only.</p></td>
+<td><p><a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/masking_views.ipynb">GitHub</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="notebooks/runtime_core.html"><span class="doc">Runtime archive, deduplication, and async scheduling</span></a></p></td>
+<td><p>Run archive persistence, coalition dedup keys, hot LRU cache, and async
+<a class="reference internal" href="api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler" title="nlp_shap.runtime.scheduler.InferenceScheduler"><code class="xref py py-class docutils literal notranslate"><span class="pre">InferenceScheduler</span></code></a> metrics.
+CPU-only.</p></td>
+<td><p><a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/runtime_core.ipynb">GitHub</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="notebooks/exact_estimation.html"><span class="doc">Exact estimation with estimand plugins</span></a></p></td>
+<td><p><a class="reference internal" href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator" title="nlp_shap.estimation.exact.ExactEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a> coalition enumeration
+and <a class="reference internal" href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.estimate_attributions" title="nlp_shap.estimation.exact.ExactEstimator.estimate_attributions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_attributions()</span></code></a>
+estimand delegation with budget guards. CPU-only.</p></td>
+<td><p><a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/exact_estimation.ipynb">GitHub</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="notebooks/estimator_comparison.html"><span class="doc">Estimator comparison: budget, variance, and accuracy</span></a></p></td>
+<td><p>Eight-player benchmark (cap ≤ 20) plus five-player fraction sweep
+0.1–0.5, MC bias analysis, multi-seed L1 vs exact Shapley. CPU-only.</p></td>
+<td><p><a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/estimator_comparison.ipynb">GitHub</a></p></td>
+</tr>
+</tbody>
+</table>
 </div>
-</section>
-<section id="masking-walkthrough">
-<h2>Masking walkthrough<a class="headerlink" href="#masking-walkthrough" title="Link to this heading">¶</a></h2>
-<p>Partition a conversation into token players, build shared masked views, and
-compare delete, pad, and neutral absence policies.</p>
 <div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="notebooks/masking_views.html">Coalition masking and absence policies</a></li>
-</ul>
 </div>
-</section>
-<section id="runtime-walkthrough">
-<h2>Runtime walkthrough<a class="headerlink" href="#runtime-walkthrough" title="Link to this heading">¶</a></h2>
-<p>Persist coalition rows, deduplicate repeated masks, and schedule async generation
-with bounded concurrency.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="notebooks/runtime_core.html">Runtime archive, deduplication, and async scheduling</a></li>
-</ul>
-</div>
-</section>
-<section id="exact-estimation-walkthrough">
-<h2>Exact estimation walkthrough<a class="headerlink" href="#exact-estimation-walkthrough" title="Link to this heading">¶</a></h2>
-<p>Enumerate every coalition on tiny player sets and delegate attribution to
-Shapley or Banzhaf estimand plugins.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="notebooks/exact_estimation.html">Exact estimation with estimand plugins</a></li>
-</ul>
-</div>
-</section>
-<section id="gallery">
-<h2>Gallery<a class="headerlink" href="#gallery" title="Link to this heading">¶</a></h2>
-<dl class="simple">
-<dt><strong>estimands_toy_game.ipynb</strong></dt><dd><p>End-to-end walkthrough of the 0.1.1 estimand API: Shapley and Banzhaf
-aggregators (labels, coalition weights, aggregation), majority vs additive
-games, <a class="reference internal" href="api/pipeline.html#nlp_shap.pipeline.result.ExplainResult" title="nlp_shap.pipeline.result.ExplainResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainResult</span></code></a> labelling,
-<a class="reference internal" href="api/pipeline.html#nlp_shap.pipeline.manifest.RunManifest" title="nlp_shap.pipeline.manifest.RunManifest"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunManifest</span></code></a> wire format, and plugin
-entry-point resolution. CPU-only; no optional extras.</p>
-</dd>
-<dt><strong>masking_views.ipynb</strong></dt><dd><p>End-to-end walkthrough of the 0.1.3 masking API: token partition,
-<a class="reference internal" href="api/masking.html#nlp_shap.masking.policies.DeletePolicy" title="nlp_shap.masking.policies.DeletePolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">DeletePolicy</span></code></a>,
-<a class="reference internal" href="api/masking.html#nlp_shap.masking.policies.PadPolicy" title="nlp_shap.masking.policies.PadPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">PadPolicy</span></code></a>, and
-<a class="reference internal" href="api/masking.html#nlp_shap.masking.policies.NeutralPolicy" title="nlp_shap.masking.policies.NeutralPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeutralPolicy</span></code></a> (defaults and custom
-parameters), <a class="reference internal" href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot" title="nlp_shap.masking.builder.MaskedSnapshot"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskedSnapshot</span></code></a>,
-<a class="reference internal" href="api/masking.html#nlp_shap.masking.codec.MaskCodec" title="nlp_shap.masking.codec.MaskCodec"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskCodec</span></code></a>,
-<a class="reference internal" href="api/masking.html#nlp_shap.masking.space.MaskSpace" title="nlp_shap.masking.space.MaskSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskSpace</span></code></a>, plugin registry
-resolution, and validation guards. CPU-only; no optional extras.</p>
-</dd>
-<dt><strong>runtime_core.ipynb</strong></dt><dd><p>End-to-end walkthrough of the 0.1.4 runtime API: run archive persistence,
-coalition dedup keys, hot LRU cache, and async
-<a class="reference internal" href="api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler" title="nlp_shap.runtime.scheduler.InferenceScheduler"><code class="xref py py-class docutils literal notranslate"><span class="pre">InferenceScheduler</span></code></a> with scheduler
-metrics. CPU-only; no optional extras.</p>
-</dd>
-<dt><strong>exact_estimation.ipynb</strong></dt><dd><p>End-to-end walkthrough of the 0.1.5 exact estimation API:
-<a class="reference internal" href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator" title="nlp_shap.estimation.exact.ExactEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a> enumeration,
-<a class="reference internal" href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.estimate_attributions" title="nlp_shap.estimation.exact.ExactEstimator.estimate_attributions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">estimate_attributions()</span></code></a>
-estimand delegation, budget guard, and plugin resolution. CPU-only; no
-optional extras.</p>
-</dd>
-</dl>
-</section>
-<section id="source-on-github">
-<h2>Source on GitHub<a class="headerlink" href="#source-on-github" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/estimands_toy_game.ipynb">estimands_toy_game.ipynb</a></p></li>
-<li><p><a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/masking_views.ipynb">masking_views.ipynb</a></p></li>
-<li><p><a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/runtime_core.ipynb">runtime_core.ipynb</a></p></li>
-<li><p><a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/exact_estimation.ipynb">exact_estimation.ipynb</a></p></li>
-<li><p><a class="reference external" href="https://github.com/Pawlo77/nlp-shap/blob/main/examples/README.md">examples/README.md</a></p></li>
-</ul>
 </section>
 </section>
 
@@ -451,12 +427,7 @@ optional extras.</p>
             <ul>
 <li><a class="reference internal" href="#">Examples</a><ul>
 <li><a class="reference internal" href="#setup">Setup</a></li>
-<li><a class="reference internal" href="#toy-game-walkthrough">Toy-game walkthrough</a></li>
-<li><a class="reference internal" href="#masking-walkthrough">Masking walkthrough</a></li>
-<li><a class="reference internal" href="#runtime-walkthrough">Runtime walkthrough</a></li>
-<li><a class="reference internal" href="#exact-estimation-walkthrough">Exact estimation walkthrough</a></li>
-<li><a class="reference internal" href="#gallery">Gallery</a></li>
-<li><a class="reference internal" href="#source-on-github">Source on GitHub</a></li>
+<li><a class="reference internal" href="#notebooks">Notebooks</a></li>
 </ul>
 </li>
 </ul>
@@ -468,7 +439,7 @@ optional extras.</p>
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=59fadc99"></script>
+</div><script src="_static/documentation_options.js?v=6e0256f3"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

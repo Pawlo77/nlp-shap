@@ -44,7 +44,8 @@ functions).
       :link: examples
       :link-type: doc
 
-      Runnable Jupyter notebooks: estimand toy game, masking views, runtime core, and exact estimation.
+      Runnable Jupyter notebooks with end-to-end walkthroughs (estimands,
+      masking, runtime, exact and approximate estimation).
 
    .. grid-item-card:: Release notes
       :link: release_notes
@@ -69,6 +70,7 @@ Requires Python 3.12. See :doc:`guides/getting_started` for a full walkthrough.
    guides/getting_started
    guides/estimands
    guides/exact
+   guides/approximation
    guides/config
    guides/masking
    guides/runtime
@@ -83,6 +85,7 @@ Requires Python 3.12. See :doc:`guides/getting_started` for a full walkthrough.
    theory/shapley_values
    theory/estimands
    theory/exact
+   theory/approximation
    theory/masking
    theory/runtime
 
