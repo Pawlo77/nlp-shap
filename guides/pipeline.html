@@ -1,19 +1,20 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="../../../../">
+<html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../genindex.html"><link rel="search" title="Search" href="../../../../search.html">
-        <link rel="prefetch" href="../../../../_static/logo.svg" as="image">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Configuration" href="config.html"><link rel="prev" title="Using value functions" href="value_functions.html">
+        <link rel="prefetch" href="../_static/logo.svg" as="image">
 
-    <link rel="shortcut icon" href="../../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.estimation.estimands.shapley - nlp-shap 0.1.8</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=7bdb33bb" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=eb227069" />
+    <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>End-to-end explain pipeline - nlp-shap 0.1.8</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eb227069" />
     
     
 
@@ -171,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../../index.html"><div class="brand">nlp-shap 0.1.8</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.8</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -182,7 +183,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -190,63 +191,63 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   <div class="sidebar-logo-container">
-    <img class="sidebar-logo" src="../../../../_static/logo.svg" alt="Logo"/>
+    <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
   <span class="sidebar-brand-text">nlp-shap 0.1.8</span>
   
-</a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/estimands.html">Using estimand aggregators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/exact.html">Using the exact estimator</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/approximation.html">Using approximate estimators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/value_functions.html">Using value functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/pipeline.html">End-to-end explain pipeline</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/config.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/masking.html">Masking views</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/runtime.html">Runtime core</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../guides/applications.html">Business and compliance applications</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exact.html">Using the exact estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="approximation.html">Using approximate estimators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="value_functions.html">Using value functions</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">End-to-end explain pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="masking.html">Masking views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runtime.html">Runtime core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../theory/cooperative_games.html">Cooperative games</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../theory/shapley_values.html">Shapley values and axioms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../theory/exact.html">Exact estimation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../theory/approximation.html">Approximate estimation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../theory/value_functions.html">Value functions and normalizers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../theory/masking.html">Masking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../theory/runtime.html">Runtime core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/shapley_values.html">Shapley values and axioms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/exact.html">Exact estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/approximation.html">Approximate estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/value_functions.html">Value functions and normalizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/masking.html">Masking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/runtime.html">Runtime core</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../release_notes.html">Release notes</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../examples.html">Examples</a><input aria-label="Toggle navigation of Examples" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/masking_views.html">Coalition masking and absence policies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/runtime_core.html">Runtime archive, deduplication, and async scheduling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/exact_estimation.html">Exact estimation with estimand plugins</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/estimator_comparison.html">Estimator comparison: budget, variance, and accuracy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../examples.html">Examples</a><input aria-label="Toggle navigation of Examples" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/estimands_toy_game.html">Shapley vs Banzhaf on toy cooperative games</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/masking_views.html">Coalition masking and absence policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/runtime_core.html">Runtime archive, deduplication, and async scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/exact_estimation.html">Exact estimation with estimand plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/estimator_comparison.html">Estimator comparison: budget, variance, and accuracy</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/domain.html">Domain types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/protocols.html">Protocols</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/plugins.html">Plugins</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/pipeline.html">Pipeline configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/masking.html">Masking</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/runtime.html">Runtime</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/estimation.html">Estimand aggregators and estimation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/value.html">Value functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/domain.html">Domain types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/protocols.html">Protocols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/plugins.html">Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/pipeline.html">Pipeline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/masking.html">Masking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/runtime.html">Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/estimation.html">Estimand aggregators and estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/value.html">Value functions</a></li>
 </ul>
 </li>
 </ul>
@@ -268,7 +269,17 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/blob/main/docs/guides/pipeline.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/edit/main/docs/guides/pipeline.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
@@ -276,63 +287,70 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for nlp_shap.estimation.estimands.shapley</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Shapley estimand aggregation.&quot;&quot;&quot;</span>
+          <section id="end-to-end-explain-pipeline">
+<h1>End-to-end explain pipeline<a class="headerlink" href="#end-to-end-explain-pipeline" title="Link to this heading">¶</a></h1>
+<p>Phase 7 wires existing masking, runtime, estimation, and value-function plugins
+into a single explain run.</p>
+<section id="quick-start">
+<h2>Quick start<a class="headerlink" href="#quick-start" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExplainConfig</span><span class="p">,</span> <span class="n">ExplainRunner</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.domain.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationSnapshot</span><span class="p">,</span> <span class="n">Message</span><span class="p">,</span> <span class="n">Turn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.domain.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">Role</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
+<span class="n">snapshot</span> <span class="o">=</span> <span class="n">ConversationSnapshot</span><span class="o">.</span><span class="n">from_turns</span><span class="p">((</span>
+    <span class="n">Turn</span><span class="p">(</span><span class="n">messages</span><span class="o">=</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="n">Role</span><span class="o">.</span><span class="n">USER</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;hello world&quot;</span><span class="p">),)),</span>
+<span class="p">))</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">ExplainConfig</span><span class="o">.</span><span class="n">model_validate</span><span class="p">({</span>
+    <span class="s2">&quot;backend&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;mock&quot;</span><span class="p">,</span> <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="s2">&quot;stub&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;explanation&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;estimator&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;estimand&quot;</span><span class="p">:</span> <span class="s2">&quot;shapley&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;value_fn&quot;</span><span class="p">:</span> <span class="s2">&quot;tfidf_cosine&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;normalizer&quot;</span><span class="p">:</span> <span class="s2">&quot;identity&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">})</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">...domain.estimands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Estimand</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">._weights</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">aggregate_from_marginals</span><span class="p">,</span>
-    <span class="n">aggregate_shapley_exact</span><span class="p">,</span>
-    <span class="n">is_complete_characteristic_table</span><span class="p">,</span>
-    <span class="n">shapley_weight</span><span class="p">,</span>
-<span class="p">)</span>
-
-
-<div class="viewcode-block" id="ShapleyAggregator">
-<a class="viewcode-back" href="../../../../api/estimation.html#nlp_shap.ShapleyAggregator">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">ShapleyAggregator</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Aggregate coalition samples with Shapley coalition weights.&quot;&quot;&quot;</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">estimand</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Estimand</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the Shapley estimand label.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">Estimand</span><span class="o">.</span><span class="n">SHAPLEY</span>
-
-<div class="viewcode-block" id="ShapleyAggregator.coalition_weight">
-<a class="viewcode-back" href="../../../../api/estimation.html#nlp_shap.ShapleyAggregator.coalition_weight">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">coalition_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coalition_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_players</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return Shapley coalition weight k!(n-k-1)!/n!.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">shapley_weight</span><span class="p">(</span><span class="n">coalition_size</span><span class="p">,</span> <span class="n">num_players</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="ShapleyAggregator.aggregate">
-<a class="viewcode-back" href="../../../../api/estimation.html#nlp_shap.ShapleyAggregator.aggregate">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">aggregate</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">masks</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">bool</span><span class="p">]],</span>
-        <span class="n">payoffs</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Aggregate coalition samples into Shapley values.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">is_complete_characteristic_table</span><span class="p">(</span><span class="n">masks</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">aggregate_shapley_exact</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">aggregate_from_marginals</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">,</span> <span class="n">weight_fn</span><span class="o">=</span><span class="n">shapley_weight</span><span class="p">)</span></div>
-</div>
-
+<span class="n">output</span> <span class="o">=</span> <span class="n">ExplainRunner</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="o">.</span><span class="n">explain_sync</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span>
 </pre></div>
+</div>
+<p>The mock backend is deterministic and requires no GPU or optional extras. Use
+<code class="docutils literal notranslate"><span class="pre">pad</span></code> absence policy when the estimator samples the empty coalition.</p>
+<p>See <a class="reference internal" href="config.html"><span class="doc">Configuration</span></a> for the full configuration schema.</p>
+</section>
+</section>
+
         </article>
       </div>
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="config.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Configuration</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="value_functions.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Using value functions</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -359,18 +377,37 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">End-to-end explain pipeline</a><ul>
+<li><a class="reference internal" href="#quick-start">Quick start</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
   </div>
-</div><script src="../../../../_static/documentation_options.js?v=22607128"></script>
-    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
-    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-    <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
-    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../../../../_static/copybutton.js?v=fd10adb8"></script>
-    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+</div><script src="../_static/documentation_options.js?v=22607128"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=fd10adb8"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
     </body>
 </html>

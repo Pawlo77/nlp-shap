@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
-    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.7</title>
+    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.8</title>
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -170,7 +170,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.7</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.8</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.7</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.8</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -209,6 +209,7 @@
 <li class="toctree-l1"><a class="reference internal" href="guides/exact.html">Using the exact estimator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/approximation.html">Using approximate estimators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/value_functions.html">Using value functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/pipeline.html">End-to-end explain pipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/runtime.html">Runtime core</a></li>
@@ -690,8 +691,6 @@
           <li><a href="api/plugins.html#nlp_shap.plugins.groups.PluginGroup.ESTIMANDS">(nlp_shap.plugins.groups.PluginGroup attribute)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/domain.html#nlp_shap.domain.estimands.EstimandWire">EstimandWire (in module nlp_shap.domain.estimands)</a>
 </li>
         <li><a href="api.html#nlp_shap.ComplementaryEstimator.estimate_attributions">estimate_attributions() (nlp_shap.ComplementaryEstimator method)</a>
@@ -712,6 +711,8 @@
           <li><a href="api.html#nlp_shap.NeymanEstimator.estimate_attributions">(nlp_shap.NeymanEstimator method)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.estimator">estimator (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
         <li><a href="api.html#nlp_shap.PluginGroup.ESTIMATORS">ESTIMATORS (nlp_shap.PluginGroup attribute)</a>
@@ -736,6 +737,12 @@
           <li><a href="api/runtime.html#nlp_shap.runtime.SchedulerMetrics.executed">(nlp_shap.runtime.SchedulerMetrics attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api.html#nlp_shap.ExplainRunner.explain">explain() (nlp_shap.ExplainRunner method)</a>
+
+        <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.runner.ExplainRunner.explain">(nlp_shap.pipeline.runner.ExplainRunner method)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.explain_config_from_yaml">explain_config_from_yaml() (in module nlp_shap)</a>
 
         <ul>
@@ -746,6 +753,12 @@
 
         <ul>
           <li><a href="api/pipeline.html#nlp_shap.pipeline.config.explain_config_to_yaml">(in module nlp_shap.pipeline.config)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.ExplainRunner.explain_sync">explain_sync() (nlp_shap.ExplainRunner method)</a>
+
+        <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.runner.ExplainRunner.explain_sync">(nlp_shap.pipeline.runner.ExplainRunner method)</a>
 </li>
         </ul></li>
         <li><a href="api/masking.html#nlp_shap.masking.MaskSpace.explainable_mask">explainable_mask (nlp_shap.masking.MaskSpace attribute)</a>
@@ -760,10 +773,24 @@
           <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplainConfig">(class in nlp_shap.pipeline.config)</a>
 </li>
         </ul></li>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.orchestrator.ExplainOrchestrator">ExplainOrchestrator (class in nlp_shap.pipeline.orchestrator)</a>
+</li>
         <li><a href="api.html#nlp_shap.ExplainResult">ExplainResult (class in nlp_shap)</a>
 
         <ul>
           <li><a href="api/pipeline.html#nlp_shap.pipeline.result.ExplainResult">(class in nlp_shap.pipeline.result)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.ExplainRunner">ExplainRunner (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.runner.ExplainRunner">(class in nlp_shap.pipeline.runner)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.ExplainRunOutput">ExplainRunOutput (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.result.ExplainRunOutput">(class in nlp_shap.pipeline.result)</a>
 </li>
         </ul></li>
         <li><a href="api.html#nlp_shap.ExplainConfig.explanation">explanation (nlp_shap.ExplainConfig attribute)</a>
@@ -984,6 +1011,12 @@
           <li><a href="api/estimation.html#nlp_shap.estimation.complementary.ComplementaryEstimator.m_counts">(nlp_shap.estimation.complementary.ComplementaryEstimator property)</a>
 </li>
         </ul></li>
+        <li><a href="api.html#nlp_shap.ExplainRunOutput.manifest">manifest (nlp_shap.ExplainRunOutput attribute)</a>
+
+        <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.result.ExplainRunOutput.manifest">(nlp_shap.pipeline.result.ExplainRunOutput attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot.mask">mask (nlp_shap.masking.builder.MaskedSnapshot attribute)</a>
 
         <ul>
@@ -1072,6 +1105,12 @@
 
         <ul>
           <li><a href="api.html#nlp_shap.Turn.messages">(nlp_shap.Turn attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.ExplainRunOutput.metrics">metrics (nlp_shap.ExplainRunOutput attribute)</a>
+
+        <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.result.ExplainRunOutput.metrics">(nlp_shap.pipeline.result.ExplainRunOutput attribute)</a>
 </li>
         </ul></li>
         <li><a href="api.html#nlp_shap.MinMaxNormalizer">MinMaxNormalizer (class in nlp_shap)</a>
@@ -1170,7 +1209,11 @@
 </li>
           <li><a href="api/pipeline.html#module-nlp_shap.pipeline.manifest">nlp_shap.pipeline.manifest</a>
 </li>
+          <li><a href="api/pipeline.html#module-nlp_shap.pipeline.orchestrator">nlp_shap.pipeline.orchestrator</a>
+</li>
           <li><a href="api/pipeline.html#module-nlp_shap.pipeline.result">nlp_shap.pipeline.result</a>
+</li>
+          <li><a href="api/pipeline.html#module-nlp_shap.pipeline.runner">nlp_shap.pipeline.runner</a>
 </li>
           <li><a href="api/plugins.html#module-nlp_shap.plugins.builtin">nlp_shap.plugins.builtin</a>
 </li>
@@ -1427,8 +1470,6 @@
           <li><a href="api/estimation.html#module-nlp_shap.estimation.normalizers">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     nlp_shap.masking
 
@@ -1436,6 +1477,8 @@
           <li><a href="api/masking.html#module-nlp_shap.masking">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     nlp_shap.masking.builder
 
@@ -1486,10 +1529,24 @@
 </li>
         </ul></li>
         <li>
+    nlp_shap.pipeline.orchestrator
+
+        <ul>
+          <li><a href="api/pipeline.html#module-nlp_shap.pipeline.orchestrator">module</a>
+</li>
+        </ul></li>
+        <li>
     nlp_shap.pipeline.result
 
         <ul>
           <li><a href="api/pipeline.html#module-nlp_shap.pipeline.result">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.pipeline.runner
+
+        <ul>
+          <li><a href="api/pipeline.html#module-nlp_shap.pipeline.runner">module</a>
 </li>
         </ul></li>
         <li>
@@ -1863,30 +1920,54 @@
           <li><a href="api/plugins.html#nlp_shap.plugins.registry.PluginRegistry.resolve">(nlp_shap.plugins.registry.PluginRegistry method)</a>
 </li>
         </ul></li>
+        <li><a href="api.html#nlp_shap.PluginRegistry.resolve_factory">resolve_factory() (nlp_shap.PluginRegistry method)</a>
+
+        <ul>
+          <li><a href="api/plugins.html#nlp_shap.plugins.registry.PluginRegistry.resolve_factory">(nlp_shap.plugins.registry.PluginRegistry method)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.PluginRegistry.resolve_type">resolve_type() (nlp_shap.PluginRegistry method)</a>
+
+        <ul>
+          <li><a href="api/plugins.html#nlp_shap.plugins.registry.PluginRegistry.resolve_type">(nlp_shap.plugins.registry.PluginRegistry method)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.ExplainRunOutput.result">result (nlp_shap.ExplainRunOutput attribute)</a>
+
+        <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.result.ExplainRunOutput.result">(nlp_shap.pipeline.result.ExplainRunOutput attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api.html#nlp_shap.Role">Role (class in nlp_shap)</a>
 
         <ul>
           <li><a href="api/domain.html#nlp_shap.domain.enums.Role">(class in nlp_shap.domain.enums)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/domain.html#nlp_shap.domain.conversation.Message.role">role (nlp_shap.domain.conversation.Message attribute)</a>
 
         <ul>
           <li><a href="api.html#nlp_shap.Message.role">(nlp_shap.Message attribute)</a>
 </li>
         </ul></li>
-        <li><a href="api/runtime.html#nlp_shap.runtime.InferenceScheduler.run">run() (nlp_shap.runtime.InferenceScheduler method)</a>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.orchestrator.ExplainOrchestrator.run">run() (nlp_shap.pipeline.orchestrator.ExplainOrchestrator method)</a>
 
         <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.InferenceScheduler.run">(nlp_shap.runtime.InferenceScheduler method)</a>
+</li>
           <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler.run">(nlp_shap.runtime.scheduler.InferenceScheduler method)</a>
 </li>
         </ul></li>
-        <li><a href="api/pipeline.html#nlp_shap.pipeline.manifest.RunManifest.run_id">run_id (nlp_shap.pipeline.manifest.RunManifest attribute)</a>
+        <li><a href="api.html#nlp_shap.ExplainRunOutput.run_id">run_id (nlp_shap.ExplainRunOutput attribute)</a>
 
         <ul>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.manifest.RunManifest.run_id">(nlp_shap.pipeline.manifest.RunManifest attribute)</a>
+</li>
           <li><a href="api/pipeline.html#nlp_shap.pipeline.manifest.RunManifestPayload.run_id">(nlp_shap.pipeline.manifest.RunManifestPayload attribute)</a>
+</li>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.result.ExplainRunOutput.run_id">(nlp_shap.pipeline.result.ExplainRunOutput attribute)</a>
 </li>
           <li><a href="api.html#nlp_shap.RunManifest.run_id">(nlp_shap.RunManifest attribute)</a>
 </li>
@@ -2227,7 +2308,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=ca7ad2ea"></script>
+</div><script src="_static/documentation_options.js?v=22607128"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

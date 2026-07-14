@@ -7,7 +7,7 @@
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>API reference - nlp-shap 0.1.7</title>
+        <title>API reference - nlp-shap 0.1.8</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.7</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.8</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.7</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.8</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -211,6 +211,7 @@
 <li class="toctree-l1"><a class="reference internal" href="guides/exact.html">Using the exact estimator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/approximation.html">Using approximate estimators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/value_functions.html">Using value functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/pipeline.html">End-to-end explain pipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/runtime.html">Runtime core</a></li>
@@ -309,61 +310,64 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.ExplainConfig" title="nlp_shap.ExplainConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.ExplainRunner" title="nlp_shap.ExplainRunner"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainRunner</span></code></a></p></td>
+<td><p>End-to-end explain pipeline entry point. See <a class="reference internal" href="api/pipeline.html"><span class="doc">Pipeline configuration</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.ExplainConfig" title="nlp_shap.ExplainConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainConfig</span></code></a></p></td>
 <td><p>Top-level explain pipeline configuration. See <a class="reference internal" href="api/pipeline.html"><span class="doc">Pipeline configuration</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.explain_config_from_yaml" title="nlp_shap.explain_config_from_yaml"><code class="xref py py-func docutils literal notranslate"><span class="pre">explain_config_from_yaml()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.explain_config_from_yaml" title="nlp_shap.explain_config_from_yaml"><code class="xref py py-func docutils literal notranslate"><span class="pre">explain_config_from_yaml()</span></code></a></p></td>
 <td><p>Parse YAML into <a class="reference internal" href="#nlp_shap.ExplainConfig" title="nlp_shap.ExplainConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainConfig</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.explain_config_to_yaml" title="nlp_shap.explain_config_to_yaml"><code class="xref py py-func docutils literal notranslate"><span class="pre">explain_config_to_yaml()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.explain_config_to_yaml" title="nlp_shap.explain_config_to_yaml"><code class="xref py py-func docutils literal notranslate"><span class="pre">explain_config_to_yaml()</span></code></a></p></td>
 <td><p>Serialize <a class="reference internal" href="#nlp_shap.ExplainConfig" title="nlp_shap.ExplainConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainConfig</span></code></a> to YAML.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.ConversationSnapshot" title="nlp_shap.ConversationSnapshot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConversationSnapshot</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.ConversationSnapshot" title="nlp_shap.ConversationSnapshot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConversationSnapshot</span></code></a></p></td>
 <td><p>Frozen conversation input for explainability. See <a class="reference internal" href="api/domain.html"><span class="doc">Domain types</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.PlayerSet" title="nlp_shap.PlayerSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlayerSet</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.PlayerSet" title="nlp_shap.PlayerSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlayerSet</span></code></a></p></td>
 <td><p>Ordered explainability players. See <a class="reference internal" href="api/domain.html"><span class="doc">Domain types</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.CoalitionMask" title="nlp_shap.CoalitionMask"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoalitionMask</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.CoalitionMask" title="nlp_shap.CoalitionMask"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoalitionMask</span></code></a></p></td>
 <td><p>Boolean coalition presence mask. See <a class="reference internal" href="api/domain.html"><span class="doc">Domain types</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.CooperativeGame" title="nlp_shap.CooperativeGame"><code class="xref py py-class docutils literal notranslate"><span class="pre">CooperativeGame</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.CooperativeGame" title="nlp_shap.CooperativeGame"><code class="xref py py-class docutils literal notranslate"><span class="pre">CooperativeGame</span></code></a></p></td>
 <td><p>Cooperative-game player set and references. See <a class="reference internal" href="api/domain.html"><span class="doc">Domain types</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.PluginRegistry" title="nlp_shap.PluginRegistry"><code class="xref py py-class docutils literal notranslate"><span class="pre">PluginRegistry</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.PluginRegistry" title="nlp_shap.PluginRegistry"><code class="xref py py-class docutils literal notranslate"><span class="pre">PluginRegistry</span></code></a></p></td>
 <td><p>Plugin discovery and resolution. See <a class="reference internal" href="api/plugins.html"><span class="doc">Plugins</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/masking.html#nlp_shap.masking.TokenPartitioner" title="nlp_shap.masking.TokenPartitioner"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenPartitioner</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/masking.html#nlp_shap.masking.TokenPartitioner" title="nlp_shap.masking.TokenPartitioner"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenPartitioner</span></code></a></p></td>
 <td><p>Whitespace token partition plugin. See <a class="reference internal" href="api/masking.html"><span class="doc">Masking</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/masking.html#nlp_shap.masking.MaskBuilder" title="nlp_shap.masking.MaskBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskBuilder</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/masking.html#nlp_shap.masking.MaskBuilder" title="nlp_shap.masking.MaskBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskBuilder</span></code></a></p></td>
 <td><p>Shared masked snapshot views. See <a class="reference internal" href="api/masking.html"><span class="doc">Masking</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/runtime.html#nlp_shap.runtime.RunArchive" title="nlp_shap.runtime.RunArchive"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunArchive</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/runtime.html#nlp_shap.runtime.RunArchive" title="nlp_shap.runtime.RunArchive"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunArchive</span></code></a></p></td>
 <td><p>SQLite + blob coalition archive. See <a class="reference internal" href="api/runtime.html"><span class="doc">Runtime</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/runtime.html#nlp_shap.runtime.InferenceScheduler" title="nlp_shap.runtime.InferenceScheduler"><code class="xref py py-class docutils literal notranslate"><span class="pre">InferenceScheduler</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/runtime.html#nlp_shap.runtime.InferenceScheduler" title="nlp_shap.runtime.InferenceScheduler"><code class="xref py py-class docutils literal notranslate"><span class="pre">InferenceScheduler</span></code></a></p></td>
 <td><p>Async bounded coalition execution. See <a class="reference internal" href="api/runtime.html"><span class="doc">Runtime</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.Estimand" title="nlp_shap.Estimand"><code class="xref py py-class docutils literal notranslate"><span class="pre">Estimand</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.Estimand" title="nlp_shap.Estimand"><code class="xref py py-class docutils literal notranslate"><span class="pre">Estimand</span></code></a></p></td>
 <td><p>Estimand label enum (<code class="docutils literal notranslate"><span class="pre">shapley</span></code> | <code class="docutils literal notranslate"><span class="pre">banzhaf</span></code>). See <a class="reference internal" href="api/domain.html"><span class="doc">Domain types</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.ShapleyAggregator" title="nlp_shap.ShapleyAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapleyAggregator</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.ShapleyAggregator" title="nlp_shap.ShapleyAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapleyAggregator</span></code></a></p></td>
 <td><p>Shapley-weighted coalition aggregation. See <a class="reference internal" href="api/estimation.html"><span class="doc">Estimand aggregators and estimation</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.ExactEstimator" title="nlp_shap.ExactEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.ExactEstimator" title="nlp_shap.ExactEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExactEstimator</span></code></a></p></td>
 <td><p>Exact coalition enumeration. See <a class="reference internal" href="api/estimation.html"><span class="doc">Estimand aggregators and estimation</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.BanzhafAggregator" title="nlp_shap.BanzhafAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BanzhafAggregator</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.BanzhafAggregator" title="nlp_shap.BanzhafAggregator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BanzhafAggregator</span></code></a></p></td>
 <td><p>Uniform Banzhaf coalition aggregation. See <a class="reference internal" href="api/estimation.html"><span class="doc">Estimand aggregators and estimation</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.ExplainResult" title="nlp_shap.ExplainResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainResult</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.ExplainResult" title="nlp_shap.ExplainResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainResult</span></code></a></p></td>
 <td><p>Labelled explain output. See <a class="reference internal" href="api/pipeline.html"><span class="doc">Pipeline configuration</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.RunManifest" title="nlp_shap.RunManifest"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunManifest</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.RunManifest" title="nlp_shap.RunManifest"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunManifest</span></code></a></p></td>
 <td><p>Run-archive metadata builder. See <a class="reference internal" href="api/pipeline.html"><span class="doc">Pipeline configuration</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#nlp_shap.parse_manifest" title="nlp_shap.parse_manifest"><code class="xref py py-func docutils literal notranslate"><span class="pre">parse_manifest()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nlp_shap.parse_manifest" title="nlp_shap.parse_manifest"><code class="xref py py-func docutils literal notranslate"><span class="pre">parse_manifest()</span></code></a></p></td>
 <td><p>Parse manifest payloads at archive boundaries. See <a class="reference internal" href="api/pipeline.html"><span class="doc">Pipeline configuration</span></a>.</p></td>
 </tr>
 </tbody>
@@ -675,6 +679,56 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.ExplainRunOutput">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">ExplainRunOutput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/pipeline.html#nlp_shap.pipeline.result.ExplainResult" title="nlp_shap.pipeline.result.ExplainResult"><span class="pre">ExplainResult</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/runtime.html#nlp_shap.runtime.scheduler.SchedulerMetrics" title="nlp_shap.runtime.scheduler.SchedulerMetrics"><span class="pre">SchedulerMetrics</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">manifest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/pipeline.html#nlp_shap.pipeline.manifest.RunManifest" title="nlp_shap.pipeline.manifest.RunManifest"><span class="pre">RunManifest</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_shap/pipeline/result.html#ExplainRunOutput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.ExplainRunOutput" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Explain pipeline output including scheduler metrics.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.ExplainRunOutput.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="api/pipeline.html#nlp_shap.pipeline.result.ExplainResult" title="nlp_shap.pipeline.result.ExplainResult"><span class="pre">ExplainResult</span></a></span><a class="headerlink" href="#nlp_shap.ExplainRunOutput.result" title="Link to this definition">¶</a></dt>
+<dd><p>Aggregated and normalized attribution values.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.ExplainRunOutput.metrics">
+<span class="sig-name descname"><span class="pre">metrics</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="api/runtime.html#nlp_shap.runtime.scheduler.SchedulerMetrics" title="nlp_shap.runtime.scheduler.SchedulerMetrics"><span class="pre">SchedulerMetrics</span></a></span><a class="headerlink" href="#nlp_shap.ExplainRunOutput.metrics" title="Link to this definition">¶</a></dt>
+<dd><p>Coalition scheduler counters for the run.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.ExplainRunOutput.run_id">
+<span class="sig-name descname"><span class="pre">run_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.ExplainRunOutput.run_id" title="Link to this definition">¶</a></dt>
+<dd><p>Stable identifier for the explain run.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.ExplainRunOutput.manifest">
+<span class="sig-name descname"><span class="pre">manifest</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="api/pipeline.html#nlp_shap.pipeline.manifest.RunManifest" title="nlp_shap.pipeline.manifest.RunManifest"><span class="pre">RunManifest</span></a></span><a class="headerlink" href="#nlp_shap.ExplainRunOutput.manifest" title="Link to this definition">¶</a></dt>
+<dd><p>Manifest metadata persisted with optional archives.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.ExplainRunner">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">ExplainRunner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/pipeline.html#nlp_shap.pipeline.config.ExplainConfig" title="nlp_shap.pipeline.config.ExplainConfig"><span class="pre">ExplainConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">registry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/plugins.html#nlp_shap.plugins.registry.PluginRegistry" title="nlp_shap.plugins.registry.PluginRegistry"><span class="pre">PluginRegistry</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_shap/pipeline/runner.html#ExplainRunner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.ExplainRunner" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Run the explain pipeline for a conversation snapshot.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.ExplainRunner.explain">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">explain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">snapshot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="api/pipeline.html#nlp_shap.pipeline.result.ExplainRunOutput" title="nlp_shap.pipeline.result.ExplainRunOutput"><span class="pre">ExplainRunOutput</span></a></span></span><a class="reference internal" href="_modules/nlp_shap/pipeline/runner.html#ExplainRunner.explain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.ExplainRunner.explain" title="Link to this definition">¶</a></dt>
+<dd><p>Execute the async explain pipeline.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.ExplainRunner.explain_sync">
+<span class="sig-name descname"><span class="pre">explain_sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">snapshot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="api/pipeline.html#nlp_shap.pipeline.result.ExplainRunOutput" title="nlp_shap.pipeline.result.ExplainRunOutput"><span class="pre">ExplainRunOutput</span></a></span></span><a class="reference internal" href="_modules/nlp_shap/pipeline/runner.html#ExplainRunner.explain_sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.ExplainRunner.explain_sync" title="Link to this definition">¶</a></dt>
+<dd><p>Execute the explain pipeline on the current event loop policy.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="nlp_shap.GenerationRecord">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">GenerationRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_token_rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">audio_token_rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logprobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contextual_embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_shap/domain/generation.html#GenerationRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.GenerationRecord" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
@@ -950,6 +1004,18 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <dt class="sig sig-object py" id="nlp_shap.PluginRegistry.resolve">
 <span class="sig-name descname"><span class="pre">resolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/plugins.html#nlp_shap.plugins.groups.PluginGroup" title="nlp_shap.plugins.groups.PluginGroup"><span class="pre">PluginGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><span class="pre">object</span></a></span></span><a class="reference internal" href="_modules/nlp_shap/plugins/registry.html#PluginRegistry.resolve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.PluginRegistry.resolve" title="Link to this definition">¶</a></dt>
 <dd><p>Instantiate a plugin registered under <code class="docutils literal notranslate"><span class="pre">group</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.PluginRegistry.resolve_factory">
+<span class="sig-name descname"><span class="pre">resolve_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/plugins.html#nlp_shap.plugins.groups.PluginGroup" title="nlp_shap.plugins.groups.PluginGroup"><span class="pre">PluginGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.14)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><span class="pre">object</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nlp_shap/plugins/registry.html#PluginRegistry.resolve_factory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.PluginRegistry.resolve_factory" title="Link to this definition">¶</a></dt>
+<dd><p>Return the factory registered under <code class="docutils literal notranslate"><span class="pre">group</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.PluginRegistry.resolve_type">
+<span class="sig-name descname"><span class="pre">resolve_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/plugins.html#nlp_shap.plugins.groups.PluginGroup" title="nlp_shap.plugins.groups.PluginGroup"><span class="pre">PluginGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.14)"><span class="pre">type</span></a></span></span><a class="reference internal" href="_modules/nlp_shap/plugins/registry.html#PluginRegistry.resolve_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.PluginRegistry.resolve_type" title="Link to this definition">¶</a></dt>
+<dd><p>Return a plugin class registered under <code class="docutils literal notranslate"><span class="pre">group</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1233,6 +1299,18 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <li><a class="reference internal" href="#nlp_shap.ExplainResult.values"><code class="docutils literal notranslate"><span class="pre">ExplainResult.values</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#nlp_shap.ExplainRunOutput"><code class="docutils literal notranslate"><span class="pre">ExplainRunOutput</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.ExplainRunOutput.result"><code class="docutils literal notranslate"><span class="pre">ExplainRunOutput.result</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.ExplainRunOutput.metrics"><code class="docutils literal notranslate"><span class="pre">ExplainRunOutput.metrics</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.ExplainRunOutput.run_id"><code class="docutils literal notranslate"><span class="pre">ExplainRunOutput.run_id</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.ExplainRunOutput.manifest"><code class="docutils literal notranslate"><span class="pre">ExplainRunOutput.manifest</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.ExplainRunner"><code class="docutils literal notranslate"><span class="pre">ExplainRunner</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.ExplainRunner.explain"><code class="docutils literal notranslate"><span class="pre">ExplainRunner.explain()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.ExplainRunner.explain_sync"><code class="docutils literal notranslate"><span class="pre">ExplainRunner.explain_sync()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#nlp_shap.GenerationRecord"><code class="docutils literal notranslate"><span class="pre">GenerationRecord</span></code></a><ul>
 <li><a class="reference internal" href="#nlp_shap.GenerationRecord.text"><code class="docutils literal notranslate"><span class="pre">GenerationRecord.text</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.GenerationRecord.text_token_rows"><code class="docutils literal notranslate"><span class="pre">GenerationRecord.text_token_rows</span></code></a></li>
@@ -1296,6 +1374,8 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <li><a class="reference internal" href="#nlp_shap.PluginRegistry"><code class="docutils literal notranslate"><span class="pre">PluginRegistry</span></code></a><ul>
 <li><a class="reference internal" href="#nlp_shap.PluginRegistry.register"><code class="docutils literal notranslate"><span class="pre">PluginRegistry.register()</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.PluginRegistry.resolve"><code class="docutils literal notranslate"><span class="pre">PluginRegistry.resolve()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.PluginRegistry.resolve_factory"><code class="docutils literal notranslate"><span class="pre">PluginRegistry.resolve_factory()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.PluginRegistry.resolve_type"><code class="docutils literal notranslate"><span class="pre">PluginRegistry.resolve_type()</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.PluginRegistry.names"><code class="docutils literal notranslate"><span class="pre">PluginRegistry.names()</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.PluginRegistry.load_entry_points"><code class="docutils literal notranslate"><span class="pre">PluginRegistry.load_entry_points()</span></code></a></li>
 </ul>
@@ -1344,7 +1424,7 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=ca7ad2ea"></script>
+</div><script src="_static/documentation_options.js?v=22607128"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

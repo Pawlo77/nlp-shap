@@ -7,7 +7,7 @@
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Plugins - nlp-shap 0.1.7</title>
+        <title>Plugins - nlp-shap 0.1.8</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">nlp-shap 0.1.7</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.8</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.7</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.8</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -211,6 +211,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../guides/exact.html">Using the exact estimator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/approximation.html">Using approximate estimators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/value_functions.html">Using value functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/pipeline.html">End-to-end explain pipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/runtime.html">Runtime core</a></li>
@@ -316,6 +317,18 @@
 <dt class="sig sig-object py" id="nlp_shap.plugins.registry.PluginRegistry.resolve">
 <span class="sig-name descname"><span class="pre">resolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.plugins.groups.PluginGroup" title="nlp_shap.plugins.groups.PluginGroup"><span class="pre">PluginGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><span class="pre">object</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/plugins/registry.html#PluginRegistry.resolve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.plugins.registry.PluginRegistry.resolve" title="Link to this definition">¶</a></dt>
 <dd><p>Instantiate a plugin registered under <code class="docutils literal notranslate"><span class="pre">group</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.plugins.registry.PluginRegistry.resolve_factory">
+<span class="sig-name descname"><span class="pre">resolve_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.plugins.groups.PluginGroup" title="nlp_shap.plugins.groups.PluginGroup"><span class="pre">PluginGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.14)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><span class="pre">object</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/nlp_shap/plugins/registry.html#PluginRegistry.resolve_factory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.plugins.registry.PluginRegistry.resolve_factory" title="Link to this definition">¶</a></dt>
+<dd><p>Return the factory registered under <code class="docutils literal notranslate"><span class="pre">group</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.plugins.registry.PluginRegistry.resolve_type">
+<span class="sig-name descname"><span class="pre">resolve_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nlp_shap.plugins.groups.PluginGroup" title="nlp_shap.plugins.groups.PluginGroup"><span class="pre">PluginGroup</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.14)"><span class="pre">type</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/plugins/registry.html#PluginRegistry.resolve_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.plugins.registry.PluginRegistry.resolve_type" title="Link to this definition">¶</a></dt>
+<dd><p>Return a plugin class registered under <code class="docutils literal notranslate"><span class="pre">group</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -473,6 +486,8 @@
 <li><a class="reference internal" href="#nlp_shap.plugins.registry.PluginRegistry"><code class="docutils literal notranslate"><span class="pre">PluginRegistry</span></code></a><ul>
 <li><a class="reference internal" href="#nlp_shap.plugins.registry.PluginRegistry.register"><code class="docutils literal notranslate"><span class="pre">PluginRegistry.register()</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.plugins.registry.PluginRegistry.resolve"><code class="docutils literal notranslate"><span class="pre">PluginRegistry.resolve()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.plugins.registry.PluginRegistry.resolve_factory"><code class="docutils literal notranslate"><span class="pre">PluginRegistry.resolve_factory()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.plugins.registry.PluginRegistry.resolve_type"><code class="docutils literal notranslate"><span class="pre">PluginRegistry.resolve_type()</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.plugins.registry.PluginRegistry.names"><code class="docutils literal notranslate"><span class="pre">PluginRegistry.names()</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.plugins.registry.PluginRegistry.load_entry_points"><code class="docutils literal notranslate"><span class="pre">PluginRegistry.load_entry_points()</span></code></a></li>
 </ul>
@@ -503,7 +518,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=ca7ad2ea"></script>
+</div><script src="../_static/documentation_options.js?v=22607128"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

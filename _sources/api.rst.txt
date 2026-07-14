@@ -13,6 +13,8 @@ Public exports
 
    * - Symbol
      - Description
+   * - :class:`~nlp_shap.ExplainRunner`
+     - End-to-end explain pipeline entry point. See :doc:`api/pipeline`.
    * - :class:`~nlp_shap.ExplainConfig`
      - Top-level explain pipeline configuration. See :doc:`api/pipeline`.
    * - :func:`~nlp_shap.explain_config_from_yaml`

@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.value.logprob - nlp-shap 0.1.8</title>
+        <title>nlp_shap.pipeline.runner - nlp-shap 0.1.8</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -281,43 +281,85 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for nlp_shap.value.logprob</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Logprob-based value function.&quot;&quot;&quot;</span>
+          <h1>Source code for nlp_shap.pipeline.runner</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Public explain pipeline entry point.&quot;&quot;&quot;</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.generation</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenerationRecord</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..protocols.backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenerationResult</span>
-
-
-<div class="viewcode-block" id="LogprobValue">
-<a class="viewcode-back" href="../../../api/value.html#nlp_shap.LogprobValue">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">LogprobValue</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Score generations from summed token log probabilities.&quot;&quot;&quot;</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the registered value-function identifier.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;logprob&quot;</span>
-
-<div class="viewcode-block" id="LogprobValue.score">
-<a class="viewcode-back" href="../../../api/value.html#nlp_shap.LogprobValue.score">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base</span><span class="p">:</span> <span class="n">GenerationResult</span><span class="p">,</span> <span class="n">candidate</span><span class="p">:</span> <span class="n">GenerationResult</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return utility from candidate logprobs relative to ``base``.&quot;&quot;&quot;</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="n">base</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">GenerationRecord</span><span class="p">)</span> <span class="ow">and</span> <span class="n">candidate</span><span class="o">.</span><span class="n">logprobs</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">candidate</span><span class="o">.</span><span class="n">logprobs</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">_stub_logprob</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span></div>
-</div>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationSnapshot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..masking.partitions</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenPartitioner</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..plugins</span><span class="w"> </span><span class="kn">import</span> <span class="n">PluginGroup</span><span class="p">,</span> <span class="n">PluginRegistry</span><span class="p">,</span> <span class="n">register_builtin_plugins</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..plugins.backends</span><span class="w"> </span><span class="kn">import</span> <span class="n">instantiate_backend</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExplainConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExplainContext</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.orchestrator</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExplainOrchestrator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.result</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExplainRunOutput</span>
 
 
+<div class="viewcode-block" id="ExplainRunner">
+<a class="viewcode-back" href="../../../api/pipeline.html#nlp_shap.ExplainRunner">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExplainRunner</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the explain pipeline for a conversation snapshot.&quot;&quot;&quot;</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_stub_logprob</span><span class="p">(</span><span class="n">generation</span><span class="p">:</span> <span class="n">GenerationResult</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a deterministic pseudo-logprob when the backend omits logprobs.&quot;&quot;&quot;</span>
-    <span class="n">digest</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">generation</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
-    <span class="n">magnitude</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">digest</span><span class="p">[:</span><span class="mi">8</span><span class="p">],</span> <span class="n">byteorder</span><span class="o">=</span><span class="s2">&quot;big&quot;</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">normalized</span> <span class="o">=</span> <span class="p">(</span><span class="n">magnitude</span> <span class="o">%</span> <span class="mi">10_000</span><span class="p">)</span> <span class="o">/</span> <span class="mf">10_000.0</span>
-    <span class="k">return</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">normalized</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">ExplainConfig</span><span class="p">,</span>
+        <span class="n">registry</span><span class="p">:</span> <span class="n">PluginRegistry</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span> <span class="o">=</span> <span class="n">registry</span> <span class="ow">or</span> <span class="n">_default_registry</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ExplainRunner.explain">
+<a class="viewcode-back" href="../../../api/pipeline.html#nlp_shap.ExplainRunner.explain">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">explain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExplainRunOutput</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute the async explain pipeline.&quot;&quot;&quot;</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_context</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="n">instantiate_backend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">backend</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="p">)</span>
+        <span class="n">orchestrator</span> <span class="o">=</span> <span class="n">ExplainOrchestrator</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">orchestrator</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ExplainRunner.explain_sync">
+<a class="viewcode-back" href="../../../api/pipeline.html#nlp_shap.ExplainRunner.explain_sync">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">explain_sync</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExplainRunOutput</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute the explain pipeline on the current event loop policy.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">snapshot</span><span class="p">))</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExplainContext</span><span class="p">:</span>
+        <span class="n">partitioner</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span>
+            <span class="n">PluginGroup</span><span class="o">.</span><span class="n">PARTITIONS</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">explanation</span><span class="o">.</span><span class="n">players</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">partitioner</span><span class="p">,</span> <span class="n">TokenPartitioner</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;only token partitioners are supported by ExplainRunner&quot;</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">player_set</span> <span class="o">=</span> <span class="n">partitioner</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
+        <span class="n">run_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">snapshot</span><span class="o">.</span><span class="n">snapshot_id</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">explanation</span><span class="o">.</span><span class="n">seed</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">ExplainContext</span><span class="p">(</span>
+            <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span>
+            <span class="n">snapshot</span><span class="o">=</span><span class="n">snapshot</span><span class="p">,</span>
+            <span class="n">player_set</span><span class="o">=</span><span class="n">player_set</span><span class="p">,</span>
+            <span class="n">registry</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="p">,</span>
+            <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_default_registry</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">PluginRegistry</span><span class="p">:</span>
+    <span class="n">registry</span> <span class="o">=</span> <span class="n">PluginRegistry</span><span class="p">()</span>
+    <span class="n">register_builtin_plugins</span><span class="p">(</span><span class="n">registry</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="p">(</span>
+        <span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMATORS</span><span class="p">,</span>
+        <span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMANDS</span><span class="p">,</span>
+        <span class="n">PluginGroup</span><span class="o">.</span><span class="n">VALUE_FNS</span><span class="p">,</span>
+        <span class="n">PluginGroup</span><span class="o">.</span><span class="n">NORMALIZERS</span><span class="p">,</span>
+        <span class="n">PluginGroup</span><span class="o">.</span><span class="n">BACKENDS</span><span class="p">,</span>
+        <span class="n">PluginGroup</span><span class="o">.</span><span class="n">PARTITIONS</span><span class="p">,</span>
+        <span class="n">PluginGroup</span><span class="o">.</span><span class="n">ABSENCE_POLICIES</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">registry</span><span class="o">.</span><span class="n">load_entry_points</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">registry</span>
 </pre></div>
         </article>
       </div>

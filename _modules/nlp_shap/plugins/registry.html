@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.plugins.registry - nlp-shap 0.1.7</title>
+        <title>nlp_shap.plugins.registry - nlp-shap 0.1.8</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -171,7 +171,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">nlp-shap 0.1.7</div></a>
+      <a href="../../../index.html"><div class="brand">nlp-shap 0.1.8</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
     <img class="sidebar-logo" src="../../../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.7</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.8</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -210,6 +210,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/exact.html">Using the exact estimator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/approximation.html">Using approximate estimators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/value_functions.html">Using value functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/pipeline.html">End-to-end explain pipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/runtime.html">Runtime core</a></li>
@@ -319,13 +320,30 @@
 <a class="viewcode-back" href="../../../api/plugins.html#nlp_shap.PluginRegistry.resolve">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">resolve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">PluginGroup</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate a plugin registered under ``group`` and ``name``.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_factory</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">)()</span></div>
+
+
+<div class="viewcode-block" id="PluginRegistry.resolve_factory">
+<a class="viewcode-back" href="../../../api/plugins.html#nlp_shap.PluginRegistry.resolve_factory">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resolve_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">PluginGroup</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PluginFactory</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the factory registered under ``group`` and ``name``.&quot;&quot;&quot;</span>
         <span class="n">group_key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">factory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_factories</span><span class="p">[</span><span class="n">group_key</span><span class="p">][</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_factories</span><span class="p">[</span><span class="n">group_key</span><span class="p">][</span><span class="n">name</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;unknown plugin </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> in group </span><span class="si">{</span><span class="n">group_key</span><span class="si">!r}</span><span class="s2">&quot;</span>
-            <span class="k">raise</span> <span class="ne">LookupError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span>
-        <span class="k">return</span> <span class="n">factory</span><span class="p">()</span></div>
+            <span class="k">raise</span> <span class="ne">LookupError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span></div>
+
+
+<div class="viewcode-block" id="PluginRegistry.resolve_type">
+<a class="viewcode-back" href="../../../api/plugins.html#nlp_shap.PluginRegistry.resolve_type">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resolve_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">PluginGroup</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a plugin class registered under ``group`` and ``name``.&quot;&quot;&quot;</span>
+        <span class="n">factory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_factory</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">factory</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;plugin </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> in group </span><span class="si">{</span><span class="n">group</span><span class="si">!r}</span><span class="s2"> is not a class constructor&quot;</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">factory</span></div>
 
 
 <div class="viewcode-block" id="PluginRegistry.names">
@@ -391,7 +409,7 @@
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=ca7ad2ea"></script>
+</div><script src="../../../_static/documentation_options.js?v=22607128"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>
