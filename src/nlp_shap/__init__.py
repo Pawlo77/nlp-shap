@@ -8,6 +8,7 @@ from .domain import (
     ConversationSnapshot,
     CooperativeGame,
     Estimand,
+    GenerationRecord,
     Message,
     PlayerSet,
     Role,
@@ -18,6 +19,7 @@ from .estimation.estimands import BanzhafAggregator, ShapleyAggregator
 from .estimation.exact import ExactEstimator
 from .estimation.monte_carlo import MonteCarloEstimator
 from .estimation.neyman import NeymanEstimator
+from .estimation.normalizers import IdentityNormalizer, MinMaxNormalizer
 from .pipeline import (
     ExplainConfig,
     ExplainResult,
@@ -27,6 +29,7 @@ from .pipeline import (
     parse_manifest,
 )
 from .plugins import PluginGroup, PluginRegistry
+from .value import CosineEmbeddingValue, LogprobValue, TfIdfCosineValue
 
 __all__ = [
     "BanzhafAggregator",
@@ -34,11 +37,16 @@ __all__ = [
     "ComplementaryEstimator",
     "ConversationSnapshot",
     "CooperativeGame",
+    "CosineEmbeddingValue",
     "Estimand",
     "ExactEstimator",
     "ExplainConfig",
     "ExplainResult",
+    "GenerationRecord",
+    "IdentityNormalizer",
+    "LogprobValue",
     "Message",
+    "MinMaxNormalizer",
     "MonteCarloEstimator",
     "NeymanEstimator",
     "PlayerSet",
@@ -47,6 +55,7 @@ __all__ = [
     "Role",
     "RunManifest",
     "ShapleyAggregator",
+    "TfIdfCosineValue",
     "Turn",
     "__version__",
     "explain_config_from_yaml",

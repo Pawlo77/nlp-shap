@@ -15,6 +15,9 @@ class PluginGroup(StrEnum):
     VALUE_FNS = "nlp_shap.value_fns"
     """Utility scoring plugins for coalition outputs."""
 
+    NORMALIZERS = "nlp_shap.normalizers"
+    """Post-aggregation presentation normalizer plugins."""
+
     BACKENDS = "nlp_shap.backends"
     """Model inference backend plugins."""
 

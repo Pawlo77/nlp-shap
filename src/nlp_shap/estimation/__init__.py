@@ -5,12 +5,22 @@ from .estimands import BanzhafAggregator, ShapleyAggregator
 from .exact import ExactEstimator
 from .monte_carlo import MonteCarloEstimator
 from .neyman import NeymanEstimator
+from .normalizers import (
+    AbsSumNormalizer,
+    IdentityNormalizer,
+    MinMaxNormalizer,
+    PowerShiftNormalizer,
+)
 
 __all__ = [
+    "AbsSumNormalizer",
     "BanzhafAggregator",
     "ComplementaryEstimator",
     "ExactEstimator",
+    "IdentityNormalizer",
+    "MinMaxNormalizer",
     "MonteCarloEstimator",
     "NeymanEstimator",
+    "PowerShiftNormalizer",
     "ShapleyAggregator",
 ]

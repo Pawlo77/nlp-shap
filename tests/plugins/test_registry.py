@@ -18,6 +18,21 @@ def test_registry_loads_estimand_entry_points() -> None:
     assert registry.names(PluginGroup.ESTIMANDS) == ("banzhaf", "shapley")
 
 
+def test_registry_loads_value_fn_and_normalizer_entry_points() -> None:
+    """Packaging entry points resolve to value functions and normalizers."""
+    registry = PluginRegistry()
+    registry.load_entry_points(PluginGroup.VALUE_FNS)
+    registry.load_entry_points(PluginGroup.NORMALIZERS)
+
+    value_fn = registry.resolve(PluginGroup.VALUE_FNS, "tfidf_cosine")
+    normalizer = registry.resolve(PluginGroup.NORMALIZERS, "identity")
+
+    assert value_fn.name == "tfidf_cosine"
+    assert normalizer.name == "identity"
+    assert "logprob" in registry.names(PluginGroup.VALUE_FNS)
+    assert "min_max" in registry.names(PluginGroup.NORMALIZERS)
+
+
 def test_registry_register_and_resolve_round_trip() -> None:
     """Manual registration resolves to the registered factory."""
     registry = PluginRegistry()

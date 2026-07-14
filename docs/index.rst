@@ -71,6 +71,7 @@ Requires Python 3.12. See :doc:`guides/getting_started` for a full walkthrough.
    guides/estimands
    guides/exact
    guides/approximation
+   guides/value_functions
    guides/config
    guides/masking
    guides/runtime
@@ -86,6 +87,7 @@ Requires Python 3.12. See :doc:`guides/getting_started` for a full walkthrough.
    theory/estimands
    theory/exact
    theory/approximation
+   theory/value_functions
    theory/masking
    theory/runtime
 

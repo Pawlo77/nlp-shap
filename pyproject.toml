@@ -1,6 +1,6 @@
 [project]
 name = "nlp-shap"
-version = "0.1.6"
+version = "0.1.7"
 description = "Multimodal explainability tool for NLP based on Shapley value."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
@@ -63,6 +63,18 @@ delete = "nlp_shap.masking.policies:DeletePolicy"
 pad = "nlp_shap.masking.policies:PadPolicy"
 neutral = "nlp_shap.masking.policies:NeutralPolicy"
 
+[project.entry-points."nlp_shap.value_fns"]
+tfidf_cosine = "nlp_shap.value.tfidf:TfIdfCosineValue"
+embedding_cosine = "nlp_shap.value.embedding:CosineEmbeddingValue"
+embedding_euclidean = "nlp_shap.value.embedding:EuclideanEmbeddingValue"
+logprob = "nlp_shap.value.logprob:LogprobValue"
+
+[project.entry-points."nlp_shap.normalizers"]
+identity = "nlp_shap.estimation.normalizers:IdentityNormalizer"
+abs_sum = "nlp_shap.estimation.normalizers:AbsSumNormalizer"
+power_shift = "nlp_shap.estimation.normalizers:PowerShiftNormalizer"
+min_max = "nlp_shap.estimation.normalizers:MinMaxNormalizer"
+
 [build-system]
 requires = ["uv_build>=0.11.0,<0.12.0"]
 build-backend = "uv_build"
@@ -83,6 +95,7 @@ dev = [
   "sphinx-copybutton>=0.5.2",
   "sphinx-design>=0.6.1",
   "types-pyyaml>=6.0.12.20250915",
+  "scikit-learn>=1.7.0",
 ]
 
 [tool.uv]

@@ -24,3 +24,7 @@ Estimand aggregators and estimation
 .. automodule:: nlp_shap.estimation.estimands.banzhaf
    :members:
    :undoc-members:
+
+.. automodule:: nlp_shap.estimation.normalizers
+   :members:
+   :undoc-members:

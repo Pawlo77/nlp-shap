@@ -4,10 +4,12 @@ from nlp_shap.estimation.complementary import ComplementaryEstimator
 from nlp_shap.estimation.exact import ExactEstimator
 from nlp_shap.estimation.monte_carlo import MonteCarloEstimator
 from nlp_shap.estimation.neyman import NeymanEstimator
+from nlp_shap.estimation.normalizers import IdentityNormalizer, MinMaxNormalizer
 from nlp_shap.masking.partitions import TokenPartitioner
 from nlp_shap.masking.policies import DeletePolicy, NeutralPolicy, PadPolicy
 from nlp_shap.pipeline.config import ExplainConfig
 from nlp_shap.plugins import PluginGroup, PluginRegistry, register_builtin_plugins
+from nlp_shap.value.tfidf import TfIdfCosineValue
 
 
 def test_builtin_plugins_resolve_from_config_keys() -> None:
@@ -78,4 +80,45 @@ def test_builtin_registers_approximate_estimators() -> None:
     assert isinstance(
         registry.resolve(PluginGroup.ESTIMATORS, "neyman_cc"),
         NeymanEstimator,
+    )
+
+
+def test_builtin_registers_value_functions_and_normalizers() -> None:
+    """Built-in registration exposes value functions and normalizers."""
+    registry = PluginRegistry()
+    register_builtin_plugins(registry)
+    registry.load_entry_points(PluginGroup.VALUE_FNS)
+    registry.load_entry_points(PluginGroup.NORMALIZERS)
+
+    config = ExplainConfig.model_validate({
+        "backend": {"kind": "mock", "model_id": "stub"},
+        "explanation": {"value_fn": "tfidf_cosine", "normalizer": "min_max"},
+    })
+
+    value_fn = registry.resolve(
+        PluginGroup.VALUE_FNS,
+        config.explanation.value_fn,
+    )
+    normalizer = registry.resolve(
+        PluginGroup.NORMALIZERS,
+        config.explanation.normalizer,
+    )
+
+    assert isinstance(value_fn, TfIdfCosineValue)
+    assert isinstance(normalizer, MinMaxNormalizer)
+    assert registry.names(PluginGroup.VALUE_FNS) == (
+        "embedding_cosine",
+        "embedding_euclidean",
+        "logprob",
+        "tfidf_cosine",
+    )
+    assert registry.names(PluginGroup.NORMALIZERS) == (
+        "abs_sum",
+        "identity",
+        "min_max",
+        "power_shift",
+    )
+    assert isinstance(
+        registry.resolve(PluginGroup.NORMALIZERS, "identity"),
+        IdentityNormalizer,
     )

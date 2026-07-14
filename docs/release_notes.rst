@@ -8,6 +8,26 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-1-7:
+
+0.1.7 (2026-07-14)
+------------------
+
+Added
+~~~~~
+
+- :class:`~nlp_shap.value.tfidf.TfIdfCosineValue` with frozen-corpus TF-IDF cosine
+  scoring (U3).
+- :class:`~nlp_shap.value.embedding.CosineEmbeddingValue` and
+  :class:`~nlp_shap.value.embedding.EuclideanEmbeddingValue` for embedding utilities
+  (U1/U2/U4).
+- :class:`~nlp_shap.value.logprob.LogprobValue` with deterministic stub logprobs.
+- Presentation normalizers in ``nlp_shap.estimation.normalizers``.
+- :class:`~nlp_shap.GenerationRecord` for token rows, embeddings, and logprobs.
+- ``tfidf_cosine``, ``embedding_cosine``, ``embedding_euclidean``, and ``logprob``
+  value-function entry points; ``identity``, ``abs_sum``, ``power_shift``, and
+  ``min_max`` normalizer entry points.
+
 .. _release-0-1-6:
 
 0.1.6 (2026-07-14)

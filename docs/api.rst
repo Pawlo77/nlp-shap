@@ -65,6 +65,7 @@ Modules
    api/masking
    api/runtime
    api/estimation
+   api/value
 
 Package version
 ---------------
