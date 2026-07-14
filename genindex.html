@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
-    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.6</title>
+    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.7</title>
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -170,7 +170,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.6</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.7</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.6</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.7</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -208,6 +208,7 @@
 <li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/exact.html">Using the exact estimator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/approximation.html">Using approximate estimators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/value_functions.html">Using value functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/runtime.html">Runtime core</a></li>
@@ -220,6 +221,7 @@
 <li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/exact.html">Exact estimation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/approximation.html">Approximate estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/value_functions.html">Value functions and normalizers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/masking.html">Masking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/runtime.html">Runtime core</a></li>
 </ul>
@@ -242,6 +244,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api/masking.html">Masking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/runtime.html">Runtime</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators and estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/value.html">Value functions</a></li>
 </ul>
 </li>
 </ul>
@@ -309,6 +312,8 @@
         </ul></li>
         <li><a href="api/protocols.html#nlp_shap.protocols.masking.AbsencePolicy">AbsencePolicy (class in nlp_shap.protocols.masking)</a>
 </li>
+        <li><a href="api/estimation.html#nlp_shap.estimation.normalizers.AbsSumNormalizer">AbsSumNormalizer (class in nlp_shap.estimation.normalizers)</a>
+</li>
         <li><a href="api.html#nlp_shap.BanzhafAggregator.aggregate">aggregate() (nlp_shap.BanzhafAggregator method)</a>
 
         <ul>
@@ -357,6 +362,8 @@
           <li><a href="api.html#nlp_shap.Role.ASSISTANT">(nlp_shap.Role attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api.html#nlp_shap.GenerationRecord.audio_token_rows">audio_token_rows (nlp_shap.GenerationRecord attribute)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -549,6 +556,8 @@
         </ul></li>
         <li><a href="api/domain.html#nlp_shap.domain.enums.EmbeddingMode.CONTEXTUAL">CONTEXTUAL (nlp_shap.domain.enums.EmbeddingMode attribute)</a>
 </li>
+        <li><a href="api.html#nlp_shap.GenerationRecord.contextual_embedding">contextual_embedding (nlp_shap.GenerationRecord attribute)</a>
+</li>
         <li><a href="api.html#nlp_shap.ConversationSnapshot">ConversationSnapshot (class in nlp_shap)</a>
 
         <ul>
@@ -559,6 +568,12 @@
 
         <ul>
           <li><a href="api/domain.html#nlp_shap.domain.game.CooperativeGame">(class in nlp_shap.domain.game)</a>
+</li>
+        </ul></li>
+        <li><a href="api.html#nlp_shap.CosineEmbeddingValue">CosineEmbeddingValue (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/value.html#nlp_shap.value.embedding.CosineEmbeddingValue">(class in nlp_shap.value.embedding)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -612,6 +627,8 @@
 </li>
         </ul></li>
         <li><a href="api/protocols.html#nlp_shap.protocols.embedding.EmbeddingProvider.embed">embed() (nlp_shap.protocols.embedding.EmbeddingProvider method)</a>
+</li>
+        <li><a href="api.html#nlp_shap.GenerationRecord.embedding">embedding (nlp_shap.GenerationRecord attribute)</a>
 </li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.embedding_mode">embedding_mode (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
@@ -705,6 +722,8 @@
         </ul></li>
         <li><a href="api/protocols.html#nlp_shap.protocols.estimator.EstimatorStrategy">EstimatorStrategy (class in nlp_shap.protocols.estimator)</a>
 </li>
+        <li><a href="api/value.html#nlp_shap.value.embedding.EuclideanEmbeddingValue">EuclideanEmbeddingValue (class in nlp_shap.value.embedding)</a>
+</li>
         <li><a href="api.html#nlp_shap.ExactEstimator">ExactEstimator (class in nlp_shap)</a>
 
         <ul>
@@ -769,16 +788,22 @@
           <li><a href="api/masking.html#nlp_shap.masking.policies.NeutralPolicy.fill_char">(nlp_shap.masking.policies.NeutralPolicy attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api.html#nlp_shap.TfIdfCosineValue.fit">fit() (nlp_shap.TfIdfCosineValue method)</a>
+
+        <ul>
+          <li><a href="api/value.html#nlp_shap.value.tfidf.TfIdfCosineValue.fit">(nlp_shap.value.tfidf.TfIdfCosineValue method)</a>
+</li>
+        </ul></li>
         <li><a href="api/runtime.html#nlp_shap.runtime.archive.RunArchive.flush">flush() (nlp_shap.runtime.archive.RunArchive method)</a>
 
         <ul>
           <li><a href="api/runtime.html#nlp_shap.runtime.RunArchive.flush">(nlp_shap.runtime.RunArchive method)</a>
 </li>
         </ul></li>
-        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ArchiveConfig.flush_every">flush_every (nlp_shap.pipeline.config.ArchiveConfig attribute)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ArchiveConfig.flush_every">flush_every (nlp_shap.pipeline.config.ArchiveConfig attribute)</a>
+</li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BudgetConfig.fraction">fraction (nlp_shap.pipeline.config.BudgetConfig attribute)</a>
 </li>
         <li><a href="api.html#nlp_shap.CoalitionMask.from_sequence">from_sequence() (nlp_shap.CoalitionMask class method)</a>
@@ -824,6 +849,8 @@
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig">GenerationConfig (class in nlp_shap.pipeline.config)</a>
+</li>
+        <li><a href="api.html#nlp_shap.GenerationRecord">GenerationRecord (class in nlp_shap)</a>
 </li>
         <li><a href="api/protocols.html#nlp_shap.protocols.backend.GenerationResult">GenerationResult (class in nlp_shap.protocols.backend)</a>
 </li>
@@ -871,6 +898,12 @@
   <h2>I</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api.html#nlp_shap.IdentityNormalizer">IdentityNormalizer (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/estimation.html#nlp_shap.estimation.normalizers.IdentityNormalizer">(class in nlp_shap.estimation.normalizers)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.include_minimal_masks">include_minimal_masks (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
         <li><a href="api/runtime.html#nlp_shap.runtime.InferenceScheduler">InferenceScheduler (class in nlp_shap.runtime)</a>
@@ -879,10 +912,10 @@
           <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler">(class in nlp_shap.runtime.scheduler)</a>
 </li>
         </ul></li>
-        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.NeymanConfig.initial_fraction">initial_fraction (nlp_shap.pipeline.config.NeymanConfig attribute)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.NeymanConfig.initial_fraction">initial_fraction (nlp_shap.pipeline.config.NeymanConfig attribute)</a>
+</li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.NeymanConfig.initial_num_samples">initial_num_samples (nlp_shap.pipeline.config.NeymanConfig attribute)</a>
 </li>
         <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.iter_mask_ints">iter_mask_ints() (nlp_shap.estimation.exact.ExactEstimator static method)</a>
@@ -925,6 +958,16 @@
 
         <ul>
           <li><a href="api/plugins.html#nlp_shap.plugins.registry.PluginRegistry.load_entry_points">(nlp_shap.plugins.registry.PluginRegistry method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api.html#nlp_shap.GenerationRecord.logprobs">logprobs (nlp_shap.GenerationRecord attribute)</a>
+</li>
+        <li><a href="api.html#nlp_shap.LogprobValue">LogprobValue (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/value.html#nlp_shap.value.logprob.LogprobValue">(class in nlp_shap.value.logprob)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -1031,6 +1074,12 @@
           <li><a href="api.html#nlp_shap.Turn.messages">(nlp_shap.Turn attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api.html#nlp_shap.MinMaxNormalizer">MinMaxNormalizer (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/estimation.html#nlp_shap.estimation.normalizers.MinMaxNormalizer">(class in nlp_shap.estimation.normalizers)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.ExplainConfig.model_config">model_config (nlp_shap.ExplainConfig attribute)</a>
 
         <ul>
@@ -1103,6 +1152,8 @@
 </li>
           <li><a href="api/estimation.html#module-nlp_shap.estimation.neyman">nlp_shap.estimation.neyman</a>
 </li>
+          <li><a href="api/estimation.html#module-nlp_shap.estimation.normalizers">nlp_shap.estimation.normalizers</a>
+</li>
           <li><a href="api/masking.html#module-nlp_shap.masking">nlp_shap.masking</a>
 </li>
           <li><a href="api/masking.html#module-nlp_shap.masking.builder">nlp_shap.masking.builder</a>
@@ -1153,6 +1204,12 @@
 </li>
           <li><a href="api/runtime.html#module-nlp_shap.runtime.store">nlp_shap.runtime.store</a>
 </li>
+          <li><a href="api/value.html#module-nlp_shap.value.embedding">nlp_shap.value.embedding</a>
+</li>
+          <li><a href="api/value.html#module-nlp_shap.value.logprob">nlp_shap.value.logprob</a>
+</li>
+          <li><a href="api/value.html#module-nlp_shap.value.tfidf">nlp_shap.value.tfidf</a>
+</li>
         </ul></li>
         <li><a href="api.html#nlp_shap.MonteCarloEstimator">MonteCarloEstimator (class in nlp_shap)</a>
 
@@ -1183,6 +1240,8 @@
         <li><a href="api.html#nlp_shap.ComplementaryEstimator.name">name (nlp_shap.ComplementaryEstimator property)</a>
 
         <ul>
+          <li><a href="api.html#nlp_shap.CosineEmbeddingValue.name">(nlp_shap.CosineEmbeddingValue property)</a>
+</li>
           <li><a href="api/estimation.html#nlp_shap.estimation.complementary.ComplementaryEstimator.name">(nlp_shap.estimation.complementary.ComplementaryEstimator property)</a>
 </li>
           <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.name">(nlp_shap.estimation.exact.ExactEstimator property)</a>
@@ -1191,7 +1250,19 @@
 </li>
           <li><a href="api/estimation.html#nlp_shap.estimation.neyman.NeymanEstimator.name">(nlp_shap.estimation.neyman.NeymanEstimator property)</a>
 </li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.normalizers.AbsSumNormalizer.name">(nlp_shap.estimation.normalizers.AbsSumNormalizer property)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.normalizers.IdentityNormalizer.name">(nlp_shap.estimation.normalizers.IdentityNormalizer property)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.normalizers.MinMaxNormalizer.name">(nlp_shap.estimation.normalizers.MinMaxNormalizer property)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.normalizers.PowerShiftNormalizer.name">(nlp_shap.estimation.normalizers.PowerShiftNormalizer property)</a>
+</li>
           <li><a href="api.html#nlp_shap.ExactEstimator.name">(nlp_shap.ExactEstimator property)</a>
+</li>
+          <li><a href="api.html#nlp_shap.IdentityNormalizer.name">(nlp_shap.IdentityNormalizer property)</a>
+</li>
+          <li><a href="api.html#nlp_shap.LogprobValue.name">(nlp_shap.LogprobValue property)</a>
 </li>
           <li><a href="api/masking.html#nlp_shap.masking.DeletePolicy.name">(nlp_shap.masking.DeletePolicy property)</a>
 </li>
@@ -1209,6 +1280,8 @@
 </li>
           <li><a href="api/masking.html#nlp_shap.masking.TokenPartitioner.name">(nlp_shap.masking.TokenPartitioner property)</a>
 </li>
+          <li><a href="api.html#nlp_shap.MinMaxNormalizer.name">(nlp_shap.MinMaxNormalizer property)</a>
+</li>
           <li><a href="api.html#nlp_shap.MonteCarloEstimator.name">(nlp_shap.MonteCarloEstimator property)</a>
 </li>
           <li><a href="api.html#nlp_shap.NeymanEstimator.name">(nlp_shap.NeymanEstimator property)</a>
@@ -1222,6 +1295,16 @@
           <li><a href="api/protocols.html#nlp_shap.protocols.partition.PlayerPartitioner.name">(nlp_shap.protocols.partition.PlayerPartitioner property)</a>
 </li>
           <li><a href="api/protocols.html#nlp_shap.protocols.value.ValueFunction.name">(nlp_shap.protocols.value.ValueFunction property)</a>
+</li>
+          <li><a href="api.html#nlp_shap.TfIdfCosineValue.name">(nlp_shap.TfIdfCosineValue property)</a>
+</li>
+          <li><a href="api/value.html#nlp_shap.value.embedding.CosineEmbeddingValue.name">(nlp_shap.value.embedding.CosineEmbeddingValue property)</a>
+</li>
+          <li><a href="api/value.html#nlp_shap.value.embedding.EuclideanEmbeddingValue.name">(nlp_shap.value.embedding.EuclideanEmbeddingValue property)</a>
+</li>
+          <li><a href="api/value.html#nlp_shap.value.logprob.LogprobValue.name">(nlp_shap.value.logprob.LogprobValue property)</a>
+</li>
+          <li><a href="api/value.html#nlp_shap.value.tfidf.TfIdfCosineValue.name">(nlp_shap.value.tfidf.TfIdfCosineValue property)</a>
 </li>
         </ul></li>
         <li><a href="api.html#nlp_shap.PluginRegistry.names">names() (nlp_shap.PluginRegistry method)</a>
@@ -1335,6 +1418,13 @@
 
         <ul>
           <li><a href="api/estimation.html#module-nlp_shap.estimation.neyman">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.estimation.normalizers
+
+        <ul>
+          <li><a href="api/estimation.html#module-nlp_shap.estimation.normalizers">module</a>
 </li>
         </ul></li>
     </ul></td>
@@ -1514,16 +1604,55 @@
           <li><a href="api/runtime.html#module-nlp_shap.runtime.store">module</a>
 </li>
         </ul></li>
-        <li><a href="api/domain.html#nlp_shap.domain.enums.SystemRolesSetup.NONE">NONE (nlp_shap.domain.enums.SystemRolesSetup attribute)</a>
-</li>
-        <li><a href="api/masking.html#nlp_shap.masking.codec.MaskCodec.normalize">normalize() (nlp_shap.masking.codec.MaskCodec static method)</a>
+        <li>
+    nlp_shap.value.embedding
 
         <ul>
+          <li><a href="api/value.html#module-nlp_shap.value.embedding">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.value.logprob
+
+        <ul>
+          <li><a href="api/value.html#module-nlp_shap.value.logprob">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.value.tfidf
+
+        <ul>
+          <li><a href="api/value.html#module-nlp_shap.value.tfidf">module</a>
+</li>
+        </ul></li>
+        <li><a href="api/domain.html#nlp_shap.domain.enums.SystemRolesSetup.NONE">NONE (nlp_shap.domain.enums.SystemRolesSetup attribute)</a>
+</li>
+        <li><a href="api/estimation.html#nlp_shap.estimation.normalizers.AbsSumNormalizer.normalize">normalize() (nlp_shap.estimation.normalizers.AbsSumNormalizer method)</a>
+
+        <ul>
+          <li><a href="api/estimation.html#nlp_shap.estimation.normalizers.IdentityNormalizer.normalize">(nlp_shap.estimation.normalizers.IdentityNormalizer method)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.normalizers.MinMaxNormalizer.normalize">(nlp_shap.estimation.normalizers.MinMaxNormalizer method)</a>
+</li>
+          <li><a href="api/estimation.html#nlp_shap.estimation.normalizers.PowerShiftNormalizer.normalize">(nlp_shap.estimation.normalizers.PowerShiftNormalizer method)</a>
+</li>
+          <li><a href="api.html#nlp_shap.IdentityNormalizer.normalize">(nlp_shap.IdentityNormalizer method)</a>
+</li>
+          <li><a href="api/masking.html#nlp_shap.masking.codec.MaskCodec.normalize">(nlp_shap.masking.codec.MaskCodec static method)</a>
+</li>
           <li><a href="api/masking.html#nlp_shap.masking.MaskCodec.normalize">(nlp_shap.masking.MaskCodec static method)</a>
+</li>
+          <li><a href="api.html#nlp_shap.MinMaxNormalizer.normalize">(nlp_shap.MinMaxNormalizer method)</a>
 </li>
         </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.normalizer">normalizer (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
+        <li><a href="api.html#nlp_shap.PluginGroup.NORMALIZERS">NORMALIZERS (nlp_shap.PluginGroup attribute)</a>
+
+        <ul>
+          <li><a href="api/plugins.html#nlp_shap.plugins.groups.PluginGroup.NORMALIZERS">(nlp_shap.plugins.groups.PluginGroup attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.num_coalitions">num_coalitions() (nlp_shap.estimation.exact.ExactEstimator static method)</a>
 
         <ul>
@@ -1668,6 +1797,8 @@
           <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot.policy_name">(nlp_shap.masking.MaskedSnapshot attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api/estimation.html#nlp_shap.estimation.normalizers.PowerShiftNormalizer">PowerShiftNormalizer (class in nlp_shap.estimation.normalizers)</a>
+</li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig.precompute_base">precompute_base (nlp_shap.pipeline.config.GenerationConfig attribute)</a>
 </li>
         <li><a href="api/masking.html#nlp_shap.masking.PrefixTreeStub">PrefixTreeStub (class in nlp_shap.masking)</a>
@@ -1826,8 +1957,26 @@
           <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.SchedulerMetrics">(class in nlp_shap.runtime.scheduler)</a>
 </li>
         </ul></li>
-        <li><a href="api/protocols.html#nlp_shap.protocols.value.ValueFunction.score">score() (nlp_shap.protocols.value.ValueFunction method)</a>
+        <li><a href="api.html#nlp_shap.CosineEmbeddingValue.score">score() (nlp_shap.CosineEmbeddingValue method)</a>
+
+        <ul>
+          <li><a href="api.html#nlp_shap.LogprobValue.score">(nlp_shap.LogprobValue method)</a>
 </li>
+          <li><a href="api/protocols.html#nlp_shap.protocols.value.ValueFunction.score">(nlp_shap.protocols.value.ValueFunction method)</a>
+</li>
+          <li><a href="api.html#nlp_shap.TfIdfCosineValue.score">(nlp_shap.TfIdfCosineValue method)</a>
+</li>
+          <li><a href="api/value.html#nlp_shap.value.embedding.CosineEmbeddingValue.score">(nlp_shap.value.embedding.CosineEmbeddingValue method)</a>
+</li>
+          <li><a href="api/value.html#nlp_shap.value.embedding.EuclideanEmbeddingValue.score">(nlp_shap.value.embedding.EuclideanEmbeddingValue method)</a>
+</li>
+          <li><a href="api/value.html#nlp_shap.value.logprob.LogprobValue.score">(nlp_shap.value.logprob.LogprobValue method)</a>
+</li>
+          <li><a href="api/value.html#nlp_shap.value.tfidf.TfIdfCosineValue.score">(nlp_shap.value.tfidf.TfIdfCosineValue method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.seed">seed (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
         <li><a href="api/domain.html#nlp_shap.domain.estimands.Estimand.SHAPLEY">SHAPLEY (nlp_shap.domain.estimands.Estimand attribute)</a>
@@ -1836,8 +1985,6 @@
           <li><a href="api.html#nlp_shap.Estimand.SHAPLEY">(nlp_shap.Estimand attribute)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api.html#nlp_shap.ShapleyAggregator">ShapleyAggregator (class in nlp_shap)</a>
 
         <ul>
@@ -1901,19 +2048,29 @@
         <li><a href="api/domain.html#nlp_shap.domain.conversation.Message.text">text (nlp_shap.domain.conversation.Message attribute)</a>
 
         <ul>
+          <li><a href="api.html#nlp_shap.GenerationRecord.text">(nlp_shap.GenerationRecord attribute)</a>
+</li>
           <li><a href="api.html#nlp_shap.Message.text">(nlp_shap.Message attribute)</a>
 </li>
           <li><a href="api/protocols.html#nlp_shap.protocols.backend.GenerationResult.text">(nlp_shap.protocols.backend.GenerationResult property)</a>
 </li>
         </ul></li>
+        <li><a href="api.html#nlp_shap.GenerationRecord.text_token_rows">text_token_rows (nlp_shap.GenerationRecord attribute)</a>
+</li>
+        <li><a href="api.html#nlp_shap.TfIdfCosineValue">TfIdfCosineValue (class in nlp_shap)</a>
+
+        <ul>
+          <li><a href="api/value.html#nlp_shap.value.tfidf.TfIdfCosineValue">(class in nlp_shap.value.tfidf)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.manifest.RunManifest.to_dict">to_dict() (nlp_shap.pipeline.manifest.RunManifest method)</a>
 
         <ul>
           <li><a href="api.html#nlp_shap.RunManifest.to_dict">(nlp_shap.RunManifest method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/masking.html#nlp_shap.masking.TokenPartitioner">TokenPartitioner (class in nlp_shap.masking)</a>
 
         <ul>
@@ -2070,7 +2227,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=6e0256f3"></script>
+</div><script src="_static/documentation_options.js?v=ca7ad2ea"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="prev" title="Runtime" href="runtime.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Value functions" href="value.html"><link rel="prev" title="Runtime" href="runtime.html">
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Estimand aggregators and estimation - nlp-shap 0.1.6</title>
+        <title>Estimand aggregators and estimation - nlp-shap 0.1.7</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">nlp-shap 0.1.6</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.7</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.6</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.7</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -210,6 +210,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../guides/estimands.html">Using estimand aggregators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/exact.html">Using the exact estimator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/approximation.html">Using approximate estimators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/value_functions.html">Using value functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/runtime.html">Runtime core</a></li>
@@ -222,6 +223,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/exact.html">Exact estimation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/approximation.html">Approximate estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/value_functions.html">Value functions and normalizers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/masking.html">Masking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory/runtime.html">Runtime core</a></li>
 </ul>
@@ -244,6 +246,7 @@
 <li class="toctree-l2"><a class="reference internal" href="masking.html">Masking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="runtime.html">Runtime</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Estimand aggregators and estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="value.html">Value functions</a></li>
 </ul>
 </li>
 </ul>
@@ -518,6 +521,83 @@
 
 </dd></dl>
 
+<p id="module-nlp_shap.estimation.normalizers">Post-aggregation attribution normalizers.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.estimation.normalizers.IdentityNormalizer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.estimation.normalizers.</span></span><span class="sig-name descname"><span class="pre">IdentityNormalizer</span></span><a class="reference internal" href="../_modules/nlp_shap/estimation/normalizers.html#IdentityNormalizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.estimation.normalizers.IdentityNormalizer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Return attributions unchanged.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.estimation.normalizers.IdentityNormalizer.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.estimation.normalizers.IdentityNormalizer.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the registered normalizer identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.estimation.normalizers.IdentityNormalizer.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/nlp_shap/estimation/normalizers.html#IdentityNormalizer.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.estimation.normalizers.IdentityNormalizer.normalize" title="Link to this definition">¶</a></dt>
+<dd><p>Return a copy of <code class="docutils literal notranslate"><span class="pre">values</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.estimation.normalizers.AbsSumNormalizer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.estimation.normalizers.</span></span><span class="sig-name descname"><span class="pre">AbsSumNormalizer</span></span><a class="reference internal" href="../_modules/nlp_shap/estimation/normalizers.html#AbsSumNormalizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.estimation.normalizers.AbsSumNormalizer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Scale attributions by the sum of absolute values.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.estimation.normalizers.AbsSumNormalizer.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.estimation.normalizers.AbsSumNormalizer.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the registered normalizer identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.estimation.normalizers.AbsSumNormalizer.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/nlp_shap/estimation/normalizers.html#AbsSumNormalizer.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.estimation.normalizers.AbsSumNormalizer.normalize" title="Link to this definition">¶</a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">values</span></code> divided by the sum of absolute entries.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.estimation.normalizers.PowerShiftNormalizer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.estimation.normalizers.</span></span><span class="sig-name descname"><span class="pre">PowerShiftNormalizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">power</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_shap/estimation/normalizers.html#PowerShiftNormalizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.estimation.normalizers.PowerShiftNormalizer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Shift to non-negative values, apply a power, then scale to sum one.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.estimation.normalizers.PowerShiftNormalizer.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.estimation.normalizers.PowerShiftNormalizer.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the registered normalizer identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.estimation.normalizers.PowerShiftNormalizer.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/nlp_shap/estimation/normalizers.html#PowerShiftNormalizer.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.estimation.normalizers.PowerShiftNormalizer.normalize" title="Link to this definition">¶</a></dt>
+<dd><p>Return power-shift normalized attributions.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.estimation.normalizers.MinMaxNormalizer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.estimation.normalizers.</span></span><span class="sig-name descname"><span class="pre">MinMaxNormalizer</span></span><a class="reference internal" href="../_modules/nlp_shap/estimation/normalizers.html#MinMaxNormalizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.estimation.normalizers.MinMaxNormalizer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Min-max scale to <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1]</span></code> then normalize to sum one.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.estimation.normalizers.MinMaxNormalizer.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.estimation.normalizers.MinMaxNormalizer.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the registered normalizer identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.estimation.normalizers.MinMaxNormalizer.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/nlp_shap/estimation/normalizers.html#MinMaxNormalizer.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.estimation.normalizers.MinMaxNormalizer.normalize" title="Link to this definition">¶</a></dt>
+<dd><p>Return min-max scaled attributions that sum to one.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
         </article>
@@ -525,7 +605,15 @@
       <footer>
         
         <div class="related-pages">
-          
+          <a class="next-page" href="value.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Value functions</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
           <a class="prev-page" href="runtime.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
@@ -624,6 +712,26 @@
 <li><a class="reference internal" href="#nlp_shap.estimation.estimands.banzhaf.BanzhafAggregator.aggregate"><code class="docutils literal notranslate"><span class="pre">BanzhafAggregator.aggregate()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#nlp_shap.estimation.normalizers.IdentityNormalizer"><code class="docutils literal notranslate"><span class="pre">IdentityNormalizer</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.estimation.normalizers.IdentityNormalizer.name"><code class="docutils literal notranslate"><span class="pre">IdentityNormalizer.name</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.estimation.normalizers.IdentityNormalizer.normalize"><code class="docutils literal notranslate"><span class="pre">IdentityNormalizer.normalize()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.estimation.normalizers.AbsSumNormalizer"><code class="docutils literal notranslate"><span class="pre">AbsSumNormalizer</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.estimation.normalizers.AbsSumNormalizer.name"><code class="docutils literal notranslate"><span class="pre">AbsSumNormalizer.name</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.estimation.normalizers.AbsSumNormalizer.normalize"><code class="docutils literal notranslate"><span class="pre">AbsSumNormalizer.normalize()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.estimation.normalizers.PowerShiftNormalizer"><code class="docutils literal notranslate"><span class="pre">PowerShiftNormalizer</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.estimation.normalizers.PowerShiftNormalizer.name"><code class="docutils literal notranslate"><span class="pre">PowerShiftNormalizer.name</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.estimation.normalizers.PowerShiftNormalizer.normalize"><code class="docutils literal notranslate"><span class="pre">PowerShiftNormalizer.normalize()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.estimation.normalizers.MinMaxNormalizer"><code class="docutils literal notranslate"><span class="pre">MinMaxNormalizer</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.estimation.normalizers.MinMaxNormalizer.name"><code class="docutils literal notranslate"><span class="pre">MinMaxNormalizer.name</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.estimation.normalizers.MinMaxNormalizer.normalize"><code class="docutils literal notranslate"><span class="pre">MinMaxNormalizer.normalize()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -635,7 +743,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=6e0256f3"></script>
+</div><script src="../_static/documentation_options.js?v=ca7ad2ea"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

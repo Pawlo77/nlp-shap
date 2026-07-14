@@ -7,7 +7,7 @@
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>API reference - nlp-shap 0.1.6</title>
+        <title>API reference - nlp-shap 0.1.7</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.6</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.7</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.6</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.7</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -210,6 +210,7 @@
 <li class="toctree-l1"><a class="reference internal" href="guides/estimands.html">Using estimand aggregators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/exact.html">Using the exact estimator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/approximation.html">Using approximate estimators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/value_functions.html">Using value functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/runtime.html">Runtime core</a></li>
@@ -222,6 +223,7 @@
 <li class="toctree-l1"><a class="reference internal" href="theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/exact.html">Exact estimation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/approximation.html">Approximate estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/value_functions.html">Value functions and normalizers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/masking.html">Masking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory/runtime.html">Runtime core</a></li>
 </ul>
@@ -244,6 +246,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api/masking.html">Masking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/runtime.html">Runtime</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators and estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/value.html">Value functions</a></li>
 </ul>
 </li>
 </ul>
@@ -378,6 +381,7 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <li class="toctree-l1"><a class="reference internal" href="api/masking.html">Masking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/runtime.html">Runtime</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/estimation.html">Estimand aggregators and estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/value.html">Value functions</a></li>
 </ul>
 </div>
 </section>
@@ -528,6 +532,25 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.CosineEmbeddingValue">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">CosineEmbeddingValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/domain.html#nlp_shap.domain.enums.EmbeddingMode" title="nlp_shap.domain.enums.EmbeddingMode"><span class="pre">EmbeddingMode</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">EmbeddingMode.STATIC</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/protocols.html#nlp_shap.protocols.embedding.EmbeddingProvider" title="nlp_shap.protocols.embedding.EmbeddingProvider"><span class="pre">EmbeddingProvider</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_shap/value/embedding.html#CosineEmbeddingValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.CosineEmbeddingValue" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Cosine similarity between static or contextual embeddings (U1/U2).</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.CosineEmbeddingValue.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.CosineEmbeddingValue.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the registered value-function identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.CosineEmbeddingValue.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/protocols.html#nlp_shap.protocols.backend.GenerationResult" title="nlp_shap.protocols.backend.GenerationResult"><span class="pre">GenerationResult</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/protocols.html#nlp_shap.protocols.backend.GenerationResult" title="nlp_shap.protocols.backend.GenerationResult"><span class="pre">GenerationResult</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></span><a class="reference internal" href="_modules/nlp_shap/value/embedding.html#CosineEmbeddingValue.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.CosineEmbeddingValue.score" title="Link to this definition">¶</a></dt>
+<dd><p>Return cosine similarity between embedding vectors.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="nlp_shap.Estimand">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">Estimand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_shap/domain/estimands.html#Estimand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.Estimand" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.StrEnum" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></a></p>
@@ -652,6 +675,87 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.GenerationRecord">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">GenerationRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_token_rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">audio_token_rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logprobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contextual_embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_shap/domain/generation.html#GenerationRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.GenerationRecord" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Concrete generation output consumed by built-in value functions.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.GenerationRecord.text">
+<span class="sig-name descname"><span class="pre">text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.GenerationRecord.text" title="Link to this definition">¶</a></dt>
+<dd><p>Generated text payload.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.GenerationRecord.text_token_rows">
+<span class="sig-name descname"><span class="pre">text_token_rows</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></span><a class="headerlink" href="#nlp_shap.GenerationRecord.text_token_rows" title="Link to this definition">¶</a></dt>
+<dd><p>Token rows hashed for TF-IDF similarity (multimodal text stream).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.GenerationRecord.audio_token_rows">
+<span class="sig-name descname"><span class="pre">audio_token_rows</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></span><a class="headerlink" href="#nlp_shap.GenerationRecord.audio_token_rows" title="Link to this definition">¶</a></dt>
+<dd><p>Token rows hashed for TF-IDF similarity (multimodal audio stream).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.GenerationRecord.logprobs">
+<span class="sig-name descname"><span class="pre">logprobs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></span><a class="headerlink" href="#nlp_shap.GenerationRecord.logprobs" title="Link to this definition">¶</a></dt>
+<dd><p>Per-token log probabilities when the backend exposes them.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.GenerationRecord.embedding">
+<span class="sig-name descname"><span class="pre">embedding</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></span><a class="headerlink" href="#nlp_shap.GenerationRecord.embedding" title="Link to this definition">¶</a></dt>
+<dd><p>Static embedding vector for embedding-based value functions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.GenerationRecord.contextual_embedding">
+<span class="sig-name descname"><span class="pre">contextual_embedding</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></span><a class="headerlink" href="#nlp_shap.GenerationRecord.contextual_embedding" title="Link to this definition">¶</a></dt>
+<dd><p>Contextual embedding vector for U2-style scoring.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.IdentityNormalizer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">IdentityNormalizer</span></span><a class="reference internal" href="_modules/nlp_shap/estimation/normalizers.html#IdentityNormalizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.IdentityNormalizer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Return attributions unchanged.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.IdentityNormalizer.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.IdentityNormalizer.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the registered normalizer identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.IdentityNormalizer.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nlp_shap/estimation/normalizers.html#IdentityNormalizer.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.IdentityNormalizer.normalize" title="Link to this definition">¶</a></dt>
+<dd><p>Return a copy of <code class="docutils literal notranslate"><span class="pre">values</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.LogprobValue">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">LogprobValue</span></span><a class="reference internal" href="_modules/nlp_shap/value/logprob.html#LogprobValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.LogprobValue" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Score generations from summed token log probabilities.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.LogprobValue.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.LogprobValue.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the registered value-function identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.LogprobValue.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/protocols.html#nlp_shap.protocols.backend.GenerationResult" title="nlp_shap.protocols.backend.GenerationResult"><span class="pre">GenerationResult</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/protocols.html#nlp_shap.protocols.backend.GenerationResult" title="nlp_shap.protocols.backend.GenerationResult"><span class="pre">GenerationResult</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></span><a class="reference internal" href="_modules/nlp_shap/value/logprob.html#LogprobValue.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.LogprobValue.score" title="Link to this definition">¶</a></dt>
+<dd><p>Return utility from candidate logprobs relative to <code class="docutils literal notranslate"><span class="pre">base</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="nlp_shap.Message">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">Message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/domain.html#nlp_shap.domain.enums.Role" title="nlp_shap.domain.enums.Role"><span class="pre">Role</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nlp_shap/domain/conversation.html#Message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.Message" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
@@ -666,6 +770,25 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <dt class="sig sig-object py" id="nlp_shap.Message.text">
 <span class="sig-name descname"><span class="pre">text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.Message.text" title="Link to this definition">¶</a></dt>
 <dd><p>Token or span text included in the explainability input.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.MinMaxNormalizer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">MinMaxNormalizer</span></span><a class="reference internal" href="_modules/nlp_shap/estimation/normalizers.html#MinMaxNormalizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.MinMaxNormalizer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Min-max scale to <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1]</span></code> then normalize to sum one.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.MinMaxNormalizer.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.MinMaxNormalizer.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the registered normalizer identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.MinMaxNormalizer.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nlp_shap/estimation/normalizers.html#MinMaxNormalizer.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.MinMaxNormalizer.normalize" title="Link to this definition">¶</a></dt>
+<dd><p>Return min-max scaled attributions that sum to one.</p>
 </dd></dl>
 
 </dd></dl>
@@ -784,6 +907,12 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <dt class="sig sig-object py" id="nlp_shap.PluginGroup.VALUE_FNS">
 <span class="sig-name descname"><span class="pre">VALUE_FNS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'nlp_shap.value_fns'</span></span><a class="headerlink" href="#nlp_shap.PluginGroup.VALUE_FNS" title="Link to this definition">¶</a></dt>
 <dd><p>Utility scoring plugins for coalition outputs.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nlp_shap.PluginGroup.NORMALIZERS">
+<span class="sig-name descname"><span class="pre">NORMALIZERS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'nlp_shap.normalizers'</span></span><a class="headerlink" href="#nlp_shap.PluginGroup.NORMALIZERS" title="Link to this definition">¶</a></dt>
+<dd><p>Post-aggregation presentation normalizer plugins.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -908,6 +1037,31 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <dt class="sig sig-object py" id="nlp_shap.ShapleyAggregator.aggregate">
 <span class="sig-name descname"><span class="pre">aggregate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">masks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payoffs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nlp_shap/estimation/estimands/shapley.html#ShapleyAggregator.aggregate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.ShapleyAggregator.aggregate" title="Link to this definition">¶</a></dt>
 <dd><p>Aggregate coalition samples into Shapley values.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nlp_shap.TfIdfCosineValue">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.</span></span><span class="sig-name descname"><span class="pre">TfIdfCosineValue</span></span><a class="reference internal" href="_modules/nlp_shap/value/tfidf.html#TfIdfCosineValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.TfIdfCosineValue" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Score generations with cosine similarity of frozen TF-IDF vectors.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="nlp_shap.TfIdfCosineValue.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.TfIdfCosineValue.name" title="Link to this definition">¶</a></dt>
+<dd><p>Return the registered value-function identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.TfIdfCosineValue.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">corpus</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#nlp_shap.GenerationRecord" title="nlp_shap.domain.generation.GenerationRecord"><span class="pre">GenerationRecord</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/nlp_shap/value/tfidf.html#TfIdfCosineValue.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.TfIdfCosineValue.fit" title="Link to this definition">¶</a></dt>
+<dd><p>Freeze inverse document frequency weights from <code class="docutils literal notranslate"><span class="pre">corpus</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nlp_shap.TfIdfCosineValue.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/protocols.html#nlp_shap.protocols.backend.GenerationResult" title="nlp_shap.protocols.backend.GenerationResult"><span class="pre">GenerationResult</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api/protocols.html#nlp_shap.protocols.backend.GenerationResult" title="nlp_shap.protocols.backend.GenerationResult"><span class="pre">GenerationResult</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span></span><a class="reference internal" href="_modules/nlp_shap/value/tfidf.html#TfIdfCosineValue.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.TfIdfCosineValue.score" title="Link to this definition">¶</a></dt>
+<dd><p>Return TF-IDF cosine similarity between <code class="docutils literal notranslate"><span class="pre">candidate</span></code> and <code class="docutils literal notranslate"><span class="pre">base</span></code>.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1046,6 +1200,11 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <li><a class="reference internal" href="#nlp_shap.CooperativeGame.empty_value"><code class="docutils literal notranslate"><span class="pre">CooperativeGame.empty_value</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#nlp_shap.CosineEmbeddingValue"><code class="docutils literal notranslate"><span class="pre">CosineEmbeddingValue</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.CosineEmbeddingValue.name"><code class="docutils literal notranslate"><span class="pre">CosineEmbeddingValue.name</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.CosineEmbeddingValue.score"><code class="docutils literal notranslate"><span class="pre">CosineEmbeddingValue.score()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#nlp_shap.Estimand"><code class="docutils literal notranslate"><span class="pre">Estimand</span></code></a><ul>
 <li><a class="reference internal" href="#nlp_shap.Estimand.SHAPLEY"><code class="docutils literal notranslate"><span class="pre">Estimand.SHAPLEY</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.Estimand.BANZHAF"><code class="docutils literal notranslate"><span class="pre">Estimand.BANZHAF</span></code></a></li>
@@ -1074,9 +1233,33 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <li><a class="reference internal" href="#nlp_shap.ExplainResult.values"><code class="docutils literal notranslate"><span class="pre">ExplainResult.values</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#nlp_shap.GenerationRecord"><code class="docutils literal notranslate"><span class="pre">GenerationRecord</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.GenerationRecord.text"><code class="docutils literal notranslate"><span class="pre">GenerationRecord.text</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.GenerationRecord.text_token_rows"><code class="docutils literal notranslate"><span class="pre">GenerationRecord.text_token_rows</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.GenerationRecord.audio_token_rows"><code class="docutils literal notranslate"><span class="pre">GenerationRecord.audio_token_rows</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.GenerationRecord.logprobs"><code class="docutils literal notranslate"><span class="pre">GenerationRecord.logprobs</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.GenerationRecord.embedding"><code class="docutils literal notranslate"><span class="pre">GenerationRecord.embedding</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.GenerationRecord.contextual_embedding"><code class="docutils literal notranslate"><span class="pre">GenerationRecord.contextual_embedding</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.IdentityNormalizer"><code class="docutils literal notranslate"><span class="pre">IdentityNormalizer</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.IdentityNormalizer.name"><code class="docutils literal notranslate"><span class="pre">IdentityNormalizer.name</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.IdentityNormalizer.normalize"><code class="docutils literal notranslate"><span class="pre">IdentityNormalizer.normalize()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.LogprobValue"><code class="docutils literal notranslate"><span class="pre">LogprobValue</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.LogprobValue.name"><code class="docutils literal notranslate"><span class="pre">LogprobValue.name</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.LogprobValue.score"><code class="docutils literal notranslate"><span class="pre">LogprobValue.score()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#nlp_shap.Message"><code class="docutils literal notranslate"><span class="pre">Message</span></code></a><ul>
 <li><a class="reference internal" href="#nlp_shap.Message.role"><code class="docutils literal notranslate"><span class="pre">Message.role</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.Message.text"><code class="docutils literal notranslate"><span class="pre">Message.text</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nlp_shap.MinMaxNormalizer"><code class="docutils literal notranslate"><span class="pre">MinMaxNormalizer</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.MinMaxNormalizer.name"><code class="docutils literal notranslate"><span class="pre">MinMaxNormalizer.name</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.MinMaxNormalizer.normalize"><code class="docutils literal notranslate"><span class="pre">MinMaxNormalizer.normalize()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#nlp_shap.MonteCarloEstimator"><code class="docutils literal notranslate"><span class="pre">MonteCarloEstimator</span></code></a><ul>
@@ -1104,6 +1287,7 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <li><a class="reference internal" href="#nlp_shap.PluginGroup.ESTIMATORS"><code class="docutils literal notranslate"><span class="pre">PluginGroup.ESTIMATORS</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.PluginGroup.ESTIMANDS"><code class="docutils literal notranslate"><span class="pre">PluginGroup.ESTIMANDS</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.PluginGroup.VALUE_FNS"><code class="docutils literal notranslate"><span class="pre">PluginGroup.VALUE_FNS</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.PluginGroup.NORMALIZERS"><code class="docutils literal notranslate"><span class="pre">PluginGroup.NORMALIZERS</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.PluginGroup.BACKENDS"><code class="docutils literal notranslate"><span class="pre">PluginGroup.BACKENDS</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.PluginGroup.PARTITIONS"><code class="docutils literal notranslate"><span class="pre">PluginGroup.PARTITIONS</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.PluginGroup.ABSENCE_POLICIES"><code class="docutils literal notranslate"><span class="pre">PluginGroup.ABSENCE_POLICIES</span></code></a></li>
@@ -1134,6 +1318,12 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
 <li><a class="reference internal" href="#nlp_shap.ShapleyAggregator.aggregate"><code class="docutils literal notranslate"><span class="pre">ShapleyAggregator.aggregate()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#nlp_shap.TfIdfCosineValue"><code class="docutils literal notranslate"><span class="pre">TfIdfCosineValue</span></code></a><ul>
+<li><a class="reference internal" href="#nlp_shap.TfIdfCosineValue.name"><code class="docutils literal notranslate"><span class="pre">TfIdfCosineValue.name</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.TfIdfCosineValue.fit"><code class="docutils literal notranslate"><span class="pre">TfIdfCosineValue.fit()</span></code></a></li>
+<li><a class="reference internal" href="#nlp_shap.TfIdfCosineValue.score"><code class="docutils literal notranslate"><span class="pre">TfIdfCosineValue.score()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#nlp_shap.Turn"><code class="docutils literal notranslate"><span class="pre">Turn</span></code></a><ul>
 <li><a class="reference internal" href="#nlp_shap.Turn.messages"><code class="docutils literal notranslate"><span class="pre">Turn.messages</span></code></a></li>
 </ul>
@@ -1154,7 +1344,7 @@ from <a class="reference internal" href="#module-nlp_shap" title="nlp_shap"><cod
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=6e0256f3"></script>
+</div><script src="_static/documentation_options.js?v=ca7ad2ea"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

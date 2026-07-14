@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.domain.conversation - nlp-shap 0.1.7</title>
+        <title>nlp_shap.domain.generation - nlp-shap 0.1.7</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -280,87 +280,36 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for nlp_shap.domain.conversation</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Immutable conversation snapshots without backend or IO.&quot;&quot;&quot;</span>
+          <h1>Source code for nlp_shap.domain.generation</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Generation payloads scored by value functions.&quot;&quot;&quot;</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">Role</span>
 
 
-<div class="viewcode-block" id="Message">
-<a class="viewcode-back" href="../../../api/domain.html#nlp_shap.Message">[docs]</a>
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">Message</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A single explainable text unit with an attached role.&quot;&quot;&quot;</span>
-
-    <span class="n">role</span><span class="p">:</span> <span class="n">Role</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Participant role for this text unit.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="GenerationRecord">
+<a class="viewcode-back" href="../../../api.html#nlp_shap.GenerationRecord">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GenerationRecord</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Concrete generation output consumed by built-in value functions.&quot;&quot;&quot;</span>
 
     <span class="n">text</span><span class="p">:</span> <span class="nb">str</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Token or span text included in the explainability input.&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generated text payload.&quot;&quot;&quot;</span>
 
+    <span class="n">text_token_rows</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Token rows hashed for TF-IDF similarity (multimodal text stream).&quot;&quot;&quot;</span>
 
+    <span class="n">audio_token_rows</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Token rows hashed for TF-IDF similarity (multimodal audio stream).&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Turn">
-<a class="viewcode-back" href="../../../api/domain.html#nlp_shap.Turn">[docs]</a>
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">Turn</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;One conversational turn composed of ordered messages.&quot;&quot;&quot;</span>
+    <span class="n">logprobs</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Per-token log probabilities when the backend exposes them.&quot;&quot;&quot;</span>
 
-    <span class="n">messages</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Message</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ordered messages that make up this turn.&quot;&quot;&quot;</span>
+    <span class="n">embedding</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Static embedding vector for embedding-based value functions.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">messages</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;turn must contain at least one message&quot;</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+    <span class="n">contextual_embedding</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Contextual embedding vector for U2-style scoring.&quot;&quot;&quot;</span></div>
 
-
-
-<div class="viewcode-block" id="ConversationSnapshot">
-<a class="viewcode-back" href="../../../api/domain.html#nlp_shap.ConversationSnapshot">[docs]</a>
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">ConversationSnapshot</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Frozen conversation state used as the explainability input.&quot;&quot;&quot;</span>
-
-    <span class="n">turns</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Turn</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ordered turns that define the conversation under study.&quot;&quot;&quot;</span>
-
-    <span class="n">snapshot_id</span><span class="p">:</span> <span class="nb">str</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stable identifier used for deduplication and run archives.&quot;&quot;&quot;</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">turns</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;snapshot must contain at least one turn&quot;</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">snapshot_id</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;snapshot_id must be non-empty&quot;</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-
-<div class="viewcode-block" id="ConversationSnapshot.from_turns">
-<a class="viewcode-back" href="../../../api/domain.html#nlp_shap.ConversationSnapshot.from_turns">[docs]</a>
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_turns</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">turns</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Turn</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build a snapshot with a stable content-derived identifier.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">turns</span><span class="o">=</span><span class="n">turns</span><span class="p">,</span> <span class="n">snapshot_id</span><span class="o">=</span><span class="n">_digest_turns</span><span class="p">(</span><span class="n">turns</span><span class="p">))</span></div>
-</div>
-
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">_digest_turns</span><span class="p">(</span><span class="n">turns</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Turn</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="n">payload</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="p">[</span>
-            <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="n">message</span><span class="o">.</span><span class="n">role</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">message</span><span class="o">.</span><span class="n">text</span><span class="p">}</span>
-            <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">turn</span><span class="o">.</span><span class="n">messages</span>
-        <span class="p">]</span>
-        <span class="k">for</span> <span class="n">turn</span> <span class="ow">in</span> <span class="n">turns</span>
-    <span class="p">]</span>
-    <span class="n">encoded</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">encoded</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">16</span><span class="p">]</span>
 </pre></div>
         </article>
       </div>
