@@ -1,12 +1,13 @@
 """Horizontal bar chart renderer for token attributions."""
 
 from collections.abc import Sequence
-from typing import Any, cast
-
-from matplotlib.figure import Figure
+from typing import TYPE_CHECKING, Any, cast
 
 from ..domain.estimands import Estimand
 from .colors import diverging_rgba
+
+if TYPE_CHECKING:
+    from matplotlib.figure import Figure
 
 
 class TokenBarRenderer:
@@ -24,7 +25,7 @@ class TokenBarRenderer:
         *,
         estimand: Estimand,
         title: str | None = None,
-    ) -> Figure:
+    ) -> "Figure":
         """Build a horizontal bar chart sorted by absolute attribution."""
         if len(labels) != len(values):
             msg = "labels and values must have the same length"
@@ -49,7 +50,7 @@ class TokenBarRenderer:
         axis.set_xlabel("Attribution")
         axis.set_title(title or f"{estimand.value.title()} token attributions")
         fig.tight_layout()
-        return cast(Figure, fig)
+        return cast("Figure", fig)
 
 
 def _import_pyplot() -> object:

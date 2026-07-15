@@ -101,9 +101,6 @@ class ExplanationConfig(BaseModel):
 
     model_config = ConfigDict(extra="forbid", frozen=True)
 
-    use_v2: bool = True
-    """Whether the v2 explain pipeline is active."""
-
     estimand: Estimand = Estimand.SHAPLEY
     """Cooperative-game value targeted by aggregation."""
 

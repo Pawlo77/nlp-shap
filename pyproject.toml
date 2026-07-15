@@ -1,6 +1,6 @@
 [project]
 name = "nlp-shap"
-version = "0.1.13"
+version = "0.1.14"
 description = "Multimodal explainability tool for NLP based on Shapley value."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
@@ -100,6 +100,16 @@ api = [
 viz = [
     "matplotlib>=3.9.0",
     "ipywidgets>=8.1.0",
+]
+dev = [
+    "bandit>=1.9.4",
+    "httpx>=0.28.0",
+    "matplotlib>=3.9.0",
+    "mypy>=1.16.0",
+    "prek>=0.4.9",
+    "pytest>=8.4.2",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.15.20",
 ]
 
 [build-system]

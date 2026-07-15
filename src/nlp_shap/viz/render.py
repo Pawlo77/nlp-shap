@@ -1,8 +1,6 @@
 """Public helpers for attribution visualization."""
 
-from typing import Any, cast
-
-from matplotlib.figure import Figure
+from typing import TYPE_CHECKING, Any, cast
 
 from ..domain.conversation import ConversationSnapshot
 from ..domain.players import PlayerSet
@@ -11,7 +9,9 @@ from ..plugins.groups import PluginGroup
 from ..plugins.registry import PluginRegistry
 from ..protocols.renderer import AttributionRenderer
 from .labels import token_labels
-from .token_text import TokenTextRenderer
+
+if TYPE_CHECKING:
+    from matplotlib.figure import Figure
 
 
 def render_attribution(
@@ -22,7 +22,7 @@ def render_attribution(
     renderer: str = "token_text",
     title: str | None = None,
     registry: PluginRegistry | None = None,
-) -> Figure:
+) -> "Figure":
     """Render ``output`` attributions with a registered renderer plugin."""
     plugin_registry = registry or _default_registry()
     attribution_renderer = cast(
@@ -32,7 +32,7 @@ def render_attribution(
     labels = token_labels(snapshot, player_set)
     values = output.result.values
     return cast(
-        Figure,
+        "Figure",
         attribution_renderer.render(
             labels,
             values,
@@ -50,6 +50,8 @@ def render_attribution_html(
     title: str | None = None,
 ) -> str:
     """Return an HTML fragment for inline token coloring in Jupyter."""
+    from .token_text import TokenTextRenderer
+
     renderer = TokenTextRenderer()
     labels = token_labels(snapshot, player_set)
     return renderer.to_html(

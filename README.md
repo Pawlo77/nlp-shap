@@ -15,6 +15,35 @@
 pip install nlp-shap
 ```
 
+Optional backends and visualization:
+
+```bash
+pip install "nlp-shap[transformers]"   # Hugging Face text backend
+pip install "nlp-shap[lmstudio]"       # LM Studio SDK
+pip install "nlp-shap[api]"            # OpenAI-compatible HTTP API
+pip install "nlp-shap[viz]"            # matplotlib token charts
+```
+
+The core package does not install PyTorch. See the [extending guide](https://pawlo77.github.io/nlp-shap/guides/extending.html) for plugin entry points.
+
+## Quickstart
+
+```python
+from nlp_shap import ExplainConfig, ExplainRunner
+from nlp_shap.domain.conversation import ConversationSnapshot, Message, Turn
+from nlp_shap.domain.enums import Role
+
+snapshot = ConversationSnapshot.from_turns((
+    Turn(messages=(Message(role=Role.USER, text="refund my order"),)),
+))
+config = ExplainConfig.model_validate({
+    "backend": {"kind": "mock", "model_id": "stub"},
+    "explanation": {"estimator": "exact", "value_fn": "tfidf_cosine"},
+})
+output = ExplainRunner(config).explain_sync(snapshot)
+print(output.result.values)
+```
+
 From source:
 
 ```bash

@@ -1,12 +1,13 @@
 """SHAP-style inline colored token attribution renderer."""
 
 from collections.abc import Sequence
-from typing import Any, cast
-
-from matplotlib.figure import Figure
+from typing import TYPE_CHECKING, Any, cast
 
 from ..domain.estimands import Estimand
 from .colors import diverging_rgba
+
+if TYPE_CHECKING:
+    from matplotlib.figure import Figure
 
 
 class TokenTextRenderer:
@@ -24,7 +25,7 @@ class TokenTextRenderer:
         *,
         estimand: Estimand,
         title: str | None = None,
-    ) -> Figure:
+    ) -> "Figure":
         """Build a matplotlib figure with colored token labels."""
         if len(labels) != len(values):
             msg = "labels and values must have the same length"
@@ -59,7 +60,7 @@ class TokenTextRenderer:
                 },
             )
         fig.tight_layout()
-        return cast(Figure, fig)
+        return cast("Figure", fig)
 
     def to_html(
         self,

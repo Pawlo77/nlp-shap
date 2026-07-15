@@ -32,7 +32,20 @@ from .pipeline import (
 )
 from .plugins import PluginGroup, PluginRegistry
 from .value import CosineEmbeddingValue, LogprobValue, TfIdfCosineValue
-from .viz import render_attribution, render_attribution_html
+
+
+def __getattr__(name: str) -> object:
+    if name == "render_attribution":
+        from .viz.render import render_attribution
+
+        return render_attribution
+    if name == "render_attribution_html":
+        from .viz.render import render_attribution_html
+
+        return render_attribution_html
+    msg = f"module {__name__!r} has no attribute {name!r}"
+    raise AttributeError(msg)
+
 
 __all__ = [
     "BanzhafAggregator",

@@ -47,6 +47,33 @@ The estimand aggregators take boolean **coalition masks** and aligned payoffs
    print("Shapley:", shapley)   # ~[0.333, 0.333, 0.333]
    print("Banzhaf:", banzhaf)   # [0.5, 0.5, 0.5]
 
+Explain a short prompt
+----------------------
+
+For end-to-end token attributions, build a
+:class:`~nlp_shap.domain.conversation.ConversationSnapshot`, load an
+:class:`~nlp_shap.ExplainConfig`, and call :class:`~nlp_shap.ExplainRunner`:
+
+.. code-block:: python
+
+   from nlp_shap import ExplainConfig, ExplainRunner
+   from nlp_shap.domain.conversation import ConversationSnapshot, Message, Turn
+   from nlp_shap.domain.enums import Role
+
+   snapshot = ConversationSnapshot.from_turns((
+       Turn(messages=(Message(role=Role.USER, text="refund my order"),)),
+   ))
+   config = ExplainConfig.model_validate({
+       "backend": {"kind": "mock", "model_id": "stub"},
+       "explanation": {
+           "estimator": "exact",
+           "value_fn": "tfidf_cosine",
+           "absence_policy": "pad",
+       },
+   })
+   output = ExplainRunner(config).explain_sync(snapshot)
+   print(output.result.values)
+
 Label results for archives
 --------------------------
 
@@ -72,6 +99,8 @@ Next steps
 - :doc:`../theory/estimands` — why Shapley and Banzhaf differ
 - :doc:`applications` — business and compliance use cases
 - :doc:`../examples` — `estimands_toy_game.ipynb`, `masking_views.ipynb`, `runtime_core.ipynb`, and `exact_estimation.ipynb`
+- :doc:`pipeline` — :class:`~nlp_shap.ExplainRunner` end-to-end explain flow
+- :doc:`extending` — optional extras and plugin entry points
 - :doc:`masking` — coalition masking and absence policies
 - :doc:`runtime` — archive persistence, dedup, and async scheduling
 - :doc:`exact` — exact coalition enumeration and estimand wiring
