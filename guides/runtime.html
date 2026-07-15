@@ -7,7 +7,7 @@
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Runtime core - nlp-shap 0.1.14</title>
+        <title>Runtime core - nlp-shap 0.1.15</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">nlp-shap 0.1.14</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.15</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.14</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.15</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -413,6 +413,19 @@ scheduler does not create one coroutine per coalition upfront:</p>
 </pre></div>
 </div>
 </section>
+<section id="performance-benchmarks">
+<h2>Performance benchmarks<a class="headerlink" href="#performance-benchmarks" title="Link to this heading">¶</a></h2>
+<p>Local micro-benchmarks live in <code class="docutils literal notranslate"><span class="pre">tests/benchmarks/</span></code>. They cover coalition
+deduplication keys, mask pack/unpack throughput, 10k-row archive round-trips,
+and prefix-cache hit rate.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>bench<span class="w">              </span><span class="c1"># record timings to .pytest_benchmark/benchmark.json</span>
+make<span class="w"> </span>bench-regression<span class="w">   </span><span class="c1"># fail when a bench regresses &gt;10% vs baselines.json</span>
+</pre></div>
+</div>
+<p>Benchmarks are not part of <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check</span></code> latency gates on CI; run
+<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">bench-regression</span></code> locally before changing hot paths in
+<code class="docutils literal notranslate"><span class="pre">runtime/</span></code> or <code class="docutils literal notranslate"><span class="pre">masking/</span></code>.</p>
+</section>
 <section id="notebook">
 <h2>Notebook<a class="headerlink" href="#notebook" title="Link to this heading">¶</a></h2>
 <p>For a runnable walkthrough with stored outputs, see
@@ -488,6 +501,7 @@ scheduler does not create one coroutine per coalition upfront:</p>
 <li><a class="reference internal" href="#build-coalition-dedup-keys">Build coalition dedup keys</a></li>
 <li><a class="reference internal" href="#schedule-async-coalition-jobs">Schedule async coalition jobs</a></li>
 <li><a class="reference internal" href="#streaming-large-job-sets">Streaming large job sets</a></li>
+<li><a class="reference internal" href="#performance-benchmarks">Performance benchmarks</a></li>
 <li><a class="reference internal" href="#notebook">Notebook</a></li>
 </ul>
 </li>
@@ -500,7 +514,7 @@ scheduler does not create one coroutine per coalition upfront:</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=468bc497"></script>
+</div><script src="../_static/documentation_options.js?v=e2f3408e"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
