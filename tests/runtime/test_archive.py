@@ -95,3 +95,16 @@ def test_history_lazy_reads_blobs_incrementally(
                 break
 
     assert read_count == 50
+
+
+def test_run_archive_stores_base_generation(
+    tmp_path: Path,
+    run_manifest: RunManifest,
+) -> None:
+    """Base generation text round-trips through the archive root file."""
+    root = tmp_path / "run-base"
+    with RunArchive.open(root, run_manifest) as archive:
+        archive.write_base_generation("grand coalition text")
+
+    with RunArchive.load(root) as archive:
+        assert archive.read_base_generation() == "grand coalition text"

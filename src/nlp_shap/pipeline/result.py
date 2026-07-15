@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 
 from ..domain.estimands import Estimand
+from ..runtime.metrics import PerfSummary
 from ..runtime.scheduler import SchedulerMetrics
 from .manifest import RunManifest
 
@@ -33,3 +34,6 @@ class ExplainRunOutput:
 
     manifest: RunManifest
     """Manifest metadata persisted with optional archives."""
+
+    perf: PerfSummary | None = None
+    """Optional wall-clock breakdown for the run."""

@@ -8,7 +8,10 @@ from pathlib import Path
 from typing import Self
 
 from ..masking.codec import PackedMask
-from ..pipeline.manifest import RunManifest
+from ..pipeline.manifest import RunManifest, parse_manifest
+
+BASE_GENERATION_FILE = "base_generation.txt"
+"""Filename for the grand-coalition reference generation at the archive root."""
 
 
 @dataclass(frozen=True, slots=True)
@@ -113,6 +116,28 @@ class RunArchive:
             encoding="utf-8",
         )
         return archive
+
+    @classmethod
+    def load(cls, root: Path) -> Self:
+        """Open an existing run archive without rewriting its manifest."""
+        manifest_path = root / "manifest.json"
+        if not manifest_path.is_file():
+            msg = f"archive manifest missing: {manifest_path}"
+            raise FileNotFoundError(msg)
+        manifest = parse_manifest(json.loads(manifest_path.read_text(encoding="utf-8")))
+        return cls(root, manifest)
+
+    def write_base_generation(self, text: str) -> None:
+        """Persist the grand-coalition reference generation before coalition rows."""
+        path = self._root / BASE_GENERATION_FILE
+        path.write_text(text, encoding="utf-8")
+
+    def read_base_generation(self) -> str | None:
+        """Return the archived base generation when present."""
+        path = self._root / BASE_GENERATION_FILE
+        if not path.is_file():
+            return None
+        return path.read_text(encoding="utf-8")
 
     def append(self, draft: CoalitionRecordDraft) -> int:
         """Append one coalition record and return its archive identifier."""
