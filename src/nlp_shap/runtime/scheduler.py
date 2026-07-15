@@ -32,6 +32,9 @@ class SchedulerMetrics:
     cache_hits: int
     """Number of jobs served from the hot result store without backend calls."""
 
+    kv_cache_hits: int = 0
+    """Number of coalition generations that reused a cached prompt prefix."""
+
 
 @dataclass(frozen=True, slots=True)
 class CoalitionJob:
@@ -60,6 +63,9 @@ class CoalitionJob:
 
     utility: float
     """Utility score assigned after generation."""
+
+    prefix_hash: str = ""
+    """Shared prompt prefix hash used for KV-cache grouping."""
 
 
 class InferenceScheduler:
@@ -120,6 +126,7 @@ class InferenceScheduler:
             executed=mutable["executed"],
             deduplicated=mutable["deduplicated"],
             cache_hits=mutable["cache_hits"],
+            kv_cache_hits=mutable.get("kv_cache_hits", 0),
         )
 
     async def run_stream(
@@ -149,6 +156,7 @@ class InferenceScheduler:
             executed=mutable["executed"],
             deduplicated=mutable["deduplicated"],
             cache_hits=mutable["cache_hits"],
+            kv_cache_hits=mutable.get("kv_cache_hits", 0),
         )
 
     async def _process_job(

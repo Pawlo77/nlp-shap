@@ -19,8 +19,9 @@ from ..protocols.normalizer import Normalizer
 from ..protocols.value import ValueFunction
 from ..runtime.archive import BASE_GENERATION_FILE, RunArchive
 from ..runtime.dedup import CoalitionDedupRegistry, build_coalition_key, dedup_enabled
+from ..runtime.kv_cache import build_snapshot_prefix_hash, group_jobs_for_prefix_cache
 from ..runtime.metrics import PerfSummary
-from ..runtime.scheduler import CoalitionJob, InferenceScheduler
+from ..runtime.scheduler import CoalitionJob, InferenceScheduler, SchedulerMetrics
 from ..runtime.store import HotResultStore
 from ..value.tfidf import TfIdfCosineValue
 from .context import ExplainContext
@@ -138,7 +139,15 @@ class ExplainOrchestrator:
                 )
 
                 jobs = self._build_jobs(mask_builder, player_set, masks)
+                if explanation.kv_cache.enabled:
+                    jobs = group_jobs_for_prefix_cache(
+                        jobs,
+                        key=lambda job: job.prefix_hash,
+                    )
                 generation = config.generation
+                set_kv_cache = getattr(self._backend, "set_kv_cache_enabled", None)
+                if set_kv_cache is not None:
+                    set_kv_cache(explanation.kv_cache.enabled)
 
                 async def generate(snapshot_for_job: ConversationSnapshot) -> str:
                     record = await self._backend.generate(
@@ -152,6 +161,15 @@ class ExplainOrchestrator:
                 schedule_started = time.perf_counter()
                 with telemetry.span("orchestrator.schedule"):
                     metrics = await scheduler.run(jobs, generate)
+                backend_kv_hits = int(getattr(self._backend, "kv_cache_hits", 0))
+                if backend_kv_hits:
+                    metrics = SchedulerMetrics(
+                        requested=metrics.requested,
+                        executed=metrics.executed,
+                        deduplicated=metrics.deduplicated,
+                        cache_hits=metrics.cache_hits,
+                        kv_cache_hits=backend_kv_hits,
+                    )
                 generation_ms += (time.perf_counter() - schedule_started) * 1000.0
 
                 coalition_records = self._collect_generation_records(jobs, store)
@@ -251,6 +269,7 @@ class ExplainOrchestrator:
                     absence_policy=mask_builder.policy_name,
                     mask_words=packed.words,
                     mask_n_bits=packed.n_bits,
+                    prefix_hash=build_snapshot_prefix_hash(rendered),
                     model_id=self._backend.model_id,
                     utility=0.0,
                 )

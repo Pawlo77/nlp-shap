@@ -94,6 +94,7 @@ def reanalyze_sync(
         executed=0,
         deduplicated=0,
         cache_hits=len(records),
+        kv_cache_hits=0,
     )
     result = ExplainResult(
         estimand=explanation.estimand,

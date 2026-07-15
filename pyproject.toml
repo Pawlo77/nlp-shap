@@ -1,6 +1,6 @@
 [project]
 name = "nlp-shap"
-version = "0.1.10"
+version = "0.1.11"
 description = "Multimodal explainability tool for NLP based on Shapley value."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
@@ -78,10 +78,16 @@ min_max = "nlp_shap.estimation.normalizers:MinMaxNormalizer"
 [project.entry-points."nlp_shap.backends"]
 mock = "nlp_shap.backends.mock:MockBackend"
 lmstudio = "nlp_shap.backends.lmstudio:LmStudioBackend"
+transformers = "nlp_shap.backends.transformers.text:TransformersTextBackend"
 
 [project.optional-dependencies]
 lmstudio = [
     "lmstudio>=1.5.0",
+]
+transformers = [
+    "accelerate>=1.0.0",
+    "torch>=2.5.0",
+    "transformers>=4.40.0",
 ]
 
 [build-system]
@@ -140,6 +146,10 @@ ignore_missing_imports = true
 module = ["lmstudio", "lmstudio.*"]
 ignore_missing_imports = true
 
+[[tool.mypy.overrides]]
+module = ["torch", "torch.*", "transformers", "transformers.*"]
+ignore_missing_imports = true
+
 [tool.bandit]
 exclude_dirs = [".venv", "tests", "docs/_build", "examples"]
 
@@ -150,6 +160,7 @@ filterwarnings = [
 markers = [
   "bench: local performance benchmark (run with make bench)",
   "lms: LM Studio integration test (requires local LM Studio with qwen2-500m-instruct)",
+  "gpu: transformers integration test (requires torch and optional GPU)",
 ]
 
 [tool.coverage.run]
