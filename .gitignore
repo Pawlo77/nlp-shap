@@ -90,3 +90,5 @@ dmypy.json
 # Cursor
 .cursorignore
 .cursorindexingignore
+runs/
+examples/runs/

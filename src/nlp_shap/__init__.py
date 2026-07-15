@@ -32,6 +32,7 @@ from .pipeline import (
 )
 from .plugins import PluginGroup, PluginRegistry
 from .value import CosineEmbeddingValue, LogprobValue, TfIdfCosineValue
+from .viz import render_attribution, render_attribution_html
 
 __all__ = [
     "BanzhafAggregator",
@@ -65,6 +66,8 @@ __all__ = [
     "explain_config_from_yaml",
     "explain_config_to_yaml",
     "parse_manifest",
+    "render_attribution",
+    "render_attribution_html",
 ]
 
 try:

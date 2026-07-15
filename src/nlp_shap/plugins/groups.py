@@ -26,3 +26,6 @@ class PluginGroup(StrEnum):
 
     ABSENCE_POLICIES = "nlp_shap.absence_policies"
     """Absence-policy plugins for rendering masked snapshots."""
+
+    RENDERERS = "nlp_shap.renderers"
+    """Attribution visualization renderer plugins."""

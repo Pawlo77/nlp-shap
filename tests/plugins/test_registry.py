@@ -49,6 +49,13 @@ def test_registry_loads_backend_entry_points() -> None:
     assert "api" in registry.names(PluginGroup.BACKENDS)
 
 
+def test_registry_loads_renderer_entry_points() -> None:
+    """Packaging entry points resolve renderer plugins."""
+    registry = PluginRegistry()
+    registry.load_entry_points(PluginGroup.RENDERERS)
+    assert registry.names(PluginGroup.RENDERERS) == ("token_bar", "token_text")
+
+
 def test_registry_register_and_resolve_round_trip() -> None:
     """Manual registration resolves to the registered factory."""
     registry = PluginRegistry()

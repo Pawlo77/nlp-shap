@@ -8,6 +8,22 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-1-13:
+
+0.1.13 (2026-07-15)
+-------------------
+
+Added
+~~~~~
+
+- :mod:`nlp_shap.viz` with ``token_text`` and ``token_bar`` renderer plugins and
+  :func:`~nlp_shap.render_attribution` public helper.
+- :class:`~nlp_shap.protocols.renderer.AttributionRenderer` protocol and
+  ``nlp_shap.renderers`` entry-point group.
+- Optional ``[viz]`` extra (``matplotlib``, ``ipywidgets``).
+- :doc:`guides/visualization` user guide and ``attribution_viz`` /
+  ``text_explain_e2e`` example notebooks.
+
 .. _release-0-1-12:
 
 0.1.12 (2026-07-15)

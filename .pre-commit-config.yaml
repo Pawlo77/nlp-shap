@@ -99,5 +99,6 @@ repos:
           (?x)^(
             uv\.lock|
             LICENSE|
-            docs/_build/
+            docs/_build/|
+            examples/.*\.ipynb
           )

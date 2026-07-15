@@ -1,6 +1,6 @@
 [project]
 name = "nlp-shap"
-version = "0.1.12"
+version = "0.1.13"
 description = "Multimodal explainability tool for NLP based on Shapley value."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
@@ -81,6 +81,10 @@ lmstudio = "nlp_shap.backends.lmstudio:LmStudioBackend"
 transformers = "nlp_shap.backends.transformers.text:TransformersTextBackend"
 api = "nlp_shap.backends.api:ApiBackend"
 
+[project.entry-points."nlp_shap.renderers"]
+token_text = "nlp_shap.viz.token_text:TokenTextRenderer"
+token_bar = "nlp_shap.viz.token_bar:TokenBarRenderer"
+
 [project.optional-dependencies]
 lmstudio = [
     "lmstudio>=1.5.0",
@@ -93,6 +97,10 @@ transformers = [
 api = [
     "httpx>=0.28.0",
 ]
+viz = [
+    "matplotlib>=3.9.0",
+    "ipywidgets>=8.1.0",
+]
 
 [build-system]
 requires = ["uv_build>=0.11.0,<0.12.0"]
@@ -103,6 +111,8 @@ dev = [
   "bandit>=1.9.4",
   "httpx>=0.28.0",
   "ipykernel>=7.3.0",
+  "ipywidgets>=8.1.0",
+  "matplotlib>=3.9.0",
   "mypy>=1.16.0",
   "nbconvert>=7.17.1",
   "prek>=0.4.9",
@@ -149,6 +159,10 @@ ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = ["lmstudio", "lmstudio.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["matplotlib", "matplotlib.*", "IPython", "IPython.*"]
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
