@@ -295,8 +295,8 @@
           <section id="shapley-vs-banzhaf-on-toy-cooperative-games">
 <h1>Shapley vs Banzhaf on toy cooperative games<a class="headerlink" href="#shapley-vs-banzhaf-on-toy-cooperative-games" title="Link to this heading">¶</a></h1>
 <p><strong>Business context:</strong> Attribution reports shown to legal, risk, and product teams must name the <strong>estimand</strong> being reported. Shapley and Banzhaf answer different fairness questions; mislabelling one as the other breaks audit trails and can invalidate compliance reviews.</p>
-<p><strong>Goal:</strong> Walk through every public estimand API in <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> 0.1.1 — aggregators, coalition weights, labelled results, manifest wire format, and plugin resolution.</p>
-<p><strong>Prerequisites:</strong> <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> 0.1.1+, Python 3.12.</p>
+<p><strong>Goal:</strong> Walk through every public estimand API — aggregators, coalition weights, labelled results, manifest wire format, and plugin resolution.</p>
+<p><strong>Prerequisites:</strong> <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code>, Python 3.12.</p>
 <p><strong>Theory:</strong> See the <a class="reference external" href="https://pawlo77.github.io/nlp-shap/theory/estimands.html">estimands theory page</a>.</p>
 <p><strong>Expected output:</strong> Divergence on a majority game; agreement on an additive game; <code class="docutils literal notranslate"><span class="pre">ExplainResult</span></code> and <code class="docutils literal notranslate"><span class="pre">RunManifest</span></code> carry the estimand label end to end.</p>
 <div class="cell docutils container">

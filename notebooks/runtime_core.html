@@ -295,8 +295,8 @@
           <section id="runtime-archive-deduplication-and-async-scheduling">
 <h1>Runtime archive, deduplication, and async scheduling<a class="headerlink" href="#runtime-archive-deduplication-and-async-scheduling" title="Link to this heading">¶</a></h1>
 <p><strong>Business context:</strong> Production explain runs generate thousands of coalition evaluations. Persisted archives support compliance replay, deduplication avoids redundant API spend, and bounded concurrency keeps latency predictable under load.</p>
-<p><strong>Goal:</strong> Walk through every public runtime API in <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> 0.1.4 — run archive, coalition keys, hot LRU cache, and the async inference scheduler.</p>
-<p><strong>Prerequisites:</strong> <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> 0.1.4+, Python 3.12.</p>
+<p><strong>Goal:</strong> Walk through every public runtime API — run archive, coalition keys, hot LRU cache, and the async inference scheduler.</p>
+<p><strong>Prerequisites:</strong> <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code>, Python 3.12.</p>
 <p><strong>Theory:</strong> See the <a class="reference external" href="https://pawlo77.github.io/nlp-shap/theory/runtime.html">runtime theory page</a>.</p>
 <p><strong>Expected output:</strong> 100 coalition rows round-trip through SQLite; ten unique masks collapse to ten backend calls; scheduler metrics report cache hits and bounded concurrency.</p>
 <div class="cell docutils container">

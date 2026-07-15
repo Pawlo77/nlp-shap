@@ -1,8 +1,8 @@
 End-to-end explain pipeline
 ============================
 
-Phase 7 wires existing masking, runtime, estimation, and value-function plugins
-into a single explain run.
+The explain pipeline wires masking, runtime, estimation, and value-function plugins
+into a single run.
 
 Quick start
 -----------

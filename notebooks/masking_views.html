@@ -295,8 +295,8 @@
           <section id="coalition-masking-and-absence-policies">
 <h1>Coalition masking and absence policies<a class="headerlink" href="#coalition-masking-and-absence-policies" title="Link to this heading">¶</a></h1>
 <p><strong>Business context:</strong> LLM attribution depends on how absent prompt pieces are represented. Deletion, masking placeholders, and neutral fillers change model behavior, audit reproducibility, and the cost of coalition sampling at scale.</p>
-<p><strong>Goal:</strong> Walk through every public masking API in <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> 0.1.3 — partitioning, absence policies, shared views, packed-mask codecs, mask-space projection, and plugin resolution.</p>
-<p><strong>Prerequisites:</strong> <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> 0.1.3+, Python 3.12.</p>
+<p><strong>Goal:</strong> Walk through every public masking API — partitioning, absence policies, shared views, packed-mask codecs, mask-space projection, and plugin resolution.</p>
+<p><strong>Prerequisites:</strong> <code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code>, Python 3.12.</p>
 <p><strong>Theory:</strong> See the <a class="reference external" href="https://pawlo77.github.io/nlp-shap/theory/masking.html">masking theory page</a>.</p>
 <p><strong>Expected output:</strong> Token players partitioned from a snapshot; delete / pad / neutral renders; stable mask hashes; <code class="docutils literal notranslate"><span class="pre">MaskSpace</span></code> projection; structural sharing across views; built-in and entry-point plugin resolution for all absence policies.</p>
 <div class="cell docutils container">

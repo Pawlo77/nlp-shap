@@ -11,7 +11,7 @@
     "\n",
     "**Goal:** (1) Benchmark **eight players** with at most **20 coalition evaluations**; (2) sweep **budget.fraction** up to **0.5** where that cap allows; (3) explain why Monte Carlo can show **high error with tiny variance**.\n",
     "\n",
-    "**Prerequisites:** `nlp-shap` 0.1.6+, Python 3.12.\n",
+    "**Prerequisites:** `nlp-shap`, Python 3.12.\n",
     "\n",
     "**Theory:** [Approximation methods](https://pawlo77.github.io/nlp-shap/theory/approximation.html)."
    ]
