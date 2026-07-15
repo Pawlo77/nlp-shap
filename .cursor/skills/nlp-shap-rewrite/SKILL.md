@@ -50,7 +50,7 @@ gh run watch <run-id> --exit-status   # after push
 | 9 | v0.1.10 | lmstudio |
 | 10 | v0.1.11 | transformers text + kv cache |
 | 11 | v0.1.12 | api backend |
-| 12 | v0.1.13 | viz renderers (`[viz]` extra) |
+| 12 | v0.1.13 | viz renderers + text_explain_e2e notebook |
 | 13 | v0.1.14 | entry points, docs, nlp_shapx, flag removal |
 | 14 | v0.1.15 | perf benchmarks |
 
