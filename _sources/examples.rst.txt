@@ -67,6 +67,17 @@ open the ``.ipynb`` on GitHub or browse the full catalog in
        0.1–0.5, MC bias analysis, multi-seed L1 vs exact Shapley. CPU-only.
      - `GitHub <https://github.com/Pawlo77/nlp-shap/blob/main/examples/estimator_comparison.ipynb>`_
 
+   * - :doc:`notebooks/attribution_viz`
+     - Mock exact explain run with ``token_text`` and ``token_bar`` attribution
+       renderers. Requires ``[viz]``.
+     - `GitHub <https://github.com/Pawlo77/nlp-shap/blob/main/examples/attribution_viz.ipynb>`_
+
+   * - :doc:`notebooks/text_explain_e2e`
+     - Refund-policy prompt explained with LM Studio and transformers backends on
+       the same model id, then visualized with
+       :func:`~nlp_shap.render_attribution`. Optional LM Studio at runtime.
+     - `GitHub <https://github.com/Pawlo77/nlp-shap/blob/main/examples/text_explain_e2e.ipynb>`_
+
 .. toctree::
    :hidden:
    :maxdepth: 1
@@ -76,3 +87,5 @@ open the ``.ipynb`` on GitHub or browse the full catalog in
    notebooks/runtime_core
    notebooks/exact_estimation
    notebooks/estimator_comparison
+   notebooks/attribution_viz
+   notebooks/text_explain_e2e

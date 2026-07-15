@@ -77,6 +77,7 @@ Requires Python 3.12. See :doc:`guides/getting_started` for a full walkthrough.
    guides/config
    guides/masking
    guides/runtime
+   guides/visualization
    guides/applications
 
 .. toctree::

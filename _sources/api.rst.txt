@@ -69,6 +69,7 @@ Modules
    api/estimation
    api/value
    api/backends
+   api/viz
 
 Package version
 ---------------
