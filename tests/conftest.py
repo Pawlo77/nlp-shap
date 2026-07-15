@@ -97,6 +97,12 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         default=".pytest_benchmark/benchmark.json",
         help="Path to save benchmark report (JSON format)",
     )
+    parser.addoption(
+        "--bench-regression",
+        action="store_true",
+        default=False,
+        help="Fail @pytest.mark.bench tests that regress >10% from baselines.json",
+    )
 
 
 def _is_bench_test(item: pytest.Item) -> bool:

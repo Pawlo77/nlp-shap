@@ -8,6 +8,19 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-1-15:
+
+0.1.15 (2026-07-15)
+-------------------
+
+Added
+~~~~~
+
+- Runtime micro-benchmarks in ``tests/benchmarks/`` for dedup keys, mask
+  pack/unpack, archive round-trip (10k coalitions), and prefix-cache hits.
+- ``make bench`` and ``make bench-regression`` targets with recorded
+  ``baselines.json`` and an optional >10% regression gate.
+
 .. _release-0-1-14:
 
 0.1.14 (2026-07-15)

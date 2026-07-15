@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help install update clean prek prek-all check tests coverage bench docs notebooks build
+.PHONY: help install update clean prek prek-all check tests coverage bench bench-regression docs notebooks build
 
 help: ## Show available targets
 	@printf "Available targets:\n"
@@ -37,7 +37,10 @@ coverage: ## Run tests with coverage report
 	uv run pytest --cov=./src/nlp_shap --cov-report=term-missing tests/
 
 bench: ## Run benchmark tests with performance tracking
-	uv run pytest tests/ -m bench --benchmark
+	uv run pytest tests/benchmarks/ -m bench --benchmark
+
+bench-regression: ## Run benchmarks and fail on >10% regression vs baselines.json
+	uv run pytest tests/benchmarks/ -m bench --benchmark --bench-regression
 
 docs: ## Build the documentation
 	uv run make -C docs html

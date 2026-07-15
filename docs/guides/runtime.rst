@@ -119,6 +119,22 @@ scheduler does not create one coroutine per coalition upfront:
 
    metrics = asyncio.run(scheduler.run_iter(job_stream(), generate))
 
+Performance benchmarks
+----------------------
+
+Local micro-benchmarks live in ``tests/benchmarks/``. They cover coalition
+deduplication keys, mask pack/unpack throughput, 10k-row archive round-trips,
+and prefix-cache hit rate.
+
+.. code-block:: bash
+
+   make bench              # record timings to .pytest_benchmark/benchmark.json
+   make bench-regression   # fail when a bench regresses >10% vs baselines.json
+
+Benchmarks are not part of ``make check`` latency gates on CI; run
+``make bench-regression`` locally before changing hot paths in
+``runtime/`` or ``masking/``.
+
 Notebook
 --------
 
