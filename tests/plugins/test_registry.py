@@ -3,6 +3,7 @@
 from nlp_shap.backends.mock import MockBackend
 from nlp_shap.estimation.estimands.banzhaf import BanzhafAggregator
 from nlp_shap.estimation.estimands.shapley import ShapleyAggregator
+from nlp_shap.pipeline.config import BackendConfig
 from nlp_shap.plugins import PluginGroup, PluginRegistry
 
 
@@ -40,9 +41,10 @@ def test_registry_loads_backend_entry_points() -> None:
     registry.load_entry_points(PluginGroup.BACKENDS)
 
     backend_type = registry.resolve_type(PluginGroup.BACKENDS, "mock")
-    backend = backend_type("stub")
+    backend = backend_type(BackendConfig(kind="mock", model_id="stub"))
     assert isinstance(backend, MockBackend)
     assert backend.model_id == "stub"
+    assert "lmstudio" in registry.names(PluginGroup.BACKENDS)
 
 
 def test_registry_register_and_resolve_round_trip() -> None:

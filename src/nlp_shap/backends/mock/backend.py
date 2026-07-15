@@ -5,14 +5,20 @@ import struct
 
 from ...domain.conversation import ConversationSnapshot
 from ...domain.generation import GenerationRecord
+from ...pipeline.config import BackendConfig
 from .generation import generation_record_from_snapshot
 
 
 class MockBackend:
     """Hash-based generative backend with no external model dependencies."""
 
-    def __init__(self, model_id: str = "mock") -> None:
-        self._model_id = model_id
+    def __init__(
+        self,
+        config: BackendConfig | None = None,
+        *,
+        model_id: str = "mock",
+    ) -> None:
+        self._model_id = config.model_id if config is not None else model_id
 
     @property
     def model_id(self) -> str:

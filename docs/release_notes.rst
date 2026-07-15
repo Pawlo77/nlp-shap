@@ -8,6 +8,18 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-1-10:
+
+0.1.10 (2026-07-15)
+-------------------
+
+Added
+~~~~~
+
+- :class:`~nlp_shap.backends.lmstudio.LmStudioBackend` using ``lmstudio.AsyncClient``.
+- :exc:`~nlp_shap.errors.BackendUnavailableError` when the LM Studio API server is down.
+- Optional ``[lmstudio]`` extra, ``config/dev_lmstudio.yaml``, and ``@pytest.mark.lms`` tests.
+
 .. _release-0-1-9:
 
 0.1.9 (2026-07-15)

@@ -32,8 +32,13 @@ class ExplainRunner:
         """Execute the async explain pipeline."""
         context = self._build_context(snapshot)
         backend = instantiate_backend(self._config.backend, self._registry)
-        orchestrator = ExplainOrchestrator(context, backend)
-        return await orchestrator.run()
+        try:
+            orchestrator = ExplainOrchestrator(context, backend)
+            return await orchestrator.run()
+        finally:
+            aclose = getattr(backend, "aclose", None)
+            if aclose is not None:
+                await aclose()
 
     def explain_sync(self, snapshot: ConversationSnapshot) -> ExplainRunOutput:
         """Execute the explain pipeline on the current event loop policy."""
