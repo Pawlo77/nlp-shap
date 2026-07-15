@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 DOCS = Path(__file__).resolve().parent
 sys.path.insert(0, str(SRC))
+sys.path.insert(0, str(DOCS / "_ext"))
 
 
 def _footer_icon(filename: str) -> str:
@@ -32,6 +33,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx_copybutton",
     "sphinx_design",
+    "guide_outputs",
 ]
 
 templates_path = ["_templates"]

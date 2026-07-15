@@ -11,7 +11,7 @@ NOTEBOOK_SOURCES = estimands_toy_game.ipynb masking_views.ipynb runtime_core.ipy
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-.PHONY: help Makefile copy-notebooks
+.PHONY: help Makefile copy-notebooks render-guide-outputs
 
 copy-notebooks:
 	@mkdir -p notebooks
@@ -19,5 +19,8 @@ copy-notebooks:
 		cp ../examples/$$nb notebooks/$$nb; \
 	done
 
-%: Makefile copy-notebooks
+render-guide-outputs:
+	@cd .. && uv run python docs/scripts/render_guide_outputs.py
+
+%: Makefile copy-notebooks render-guide-outputs
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

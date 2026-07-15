@@ -40,6 +40,8 @@ Skip for: private refactors, typing-only edits, test-only changes.
 - Include **original references** (DOI or stable URL) for cooperative-game foundations and ML explainability papers where relevant.
 - Cross-link theory ↔ guides ↔ API (`:doc:` / `:ref:`).
 - Code samples in guides must match the current public API and be copy-pasteable.
+- Runnable guide snippets must show captured output via ``.. guide-result::``;
+  regenerate artifacts with ``make docs`` (runs ``docs/scripts/render_guide_outputs.py``).
 - Describe the **current** public surface only — no phase numbers, rewrite plans,
   “coming soon”, or internal implementation progress in `docs/` or `examples/`.
 - On every version bump: add a dated section to `docs/release_notes.rst` (move

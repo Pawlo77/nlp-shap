@@ -1,0 +1,4 @@
+backend:
+  kind: mock
+  model_id: stub
+  api_host: null

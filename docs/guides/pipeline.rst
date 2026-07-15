@@ -27,8 +27,11 @@ Quick start
    })
 
    output = ExplainRunner(config).explain_sync(snapshot)
-   print(output.result.values)
-   print(output.metrics)
+   print("values:", output.result.values)
+   print("requested:", output.metrics.requested)
+   print("executed:", output.metrics.executed)
+
+.. guide-result:: pipeline_quick_start
 
 The mock backend is deterministic and requires no GPU or optional extras. Use
 ``pad`` absence policy when the estimator samples the empty coalition.

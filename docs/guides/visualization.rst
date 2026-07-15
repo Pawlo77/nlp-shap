@@ -15,15 +15,20 @@ Renderers
    * - Plugin key
      - Output
    * - ``token_text``
-     - SHAP-style inline colored tokens (diverging red/blue scale)
+     - SHAP-style inline colored tokens (red / blue diverging highlights)
    * - ``token_bar``
-     - Horizontal bar chart sorted by absolute attribution
+     - Horizontal bar chart with SHAP palette, value labels, and sign legend
 
 Install the optional visualization extra:
 
 .. code-block:: bash
 
    pip install "nlp-shap[viz]"
+
+The renderers follow the `SHAP <https://github.com/shap/shap>`_ palette: warm red
+for positive attributions and cool blue for negative attributions, with soft
+white-centered highlights for inline tokens. Figures use a Seaborn-backed clean
+theme (muted grid, no chart junk).
 
 Quick start
 -----------
@@ -53,6 +58,16 @@ Quick start
    figure = render_attribution(output, snapshot, player_set, renderer="token_bar")
    figure.savefig("attribution.png", dpi=150, bbox_inches="tight")
 
+.. guide-result:: visualization_bar
+   :caption: Bar chart
+   :figure:
+   :alt: Horizontal token attribution bar chart
+
+.. guide-result:: visualization_text
+   :caption: Inline tokens
+   :figure:
+   :alt: Inline colored token attribution
+
 Jupyter HTML
 ------------
 
@@ -62,9 +77,10 @@ For inline notebook display, use :func:`~nlp_shap.render_attribution_html` or
 Color scale
 -----------
 
-Positive attributions trend red; negative attributions trend blue. Color
-intensity scales with the largest absolute value in the rendered vector so
-small-magnitude tokens remain readable.
+Positive attributions use SHAP red (``#FF0D57``); negative attributions use SHAP
+blue (``#1E88E5``). Inline token backgrounds fade from white toward the signed
+color, matching the ``shap.plots.text`` emphasis pattern. Bar charts annotate
+each token with its signed value.
 
 Further reading
 ---------------

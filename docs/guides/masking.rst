@@ -13,11 +13,12 @@ Partition tokens
    from nlp_shap.masking import TokenPartitioner
 
    turn = Turn(messages=(Message(role=Role.USER, text="Who are you?"),))
-   snapshot = ConversationSnapshot.from_turns((turn,))
+   snapshot = ConversationSnapshot(turns=(turn,), snapshot_id="demo-snap")
 
    players = TokenPartitioner().partition(snapshot)
    print(players.player_ids)
-   # ('<snapshot_id>:0:0:0', '<snapshot_id>:0:0:1', '<snapshot_id>:0:0:2')
+
+.. guide-result:: masking_partition
 
 Render a coalition
 ------------------
@@ -33,7 +34,8 @@ Render a coalition
    rendered = builder.render(view)
 
    print(rendered.turns[0].messages[0].text)
-   # Who you?
+
+.. guide-result:: masking_render_coalition
 
 Compare absence policies
 ------------------------
@@ -42,14 +44,18 @@ Compare absence policies
 
    from nlp_shap.masking import NeutralPolicy, PadPolicy
 
+   turn = Turn(messages=(Message(role=Role.USER, text="Who are you?"),))
+   snapshot = ConversationSnapshot(turns=(turn,), snapshot_id="demo-snap")
+   players = TokenPartitioner().partition(snapshot)
+   mask = CoalitionMask.from_sequence((True, False, True))
+
    pad_view = MaskBuilder(PadPolicy()).view(snapshot, players, mask)
    neutral_view = MaskBuilder(NeutralPolicy()).view(snapshot, players, mask)
 
    print(MaskBuilder(PadPolicy()).render(pad_view).turns[0].messages[0].text)
-   # Who [MASK] you?
-
    print(MaskBuilder(NeutralPolicy()).render(neutral_view).turns[0].messages[0].text)
-   # Who ___ you?
+
+.. guide-result:: masking_absence_policies
 
 Resolve plugins from config
 ---------------------------
@@ -77,6 +83,10 @@ Built-in plugins register the ``tokens`` partition and ``delete`` / ``pad`` /
        PluginGroup.ABSENCE_POLICIES,
        config.explanation.absence_policy,
    )
+   print(type(partitioner).__name__)
+   print(type(policy).__name__)
+
+.. guide-result:: masking_plugins
 
 See :doc:`../guides/config` for the full configuration schema.
 

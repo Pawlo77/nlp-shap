@@ -25,8 +25,10 @@ Quick start
    shapley = ShapleyAggregator().aggregate(masks, payoffs)
    banzhaf = BanzhafAggregator().aggregate(masks, payoffs)
 
-   print("Shapley:", shapley)   # ~[0.333, 0.333, 0.333]
-   print("Banzhaf:", banzhaf)   # [0.5, 0.5, 0.5]
+   print("Shapley:", shapley)
+   print("Banzhaf:", banzhaf)
+
+.. guide-result:: estimands_majority
 
 Coalition weights
 -----------------
@@ -43,6 +45,8 @@ Inspect weights without full aggregation:
    n = 4
    for k in range(n):
        print(f"k={k}", shapley.coalition_weight(k, n), banzhaf.coalition_weight(k, n))
+
+.. guide-result:: estimands_coalition_weights
 
 Explain results and manifests
 -----------------------------
@@ -61,8 +65,10 @@ Label outputs explicitly for archives and papers:
    manifest = RunManifest(estimand=result.estimand, run_id="run-42")
    payload = manifest.to_dict()
    restored = parse_manifest(payload)
+   print("estimand:", restored.estimand.value)
+   print("run_id:", restored.run_id)
 
-   assert restored.estimand is Estimand.SHAPLEY
+.. guide-result:: estimands_manifest
 
 Wire values for JSON manifests use :data:`~nlp_shap.domain.estimands.EstimandWire`
 (``"shapley"`` | ``"banzhaf"``).
