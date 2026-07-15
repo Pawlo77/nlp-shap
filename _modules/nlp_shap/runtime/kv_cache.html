@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.pipeline.result - nlp-shap 0.1.11</title>
+        <title>nlp_shap.runtime.kv_cache - nlp-shap 0.1.11</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -281,51 +281,101 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for nlp_shap.pipeline.result</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Explain pipeline result types.&quot;&quot;&quot;</span>
+          <h1>Source code for nlp_shap.runtime.kv_cache</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Prefix-cache storage for shared prompt token prefixes.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.estimands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Estimand</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">PerfSummary</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.scheduler</span><span class="w"> </span><span class="kn">import</span> <span class="n">SchedulerMetrics</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.manifest</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunManifest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..domain.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationSnapshot</span>
 
 
-<div class="viewcode-block" id="ExplainResult">
-<a class="viewcode-back" href="../../../api/pipeline.html#nlp_shap.ExplainResult">[docs]</a>
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">ExplainResult</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Attribution output for a single explain run.&quot;&quot;&quot;</span>
-
-    <span class="n">estimand</span><span class="p">:</span> <span class="n">Estimand</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimand used to aggregate coalition samples.&quot;&quot;&quot;</span>
-
-    <span class="n">values</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Per-player attribution values.&quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="build_snapshot_prefix_hash">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.build_snapshot_prefix_hash">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_snapshot_prefix_hash</span><span class="p">(</span><span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Hash the shared text prefix excluding the final whitespace token.&quot;&quot;&quot;</span>
+    <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">message</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">turn</span> <span class="ow">in</span> <span class="n">snapshot</span><span class="o">.</span><span class="n">turns</span> <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">turn</span><span class="o">.</span><span class="n">messages</span><span class="p">]</span>
+    <span class="n">combined</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">combined</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">combined</span>
+    <span class="n">digest</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">prefix</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">digest</span><span class="p">[:</span><span class="mi">16</span><span class="p">]</span></div>
 
 
 
-<div class="viewcode-block" id="ExplainRunOutput">
-<a class="viewcode-back" href="../../../api/pipeline.html#nlp_shap.ExplainRunOutput">[docs]</a>
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">ExplainRunOutput</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Explain pipeline output including scheduler metrics.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PrefixCacheManager">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.PrefixCacheManager">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PrefixCacheManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Store and reuse transformer ``past_key_values`` for shared prefixes.&quot;&quot;&quot;</span>
 
-    <span class="n">result</span><span class="p">:</span> <span class="n">ExplainResult</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Aggregated and normalized attribution values.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hits</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">misses</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="n">metrics</span><span class="p">:</span> <span class="n">SchedulerMetrics</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Coalition scheduler counters for the run.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PrefixCacheManager.get_prefix">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.PrefixCacheManager.get_prefix">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token_ids</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return cached KV state and the longest matching prefix length.&quot;&quot;&quot;</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">token_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">token_id</span> <span class="ow">in</span> <span class="n">token_ids</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">length</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ids</span><span class="p">[:</span><span class="n">length</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">cached</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">cached</span><span class="p">,</span> <span class="n">length</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span></div>
 
-    <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stable identifier for the explain run.&quot;&quot;&quot;</span>
 
-    <span class="n">manifest</span><span class="p">:</span> <span class="n">RunManifest</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Manifest metadata persisted with optional archives.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PrefixCacheManager.lookup">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.PrefixCacheManager.lookup">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lookup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token_ids</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return cached KV state and update hit or miss counters.&quot;&quot;&quot;</span>
+        <span class="n">matched</span><span class="p">,</span> <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_prefix</span><span class="p">(</span><span class="n">token_ids</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hits</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">misses</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">matched</span><span class="p">,</span> <span class="n">length</span></div>
 
-    <span class="n">perf</span><span class="p">:</span> <span class="n">PerfSummary</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Optional wall-clock breakdown for the run.&quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="PrefixCacheManager.get_at_length">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.PrefixCacheManager.get_at_length">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_at_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token_ids</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return cached KV state for an exact prefix length.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="nb">tuple</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">token_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">token_id</span> <span class="ow">in</span> <span class="n">token_ids</span><span class="p">[:</span><span class="n">length</span><span class="p">])</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PrefixCacheManager.store">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.PrefixCacheManager.store">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">store</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token_ids</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">past_key_values</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Persist KV state for an exact token-id prefix.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">token_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">token_id</span> <span class="ow">in</span> <span class="n">token_ids</span><span class="p">)]</span> <span class="o">=</span> <span class="n">past_key_values</span></div>
+
+
+<div class="viewcode-block" id="PrefixCacheManager.reset">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.PrefixCacheManager.reset">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear cached prefixes and counters.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entries</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hits</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">misses</span> <span class="o">=</span> <span class="mi">0</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="group_jobs_for_prefix_cache">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.group_jobs_for_prefix_cache">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">group_jobs_for_prefix_cache</span><span class="p">[</span><span class="n">T</span><span class="p">](</span>
+    <span class="n">jobs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">key</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="nb">str</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sort jobs so coalitions with the same prefix hash run adjacently.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">jobs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span></div>
 
 </pre></div>
         </article>

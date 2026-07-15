@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.pipeline.orchestrator - nlp-shap 0.1.10</title>
+        <title>nlp_shap.pipeline.orchestrator - nlp-shap 0.1.11</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -171,7 +171,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">nlp-shap 0.1.10</div></a>
+      <a href="../../../index.html"><div class="brand">nlp-shap 0.1.11</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
     <img class="sidebar-logo" src="../../../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.10</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.11</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -303,8 +303,9 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">..protocols.value</span><span class="w"> </span><span class="kn">import</span> <span class="n">ValueFunction</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.archive</span><span class="w"> </span><span class="kn">import</span> <span class="n">BASE_GENERATION_FILE</span><span class="p">,</span> <span class="n">RunArchive</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.dedup</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionDedupRegistry</span><span class="p">,</span> <span class="n">build_coalition_key</span><span class="p">,</span> <span class="n">dedup_enabled</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.kv_cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_snapshot_prefix_hash</span><span class="p">,</span> <span class="n">group_jobs_for_prefix_cache</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">PerfSummary</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.scheduler</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionJob</span><span class="p">,</span> <span class="n">InferenceScheduler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.scheduler</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionJob</span><span class="p">,</span> <span class="n">InferenceScheduler</span><span class="p">,</span> <span class="n">SchedulerMetrics</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.store</span><span class="w"> </span><span class="kn">import</span> <span class="n">HotResultStore</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..value.tfidf</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfIdfCosineValue</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExplainContext</span>
@@ -426,7 +427,15 @@
                 <span class="p">)</span>
 
                 <span class="n">jobs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_jobs</span><span class="p">(</span><span class="n">mask_builder</span><span class="p">,</span> <span class="n">player_set</span><span class="p">,</span> <span class="n">masks</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">explanation</span><span class="o">.</span><span class="n">kv_cache</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+                    <span class="n">jobs</span> <span class="o">=</span> <span class="n">group_jobs_for_prefix_cache</span><span class="p">(</span>
+                        <span class="n">jobs</span><span class="p">,</span>
+                        <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">job</span><span class="p">:</span> <span class="n">job</span><span class="o">.</span><span class="n">prefix_hash</span><span class="p">,</span>
+                    <span class="p">)</span>
                 <span class="n">generation</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">generation</span>
+                <span class="n">set_kv_cache</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="p">,</span> <span class="s2">&quot;set_kv_cache_enabled&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">set_kv_cache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">set_kv_cache</span><span class="p">(</span><span class="n">explanation</span><span class="o">.</span><span class="n">kv_cache</span><span class="o">.</span><span class="n">enabled</span><span class="p">)</span>
 
                 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">snapshot_for_job</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
                     <span class="n">record</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
@@ -440,6 +449,15 @@
                 <span class="n">schedule_started</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
                 <span class="k">with</span> <span class="n">telemetry</span><span class="o">.</span><span class="n">span</span><span class="p">(</span><span class="s2">&quot;orchestrator.schedule&quot;</span><span class="p">):</span>
                     <span class="n">metrics</span> <span class="o">=</span> <span class="k">await</span> <span class="n">scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">jobs</span><span class="p">,</span> <span class="n">generate</span><span class="p">)</span>
+                <span class="n">backend_kv_hits</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="p">,</span> <span class="s2">&quot;kv_cache_hits&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">backend_kv_hits</span><span class="p">:</span>
+                    <span class="n">metrics</span> <span class="o">=</span> <span class="n">SchedulerMetrics</span><span class="p">(</span>
+                        <span class="n">requested</span><span class="o">=</span><span class="n">metrics</span><span class="o">.</span><span class="n">requested</span><span class="p">,</span>
+                        <span class="n">executed</span><span class="o">=</span><span class="n">metrics</span><span class="o">.</span><span class="n">executed</span><span class="p">,</span>
+                        <span class="n">deduplicated</span><span class="o">=</span><span class="n">metrics</span><span class="o">.</span><span class="n">deduplicated</span><span class="p">,</span>
+                        <span class="n">cache_hits</span><span class="o">=</span><span class="n">metrics</span><span class="o">.</span><span class="n">cache_hits</span><span class="p">,</span>
+                        <span class="n">kv_cache_hits</span><span class="o">=</span><span class="n">backend_kv_hits</span><span class="p">,</span>
+                    <span class="p">)</span>
                 <span class="n">generation_ms</span> <span class="o">+=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">schedule_started</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1000.0</span>
 
                 <span class="n">coalition_records</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collect_generation_records</span><span class="p">(</span><span class="n">jobs</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span>
@@ -540,6 +558,7 @@
                     <span class="n">absence_policy</span><span class="o">=</span><span class="n">mask_builder</span><span class="o">.</span><span class="n">policy_name</span><span class="p">,</span>
                     <span class="n">mask_words</span><span class="o">=</span><span class="n">packed</span><span class="o">.</span><span class="n">words</span><span class="p">,</span>
                     <span class="n">mask_n_bits</span><span class="o">=</span><span class="n">packed</span><span class="o">.</span><span class="n">n_bits</span><span class="p">,</span>
+                    <span class="n">prefix_hash</span><span class="o">=</span><span class="n">build_snapshot_prefix_hash</span><span class="p">(</span><span class="n">rendered</span><span class="p">),</span>
                     <span class="n">model_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">model_id</span><span class="p">,</span>
                     <span class="n">utility</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
                 <span class="p">)</span>
@@ -631,7 +650,7 @@
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=bafade30"></script>
+</div><script src="../../../_static/documentation_options.js?v=1e825a29"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>

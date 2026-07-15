@@ -8,6 +8,21 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-1-11:
+
+0.1.11 (2026-07-15)
+-------------------
+
+Added
+~~~~~
+
+- :class:`~nlp_shap.backends.transformers.text.TransformersTextBackend` with chat
+  templates, text-only validation, and contextual embedding hooks.
+- :class:`~nlp_shap.runtime.kv_cache.PrefixCacheManager` with scheduler prefix
+  grouping and ``kv_cache_hits`` metrics on :class:`~nlp_shap.runtime.scheduler.SchedulerMetrics`.
+- Optional ``[transformers]`` extra and ``config/dev_transformers.yaml``.
+- ``@pytest.mark.gpu`` integration tests for local Hugging Face runs.
+
 .. _release-0-1-10:
 
 0.1.10 (2026-07-15)

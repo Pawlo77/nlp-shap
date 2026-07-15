@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
-    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.10</title>
+    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.11</title>
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -170,7 +170,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.10</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.11</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.10</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.11</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -415,14 +415,14 @@
           <li><a href="api/masking.html#nlp_shap.masking.MaskedSnapshot.base_snapshot_id">(nlp_shap.masking.MaskedSnapshot property)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/estimation.html#nlp_shap.estimation.neyman.NeymanEstimator.begin_allocation">begin_allocation() (nlp_shap.estimation.neyman.NeymanEstimator method)</a>
 
         <ul>
           <li><a href="api.html#nlp_shap.NeymanEstimator.begin_allocation">(nlp_shap.NeymanEstimator method)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api.html#nlp_shap.ComplementaryEstimator.bind_snapshot">bind_snapshot() (nlp_shap.ComplementaryEstimator method)</a>
 
         <ul>
@@ -453,6 +453,8 @@
           <li><a href="api/runtime.html#nlp_shap.runtime.dedup.build_coalition_key">(in module nlp_shap.runtime.dedup)</a>
 </li>
         </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.build_snapshot_prefix_hash">build_snapshot_prefix_hash() (in module nlp_shap.runtime)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -897,6 +899,12 @@
           <li><a href="api/runtime.html#nlp_shap.runtime.store.HotResultStore.get">(nlp_shap.runtime.store.HotResultStore method)</a>
 </li>
         </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.PrefixCacheManager.get_at_length">get_at_length() (nlp_shap.runtime.PrefixCacheManager method)</a>
+</li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.PrefixCacheManager.get_prefix">get_prefix() (nlp_shap.runtime.PrefixCacheManager method)</a>
+</li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.group_jobs_for_prefix_cache">group_jobs_for_prefix_cache() (in module nlp_shap.runtime)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -977,10 +985,16 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BackendConfig.kind">kind (nlp_shap.pipeline.config.BackendConfig attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.kv_cache">kv_cache (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.SchedulerMetrics.kv_cache_hits">kv_cache_hits (nlp_shap.runtime.scheduler.SchedulerMetrics attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.SchedulerMetrics.kv_cache_hits">(nlp_shap.runtime.SchedulerMetrics attribute)</a>
+</li>
+        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.KvCacheConfig">KvCacheConfig (class in nlp_shap.pipeline.config)</a>
 </li>
     </ul></td>
@@ -1013,6 +1027,8 @@
           <li><a href="api/value.html#nlp_shap.value.logprob.LogprobValue">(class in nlp_shap.value.logprob)</a>
 </li>
         </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.PrefixCacheManager.lookup">lookup() (nlp_shap.runtime.PrefixCacheManager method)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -1840,10 +1856,10 @@
           <li><a href="api/domain.html#nlp_shap.domain.game.CooperativeGame.player_set">(nlp_shap.domain.game.CooperativeGame attribute)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/protocols.html#nlp_shap.protocols.partition.PlayerPartitioner">PlayerPartitioner (class in nlp_shap.protocols.partition)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/masking.html#nlp_shap.masking.builder.MaskedSnapshot.players">players (nlp_shap.masking.builder.MaskedSnapshot attribute)</a>
 
         <ul>
@@ -1887,6 +1903,14 @@
         <li><a href="api/estimation.html#nlp_shap.estimation.normalizers.PowerShiftNormalizer">PowerShiftNormalizer (class in nlp_shap.estimation.normalizers)</a>
 </li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig.precompute_base">precompute_base (nlp_shap.pipeline.config.GenerationConfig attribute)</a>
+</li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionJob.prefix_hash">prefix_hash (nlp_shap.runtime.CoalitionJob attribute)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.CoalitionJob.prefix_hash">(nlp_shap.runtime.scheduler.CoalitionJob attribute)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.PrefixCacheManager">PrefixCacheManager (class in nlp_shap.runtime)</a>
 </li>
         <li><a href="api/masking.html#nlp_shap.masking.PrefixTreeStub">PrefixTreeStub (class in nlp_shap.masking)</a>
 </li>
@@ -1950,6 +1974,8 @@
           <li><a href="api/runtime.html#nlp_shap.runtime.SchedulerMetrics.requested">(nlp_shap.runtime.SchedulerMetrics attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.PrefixCacheManager.reset">reset() (nlp_shap.runtime.PrefixCacheManager method)</a>
+</li>
         <li><a href="api.html#nlp_shap.ComplementaryEstimator.reset_sampling_state">reset_sampling_state() (nlp_shap.ComplementaryEstimator method)</a>
 
         <ul>
@@ -2153,6 +2179,8 @@
         <li><a href="api/runtime.html#nlp_shap.runtime.InMemoryObservabilitySink.spans">spans (nlp_shap.runtime.InMemoryObservabilitySink attribute)</a>
 </li>
         <li><a href="api/domain.html#nlp_shap.domain.enums.EmbeddingMode.STATIC">STATIC (nlp_shap.domain.enums.EmbeddingMode attribute)</a>
+</li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.PrefixCacheManager.store">store() (nlp_shap.runtime.PrefixCacheManager method)</a>
 </li>
         <li><a href="api/domain.html#nlp_shap.domain.enums.Role.SYSTEM">SYSTEM (nlp_shap.domain.enums.Role attribute)</a>
 
@@ -2374,7 +2402,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=bafade30"></script>
+</div><script src="_static/documentation_options.js?v=1e825a29"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>
