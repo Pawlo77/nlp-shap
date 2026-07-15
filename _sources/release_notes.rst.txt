@@ -8,6 +8,22 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-1-12:
+
+0.1.12 (2026-07-15)
+-------------------
+
+Added
+~~~~~
+
+- :class:`~nlp_shap.backends.api.ApiBackend` for OpenAI-compatible
+  ``/chat/completions`` HTTP APIs via ``httpx``.
+- In-memory response deduplication for identical request bodies at
+  ``temperature: 0.0``.
+- Optional ``[api]`` extra, ``config/dev_api.yaml``, and mock-transport contract
+  tests in CI.
+- User guide for generative backends: :doc:`guides/backends`.
+
 .. _release-0-1-11:
 
 0.1.11 (2026-07-15)

@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
-    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.11</title>
+    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.12</title>
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -170,7 +170,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.11</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.12</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.11</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.12</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -210,6 +210,7 @@
 <li class="toctree-l1"><a class="reference internal" href="guides/approximation.html">Using approximate estimators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/value_functions.html">Using value functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/pipeline.html">End-to-end explain pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/backends.html">Generative backends</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/runtime.html">Runtime core</a></li>
@@ -246,6 +247,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api/runtime.html">Runtime</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/estimation.html">Estimand aggregators and estimation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/value.html">Value functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/backends.html">Backends</a></li>
 </ul>
 </li>
 </ul>
@@ -315,6 +317,14 @@
 </li>
         <li><a href="api/estimation.html#nlp_shap.estimation.normalizers.AbsSumNormalizer">AbsSumNormalizer (class in nlp_shap.estimation.normalizers)</a>
 </li>
+        <li><a href="api/backends.html#nlp_shap.backends.api.ApiBackend.aclose">aclose() (nlp_shap.backends.api.ApiBackend method)</a>
+
+        <ul>
+          <li><a href="api/backends.html#nlp_shap.backends.lmstudio.LmStudioBackend.aclose">(nlp_shap.backends.lmstudio.LmStudioBackend method)</a>
+</li>
+          <li><a href="api/backends.html#nlp_shap.backends.transformers.text.TransformersTextBackend.aclose">(nlp_shap.backends.transformers.text.TransformersTextBackend method)</a>
+</li>
+        </ul></li>
         <li><a href="api.html#nlp_shap.BanzhafAggregator.aggregate">aggregate() (nlp_shap.BanzhafAggregator method)</a>
 
         <ul>
@@ -332,6 +342,8 @@
         <li><a href="api/runtime.html#nlp_shap.runtime.PerfSummary.aggregation_ms">aggregation_ms (nlp_shap.runtime.PerfSummary attribute)</a>
 </li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BackendConfig.api_host">api_host (nlp_shap.pipeline.config.BackendConfig attribute)</a>
+</li>
+        <li><a href="api/backends.html#nlp_shap.backends.api.ApiBackend">ApiBackend (class in nlp_shap.backends.api)</a>
 </li>
         <li><a href="api/runtime.html#nlp_shap.runtime.archive.RunArchive.append">append() (nlp_shap.runtime.archive.RunArchive method)</a>
 
@@ -446,6 +458,8 @@
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.budget">budget (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BudgetConfig">BudgetConfig (class in nlp_shap.pipeline.config)</a>
+</li>
+        <li><a href="api/backends.html#nlp_shap.backends.api.payload.build_chat_payload">build_chat_payload() (in module nlp_shap.backends.api.payload)</a>
 </li>
         <li><a href="api/runtime.html#nlp_shap.runtime.build_coalition_key">build_coalition_key() (in module nlp_shap.runtime)</a>
 
@@ -809,6 +823,8 @@
         </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig">ExplanationConfig (class in nlp_shap.pipeline.config)</a>
 </li>
+        <li><a href="api/backends.html#nlp_shap.backends.api.payload.extract_message_content">extract_message_content() (in module nlp_shap.backends.api.payload)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -861,8 +877,18 @@
   <h2>G</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/protocols.html#nlp_shap.protocols.backend.GenerativeBackend.generate">generate() (nlp_shap.protocols.backend.GenerativeBackend method)</a>
+        <li><a href="api/backends.html#nlp_shap.backends.api.ApiBackend.generate">generate() (nlp_shap.backends.api.ApiBackend method)</a>
+
+        <ul>
+          <li><a href="api/backends.html#nlp_shap.backends.lmstudio.LmStudioBackend.generate">(nlp_shap.backends.lmstudio.LmStudioBackend method)</a>
 </li>
+          <li><a href="api/backends.html#nlp_shap.backends.mock.MockBackend.generate">(nlp_shap.backends.mock.MockBackend method)</a>
+</li>
+          <li><a href="api/backends.html#nlp_shap.backends.transformers.text.TransformersTextBackend.generate">(nlp_shap.backends.transformers.text.TransformersTextBackend method)</a>
+</li>
+          <li><a href="api/protocols.html#nlp_shap.protocols.backend.GenerativeBackend.generate">(nlp_shap.protocols.backend.GenerativeBackend method)</a>
+</li>
+        </ul></li>
         <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.GenerateFn">GenerateFn (in module nlp_shap.runtime.scheduler)</a>
 </li>
         <li><a href="api.html#nlp_shap.ExplainConfig.generation">generation (nlp_shap.ExplainConfig attribute)</a>
@@ -987,14 +1013,16 @@
 </li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.kv_cache">kv_cache (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.SchedulerMetrics.kv_cache_hits">kv_cache_hits (nlp_shap.runtime.scheduler.SchedulerMetrics attribute)</a>
+        <li><a href="api/backends.html#nlp_shap.backends.transformers.text.TransformersTextBackend.kv_cache_hits">kv_cache_hits (nlp_shap.backends.transformers.text.TransformersTextBackend property)</a>
 
         <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.scheduler.SchedulerMetrics.kv_cache_hits">(nlp_shap.runtime.scheduler.SchedulerMetrics attribute)</a>
+</li>
           <li><a href="api/runtime.html#nlp_shap.runtime.SchedulerMetrics.kv_cache_hits">(nlp_shap.runtime.SchedulerMetrics attribute)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.KvCacheConfig">KvCacheConfig (class in nlp_shap.pipeline.config)</a>
 </li>
     </ul></td>
@@ -1005,6 +1033,8 @@
   <h2>L</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/backends.html#nlp_shap.backends.lmstudio.LmStudioBackend">LmStudioBackend (class in nlp_shap.backends.lmstudio)</a>
+</li>
         <li><a href="api/runtime.html#nlp_shap.runtime.archive.RunArchive.load">load() (nlp_shap.runtime.archive.RunArchive class method)</a>
 
         <ul>
@@ -1151,6 +1181,8 @@
           <li><a href="api/estimation.html#nlp_shap.estimation.normalizers.MinMaxNormalizer">(class in nlp_shap.estimation.normalizers)</a>
 </li>
         </ul></li>
+        <li><a href="api/backends.html#nlp_shap.backends.mock.MockBackend">MockBackend (class in nlp_shap.backends.mock)</a>
+</li>
         <li><a href="api.html#nlp_shap.ExplainConfig.model_config">model_config (nlp_shap.ExplainConfig attribute)</a>
 
         <ul>
@@ -1173,9 +1205,17 @@
           <li><a href="api/pipeline.html#nlp_shap.pipeline.config.NeymanConfig.model_config">(nlp_shap.pipeline.config.NeymanConfig attribute)</a>
 </li>
         </ul></li>
-        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BackendConfig.model_id">model_id (nlp_shap.pipeline.config.BackendConfig attribute)</a>
+        <li><a href="api/backends.html#nlp_shap.backends.api.ApiBackend.model_id">model_id (nlp_shap.backends.api.ApiBackend property)</a>
 
         <ul>
+          <li><a href="api/backends.html#nlp_shap.backends.lmstudio.LmStudioBackend.model_id">(nlp_shap.backends.lmstudio.LmStudioBackend property)</a>
+</li>
+          <li><a href="api/backends.html#nlp_shap.backends.mock.MockBackend.model_id">(nlp_shap.backends.mock.MockBackend property)</a>
+</li>
+          <li><a href="api/backends.html#nlp_shap.backends.transformers.text.TransformersTextBackend.model_id">(nlp_shap.backends.transformers.text.TransformersTextBackend property)</a>
+</li>
+          <li><a href="api/pipeline.html#nlp_shap.pipeline.config.BackendConfig.model_id">(nlp_shap.pipeline.config.BackendConfig attribute)</a>
+</li>
           <li><a href="api/protocols.html#nlp_shap.protocols.backend.GenerativeBackend.model_id">(nlp_shap.protocols.backend.GenerativeBackend property)</a>
 </li>
           <li><a href="api/runtime.html#nlp_shap.runtime.archive.CoalitionRecord.model_id">(nlp_shap.runtime.archive.CoalitionRecord attribute)</a>
@@ -1198,6 +1238,16 @@
 
         <ul>
           <li><a href="api.html#module-nlp_shap">nlp_shap</a>
+</li>
+          <li><a href="api/backends.html#module-nlp_shap.backends.api">nlp_shap.backends.api</a>
+</li>
+          <li><a href="api/backends.html#module-nlp_shap.backends.api.payload">nlp_shap.backends.api.payload</a>
+</li>
+          <li><a href="api/backends.html#module-nlp_shap.backends.lmstudio">nlp_shap.backends.lmstudio</a>
+</li>
+          <li><a href="api/backends.html#module-nlp_shap.backends.mock">nlp_shap.backends.mock</a>
+</li>
+          <li><a href="api/backends.html#module-nlp_shap.backends.transformers.text">nlp_shap.backends.transformers.text</a>
 </li>
           <li><a href="api/domain.html#module-nlp_shap.domain.coalition">nlp_shap.domain.coalition</a>
 </li>
@@ -1414,6 +1464,41 @@
 </li>
         </ul></li>
         <li>
+    nlp_shap.backends.api
+
+        <ul>
+          <li><a href="api/backends.html#module-nlp_shap.backends.api">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.backends.api.payload
+
+        <ul>
+          <li><a href="api/backends.html#module-nlp_shap.backends.api.payload">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.backends.lmstudio
+
+        <ul>
+          <li><a href="api/backends.html#module-nlp_shap.backends.lmstudio">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.backends.mock
+
+        <ul>
+          <li><a href="api/backends.html#module-nlp_shap.backends.mock">module</a>
+</li>
+        </ul></li>
+        <li>
+    nlp_shap.backends.transformers.text
+
+        <ul>
+          <li><a href="api/backends.html#module-nlp_shap.backends.transformers.text">module</a>
+</li>
+        </ul></li>
+        <li>
     nlp_shap.domain.coalition
 
         <ul>
@@ -1490,6 +1575,8 @@
           <li><a href="api/estimation.html#module-nlp_shap.estimation.monte_carlo">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     nlp_shap.estimation.neyman
 
@@ -1511,8 +1598,6 @@
           <li><a href="api/masking.html#module-nlp_shap.masking">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     nlp_shap.masking.builder
 
@@ -1830,6 +1915,8 @@
         </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ArchiveConfig.path">path (nlp_shap.pipeline.config.ArchiveConfig attribute)</a>
 </li>
+        <li><a href="api/backends.html#nlp_shap.backends.api.payload.payload_cache_key">payload_cache_key() (in module nlp_shap.backends.api.payload)</a>
+</li>
         <li><a href="api.html#nlp_shap.ExplainRunOutput.perf">perf (nlp_shap.ExplainRunOutput attribute)</a>
 
         <ul>
@@ -2128,6 +2215,8 @@
 </li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.seed">seed (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
+        <li><a href="api/backends.html#nlp_shap.backends.transformers.text.TransformersTextBackend.set_kv_cache_enabled">set_kv_cache_enabled() (nlp_shap.backends.transformers.text.TransformersTextBackend method)</a>
+</li>
         <li><a href="api/domain.html#nlp_shap.domain.estimands.Estimand.SHAPLEY">SHAPLEY (nlp_shap.domain.estimands.Estimand attribute)</a>
 
         <ul>
@@ -2245,6 +2334,8 @@
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig.top_k">top_k (nlp_shap.pipeline.config.GenerationConfig attribute)</a>
 </li>
         <li><a href="api/runtime.html#nlp_shap.runtime.PerfSummary.total_ms">total_ms (nlp_shap.runtime.PerfSummary attribute)</a>
+</li>
+        <li><a href="api/backends.html#nlp_shap.backends.transformers.text.TransformersTextBackend">TransformersTextBackend (class in nlp_shap.backends.transformers.text)</a>
 </li>
         <li><a href="api.html#nlp_shap.Turn">Turn (class in nlp_shap)</a>
 
@@ -2402,7 +2493,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=1e825a29"></script>
+</div><script src="_static/documentation_options.js?v=297ad043"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>
