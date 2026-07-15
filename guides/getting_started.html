@@ -7,7 +7,7 @@
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Getting started - nlp-shap 0.1.13</title>
+        <title>Getting started - nlp-shap 0.1.14</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">nlp-shap 0.1.13</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.14</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.13</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.14</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -214,6 +214,7 @@
 <li class="toctree-l1"><a class="reference internal" href="pipeline.html">End-to-end explain pipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="backends.html">Generative backends</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extending.html">Extending nlp-shap</a></li>
 <li class="toctree-l1"><a class="reference internal" href="masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="runtime.html">Runtime core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
@@ -339,6 +340,31 @@ make<span class="w"> </span>install
 </pre></div>
 </div>
 </section>
+<section id="explain-a-short-prompt">
+<h2>Explain a short prompt<a class="headerlink" href="#explain-a-short-prompt" title="Link to this heading">¶</a></h2>
+<p>For end-to-end token attributions, build a
+<a class="reference internal" href="../api/domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConversationSnapshot</span></code></a>, load an
+<a class="reference internal" href="../api.html#nlp_shap.ExplainConfig" title="nlp_shap.ExplainConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainConfig</span></code></a>, and call <a class="reference internal" href="../api.html#nlp_shap.ExplainRunner" title="nlp_shap.ExplainRunner"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainRunner</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExplainConfig</span><span class="p">,</span> <span class="n">ExplainRunner</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.domain.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationSnapshot</span><span class="p">,</span> <span class="n">Message</span><span class="p">,</span> <span class="n">Turn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.domain.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">Role</span>
+
+<span class="n">snapshot</span> <span class="o">=</span> <span class="n">ConversationSnapshot</span><span class="o">.</span><span class="n">from_turns</span><span class="p">((</span>
+    <span class="n">Turn</span><span class="p">(</span><span class="n">messages</span><span class="o">=</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="n">Role</span><span class="o">.</span><span class="n">USER</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;refund my order&quot;</span><span class="p">),)),</span>
+<span class="p">))</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">ExplainConfig</span><span class="o">.</span><span class="n">model_validate</span><span class="p">({</span>
+    <span class="s2">&quot;backend&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;mock&quot;</span><span class="p">,</span> <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="s2">&quot;stub&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;explanation&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;estimator&quot;</span><span class="p">:</span> <span class="s2">&quot;exact&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;value_fn&quot;</span><span class="p">:</span> <span class="s2">&quot;tfidf_cosine&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;absence_policy&quot;</span><span class="p">:</span> <span class="s2">&quot;pad&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">})</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">ExplainRunner</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="o">.</span><span class="n">explain_sync</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 <section id="label-results-for-archives">
 <h2>Label results for archives<a class="headerlink" href="#label-results-for-archives" title="Link to this heading">¶</a></h2>
 <p>When you persist explain outputs, record which estimand was used:</p>
@@ -362,6 +388,8 @@ make<span class="w"> </span>install
 <li><p><a class="reference internal" href="../theory/estimands.html"><span class="doc">Estimands: Shapley vs Banzhaf</span></a> — why Shapley and Banzhaf differ</p></li>
 <li><p><a class="reference internal" href="applications.html"><span class="doc">Business and compliance applications</span></a> — business and compliance use cases</p></li>
 <li><p><a class="reference internal" href="../examples.html"><span class="doc">Examples</span></a> — <cite>estimands_toy_game.ipynb</cite>, <cite>masking_views.ipynb</cite>, <cite>runtime_core.ipynb</cite>, and <cite>exact_estimation.ipynb</cite></p></li>
+<li><p><a class="reference internal" href="pipeline.html"><span class="doc">End-to-end explain pipeline</span></a> — <a class="reference internal" href="../api.html#nlp_shap.ExplainRunner" title="nlp_shap.ExplainRunner"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainRunner</span></code></a> end-to-end explain flow</p></li>
+<li><p><a class="reference internal" href="extending.html"><span class="doc">Extending nlp-shap</span></a> — optional extras and plugin entry points</p></li>
 <li><p><a class="reference internal" href="masking.html"><span class="doc">Masking views</span></a> — coalition masking and absence policies</p></li>
 <li><p><a class="reference internal" href="runtime.html"><span class="doc">Runtime core</span></a> — archive persistence, dedup, and async scheduling</p></li>
 <li><p><a class="reference internal" href="exact.html"><span class="doc">Using the exact estimator</span></a> — exact coalition enumeration and estimand wiring</p></li>
@@ -436,6 +464,7 @@ make<span class="w"> </span>install
 <li><a class="reference internal" href="#">Getting started</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#your-first-aggregation">Your first aggregation</a></li>
+<li><a class="reference internal" href="#explain-a-short-prompt">Explain a short prompt</a></li>
 <li><a class="reference internal" href="#label-results-for-archives">Label results for archives</a></li>
 <li><a class="reference internal" href="#next-steps">Next steps</a></li>
 </ul>
@@ -449,7 +478,7 @@ make<span class="w"> </span>install
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=8d02545a"></script>
+</div><script src="../_static/documentation_options.js?v=468bc497"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

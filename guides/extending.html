@@ -3,11 +3,11 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Runtime core" href="runtime.html"><link rel="prev" title="Value functions and normalizers" href="value_functions.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Masking views" href="masking.html"><link rel="prev" title="Configuration" href="config.html">
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Masking - nlp-shap 0.1.14</title>
+        <title>Extending nlp-shap - nlp-shap 0.1.14</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -205,31 +205,31 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../guides/getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/estimands.html">Using estimand aggregators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/exact.html">Using the exact estimator</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/approximation.html">Using approximate estimators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/value_functions.html">Using value functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/pipeline.html">End-to-end explain pipeline</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/backends.html">Generative backends</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/config.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/extending.html">Extending nlp-shap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/masking.html">Masking views</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/runtime.html">Runtime core</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/visualization.html">Visualization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../guides/applications.html">Business and compliance applications</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimands.html">Using estimand aggregators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exact.html">Using the exact estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="approximation.html">Using approximate estimators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="value_functions.html">Using value functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline.html">End-to-end explain pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backends.html">Generative backends</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Extending nlp-shap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="masking.html">Masking views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runtime.html">Runtime core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="applications.html">Business and compliance applications</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theory</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="cooperative_games.html">Cooperative games</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shapley_values.html">Shapley values and axioms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="estimands.html">Estimands: Shapley vs Banzhaf</a></li>
-<li class="toctree-l1"><a class="reference internal" href="exact.html">Exact estimation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="approximation.html">Approximate estimation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="value_functions.html">Value functions and normalizers</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Masking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="runtime.html">Runtime core</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/cooperative_games.html">Cooperative games</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/shapley_values.html">Shapley values and axioms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/estimands.html">Estimands: Shapley vs Banzhaf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/exact.html">Exact estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/approximation.html">Approximate estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/value_functions.html">Value functions and normalizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/masking.html">Masking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/runtime.html">Runtime core</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
@@ -277,12 +277,12 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/blob/main/docs/theory/masking.rst?plain=true" title="View this page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/blob/main/docs/guides/extending.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
 </div><div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/edit/main/docs/theory/masking.rst" rel="edit" title="Edit this page">
+  <a class="muted-link" href="https://github.com/Pawlo77/nlp-shap/edit/main/docs/guides/extending.rst" rel="edit" title="Edit this page">
     <svg><use href="#svg-pencil"></use></svg>
     <span class="visually-hidden">Edit this page</span>
   </a>
@@ -299,65 +299,99 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="masking">
-<h1>Masking<a class="headerlink" href="#masking" title="Link to this heading">¶</a></h1>
-<p>Coalition masking turns a <a class="reference internal" href="../api.html#nlp_shap.ConversationSnapshot" title="nlp_shap.ConversationSnapshot"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConversationSnapshot</span></code></a> and a
-<a class="reference internal" href="../api.html#nlp_shap.CoalitionMask" title="nlp_shap.CoalitionMask"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoalitionMask</span></code></a> into a coalition-specific prompt view. The
-masking layer separates three concerns:</p>
-<ol class="arabic simple">
-<li><p><strong>Partitioning</strong> — which text units are explainability players.</p></li>
-<li><p><strong>Absence policy</strong> — how absent players appear in the rendered prompt.</p></li>
-<li><p><strong>Codec</strong> — stable packed representation for deduplication keys.</p></li>
-</ol>
-<section id="partitioning">
-<h2>Partitioning<a class="headerlink" href="#partitioning" title="Link to this heading">¶</a></h2>
-<p><a class="reference internal" href="../api/masking.html#nlp_shap.masking.partitions.TokenPartitioner" title="nlp_shap.masking.partitions.TokenPartitioner"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenPartitioner</span></code></a> splits each message into
-whitespace-delimited tokens. Each token becomes one player with a stable
-identifier derived from the base snapshot id and token coordinates.</p>
+          <section id="extending-nlp-shap">
+<h1>Extending nlp-shap<a class="headerlink" href="#extending-nlp-shap" title="Link to this heading">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">nlp-shap</span></code> is built around a small plugin registry. Third-party packages can
+register estimators, value functions, backends, and renderers without forking
+the core library.</p>
+<section id="optional-extras">
+<h2>Optional extras<a class="headerlink" href="#optional-extras" title="Link to this heading">¶</a></h2>
+<p>Install only what your deployment needs:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>nlp-shap<span class="w">                    </span><span class="c1"># core only (no torch)</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;nlp-shap[transformers]&quot;</span><span class="w">    </span><span class="c1"># Hugging Face text backend</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;nlp-shap[lmstudio]&quot;</span><span class="w">        </span><span class="c1"># LM Studio SDK backend</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;nlp-shap[api]&quot;</span><span class="w">             </span><span class="c1"># OpenAI-compatible HTTP backend</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;nlp-shap[viz]&quot;</span><span class="w">             </span><span class="c1"># matplotlib token attribution charts</span>
+</pre></div>
+</div>
 </section>
-<section id="absence-policies">
-<h2>Absence policies<a class="headerlink" href="#absence-policies" title="Link to this heading">¶</a></h2>
-<p>Three absence policies are available:</p>
-<section id="delete">
-<h3>Delete<a class="headerlink" href="#delete" title="Link to this heading">¶</a></h3>
-<p>Absent tokens are removed from the rendered text. This matches the default
-<code class="docutils literal notranslate"><span class="pre">explanation.absence_policy:</span> <span class="pre">delete</span></code> setting in <a class="reference internal" href="../api.html#nlp_shap.ExplainConfig" title="nlp_shap.ExplainConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainConfig</span></code></a>
-and changes later token positions when a model consumes the prompt sequentially.</p>
+<section id="entry-point-groups">
+<h2>Entry-point groups<a class="headerlink" href="#entry-point-groups" title="Link to this heading">¶</a></h2>
+<p>Register plugins under <code class="docutils literal notranslate"><span class="pre">project.entry-points</span></code> in your package
+<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>:</p>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Group</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nlp_shap.estimators</span></code></p></td>
+<td><p>Coalition sampling strategies (<code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">mc</span></code>, …)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nlp_shap.estimands</span></code></p></td>
+<td><p>Payoff aggregation (<code class="docutils literal notranslate"><span class="pre">shapley</span></code>, <code class="docutils literal notranslate"><span class="pre">banzhaf</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nlp_shap.value_fns</span></code></p></td>
+<td><p>Coalition scoring utilities (<code class="docutils literal notranslate"><span class="pre">tfidf_cosine</span></code>, <code class="docutils literal notranslate"><span class="pre">logprob</span></code>, …)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nlp_shap.normalizers</span></code></p></td>
+<td><p>Post-aggregation scaling (<code class="docutils literal notranslate"><span class="pre">identity</span></code>, <code class="docutils literal notranslate"><span class="pre">min_max</span></code>, …)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nlp_shap.partitions</span></code></p></td>
+<td><p>Player definitions (<code class="docutils literal notranslate"><span class="pre">tokens</span></code>, …)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nlp_shap.absence_policies</span></code></p></td>
+<td><p>Masked snapshot rendering (<code class="docutils literal notranslate"><span class="pre">delete</span></code>, <code class="docutils literal notranslate"><span class="pre">pad</span></code>, …)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nlp_shap.backends</span></code></p></td>
+<td><p>Model inference connectors (<code class="docutils literal notranslate"><span class="pre">mock</span></code>, <code class="docutils literal notranslate"><span class="pre">transformers</span></code>, …)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nlp_shap.renderers</span></code></p></td>
+<td><p>Attribution visualization (<code class="docutils literal notranslate"><span class="pre">token_text</span></code>, <code class="docutils literal notranslate"><span class="pre">token_bar</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
-<section id="pad">
-<h3>Pad<a class="headerlink" href="#pad" title="Link to this heading">¶</a></h3>
-<p>Absent tokens are replaced with a fixed placeholder (default <code class="docutils literal notranslate"><span class="pre">[MASK]</span></code>).
-Position shifts are avoided relative to deletion, but the placeholder must be
-valid for the downstream tokenizer and model.</p>
+<section id="example-custom-value-function">
+<h2>Example custom value function<a class="headerlink" href="#example-custom-value-function" title="Link to this heading">¶</a></h2>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[project.entry-points.</span><span class="s2">&quot;nlp_shap.value_fns&quot;</span><span class="k">]</span>
+<span class="n">my_metric</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_package.values:MyMetricValue&quot;</span>
+</pre></div>
+</div>
+<p>Your class should satisfy <a class="reference internal" href="../api/protocols.html#nlp_shap.protocols.value.ValueFunction" title="nlp_shap.protocols.value.ValueFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueFunction</span></code></a>.
+Resolve it by name in <a class="reference internal" href="../api/pipeline.html#nlp_shap.pipeline.config.ExplainConfig" title="nlp_shap.pipeline.config.ExplainConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainConfig</span></code></a>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">explanation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">value_fn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_metric</span>
+</pre></div>
+</div>
 </section>
-<section id="neutral">
-<h3>Neutral<a class="headerlink" href="#neutral" title="Link to this heading">¶</a></h3>
-<p>Absent tokens are replaced with width-matched neutral fillers (default <code class="docutils literal notranslate"><span class="pre">_</span></code> per
-character). This preserves string length while signalling absence without
-introducing a special mask token.</p>
+<section id="running-with-a-custom-registry">
+<h2>Running with a custom registry<a class="headerlink" href="#running-with-a-custom-registry" title="Link to this heading">¶</a></h2>
+<p>Pass an explicit <a class="reference internal" href="../api.html#nlp_shap.PluginRegistry" title="nlp_shap.PluginRegistry"><code class="xref py py-class docutils literal notranslate"><span class="pre">PluginRegistry</span></code></a> to
+<a class="reference internal" href="../api.html#nlp_shap.ExplainRunner" title="nlp_shap.ExplainRunner"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainRunner</span></code></a> when you need to load entry points from
+multiple distributions or override builtins in tests:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExplainRunner</span><span class="p">,</span> <span class="n">PluginRegistry</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.plugins</span><span class="w"> </span><span class="kn">import</span> <span class="n">PluginGroup</span>
+
+<span class="n">registry</span> <span class="o">=</span> <span class="n">PluginRegistry</span><span class="p">()</span>
+<span class="n">registry</span><span class="o">.</span><span class="n">load_entry_points</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">VALUE_FNS</span><span class="p">)</span>
+<span class="n">runner</span> <span class="o">=</span> <span class="n">ExplainRunner</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">registry</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
-</section>
-<section id="structural-sharing">
-<h2>Structural sharing<a class="headerlink" href="#structural-sharing" title="Link to this heading">¶</a></h2>
-<p><a class="reference internal" href="../api/masking.html#nlp_shap.masking.builder.MaskedSnapshot" title="nlp_shap.masking.builder.MaskedSnapshot"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskedSnapshot</span></code></a> references the original
-snapshot object. Many coalition views therefore share the same
-<code class="docutils literal notranslate"><span class="pre">snapshot_id</span></code> and base conversation payload; only the coalition mask and
-policy metadata differ until <a class="reference internal" href="../api/masking.html#nlp_shap.masking.builder.MaskBuilder" title="nlp_shap.masking.builder.MaskBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskBuilder</span></code></a>
-materializes a rendered snapshot.</p>
-</section>
-<section id="packed-masks">
-<h2>Packed masks<a class="headerlink" href="#packed-masks" title="Link to this heading">¶</a></h2>
-<p><a class="reference internal" href="../api/masking.html#nlp_shap.masking.codec.MaskCodec" title="nlp_shap.masking.codec.MaskCodec"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskCodec</span></code></a> packs boolean masks into little-endian
-bytes and exposes a stable integer hash compatible with the legacy MLLM-Shap
-codec. <a class="reference internal" href="../api/masking.html#nlp_shap.masking.space.MaskSpace" title="nlp_shap.masking.space.MaskSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">MaskSpace</span></code></a> projects feature-level splits
-back into full-length masks when some positions are always present.</p>
-</section>
-<section id="see-also">
-<h2>See also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
+<section id="further-reading">
+<h2>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><a class="reference internal" href="../guides/masking.html"><span class="doc">Masking views</span></a> — usage examples</p></li>
-<li><p><a class="reference internal" href="../api/masking.html"><span class="doc">Masking</span></a> — module reference</p></li>
-<li><p><a class="reference internal" href="../guides/config.html"><span class="doc">Configuration</span></a> — <code class="docutils literal notranslate"><span class="pre">players</span></code> and <code class="docutils literal notranslate"><span class="pre">absence_policy</span></code> settings</p></li>
+<li><p><a class="reference internal" href="../api/plugins.html"><span class="doc">Plugins</span></a> — registry API and built-in groups</p></li>
+<li><p><a class="reference internal" href="../api/protocols.html"><span class="doc">Protocols</span></a> — strategy protocols for plugins</p></li>
+<li><p><a class="reference internal" href="config.html"><span class="doc">Configuration</span></a> — <a class="reference internal" href="../api.html#nlp_shap.ExplainConfig" title="nlp_shap.ExplainConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainConfig</span></code></a> schema</p></li>
 </ul>
 </section>
 </section>
@@ -367,23 +401,23 @@ back into full-length masks when some positions are always present.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="runtime.html">
+          <a class="next-page" href="masking.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Runtime core</div>
+                <div class="title">Masking views</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="value_functions.html">
+          <a class="prev-page" href="config.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Value functions and normalizers</div>
+                <div class="title">Configuration</div>
                 
               </div>
             </a>
@@ -425,17 +459,12 @@ back into full-length masks when some positions are always present.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Masking</a><ul>
-<li><a class="reference internal" href="#partitioning">Partitioning</a></li>
-<li><a class="reference internal" href="#absence-policies">Absence policies</a><ul>
-<li><a class="reference internal" href="#delete">Delete</a></li>
-<li><a class="reference internal" href="#pad">Pad</a></li>
-<li><a class="reference internal" href="#neutral">Neutral</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#structural-sharing">Structural sharing</a></li>
-<li><a class="reference internal" href="#packed-masks">Packed masks</a></li>
-<li><a class="reference internal" href="#see-also">See also</a></li>
+<li><a class="reference internal" href="#">Extending nlp-shap</a><ul>
+<li><a class="reference internal" href="#optional-extras">Optional extras</a></li>
+<li><a class="reference internal" href="#entry-point-groups">Entry-point groups</a></li>
+<li><a class="reference internal" href="#example-custom-value-function">Example custom value function</a></li>
+<li><a class="reference internal" href="#running-with-a-custom-registry">Running with a custom registry</a></li>
+<li><a class="reference internal" href="#further-reading">Further reading</a></li>
 </ul>
 </li>
 </ul>

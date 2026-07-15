@@ -7,7 +7,7 @@
         <link rel="prefetch" href="../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>Visualization - nlp-shap 0.1.13</title>
+        <title>Visualization - nlp-shap 0.1.14</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -172,7 +172,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">nlp-shap 0.1.13</div></a>
+      <a href="../index.html"><div class="brand">nlp-shap 0.1.14</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -196,7 +196,7 @@
     <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.13</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.14</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -214,6 +214,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../guides/pipeline.html">End-to-end explain pipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/backends.html">Generative backends</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/extending.html">Extending nlp-shap</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/runtime.html">Runtime core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../guides/visualization.html">Visualization</a></li>
@@ -301,50 +302,6 @@
           <section id="module-nlp_shap.viz">
 <span id="visualization"></span><h1>Visualization<a class="headerlink" href="#module-nlp_shap.viz" title="Link to this heading">¶</a></h1>
 <p>Token attribution visualization plugins.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="nlp_shap.viz.TokenBarRenderer">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.viz.</span></span><span class="sig-name descname"><span class="pre">TokenBarRenderer</span></span><a class="reference internal" href="../_modules/nlp_shap/viz/token_bar.html#TokenBarRenderer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.viz.TokenBarRenderer" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Render attributions as a horizontal bar chart.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="nlp_shap.viz.TokenBarRenderer.name">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.viz.TokenBarRenderer.name" title="Link to this definition">¶</a></dt>
-<dd><p>Return the registered renderer identifier.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="nlp_shap.viz.TokenBarRenderer.render">
-<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimand</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.estimands.Estimand" title="nlp_shap.domain.estimands.Estimand"><span class="pre">Estimand</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="reference internal" href="../_modules/nlp_shap/viz/token_bar.html#TokenBarRenderer.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.viz.TokenBarRenderer.render" title="Link to this definition">¶</a></dt>
-<dd><p>Build a horizontal bar chart sorted by absolute attribution.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="nlp_shap.viz.TokenTextRenderer">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nlp_shap.viz.</span></span><span class="sig-name descname"><span class="pre">TokenTextRenderer</span></span><a class="reference internal" href="../_modules/nlp_shap/viz/token_text.html#TokenTextRenderer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.viz.TokenTextRenderer" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Render attributions as inline colored tokens.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="nlp_shap.viz.TokenTextRenderer.name">
-<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#nlp_shap.viz.TokenTextRenderer.name" title="Link to this definition">¶</a></dt>
-<dd><p>Return the registered renderer identifier.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="nlp_shap.viz.TokenTextRenderer.render">
-<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimand</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.estimands.Estimand" title="nlp_shap.domain.estimands.Estimand"><span class="pre">Estimand</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="reference internal" href="../_modules/nlp_shap/viz/token_text.html#TokenTextRenderer.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.viz.TokenTextRenderer.render" title="Link to this definition">¶</a></dt>
-<dd><p>Build a matplotlib figure with colored token labels.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="nlp_shap.viz.TokenTextRenderer.to_html">
-<span class="sig-name descname"><span class="pre">to_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimand</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.estimands.Estimand" title="nlp_shap.domain.estimands.Estimand"><span class="pre">Estimand</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/viz/token_text.html#TokenTextRenderer.to_html"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.viz.TokenTextRenderer.to_html" title="Link to this definition">¶</a></dt>
-<dd><p>Return an HTML fragment with colored token spans for Jupyter.</p>
-</dd></dl>
-
-</dd></dl>
-
 <dl class="py function">
 <dt class="sig sig-object py" id="nlp_shap.viz.display_attribution_html">
 <span class="sig-prename descclassname"><span class="pre">nlp_shap.viz.</span></span><span class="sig-name descname"><span class="pre">display_attribution_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pipeline.html#nlp_shap.pipeline.result.ExplainRunOutput" title="nlp_shap.pipeline.result.ExplainRunOutput"><span class="pre">ExplainRunOutput</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.conversation.ConversationSnapshot" title="nlp_shap.domain.conversation.ConversationSnapshot"><span class="pre">ConversationSnapshot</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">player_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="domain.html#nlp_shap.domain.players.PlayerSet" title="nlp_shap.domain.players.PlayerSet"><span class="pre">PlayerSet</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><span class="pre">Any</span></a></span></span><a class="reference internal" href="../_modules/nlp_shap/viz/render.html#display_attribution_html"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nlp_shap.viz.display_attribution_html" title="Link to this definition">¶</a></dt>
@@ -506,17 +463,6 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Visualization</a><ul>
-<li><a class="reference internal" href="#nlp_shap.viz.TokenBarRenderer"><code class="docutils literal notranslate"><span class="pre">TokenBarRenderer</span></code></a><ul>
-<li><a class="reference internal" href="#nlp_shap.viz.TokenBarRenderer.name"><code class="docutils literal notranslate"><span class="pre">TokenBarRenderer.name</span></code></a></li>
-<li><a class="reference internal" href="#nlp_shap.viz.TokenBarRenderer.render"><code class="docutils literal notranslate"><span class="pre">TokenBarRenderer.render()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#nlp_shap.viz.TokenTextRenderer"><code class="docutils literal notranslate"><span class="pre">TokenTextRenderer</span></code></a><ul>
-<li><a class="reference internal" href="#nlp_shap.viz.TokenTextRenderer.name"><code class="docutils literal notranslate"><span class="pre">TokenTextRenderer.name</span></code></a></li>
-<li><a class="reference internal" href="#nlp_shap.viz.TokenTextRenderer.render"><code class="docutils literal notranslate"><span class="pre">TokenTextRenderer.render()</span></code></a></li>
-<li><a class="reference internal" href="#nlp_shap.viz.TokenTextRenderer.to_html"><code class="docutils literal notranslate"><span class="pre">TokenTextRenderer.to_html()</span></code></a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#nlp_shap.viz.display_attribution_html"><code class="docutils literal notranslate"><span class="pre">display_attribution_html()</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.viz.render_attribution"><code class="docutils literal notranslate"><span class="pre">render_attribution()</span></code></a></li>
 <li><a class="reference internal" href="#nlp_shap.viz.render_attribution_html"><code class="docutils literal notranslate"><span class="pre">render_attribution_html()</span></code></a></li>
@@ -550,7 +496,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=8d02545a"></script>
+</div><script src="../_static/documentation_options.js?v=468bc497"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

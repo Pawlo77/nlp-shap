@@ -8,6 +8,32 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-1-14:
+
+0.1.14 (2026-07-15)
+-------------------
+
+Added
+~~~~~
+
+- :doc:`guides/extending` user guide for optional extras and plugin entry points.
+- ``[dev]`` optional extra for contributor tooling.
+- Base-wheel smoke test ensuring ``torch`` is not installed without extras.
+
+Changed
+~~~~~~~
+
+- Removed the transitional ``explain.use_v2`` YAML flag; the v2 explain pipeline
+  is now the only path.
+- :func:`~nlp_shap.render_attribution` and :func:`~nlp_shap.render_attribution_html`
+  load lazily so ``import nlp_shap`` works without ``[viz]``.
+
+Documentation
+~~~~~~~~~~~~~
+
+- README quickstart with :class:`~nlp_shap.ExplainRunner`.
+- Getting-started explain walkthrough and API export table updates.
+
 .. _release-0-1-13:
 
 0.1.13 (2026-07-15)
@@ -23,6 +49,12 @@ Added
 - Optional ``[viz]`` extra (``matplotlib``, ``ipywidgets``).
 - :doc:`guides/visualization` user guide and ``attribution_viz`` /
   ``text_explain_e2e`` example notebooks.
+
+Fixed
+~~~~~
+
+- Lazy visualization imports so the published wheel passes the base ``import nlp_shap``
+  smoke test without ``matplotlib``.
 
 .. _release-0-1-12:
 

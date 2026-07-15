@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.viz.render - nlp-shap 0.1.13</title>
+        <title>nlp_shap.viz.render - nlp-shap 0.1.14</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -171,7 +171,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">nlp-shap 0.1.13</div></a>
+      <a href="../../../index.html"><div class="brand">nlp-shap 0.1.14</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
     <img class="sidebar-logo" src="../../../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.13</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.14</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -213,6 +213,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/pipeline.html">End-to-end explain pipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/backends.html">Generative backends</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/extending.html">Extending nlp-shap</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/runtime.html">Runtime core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../guides/visualization.html">Visualization</a></li>
@@ -290,9 +291,7 @@
           <h1>Source code for nlp_shap.viz.render</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Public helpers for attribution visualization.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">cast</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.figure</span><span class="w"> </span><span class="kn">import</span> <span class="n">Figure</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">cast</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">..domain.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationSnapshot</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..domain.players</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlayerSet</span>
@@ -301,11 +300,13 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">..plugins.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">PluginRegistry</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..protocols.renderer</span><span class="w"> </span><span class="kn">import</span> <span class="n">AttributionRenderer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.labels</span><span class="w"> </span><span class="kn">import</span> <span class="n">token_labels</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.token_text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenTextRenderer</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.figure</span><span class="w"> </span><span class="kn">import</span> <span class="n">Figure</span>
 
 
 <div class="viewcode-block" id="render_attribution">
-<a class="viewcode-back" href="../../../api/viz.html#nlp_shap.render_attribution">[docs]</a>
+<a class="viewcode-back" href="../../../api/viz.html#nlp_shap.viz.render_attribution">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">render_attribution</span><span class="p">(</span>
     <span class="n">output</span><span class="p">:</span> <span class="n">ExplainRunOutput</span><span class="p">,</span>
     <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">,</span>
@@ -314,7 +315,7 @@
     <span class="n">renderer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;token_text&quot;</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">registry</span><span class="p">:</span> <span class="n">PluginRegistry</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Figure</span><span class="p">:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Figure&quot;</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Render ``output`` attributions with a registered renderer plugin.&quot;&quot;&quot;</span>
     <span class="n">plugin_registry</span> <span class="o">=</span> <span class="n">registry</span> <span class="ow">or</span> <span class="n">_default_registry</span><span class="p">()</span>
     <span class="n">attribution_renderer</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
@@ -324,7 +325,7 @@
     <span class="n">labels</span> <span class="o">=</span> <span class="n">token_labels</span><span class="p">(</span><span class="n">snapshot</span><span class="p">,</span> <span class="n">player_set</span><span class="p">)</span>
     <span class="n">values</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">values</span>
     <span class="k">return</span> <span class="n">cast</span><span class="p">(</span>
-        <span class="n">Figure</span><span class="p">,</span>
+        <span class="s2">&quot;Figure&quot;</span><span class="p">,</span>
         <span class="n">attribution_renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
             <span class="n">labels</span><span class="p">,</span>
             <span class="n">values</span><span class="p">,</span>
@@ -336,7 +337,7 @@
 
 
 <div class="viewcode-block" id="render_attribution_html">
-<a class="viewcode-back" href="../../../api/viz.html#nlp_shap.render_attribution_html">[docs]</a>
+<a class="viewcode-back" href="../../../api/viz.html#nlp_shap.viz.render_attribution_html">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">render_attribution_html</span><span class="p">(</span>
     <span class="n">output</span><span class="p">:</span> <span class="n">ExplainRunOutput</span><span class="p">,</span>
     <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">,</span>
@@ -345,6 +346,8 @@
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return an HTML fragment for inline token coloring in Jupyter.&quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.token_text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenTextRenderer</span>
+
     <span class="n">renderer</span> <span class="o">=</span> <span class="n">TokenTextRenderer</span><span class="p">()</span>
     <span class="n">labels</span> <span class="o">=</span> <span class="n">token_labels</span><span class="p">(</span><span class="n">snapshot</span><span class="p">,</span> <span class="n">player_set</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">renderer</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span>
@@ -357,7 +360,7 @@
 
 
 <div class="viewcode-block" id="display_attribution_html">
-<a class="viewcode-back" href="../../../api/viz.html#nlp_shap.display_attribution_html">[docs]</a>
+<a class="viewcode-back" href="../../../api/viz.html#nlp_shap.viz.display_attribution_html">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">display_attribution_html</span><span class="p">(</span>
     <span class="n">output</span><span class="p">:</span> <span class="n">ExplainRunOutput</span><span class="p">,</span>
     <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">,</span>
@@ -425,7 +428,7 @@
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=8d02545a"></script>
+</div><script src="../../../_static/documentation_options.js?v=468bc497"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>

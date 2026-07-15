@@ -62,6 +62,17 @@ Quick install
 
 Requires Python 3.12. See :doc:`guides/getting_started` for a full walkthrough.
 
+Optional extras:
+
+.. code-block:: bash
+
+   pip install "nlp-shap[transformers]"   # Hugging Face backend
+   pip install "nlp-shap[lmstudio]"       # LM Studio backend
+   pip install "nlp-shap[api]"             # OpenAI-compatible HTTP API
+   pip install "nlp-shap[viz]"             # matplotlib attribution charts
+
+See :doc:`guides/extending` for the full extras and entry-point matrix.
+
 .. toctree::
    :hidden:
    :caption: Guides
@@ -75,6 +86,7 @@ Requires Python 3.12. See :doc:`guides/getting_started` for a full walkthrough.
    guides/pipeline
    guides/backends
    guides/config
+   guides/extending
    guides/masking
    guides/runtime
    guides/visualization

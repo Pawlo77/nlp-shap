@@ -23,7 +23,6 @@ YAML skeleton
      precompute_base: true
 
    explanation:
-     use_v2: true
      estimand: shapley
      estimator: neyman_cc
      value_fn: tfidf_cosine

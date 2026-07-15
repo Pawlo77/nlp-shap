@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#"><link rel="search" title="Search" href="search.html">
         <link rel="prefetch" href="_static/logo.svg" as="image">
 
-    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.13</title>
+    <link rel="shortcut icon" href="_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 --><title>Index - nlp-shap 0.1.14</title>
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -170,7 +170,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">nlp-shap 0.1.13</div></a>
+      <a href="index.html"><div class="brand">nlp-shap 0.1.14</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.13</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.14</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -212,6 +212,7 @@
 <li class="toctree-l1"><a class="reference internal" href="guides/pipeline.html">End-to-end explain pipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/backends.html">Generative backends</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guides/extending.html">Extending nlp-shap</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/masking.html">Masking views</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/runtime.html">Runtime core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="guides/visualization.html">Visualization</a></li>
@@ -1461,10 +1462,6 @@
 </li>
           <li><a href="api/viz.html#nlp_shap.viz.token_text.TokenTextRenderer.name">(nlp_shap.viz.token_text.TokenTextRenderer property)</a>
 </li>
-          <li><a href="api/viz.html#nlp_shap.viz.TokenBarRenderer.name">(nlp_shap.viz.TokenBarRenderer property)</a>
-</li>
-          <li><a href="api/viz.html#nlp_shap.viz.TokenTextRenderer.name">(nlp_shap.viz.TokenTextRenderer property)</a>
-</li>
         </ul></li>
         <li><a href="api.html#nlp_shap.PluginRegistry.names">names() (nlp_shap.PluginRegistry method)</a>
 
@@ -1614,8 +1611,6 @@
           <li><a href="api/estimation.html#module-nlp_shap.estimation.neyman">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     nlp_shap.estimation.normalizers
 
@@ -1623,6 +1618,8 @@
           <li><a href="api/estimation.html#module-nlp_shap.estimation.normalizers">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     nlp_shap.masking
 
@@ -2127,24 +2124,16 @@
 </li>
           <li><a href="api/viz.html#nlp_shap.viz.token_text.TokenTextRenderer.render">(nlp_shap.viz.token_text.TokenTextRenderer method)</a>
 </li>
-          <li><a href="api/viz.html#nlp_shap.viz.TokenBarRenderer.render">(nlp_shap.viz.TokenBarRenderer method)</a>
-</li>
-          <li><a href="api/viz.html#nlp_shap.viz.TokenTextRenderer.render">(nlp_shap.viz.TokenTextRenderer method)</a>
-</li>
         </ul></li>
-        <li><a href="api.html#nlp_shap.render_attribution">render_attribution() (in module nlp_shap)</a>
+        <li><a href="api/viz.html#nlp_shap.viz.render_attribution">render_attribution() (in module nlp_shap.viz)</a>
 
         <ul>
-          <li><a href="api/viz.html#nlp_shap.viz.render_attribution">(in module nlp_shap.viz)</a>
-</li>
           <li><a href="api/viz.html#nlp_shap.viz.render.render_attribution">(in module nlp_shap.viz.render)</a>
 </li>
         </ul></li>
-        <li><a href="api.html#nlp_shap.render_attribution_html">render_attribution_html() (in module nlp_shap)</a>
+        <li><a href="api/viz.html#nlp_shap.viz.render_attribution_html">render_attribution_html() (in module nlp_shap.viz)</a>
 
         <ul>
-          <li><a href="api/viz.html#nlp_shap.viz.render_attribution_html">(in module nlp_shap.viz)</a>
-</li>
           <li><a href="api/viz.html#nlp_shap.viz.render.render_attribution_html">(in module nlp_shap.viz.render)</a>
 </li>
         </ul></li>
@@ -2168,14 +2157,14 @@
           <li><a href="api/estimation.html#nlp_shap.estimation.complementary.ComplementaryEstimator.reset_sampling_state">(nlp_shap.estimation.complementary.ComplementaryEstimator method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api.html#nlp_shap.PluginRegistry.resolve">resolve() (nlp_shap.PluginRegistry method)</a>
 
         <ul>
           <li><a href="api/plugins.html#nlp_shap.plugins.registry.PluginRegistry.resolve">(nlp_shap.plugins.registry.PluginRegistry method)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api.html#nlp_shap.PluginRegistry.resolve_factory">resolve_factory() (nlp_shap.PluginRegistry method)</a>
 
         <ul>
@@ -2422,32 +2411,20 @@
           <li><a href="api.html#nlp_shap.RunManifest.to_dict">(nlp_shap.RunManifest method)</a>
 </li>
         </ul></li>
-        <li><a href="api/viz.html#nlp_shap.viz.token_text.TokenTextRenderer.to_html">to_html() (nlp_shap.viz.token_text.TokenTextRenderer method)</a>
-
-        <ul>
-          <li><a href="api/viz.html#nlp_shap.viz.TokenTextRenderer.to_html">(nlp_shap.viz.TokenTextRenderer method)</a>
-</li>
-        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/viz.html#nlp_shap.viz.TokenBarRenderer">TokenBarRenderer (class in nlp_shap.viz)</a>
-
-        <ul>
-          <li><a href="api/viz.html#nlp_shap.viz.token_bar.TokenBarRenderer">(class in nlp_shap.viz.token_bar)</a>
+        <li><a href="api/viz.html#nlp_shap.viz.token_text.TokenTextRenderer.to_html">to_html() (nlp_shap.viz.token_text.TokenTextRenderer method)</a>
 </li>
-        </ul></li>
+        <li><a href="api/viz.html#nlp_shap.viz.token_bar.TokenBarRenderer">TokenBarRenderer (class in nlp_shap.viz.token_bar)</a>
+</li>
         <li><a href="api/masking.html#nlp_shap.masking.TokenPartitioner">TokenPartitioner (class in nlp_shap.masking)</a>
 
         <ul>
           <li><a href="api/masking.html#nlp_shap.masking.partitions.TokenPartitioner">(class in nlp_shap.masking.partitions)</a>
 </li>
         </ul></li>
-        <li><a href="api/viz.html#nlp_shap.viz.TokenTextRenderer">TokenTextRenderer (class in nlp_shap.viz)</a>
-
-        <ul>
-          <li><a href="api/viz.html#nlp_shap.viz.token_text.TokenTextRenderer">(class in nlp_shap.viz.token_text)</a>
+        <li><a href="api/viz.html#nlp_shap.viz.token_text.TokenTextRenderer">TokenTextRenderer (class in nlp_shap.viz.token_text)</a>
 </li>
-        </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.GenerationConfig.top_k">top_k (nlp_shap.pipeline.config.GenerationConfig attribute)</a>
 </li>
         <li><a href="api/runtime.html#nlp_shap.runtime.PerfSummary.total_ms">total_ms (nlp_shap.runtime.PerfSummary attribute)</a>
@@ -2481,8 +2458,6 @@
 </li>
         </ul></li>
         <li><a href="api/pipeline.html#nlp_shap.pipeline.config.NeymanConfig.use_standard_method">use_standard_method (nlp_shap.pipeline.config.NeymanConfig attribute)</a>
-</li>
-        <li><a href="api/pipeline.html#nlp_shap.pipeline.config.ExplanationConfig.use_v2">use_v2 (nlp_shap.pipeline.config.ExplanationConfig attribute)</a>
 </li>
         <li><a href="api/domain.html#nlp_shap.domain.enums.Role.USER">USER (nlp_shap.domain.enums.Role attribute)</a>
 
@@ -2610,7 +2585,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=8d02545a"></script>
+</div><script src="_static/documentation_options.js?v=468bc497"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

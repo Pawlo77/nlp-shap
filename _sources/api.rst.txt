@@ -13,6 +13,10 @@ Public exports
 
    * - Symbol
      - Description
+   * - :func:`~nlp_shap.render_attribution`
+     - Render token attributions with a registered viz plugin. See :doc:`api/viz`.
+   * - :func:`~nlp_shap.render_attribution_html`
+     - Return inline HTML for Jupyter token coloring. See :doc:`api/viz`.
    * - :class:`~nlp_shap.ExplainRunner`
      - End-to-end explain pipeline entry point. See :doc:`api/pipeline`.
    * - :class:`~nlp_shap.ExplainConfig`
