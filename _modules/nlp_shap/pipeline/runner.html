@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.pipeline.runner - nlp-shap 0.1.8</title>
+        <title>nlp_shap.pipeline.runner - nlp-shap 0.1.9</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -171,7 +171,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">nlp-shap 0.1.8</div></a>
+      <a href="../../../index.html"><div class="brand">nlp-shap 0.1.9</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
     <img class="sidebar-logo" src="../../../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.8</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.9</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -285,14 +285,17 @@
 <span></span><span class="sd">&quot;&quot;&quot;Public explain pipeline entry point.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">..domain.conversation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConversationSnapshot</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..masking.partitions</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenPartitioner</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..plugins</span><span class="w"> </span><span class="kn">import</span> <span class="n">PluginGroup</span><span class="p">,</span> <span class="n">PluginRegistry</span><span class="p">,</span> <span class="n">register_builtin_plugins</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..plugins.backends</span><span class="w"> </span><span class="kn">import</span> <span class="n">instantiate_backend</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.telemetry</span><span class="w"> </span><span class="kn">import</span> <span class="n">NullObservabilitySink</span><span class="p">,</span> <span class="n">ObservabilitySink</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExplainConfig</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExplainContext</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.orchestrator</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExplainOrchestrator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.reanalyze</span><span class="w"> </span><span class="kn">import</span> <span class="n">reanalyze_sync</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.result</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExplainRunOutput</span>
 
 
@@ -305,9 +308,11 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">config</span><span class="p">:</span> <span class="n">ExplainConfig</span><span class="p">,</span>
         <span class="n">registry</span><span class="p">:</span> <span class="n">PluginRegistry</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">telemetry</span><span class="p">:</span> <span class="n">ObservabilitySink</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span> <span class="o">=</span> <span class="n">registry</span> <span class="ow">or</span> <span class="n">_default_registry</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_telemetry</span> <span class="o">=</span> <span class="n">telemetry</span> <span class="ow">or</span> <span class="n">NullObservabilitySink</span><span class="p">()</span>
 
 <div class="viewcode-block" id="ExplainRunner.explain">
 <a class="viewcode-back" href="../../../api/pipeline.html#nlp_shap.ExplainRunner.explain">[docs]</a>
@@ -326,6 +331,18 @@
         <span class="k">return</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">snapshot</span><span class="p">))</span></div>
 
 
+<div class="viewcode-block" id="ExplainRunner.reanalyze">
+<a class="viewcode-back" href="../../../api/pipeline.html#nlp_shap.ExplainRunner.reanalyze">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reanalyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archive_root</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExplainRunOutput</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Rescore an archived run with the runner&#39;s current explain settings.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">reanalyze_sync</span><span class="p">(</span>
+            <span class="n">Path</span><span class="p">(</span><span class="n">archive_root</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="p">,</span>
+            <span class="n">telemetry</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_telemetry</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
     <span class="k">def</span><span class="w"> </span><span class="nf">_build_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExplainContext</span><span class="p">:</span>
         <span class="n">partitioner</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span>
             <span class="n">PluginGroup</span><span class="o">.</span><span class="n">PARTITIONS</span><span class="p">,</span>
@@ -342,7 +359,15 @@
             <span class="n">player_set</span><span class="o">=</span><span class="n">player_set</span><span class="p">,</span>
             <span class="n">registry</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="p">,</span>
             <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span>
-        <span class="p">)</span></div>
+            <span class="n">archive_root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_resolve_archive_root</span><span class="p">(</span><span class="n">run_id</span><span class="p">),</span>
+            <span class="n">telemetry</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_telemetry</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_archive_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">explanation</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">template</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">))</span></div>
 
 
 
@@ -400,7 +425,7 @@
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=22607128"></script>
+</div><script src="../../../_static/documentation_options.js?v=8618f531"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>

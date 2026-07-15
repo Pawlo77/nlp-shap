@@ -8,6 +8,24 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-1-9:
+
+0.1.9 (2026-07-15)
+------------------
+
+Added
+~~~~~
+
+- :meth:`~nlp_shap.pipeline.runner.ExplainRunner.reanalyze` rescoring on archived
+  coalitions with zero backend executions.
+- Grand-coalition ``base_generation.txt`` persisted in run archives before the
+  coalition scheduler loop when ``precompute_base`` is enabled.
+- :mod:`nlp_shap.runtime.telemetry` with :class:`~nlp_shap.runtime.telemetry.InMemoryObservabilitySink`
+  stage spans for orchestrator and estimator phases.
+- :class:`~nlp_shap.runtime.metrics.PerfSummary` on
+  :class:`~nlp_shap.pipeline.result.ExplainRunOutput`.
+- :meth:`~nlp_shap.runtime.archive.RunArchive.load` for reopening existing archives.
+
 .. _release-0-1-8:
 
 0.1.8 (2026-07-14)

@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.pipeline.orchestrator - nlp-shap 0.1.8</title>
+        <title>nlp_shap.pipeline.orchestrator - nlp-shap 0.1.9</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -171,7 +171,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">nlp-shap 0.1.8</div></a>
+      <a href="../../../index.html"><div class="brand">nlp-shap 0.1.9</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
     <img class="sidebar-logo" src="../../../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.8</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.9</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -284,6 +284,7 @@
           <h1>Source code for nlp_shap.pipeline.orchestrator</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Explain pipeline orchestration.&quot;&quot;&quot;</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">cast</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">..backends.mock.generation</span><span class="w"> </span><span class="kn">import</span> <span class="n">generation_record_from_snapshot</span>
@@ -300,7 +301,9 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">..protocols.masking</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbsencePolicy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..protocols.normalizer</span><span class="w"> </span><span class="kn">import</span> <span class="n">Normalizer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..protocols.value</span><span class="w"> </span><span class="kn">import</span> <span class="n">ValueFunction</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.archive</span><span class="w"> </span><span class="kn">import</span> <span class="n">BASE_GENERATION_FILE</span><span class="p">,</span> <span class="n">RunArchive</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.dedup</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionDedupRegistry</span><span class="p">,</span> <span class="n">build_coalition_key</span><span class="p">,</span> <span class="n">dedup_enabled</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">PerfSummary</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.scheduler</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionJob</span><span class="p">,</span> <span class="n">InferenceScheduler</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.store</span><span class="w"> </span><span class="kn">import</span> <span class="n">HotResultStore</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..value.tfidf</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfIdfCosineValue</span>
@@ -326,97 +329,146 @@
 <a class="viewcode-back" href="../../../api/pipeline.html#nlp_shap.pipeline.orchestrator.ExplainOrchestrator.run">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExplainRunOutput</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute the configured explain pipeline and return attributions.&quot;&quot;&quot;</span>
-        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">config</span>
-        <span class="n">explanation</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">explanation</span>
-        <span class="n">registry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">registry</span>
-        <span class="n">snapshot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">snapshot</span>
-        <span class="n">player_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">player_set</span>
+        <span class="n">telemetry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">resolved_telemetry</span><span class="p">()</span>
+        <span class="n">run_started</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">generation_ms</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">scoring_ms</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">aggregation_ms</span> <span class="o">=</span> <span class="mf">0.0</span>
 
-        <span class="n">estimator</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
-            <span class="n">EstimatorStrategy</span><span class="p">,</span>
-            <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMATORS</span><span class="p">,</span> <span class="n">explanation</span><span class="o">.</span><span class="n">estimator</span><span class="p">),</span>
-        <span class="p">)</span>
-        <span class="n">estimator</span><span class="o">.</span><span class="n">bind_snapshot</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">telemetry</span><span class="o">.</span><span class="n">span</span><span class="p">(</span><span class="s2">&quot;orchestrator.run&quot;</span><span class="p">):</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">config</span>
+            <span class="n">explanation</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">explanation</span>
+            <span class="n">registry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">registry</span>
+            <span class="n">snapshot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">snapshot</span>
+            <span class="n">player_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">player_set</span>
 
-        <span class="n">aggregator</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
-            <span class="n">EstimandAggregator</span><span class="p">,</span>
-            <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMANDS</span><span class="p">,</span> <span class="n">explanation</span><span class="o">.</span><span class="n">estimand</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
-        <span class="p">)</span>
-
-        <span class="n">value_fn</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
-            <span class="n">ValueFunction</span><span class="p">,</span>
-            <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">VALUE_FNS</span><span class="p">,</span> <span class="n">explanation</span><span class="o">.</span><span class="n">value_fn</span><span class="p">),</span>
-        <span class="p">)</span>
-
-        <span class="n">normalizer</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
-            <span class="n">Normalizer</span><span class="p">,</span>
-            <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">NORMALIZERS</span><span class="p">,</span> <span class="n">explanation</span><span class="o">.</span><span class="n">normalizer</span><span class="p">),</span>
-        <span class="p">)</span>
-
-        <span class="n">absence_policy</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
-            <span class="n">AbsencePolicy</span><span class="p">,</span>
-            <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span>
-                <span class="n">PluginGroup</span><span class="o">.</span><span class="n">ABSENCE_POLICIES</span><span class="p">,</span>
-                <span class="n">explanation</span><span class="o">.</span><span class="n">absence_policy</span><span class="p">,</span>
-            <span class="p">),</span>
-        <span class="p">)</span>
-        <span class="n">mask_builder</span> <span class="o">=</span> <span class="n">MaskBuilder</span><span class="p">(</span><span class="n">absence_policy</span><span class="p">)</span>
-
-        <span class="n">base_record</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_base</span><span class="p">(</span><span class="n">mask_builder</span><span class="p">,</span> <span class="n">player_set</span><span class="p">)</span>
-        <span class="n">masks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-            <span class="n">estimator</span><span class="o">.</span><span class="n">sample_masks</span><span class="p">(</span>
-                <span class="n">player_set</span><span class="p">,</span>
-                <span class="n">explanation</span><span class="o">.</span><span class="n">budget</span><span class="o">.</span><span class="n">fraction</span><span class="p">,</span>
-                <span class="n">explanation</span><span class="o">.</span><span class="n">include_minimal_masks</span><span class="p">,</span>
-                <span class="n">explanation</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
+            <span class="n">estimator</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
+                <span class="n">EstimatorStrategy</span><span class="p">,</span>
+                <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMATORS</span><span class="p">,</span> <span class="n">explanation</span><span class="o">.</span><span class="n">estimator</span><span class="p">),</span>
             <span class="p">)</span>
-        <span class="p">)</span>
+            <span class="n">estimator</span><span class="o">.</span><span class="n">bind_snapshot</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
 
-        <span class="n">store</span> <span class="o">=</span> <span class="n">HotResultStore</span><span class="p">()</span>
-        <span class="n">dedup</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">CoalitionDedupRegistry</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">dedup_enabled</span><span class="p">(</span><span class="n">explanation</span><span class="o">.</span><span class="n">dedup</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">generation</span><span class="p">)</span>
-            <span class="k">else</span> <span class="kc">None</span>
-        <span class="p">)</span>
-        <span class="n">scheduler</span> <span class="o">=</span> <span class="n">InferenceScheduler</span><span class="p">(</span>
-            <span class="n">max_inflight</span><span class="o">=</span><span class="n">explanation</span><span class="o">.</span><span class="n">max_inflight</span><span class="p">,</span>
-            <span class="n">generation</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">generation</span><span class="p">,</span>
-            <span class="n">store</span><span class="o">=</span><span class="n">store</span><span class="p">,</span>
-            <span class="n">dedup</span><span class="o">=</span><span class="n">dedup</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="n">jobs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_jobs</span><span class="p">(</span><span class="n">mask_builder</span><span class="p">,</span> <span class="n">player_set</span><span class="p">,</span> <span class="n">masks</span><span class="p">)</span>
-        <span class="n">generation</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">generation</span>
-
-        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">snapshot_for_job</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-            <span class="n">record</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
-                <span class="n">snapshot_for_job</span><span class="p">,</span>
-                <span class="n">generation</span><span class="o">.</span><span class="n">max_new_tokens</span><span class="p">,</span>
-                <span class="n">generation</span><span class="o">.</span><span class="n">temperature</span><span class="p">,</span>
-                <span class="n">generation</span><span class="o">.</span><span class="n">top_k</span><span class="p">,</span>
+            <span class="n">aggregator</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
+                <span class="n">EstimandAggregator</span><span class="p">,</span>
+                <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMANDS</span><span class="p">,</span> <span class="n">explanation</span><span class="o">.</span><span class="n">estimand</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
             <span class="p">)</span>
-            <span class="k">return</span> <span class="n">record</span><span class="o">.</span><span class="n">text</span>
 
-        <span class="n">metrics</span> <span class="o">=</span> <span class="k">await</span> <span class="n">scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">jobs</span><span class="p">,</span> <span class="n">generate</span><span class="p">)</span>
-        <span class="n">coalition_records</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collect_generation_records</span><span class="p">(</span><span class="n">jobs</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span>
-        <span class="n">corpus</span> <span class="o">=</span> <span class="p">(</span><span class="n">base_record</span><span class="p">,</span> <span class="o">*</span><span class="n">coalition_records</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_fit_value_function</span><span class="p">(</span><span class="n">value_fn</span><span class="p">,</span> <span class="n">corpus</span><span class="p">)</span>
-        <span class="n">payoffs</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">value_fn</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">base_record</span><span class="p">,</span> <span class="n">coalition_record</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">coalition_record</span> <span class="ow">in</span> <span class="n">coalition_records</span>
-        <span class="p">]</span>
+            <span class="n">value_fn</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
+                <span class="n">ValueFunction</span><span class="p">,</span>
+                <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">VALUE_FNS</span><span class="p">,</span> <span class="n">explanation</span><span class="o">.</span><span class="n">value_fn</span><span class="p">),</span>
+            <span class="p">)</span>
 
-        <span class="n">raw_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_estimate_attributions</span><span class="p">(</span>
-            <span class="n">estimator</span><span class="p">,</span>
-            <span class="n">masks</span><span class="p">,</span>
-            <span class="n">payoffs</span><span class="p">,</span>
-            <span class="n">aggregator</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">normalized</span> <span class="o">=</span> <span class="n">normalizer</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">raw_values</span><span class="p">)</span>
-        <span class="n">manifest</span> <span class="o">=</span> <span class="n">RunManifest</span><span class="p">(</span>
-            <span class="n">estimand</span><span class="o">=</span><span class="n">explanation</span><span class="o">.</span><span class="n">estimand</span><span class="p">,</span>
-            <span class="n">run_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
-        <span class="p">)</span>
+            <span class="n">normalizer</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
+                <span class="n">Normalizer</span><span class="p">,</span>
+                <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">NORMALIZERS</span><span class="p">,</span> <span class="n">explanation</span><span class="o">.</span><span class="n">normalizer</span><span class="p">),</span>
+            <span class="p">)</span>
+
+            <span class="n">absence_policy</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
+                <span class="n">AbsencePolicy</span><span class="p">,</span>
+                <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span>
+                    <span class="n">PluginGroup</span><span class="o">.</span><span class="n">ABSENCE_POLICIES</span><span class="p">,</span>
+                    <span class="n">explanation</span><span class="o">.</span><span class="n">absence_policy</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+            <span class="n">mask_builder</span> <span class="o">=</span> <span class="n">MaskBuilder</span><span class="p">(</span><span class="n">absence_policy</span><span class="p">)</span>
+
+            <span class="n">archive</span><span class="p">:</span> <span class="n">RunArchive</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">manifest</span> <span class="o">=</span> <span class="n">RunManifest</span><span class="p">(</span>
+                <span class="n">estimand</span><span class="o">=</span><span class="n">explanation</span><span class="o">.</span><span class="n">estimand</span><span class="p">,</span>
+                <span class="n">run_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">archive_root</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">archive</span> <span class="o">=</span> <span class="n">RunArchive</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">archive_root</span><span class="p">,</span>
+                    <span class="n">manifest</span><span class="p">,</span>
+                    <span class="n">flush_every</span><span class="o">=</span><span class="n">explanation</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">flush_every</span><span class="p">,</span>
+                <span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">base_started</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+                <span class="k">with</span> <span class="n">telemetry</span><span class="o">.</span><span class="n">span</span><span class="p">(</span><span class="s2">&quot;orchestrator.generate_base&quot;</span><span class="p">):</span>
+                    <span class="n">base_record</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_base</span><span class="p">(</span><span class="n">mask_builder</span><span class="p">,</span> <span class="n">player_set</span><span class="p">)</span>
+                <span class="n">generation_ms</span> <span class="o">+=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">base_started</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1000.0</span>
+
+                <span class="k">if</span> <span class="n">archive</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">archive</span><span class="o">.</span><span class="n">write_base_generation</span><span class="p">(</span><span class="n">base_record</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                    <span class="n">archive_root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">archive_root</span>
+                    <span class="k">if</span> <span class="n">archive_root</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;archive root missing while archive is open&quot;</span>
+                        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                    <span class="n">base_path</span> <span class="o">=</span> <span class="n">archive_root</span> <span class="o">/</span> <span class="n">BASE_GENERATION_FILE</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">base_path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;base generation was not persisted before coalition loop&quot;</span>
+                        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+                <span class="k">with</span> <span class="n">telemetry</span><span class="o">.</span><span class="n">span</span><span class="p">(</span><span class="s2">&quot;estimator.sample_masks&quot;</span><span class="p">):</span>
+                    <span class="n">masks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                        <span class="n">estimator</span><span class="o">.</span><span class="n">sample_masks</span><span class="p">(</span>
+                            <span class="n">player_set</span><span class="p">,</span>
+                            <span class="n">explanation</span><span class="o">.</span><span class="n">budget</span><span class="o">.</span><span class="n">fraction</span><span class="p">,</span>
+                            <span class="n">explanation</span><span class="o">.</span><span class="n">include_minimal_masks</span><span class="p">,</span>
+                            <span class="n">explanation</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+
+                <span class="n">store</span> <span class="o">=</span> <span class="n">HotResultStore</span><span class="p">()</span>
+                <span class="n">dedup</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">CoalitionDedupRegistry</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">dedup_enabled</span><span class="p">(</span><span class="n">explanation</span><span class="o">.</span><span class="n">dedup</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">generation</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="kc">None</span>
+                <span class="p">)</span>
+                <span class="n">scheduler</span> <span class="o">=</span> <span class="n">InferenceScheduler</span><span class="p">(</span>
+                    <span class="n">max_inflight</span><span class="o">=</span><span class="n">explanation</span><span class="o">.</span><span class="n">max_inflight</span><span class="p">,</span>
+                    <span class="n">generation</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">generation</span><span class="p">,</span>
+                    <span class="n">store</span><span class="o">=</span><span class="n">store</span><span class="p">,</span>
+                    <span class="n">dedup</span><span class="o">=</span><span class="n">dedup</span><span class="p">,</span>
+                    <span class="n">archive</span><span class="o">=</span><span class="n">archive</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="n">jobs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_jobs</span><span class="p">(</span><span class="n">mask_builder</span><span class="p">,</span> <span class="n">player_set</span><span class="p">,</span> <span class="n">masks</span><span class="p">)</span>
+                <span class="n">generation</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">generation</span>
+
+                <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">snapshot_for_job</span><span class="p">:</span> <span class="n">ConversationSnapshot</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+                    <span class="n">record</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+                        <span class="n">snapshot_for_job</span><span class="p">,</span>
+                        <span class="n">generation</span><span class="o">.</span><span class="n">max_new_tokens</span><span class="p">,</span>
+                        <span class="n">generation</span><span class="o">.</span><span class="n">temperature</span><span class="p">,</span>
+                        <span class="n">generation</span><span class="o">.</span><span class="n">top_k</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span> <span class="n">record</span><span class="o">.</span><span class="n">text</span>
+
+                <span class="n">schedule_started</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+                <span class="k">with</span> <span class="n">telemetry</span><span class="o">.</span><span class="n">span</span><span class="p">(</span><span class="s2">&quot;orchestrator.schedule&quot;</span><span class="p">):</span>
+                    <span class="n">metrics</span> <span class="o">=</span> <span class="k">await</span> <span class="n">scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">jobs</span><span class="p">,</span> <span class="n">generate</span><span class="p">)</span>
+                <span class="n">generation_ms</span> <span class="o">+=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">schedule_started</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1000.0</span>
+
+                <span class="n">coalition_records</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collect_generation_records</span><span class="p">(</span><span class="n">jobs</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span>
+                <span class="n">corpus</span> <span class="o">=</span> <span class="p">(</span><span class="n">base_record</span><span class="p">,</span> <span class="o">*</span><span class="n">coalition_records</span><span class="p">)</span>
+
+                <span class="n">scoring_started</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+                <span class="k">with</span> <span class="n">telemetry</span><span class="o">.</span><span class="n">span</span><span class="p">(</span><span class="s2">&quot;orchestrator.score&quot;</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_fit_value_function</span><span class="p">(</span><span class="n">value_fn</span><span class="p">,</span> <span class="n">corpus</span><span class="p">)</span>
+                    <span class="n">payoffs</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="n">value_fn</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">base_record</span><span class="p">,</span> <span class="n">coalition_record</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">coalition_record</span> <span class="ow">in</span> <span class="n">coalition_records</span>
+                    <span class="p">]</span>
+                <span class="n">scoring_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">scoring_started</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1000.0</span>
+
+                <span class="n">aggregation_started</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+                <span class="k">with</span> <span class="n">telemetry</span><span class="o">.</span><span class="n">span</span><span class="p">(</span><span class="s2">&quot;orchestrator.aggregate&quot;</span><span class="p">):</span>
+                    <span class="n">raw_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_estimate_attributions</span><span class="p">(</span>
+                        <span class="n">estimator</span><span class="p">,</span>
+                        <span class="n">masks</span><span class="p">,</span>
+                        <span class="n">payoffs</span><span class="p">,</span>
+                        <span class="n">aggregator</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">normalized</span> <span class="o">=</span> <span class="n">normalizer</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">raw_values</span><span class="p">)</span>
+                <span class="n">aggregation_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">aggregation_started</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1000.0</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">archive</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">archive</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">total_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">run_started</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1000.0</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">ExplainResult</span><span class="p">(</span>
             <span class="n">estimand</span><span class="o">=</span><span class="n">explanation</span><span class="o">.</span><span class="n">estimand</span><span class="p">,</span>
             <span class="n">values</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">normalized</span><span class="p">),</span>
@@ -426,6 +478,12 @@
             <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">,</span>
             <span class="n">run_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
             <span class="n">manifest</span><span class="o">=</span><span class="n">manifest</span><span class="p">,</span>
+            <span class="n">perf</span><span class="o">=</span><span class="n">PerfSummary</span><span class="p">(</span>
+                <span class="n">total_ms</span><span class="o">=</span><span class="n">total_ms</span><span class="p">,</span>
+                <span class="n">generation_ms</span><span class="o">=</span><span class="n">generation_ms</span><span class="p">,</span>
+                <span class="n">scoring_ms</span><span class="o">=</span><span class="n">scoring_ms</span><span class="p">,</span>
+                <span class="n">aggregation_ms</span><span class="o">=</span><span class="n">aggregation_ms</span><span class="p">,</span>
+            <span class="p">),</span>
         <span class="p">)</span></div>
 
 
@@ -573,7 +631,7 @@
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=22607128"></script>
+</div><script src="../../../_static/documentation_options.js?v=8618f531"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>

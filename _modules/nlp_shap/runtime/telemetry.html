@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.masking.codec - nlp-shap 0.1.9</title>
+        <title>nlp_shap.runtime.telemetry - nlp-shap 0.1.9</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -281,80 +281,79 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for nlp_shap.masking.codec</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Packed bitset encoding and stable hashing for coalition masks.&quot;&quot;&quot;</span>
+          <h1>Source code for nlp_shap.runtime.telemetry</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Optional observability hooks for explain pipeline stages.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Protocol</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span>
 
-
-<div class="viewcode-block" id="PackedMask">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.PackedMask">[docs]</a>
+<div class="viewcode-block" id="SpanRecord">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.SpanRecord">[docs]</a>
 <span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">PackedMask</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Packed bit representation of one boolean mask.&quot;&quot;&quot;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SpanRecord</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;One completed pipeline stage span.&quot;&quot;&quot;</span>
 
-    <span class="n">words</span><span class="p">:</span> <span class="nb">bytes</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Little-endian packed bytes encoding the boolean mask.&quot;&quot;&quot;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stage identifier emitted by the orchestrator or estimator.&quot;&quot;&quot;</span>
 
-    <span class="n">n_bits</span><span class="p">:</span> <span class="nb">int</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Original number of bits (mask length) before packing.&quot;&quot;&quot;</span></div>
-
-
-
-<div class="viewcode-block" id="MaskCodec">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.MaskCodec">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">MaskCodec</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encode and decode boolean masks to packed bytes.&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="MaskCodec.normalize">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.MaskCodec.normalize">[docs]</a>
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">normalize</span><span class="p">(</span><span class="n">mask</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">|</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Normalize incoming mask to a 1D boolean array.&quot;&quot;&quot;</span>
-        <span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;mask must contain at least one value&quot;</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">array</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;mask must be 1D or have exactly one row&quot;</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-            <span class="n">array</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">array</span></div>
+    <span class="n">duration_ms</span><span class="p">:</span> <span class="nb">float</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wall-clock duration of the stage in milliseconds.&quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="MaskCodec.pack">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.MaskCodec.pack">[docs]</a>
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">pack</span><span class="p">(</span><span class="n">mask</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">|</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PackedMask</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Pack a mask into little-endian bytes.&quot;&quot;&quot;</span>
-        <span class="n">normalized</span> <span class="o">=</span> <span class="n">MaskCodec</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
-        <span class="n">n_bits</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">normalized</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
-        <span class="n">packed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">packbits</span><span class="p">(</span><span class="n">normalized</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span> <span class="n">bitorder</span><span class="o">=</span><span class="s2">&quot;little&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">PackedMask</span><span class="p">(</span><span class="n">words</span><span class="o">=</span><span class="n">packed</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="n">n_bits</span><span class="o">=</span><span class="n">n_bits</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ObservabilitySink">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.ObservabilitySink">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ObservabilitySink</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Protocol for recording explain pipeline stage spans.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ObservabilitySink.span">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.ObservabilitySink.span">[docs]</a>
+    <span class="nd">@contextmanager</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">span</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Record wall-clock duration for one named pipeline stage.&quot;&quot;&quot;</span></div>
+</div>
 
 
-<div class="viewcode-block" id="MaskCodec.unpack">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.MaskCodec.unpack">[docs]</a>
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">unpack</span><span class="p">(</span><span class="n">packed</span><span class="p">:</span> <span class="n">PackedMask</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Unpack bytes back to a boolean tuple.&quot;&quot;&quot;</span>
-        <span class="n">raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">packed</span><span class="o">.</span><span class="n">words</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
-        <span class="n">bits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unpackbits</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">bitorder</span><span class="o">=</span><span class="s2">&quot;little&quot;</span><span class="p">)[:</span> <span class="n">packed</span><span class="o">.</span><span class="n">n_bits</span><span class="p">]</span>
-        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">bits</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NullObservabilitySink">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.NullObservabilitySink">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NullObservabilitySink</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;No-op observability sink used when telemetry is disabled.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="NullObservabilitySink.span">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.NullObservabilitySink.span">[docs]</a>
+    <span class="nd">@contextmanager</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">span</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Yield without recording span metadata.&quot;&quot;&quot;</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">yield</span></div>
+</div>
 
 
-<div class="viewcode-block" id="MaskCodec.hash_mask">
-<a class="viewcode-back" href="../../../api/masking.html#nlp_shap.masking.MaskCodec.hash_mask">[docs]</a>
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">hash_mask</span><span class="p">(</span><span class="n">mask</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">|</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a stable hash over packed mask bytes.&quot;&quot;&quot;</span>
-        <span class="n">packed</span> <span class="o">=</span> <span class="n">MaskCodec</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="n">packed</span><span class="o">.</span><span class="n">words</span><span class="p">,</span> <span class="n">packed</span><span class="o">.</span><span class="n">n_bits</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="InMemoryObservabilitySink">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.InMemoryObservabilitySink">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">InMemoryObservabilitySink</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Collect span records in memory for tests and diagnostics.&quot;&quot;&quot;</span>
+
+    <span class="n">spans</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SpanRecord</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+
+<div class="viewcode-block" id="InMemoryObservabilitySink.span">
+<a class="viewcode-back" href="../../../api/runtime.html#nlp_shap.runtime.InMemoryObservabilitySink.span">[docs]</a>
+    <span class="nd">@contextmanager</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">span</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Append one span record when the context exits.&quot;&quot;&quot;</span>
+        <span class="n">started</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">duration_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">started</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1000.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SpanRecord</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">duration_ms</span><span class="o">=</span><span class="n">duration_ms</span><span class="p">))</span></div>
 </div>
 
 </pre></div>
