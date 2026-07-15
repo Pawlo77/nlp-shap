@@ -19,7 +19,7 @@ identifier derived from the base snapshot id and token coordinates.
 Absence policies
 ----------------
 
-Three policies ship in ``0.1.3``:
+Three absence policies are available:
 
 Delete
 ~~~~~~

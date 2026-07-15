@@ -14,7 +14,7 @@ Canonical plan: **[[nlp-shap Package Rewrite]]** in `nlp-shap-research/docs/plan
 1. **Gather logic, rewrite modules** — use `papers/MLLM-Shap/mllm_shap/` as reference; never bulk-copy files or god-classes
 2. **One phase = one tag = one PyPI publish** — do not batch phases
 3. **Dropped:** `shap/hierarchical/*` — do not implement or reference
-4. **Text track first** (Phases 0–13, `v0.1.1`–`v0.1.14`); **audio track** (Phases 14–20, `v0.2.0`–`v0.2.6`) only after text sign-off
+4. **Text track first** (Phases 0–14, `v0.1.1`–`v0.1.15`); **audio track** (Phases 15–21, `v0.2.0`–`v0.2.6`) only after text sign-off
 5. **Deps:** torch / transformers / liquid-audio in extras only
 6. **Imports:** relative inside `src/nlp_shap/`; absolute `from nlp_shap...` in tests and examples
 7. **No `from __future__ import annotations`** unless required — use `Self` or quoted forward refs (`python-quality.mdc`)
@@ -50,20 +50,21 @@ gh run watch <run-id> --exit-status   # after push
 | 9 | v0.1.10 | lmstudio |
 | 10 | v0.1.11 | transformers text + kv cache |
 | 11 | v0.1.12 | api backend |
-| 12 | v0.1.13 | entry points, docs, nlp_shapx, flag removal |
-| 13 | v0.1.14 | perf benchmarks |
+| 12 | v0.1.13 | viz renderers (`[viz]` extra) |
+| 13 | v0.1.14 | entry points, docs, nlp_shapx, flag removal |
+| 14 | v0.1.15 | perf benchmarks |
 
-## Audio track order (v0.2.x) — after Phase 12 sign-off
+## Audio track order (v0.2.x) — after Phase 13 sign-off
 
 | Phase | Tag | Module focus |
 |-------|-----|--------------|
-| 14 | v0.2.0 | multimodal domain + enums |
-| 15 | v0.2.1 | SGPA alignment (Wav2Vec2) |
-| 16 | v0.2.2 | audio masking, filters, sgpa partition |
-| 17 | v0.2.3 | mock audio backend |
-| 18 | v0.2.4 | liquid-audio backend |
-| 19 | v0.2.5 | multimodal E2E pipeline |
-| 20 | v0.2.6 | audio value fns + SGPA Audio smoke |
+| 15 | v0.2.0 | multimodal domain + enums |
+| 16 | v0.2.1 | SGPA alignment (Wav2Vec2) |
+| 17 | v0.2.2 | audio masking, filters, sgpa partition |
+| 18 | v0.2.3 | mock audio backend |
+| 19 | v0.2.4 | liquid-audio backend |
+| 20 | v0.2.5 | multimodal E2E pipeline |
+| 21 | v0.2.6 | audio value fns + SGPA Audio smoke |
 
 ## Workflow
 

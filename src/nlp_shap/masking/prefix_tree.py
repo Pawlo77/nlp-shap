@@ -1,7 +1,7 @@
-"""Prefix-tree cache stub for future KV-cache grouping.
+"""Prefix-tree cache stub for prefix-aware coalition batching.
 
-Phase 2 reserves this module for prefix-aware coalition batching. Concrete
-prefix-tree logic arrives with the runtime scheduler in a later release.
+Reserved for future KV-cache grouping; concrete prefix-tree logic is not yet
+implemented.
 """
 
 from dataclasses import dataclass

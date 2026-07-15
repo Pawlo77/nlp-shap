@@ -46,5 +46,5 @@ Applied **after** :class:`~nlp_shap.estimation.estimands.shapley.ShapleyAggregat
 * **MinMax** — scale to ``[0, 1]``, then scale to sum 1
 
 Archive rows store pre-normalization utilities and attributions so
-``reanalyze`` (Phase 8) can swap value functions or normalizers without new
+``reanalyze`` can swap value functions or normalizers without new
 model calls.

@@ -1,7 +1,7 @@
 Runtime core
 ============
 
-Phase 3 introduces the execution substrate for coalition evaluations:
+The runtime layer is the execution substrate for coalition evaluations:
 
 1. **Run archive** — SQLite index plus blob storage for generation text.
 2. **Dedup registry** — SHA256 coalition keys that collapse repeated work.
