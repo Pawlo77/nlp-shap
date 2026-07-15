@@ -1,4 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="nlp-shap">
-  <rect width="32" height="32" rx="6" fill="#2563eb"/>
-  <text x="16" y="21" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#ffffff">nlp</text>
+  <!--
+    Bar lengths from a 5-player additive-game Shapley vector
+    [2.0, 0.96, 3.28, 0.72, 2.64] (coefficients 2.5, 1.2, 4.1, 0.9, 3.3).
+    Widths are min-max scaled to 2.5–20px for favicon legibility.
+  -->
+  <defs>
+    <linearGradient id="bar-a" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#a5b4fc"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="bar-b" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#64748b"/>
+    </linearGradient>
+    <linearGradient id="bar-c" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#9333ea"/>
+    </linearGradient>
+    <linearGradient id="bar-d" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+    <linearGradient id="bar-e" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+  </defs>
+  <rect x="0.75" y="0.75" width="30.5" height="30.5" rx="7.5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="0.75"/>
+  <line x1="6" y1="4" x2="6" y2="28" stroke="#cbd5e1" stroke-width="0.75" stroke-linecap="round"/>
+  <circle cx="4.25" cy="6.25" r="1.1" fill="#94a3b8"/>
+  <rect x="6" y="4.75" width="11.25" height="3" rx="1.5" fill="url(#bar-a)"/>
+  <circle cx="4.25" cy="11.45" r="1.1" fill="#94a3b8"/>
+  <rect x="6" y="9.95" width="4.14" height="3" rx="1.5" fill="url(#bar-b)"/>
+  <circle cx="4.25" cy="16.65" r="1.1" fill="#94a3b8"/>
+  <rect x="6" y="15.15" width="20" height="3" rx="1.5" fill="url(#bar-c)"/>
+  <circle cx="4.25" cy="21.85" r="1.1" fill="#94a3b8"/>
+  <rect x="6" y="20.35" width="2.5" height="3" rx="1.5" fill="url(#bar-d)"/>
+  <circle cx="4.25" cy="27.05" r="1.1" fill="#94a3b8"/>
+  <rect x="6" y="25.55" width="15.62" height="3" rx="1.5" fill="url(#bar-e)"/>
 </svg>
