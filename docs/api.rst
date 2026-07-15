@@ -68,6 +68,7 @@ Modules
    api/runtime
    api/estimation
    api/value
+   api/backends
 
 Package version
 ---------------

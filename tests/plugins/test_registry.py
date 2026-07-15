@@ -46,6 +46,7 @@ def test_registry_loads_backend_entry_points() -> None:
     assert backend.model_id == "stub"
     assert "lmstudio" in registry.names(PluginGroup.BACKENDS)
     assert "transformers" in registry.names(PluginGroup.BACKENDS)
+    assert "api" in registry.names(PluginGroup.BACKENDS)
 
 
 def test_registry_register_and_resolve_round_trip() -> None:

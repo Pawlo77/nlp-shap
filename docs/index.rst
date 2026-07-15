@@ -73,6 +73,7 @@ Requires Python 3.12. See :doc:`guides/getting_started` for a full walkthrough.
    guides/approximation
    guides/value_functions
    guides/pipeline
+   guides/backends
    guides/config
    guides/masking
    guides/runtime

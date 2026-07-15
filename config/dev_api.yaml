@@ -1,0 +1,32 @@
+backend:
+  kind: api
+  model_id: gpt-4o-mini
+  api_host: https://api.openai.com/v1
+
+generation:
+  max_new_tokens: 32
+  temperature: 0.0
+  top_k: 1
+  precompute_base: true
+
+explanation:
+  use_v2: true
+  estimand: shapley
+  estimator: exact
+  value_fn: tfidf_cosine
+  normalizer: identity
+  players: tokens
+  absence_policy: pad
+  budget:
+    fraction: 1.0
+  include_minimal_masks: false
+  max_inflight: 2
+  archive:
+    path: ""
+    flush_every: 50
+  dedup:
+    enabled: auto
+  kv_cache:
+    enabled: false
+  embedding_mode: static
+  seed: 0

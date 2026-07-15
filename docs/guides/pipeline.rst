@@ -33,4 +33,6 @@ Quick start
 The mock backend is deterministic and requires no GPU or optional extras. Use
 ``pad`` absence policy when the estimator samples the empty coalition.
 
+For remote or local model servers see :doc:`backends`.
+
 See :doc:`config` for the full configuration schema.
