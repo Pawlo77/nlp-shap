@@ -39,6 +39,8 @@ Open a run archive
        for record in archive.history_lazy():
            print(record.record_id, record.generation_text)
 
+.. guide-result:: runtime_archive
+
 Build coalition dedup keys
 --------------------------
 
@@ -57,6 +59,8 @@ Build coalition dedup keys
        generation=generation,
    )
    print(dedup_enabled(DedupConfig(enabled="auto"), generation), key[:12])
+
+.. guide-result:: runtime_dedup
 
 Schedule async coalition jobs
 -----------------------------
@@ -103,6 +107,8 @@ Schedule async coalition jobs
    ]
    metrics = asyncio.run(scheduler.run(jobs, generate))
    print(metrics)
+
+.. guide-result:: runtime_scheduler
 
 Streaming large job sets
 ------------------------

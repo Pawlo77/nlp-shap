@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eb227069" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=aade2278" />
     
     
 
@@ -349,6 +349,14 @@ registered estimand plugin.</p>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Banzhaf:&quot;</span><span class="p">,</span> <span class="n">banzhaf</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>coalitions: 7
+Shapley: [0.3333333333333333, 0.3333333333333333, 0.3333333333333333]
+Banzhaf: [0.5, 0.5, 0.5]
+</pre></div>
+</div>
+</div>
 </section>
 <section id="bitmask-iteration">
 <h2>Bitmask iteration<a class="headerlink" href="#bitmask-iteration" title="Link to this heading">¶</a></h2>
@@ -356,9 +364,20 @@ registered estimand plugin.</p>
 needed:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.estimation.exact</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExactEstimator</span>
 
-<span class="k">for</span> <span class="n">mask_int</span> <span class="ow">in</span> <span class="n">ExactEstimator</span><span class="o">.</span><span class="n">iter_mask_ints</span><span class="p">(</span><span class="n">player_set</span><span class="o">.</span><span class="n">num_players</span><span class="p">):</span>
-    <span class="n">present</span> <span class="o">=</span> <span class="n">ExactEstimator</span><span class="o">.</span><span class="n">mask_int_to_present</span><span class="p">(</span><span class="n">mask_int</span><span class="p">,</span> <span class="n">player_set</span><span class="o">.</span><span class="n">num_players</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">mask_int</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ExactEstimator</span><span class="o">.</span><span class="n">iter_mask_ints</span><span class="p">(</span><span class="mi">3</span><span class="p">)):</span>
+    <span class="n">present</span> <span class="o">=</span> <span class="n">ExactEstimator</span><span class="o">.</span><span class="n">mask_int_to_present</span><span class="p">(</span><span class="n">mask_int</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">present</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">break</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>(False, False, False)
+(True, False, False)
+(False, True, False)
+</pre></div>
+</div>
 </div>
 </section>
 <section id="budget-requirement">
@@ -376,8 +395,14 @@ needed:</p>
         <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="p">)</span>
 <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>  <span class="c1"># exact estimator requires budget_fraction == 1.0</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>exact estimator requires budget_fraction == 1.0
+</pre></div>
+</div>
 </div>
 </section>
 <section id="plugin-resolution">
@@ -390,8 +415,14 @@ needed:</p>
 <span class="n">registry</span><span class="o">.</span><span class="n">load_entry_points</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMATORS</span><span class="p">)</span>
 
 <span class="n">estimator</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMATORS</span><span class="p">,</span> <span class="s2">&quot;exact&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># exact</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>exact
+</pre></div>
+</div>
 </div>
 </section>
 <section id="notebook">

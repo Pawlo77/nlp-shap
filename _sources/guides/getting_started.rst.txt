@@ -44,8 +44,10 @@ The estimand aggregators take boolean **coalition masks** and aligned payoffs
    shapley = ShapleyAggregator().aggregate(masks, payoffs)
    banzhaf = BanzhafAggregator().aggregate(masks, payoffs)
 
-   print("Shapley:", shapley)   # ~[0.333, 0.333, 0.333]
-   print("Banzhaf:", banzhaf)   # [0.5, 0.5, 0.5]
+   print("Shapley:", shapley)
+   print("Banzhaf:", banzhaf)
+
+.. guide-result:: getting_started_majority
 
 Explain a short prompt
 ----------------------
@@ -74,6 +76,8 @@ For end-to-end token attributions, build a
    output = ExplainRunner(config).explain_sync(snapshot)
    print(output.result.values)
 
+.. guide-result:: getting_started_explain
+
 Label results for archives
 --------------------------
 
@@ -89,7 +93,10 @@ When you persist explain outputs, record which estimand was used:
    )
    manifest = RunManifest(estimand=result.estimand, run_id="run-42")
    restored = parse_manifest(manifest.to_dict())
-   assert restored.estimand is Estimand.SHAPLEY
+   print("estimand:", restored.estimand.value)
+   print("run_id:", restored.run_id)
+
+.. guide-result:: getting_started_manifest
 
 Next steps
 ----------

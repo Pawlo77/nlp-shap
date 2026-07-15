@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eb227069" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=aade2278" />
     
     
 
@@ -323,9 +323,18 @@ into a single run.</p>
 <span class="p">})</span>
 
 <span class="n">output</span> <span class="o">=</span> <span class="n">ExplainRunner</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="o">.</span><span class="n">explain_sync</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;values:&quot;</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;requested:&quot;</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">requested</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;executed:&quot;</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">executed</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>values: (0.2747891770937262, 0.2747891770937262)
+requested: 3
+executed: 3
+</pre></div>
+</div>
 </div>
 <p>The mock backend is deterministic and requires no GPU or optional extras. Use
 <code class="docutils literal notranslate"><span class="pre">pad</span></code> absence policy when the estimator samples the empty coalition.</p>

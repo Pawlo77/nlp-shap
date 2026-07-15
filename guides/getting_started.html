@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eb227069" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=aade2278" />
     
     
 
@@ -335,9 +335,16 @@ make<span class="w"> </span>install
 <span class="n">shapley</span> <span class="o">=</span> <span class="n">ShapleyAggregator</span><span class="p">()</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">)</span>
 <span class="n">banzhaf</span> <span class="o">=</span> <span class="n">BanzhafAggregator</span><span class="p">()</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">payoffs</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shapley:&quot;</span><span class="p">,</span> <span class="n">shapley</span><span class="p">)</span>   <span class="c1"># ~[0.333, 0.333, 0.333]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Banzhaf:&quot;</span><span class="p">,</span> <span class="n">banzhaf</span><span class="p">)</span>   <span class="c1"># [0.5, 0.5, 0.5]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shapley:&quot;</span><span class="p">,</span> <span class="n">shapley</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Banzhaf:&quot;</span><span class="p">,</span> <span class="n">banzhaf</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Shapley: [0.3333333333333333, 0.3333333333333333, 0.3333333333333333]
+Banzhaf: [0.5, 0.5, 0.5]
+</pre></div>
+</div>
 </div>
 </section>
 <section id="explain-a-short-prompt">
@@ -364,6 +371,12 @@ make<span class="w"> </span>install
 <span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>(-0.3201357760454475, -0.06610412816763576, -0.12182339154254021)
+</pre></div>
+</div>
+</div>
 </section>
 <section id="label-results-for-archives">
 <h2>Label results for archives<a class="headerlink" href="#label-results-for-archives" title="Link to this heading">¶</a></h2>
@@ -376,8 +389,16 @@ make<span class="w"> </span>install
 <span class="p">)</span>
 <span class="n">manifest</span> <span class="o">=</span> <span class="n">RunManifest</span><span class="p">(</span><span class="n">estimand</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">estimand</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="s2">&quot;run-42&quot;</span><span class="p">)</span>
 <span class="n">restored</span> <span class="o">=</span> <span class="n">parse_manifest</span><span class="p">(</span><span class="n">manifest</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
-<span class="k">assert</span> <span class="n">restored</span><span class="o">.</span><span class="n">estimand</span> <span class="ow">is</span> <span class="n">Estimand</span><span class="o">.</span><span class="n">SHAPLEY</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;estimand:&quot;</span><span class="p">,</span> <span class="n">restored</span><span class="o">.</span><span class="n">estimand</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;run_id:&quot;</span><span class="p">,</span> <span class="n">restored</span><span class="o">.</span><span class="n">run_id</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>estimand: shapley
+run_id: run-42
+</pre></div>
+</div>
 </div>
 </section>
 <section id="next-steps">

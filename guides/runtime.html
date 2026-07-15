@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eb227069" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=aade2278" />
     
     
 
@@ -336,6 +336,12 @@ and schedule async coalition generation with bounded concurrency.</p>
         <span class="nb">print</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">record_id</span><span class="p">,</span> <span class="n">record</span><span class="o">.</span><span class="n">generation_text</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>1 Who you?
+</pre></div>
+</div>
+</div>
 </section>
 <section id="build-coalition-dedup-keys">
 <h2>Build coalition dedup keys<a class="headerlink" href="#build-coalition-dedup-keys" title="Link to this heading">¶</a></h2>
@@ -353,6 +359,12 @@ and schedule async coalition generation with bounded concurrency.</p>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">dedup_enabled</span><span class="p">(</span><span class="n">DedupConfig</span><span class="p">(</span><span class="n">enabled</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">),</span> <span class="n">generation</span><span class="p">),</span> <span class="n">key</span><span class="p">[:</span><span class="mi">12</span><span class="p">])</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>True ec7d60731ab2
+</pre></div>
+</div>
 </div>
 </section>
 <section id="schedule-async-coalition-jobs">
@@ -398,6 +410,12 @@ and schedule async coalition generation with bounded concurrency.</p>
 <span class="n">metrics</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">jobs</span><span class="p">,</span> <span class="n">generate</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>SchedulerMetrics(requested=9, executed=3, deduplicated=0, cache_hits=6, kv_cache_hits=0)
+</pre></div>
+</div>
 </div>
 </section>
 <section id="streaming-large-job-sets">

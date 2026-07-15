@@ -1,0 +1,1 @@
+SchedulerMetrics(requested=9, executed=3, deduplicated=0, cache_hits=6, kv_cache_hits=0)

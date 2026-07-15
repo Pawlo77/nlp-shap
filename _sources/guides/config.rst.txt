@@ -61,6 +61,8 @@ Load and save
        encoding="utf-8",
    )
 
+.. guide-result:: config_roundtrip
+
 Budget flags
 ------------
 

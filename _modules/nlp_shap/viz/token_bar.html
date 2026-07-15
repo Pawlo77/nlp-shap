@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=eb227069" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=aade2278" />
     
     
 
@@ -295,7 +295,8 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">cast</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">..domain.estimands</span><span class="w"> </span><span class="kn">import</span> <span class="n">Estimand</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">diverging_rgba</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">bar_color</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.style</span><span class="w"> </span><span class="kn">import</span> <span class="n">new_attribution_figure</span><span class="p">,</span> <span class="n">polish_bar_axes</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.figure</span><span class="w"> </span><span class="kn">import</span> <span class="n">Figure</span>
@@ -304,7 +305,7 @@
 <div class="viewcode-block" id="TokenBarRenderer">
 <a class="viewcode-back" href="../../../api/viz.html#nlp_shap.viz.token_bar.TokenBarRenderer">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">TokenBarRenderer</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Render attributions as a horizontal bar chart.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Render attributions as a SHAP-style horizontal bar chart.&quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -328,7 +329,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">labels</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;cannot render an empty attribution&quot;</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="n">plt</span> <span class="o">=</span> <span class="n">_import_pyplot</span><span class="p">()</span>
+
         <span class="n">ordering</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
             <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)),</span>
             <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">index</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">index</span><span class="p">]),</span>
@@ -336,27 +337,71 @@
         <span class="p">)</span>
         <span class="n">ordered_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">labels</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">ordering</span><span class="p">]</span>
         <span class="n">ordered_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">values</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">ordering</span><span class="p">]</span>
-        <span class="n">vmax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">ordered_values</span><span class="p">)</span>
-        <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">diverging_rgba</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">vmax</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">ordered_values</span><span class="p">]</span>
-        <span class="n">height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.45</span><span class="p">)</span>
-        <span class="n">fig</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">Any</span><span class="p">,</span> <span class="n">plt</span><span class="p">)</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">8.0</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
-        <span class="n">axis</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">ordered_labels</span><span class="p">,</span> <span class="n">ordered_values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
-        <span class="n">axis</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-        <span class="n">axis</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Attribution&quot;</span><span class="p">)</span>
-        <span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">estimand</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s2"> token attributions&quot;</span><span class="p">)</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.55</span><span class="p">)</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">new_attribution_figure</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mf">8.5</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">)</span>
+
+        <span class="n">y_positions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ordered_labels</span><span class="p">)))</span>
+        <span class="n">bars</span> <span class="o">=</span> <span class="n">axis</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span>
+            <span class="n">y_positions</span><span class="p">,</span>
+            <span class="n">ordered_values</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="mf">0.68</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="n">bar_color</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">ordered_values</span><span class="p">],</span>
+            <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+            <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+            <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">y_positions</span><span class="p">,</span> <span class="n">ordered_labels</span><span class="p">)</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Attribution&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#6B7280&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+            <span class="n">title</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">estimand</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s2"> token attributions&quot;</span><span class="p">,</span>
+            <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
+            <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span>
+            <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;semibold&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#111827&quot;</span><span class="p">,</span>
+            <span class="n">pad</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">polish_bar_axes</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+        <span class="n">_annotate_bars</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">bars</span><span class="p">,</span> <span class="n">ordered_values</span><span class="p">)</span>
+        <span class="n">_add_sign_legend</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="s2">&quot;Figure&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span></div>
 </div>
 
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_import_pyplot</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;matplotlib is required for the visualization extra&quot;</span>
-        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
-    <span class="k">return</span> <span class="n">plt</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_annotate_bars</span><span class="p">(</span><span class="n">axis</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">bars</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">x_span</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">)</span> <span class="ow">or</span> <span class="mf">1.0</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="n">x_span</span> <span class="o">*</span> <span class="mf">0.02</span>
+    <span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">())</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">:</span><span class="s2">+.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">x_pos</span> <span class="o">=</span> <span class="n">width</span> <span class="o">+</span> <span class="n">offset</span> <span class="k">if</span> <span class="n">width</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">width</span> <span class="o">-</span> <span class="n">offset</span>
+        <span class="n">ha</span> <span class="o">=</span> <span class="s2">&quot;left&quot;</span> <span class="k">if</span> <span class="n">width</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;right&quot;</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+            <span class="n">x_pos</span><span class="p">,</span>
+            <span class="n">bar</span><span class="o">.</span><span class="n">get_y</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="n">label</span><span class="p">,</span>
+            <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="n">ha</span><span class="o">=</span><span class="n">ha</span><span class="p">,</span>
+            <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#4B5563&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_add_sign_legend</span><span class="p">(</span><span class="n">axis</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Patch</span>
+
+    <span class="n">legend</span> <span class="o">=</span> <span class="n">axis</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+        <span class="n">handles</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">Patch</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;#FF0D57&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Positive&quot;</span><span class="p">),</span>
+            <span class="n">Patch</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;#1E88E5&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Negative&quot;</span><span class="p">),</span>
+        <span class="p">],</span>
+        <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
+        <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">legend</span><span class="o">.</span><span class="n">get_texts</span><span class="p">():</span>
+        <span class="n">text</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">&quot;#6B7280&quot;</span><span class="p">)</span>
 </pre></div>
         </article>
       </div>

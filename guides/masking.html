@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eb227069" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=aade2278" />
     
     
 
@@ -309,12 +309,17 @@ shared masked views, and render coalition-specific prompts.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.masking</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenPartitioner</span>
 
 <span class="n">turn</span> <span class="o">=</span> <span class="n">Turn</span><span class="p">(</span><span class="n">messages</span><span class="o">=</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="n">Role</span><span class="o">.</span><span class="n">USER</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Who are you?&quot;</span><span class="p">),))</span>
-<span class="n">snapshot</span> <span class="o">=</span> <span class="n">ConversationSnapshot</span><span class="o">.</span><span class="n">from_turns</span><span class="p">((</span><span class="n">turn</span><span class="p">,))</span>
+<span class="n">snapshot</span> <span class="o">=</span> <span class="n">ConversationSnapshot</span><span class="p">(</span><span class="n">turns</span><span class="o">=</span><span class="p">(</span><span class="n">turn</span><span class="p">,),</span> <span class="n">snapshot_id</span><span class="o">=</span><span class="s2">&quot;demo-snap&quot;</span><span class="p">)</span>
 
 <span class="n">players</span> <span class="o">=</span> <span class="n">TokenPartitioner</span><span class="p">()</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">players</span><span class="o">.</span><span class="n">player_ids</span><span class="p">)</span>
-<span class="c1"># (&#39;&lt;snapshot_id&gt;:0:0:0&#39;, &#39;&lt;snapshot_id&gt;:0:0:1&#39;, &#39;&lt;snapshot_id&gt;:0:0:2&#39;)</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>(&#39;demo-snap:0:0:0&#39;, &#39;demo-snap:0:0:1&#39;, &#39;demo-snap:0:0:2&#39;)
+</pre></div>
+</div>
 </div>
 </section>
 <section id="render-a-coalition">
@@ -328,23 +333,37 @@ shared masked views, and render coalition-specific prompts.</p>
 <span class="n">rendered</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">rendered</span><span class="o">.</span><span class="n">turns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">messages</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-<span class="c1"># Who you?</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Who you?
+</pre></div>
+</div>
 </div>
 </section>
 <section id="compare-absence-policies">
 <h2>Compare absence policies<a class="headerlink" href="#compare-absence-policies" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nlp_shap.masking</span><span class="w"> </span><span class="kn">import</span> <span class="n">NeutralPolicy</span><span class="p">,</span> <span class="n">PadPolicy</span>
 
+<span class="n">turn</span> <span class="o">=</span> <span class="n">Turn</span><span class="p">(</span><span class="n">messages</span><span class="o">=</span><span class="p">(</span><span class="n">Message</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="n">Role</span><span class="o">.</span><span class="n">USER</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Who are you?&quot;</span><span class="p">),))</span>
+<span class="n">snapshot</span> <span class="o">=</span> <span class="n">ConversationSnapshot</span><span class="p">(</span><span class="n">turns</span><span class="o">=</span><span class="p">(</span><span class="n">turn</span><span class="p">,),</span> <span class="n">snapshot_id</span><span class="o">=</span><span class="s2">&quot;demo-snap&quot;</span><span class="p">)</span>
+<span class="n">players</span> <span class="o">=</span> <span class="n">TokenPartitioner</span><span class="p">()</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">CoalitionMask</span><span class="o">.</span><span class="n">from_sequence</span><span class="p">((</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+
 <span class="n">pad_view</span> <span class="o">=</span> <span class="n">MaskBuilder</span><span class="p">(</span><span class="n">PadPolicy</span><span class="p">())</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">snapshot</span><span class="p">,</span> <span class="n">players</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
 <span class="n">neutral_view</span> <span class="o">=</span> <span class="n">MaskBuilder</span><span class="p">(</span><span class="n">NeutralPolicy</span><span class="p">())</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">snapshot</span><span class="p">,</span> <span class="n">players</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">MaskBuilder</span><span class="p">(</span><span class="n">PadPolicy</span><span class="p">())</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">pad_view</span><span class="p">)</span><span class="o">.</span><span class="n">turns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">messages</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-<span class="c1"># Who [MASK] you?</span>
-
 <span class="nb">print</span><span class="p">(</span><span class="n">MaskBuilder</span><span class="p">(</span><span class="n">NeutralPolicy</span><span class="p">())</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">neutral_view</span><span class="p">)</span><span class="o">.</span><span class="n">turns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">messages</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-<span class="c1"># Who ___ you?</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Who [MASK] you?
+Who ___ you?
+</pre></div>
+</div>
 </div>
 </section>
 <section id="resolve-plugins-from-config">
@@ -369,7 +388,16 @@ shared masked views, and render coalition-specific prompts.</p>
     <span class="n">PluginGroup</span><span class="o">.</span><span class="n">ABSENCE_POLICIES</span><span class="p">,</span>
     <span class="n">config</span><span class="o">.</span><span class="n">explanation</span><span class="o">.</span><span class="n">absence_policy</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">partitioner</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>TokenPartitioner
+PadPolicy
+</pre></div>
+</div>
 </div>
 <p>See <a class="reference internal" href="config.html"><span class="doc">Configuration</span></a> for the full configuration schema.</p>
 </section>

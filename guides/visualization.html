@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eb227069" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=aade2278" />
     
     
 
@@ -319,10 +319,10 @@ values into review-ready figures for notebooks, reports, and stakeholder decks.<
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">token_text</span></code></p></td>
-<td><p>SHAP-style inline colored tokens (diverging red/blue scale)</p></td>
+<td><p>SHAP-style inline colored tokens (red / blue diverging highlights)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">token_bar</span></code></p></td>
-<td><p>Horizontal bar chart sorted by absolute attribution</p></td>
+<td><p>Horizontal bar chart with SHAP palette, value labels, and sign legend</p></td>
 </tr>
 </tbody>
 </table>
@@ -331,6 +331,10 @@ values into review-ready figures for notebooks, reports, and stakeholder decks.<
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;nlp-shap[viz]&quot;</span>
 </pre></div>
 </div>
+<p>The renderers follow the <a class="reference external" href="https://github.com/shap/shap">SHAP</a> palette: warm red
+for positive attributions and cool blue for negative attributions, with soft
+white-centered highlights for inline tokens. Figures use a Seaborn-backed clean
+theme (muted grid, no chart junk).</p>
 </section>
 <section id="quick-start">
 <h2>Quick start<a class="headerlink" href="#quick-start" title="Link to this heading">¶</a></h2>
@@ -358,6 +362,14 @@ values into review-ready figures for notebooks, reports, and stakeholder decks.<
 <span class="n">figure</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;attribution.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="guide-result docutils container">
+<p><strong>Bar chart</strong></p>
+<img alt="Horizontal token attribution bar chart" class="guide-result-figure" src="../_images/visualization_bar.png" />
+</div>
+<div class="guide-result docutils container">
+<p><strong>Inline tokens</strong></p>
+<img alt="Inline colored token attribution" class="guide-result-figure" src="../_images/visualization_text.png" />
+</div>
 </section>
 <section id="jupyter-html">
 <h2>Jupyter HTML<a class="headerlink" href="#jupyter-html" title="Link to this heading">¶</a></h2>
@@ -366,9 +378,10 @@ values into review-ready figures for notebooks, reports, and stakeholder decks.<
 </section>
 <section id="color-scale">
 <h2>Color scale<a class="headerlink" href="#color-scale" title="Link to this heading">¶</a></h2>
-<p>Positive attributions trend red; negative attributions trend blue. Color
-intensity scales with the largest absolute value in the rendered vector so
-small-magnitude tokens remain readable.</p>
+<p>Positive attributions use SHAP red (<code class="docutils literal notranslate"><span class="pre">#FF0D57</span></code>); negative attributions use SHAP
+blue (<code class="docutils literal notranslate"><span class="pre">#1E88E5</span></code>). Inline token backgrounds fade from white toward the signed
+color, matching the <code class="docutils literal notranslate"><span class="pre">shap.plots.text</span></code> emphasis pattern. Bar charts annotate
+each token with its signed value.</p>
 </section>
 <section id="further-reading">
 <h2>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading">¶</a></h2>

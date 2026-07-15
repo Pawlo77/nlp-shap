@@ -23,13 +23,16 @@ Monte Carlo
        include_minimal_masks=True,
        seed=42,
    ))
-   payoffs = [...]  # one float per mask from your value function
-
+   payoffs = [float(index % 3) for index in range(len(masks))]
    values = estimator.estimate_attributions(
        masks,
        payoffs,
        ShapleyAggregator(),
    )
+   print("samples:", len(masks))
+   print("values:", tuple(round(value, 4) for value in values))
+
+.. guide-result:: approximation_monte_carlo
 
 Complementary pairs
 -------------------
@@ -107,6 +110,9 @@ Plugin resolution
    mc = registry.resolve(PluginGroup.ESTIMATORS, "mc")
    complementary = registry.resolve(PluginGroup.ESTIMATORS, "complementary")
    neyman = registry.resolve(PluginGroup.ESTIMATORS, "neyman_cc")
+   print(mc.name, complementary.name, neyman.name)
+
+.. guide-result:: approximation_plugins
 
 Entry points are registered under ``nlp_shap.estimators`` in ``pyproject.toml``.
 

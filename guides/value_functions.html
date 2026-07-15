@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eb227069" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=aade2278" />
     
     
 
@@ -319,7 +319,14 @@ They are separate from estimands (Shapley/Banzhaf) and estimators (sampling).</p
 <span class="n">value_fn</span> <span class="o">=</span> <span class="n">TfIdfCosineValue</span><span class="p">()</span>
 <span class="n">value_fn</span><span class="o">.</span><span class="n">fit</span><span class="p">((</span><span class="n">base</span><span class="p">,</span> <span class="n">candidate</span><span class="p">))</span>
 <span class="n">utility</span> <span class="o">=</span> <span class="n">value_fn</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">candidate</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">utility</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>0.3361
+</pre></div>
+</div>
 </div>
 <p>Call <a class="reference internal" href="../api/value.html#nlp_shap.value.tfidf.TfIdfCosineValue.fit" title="nlp_shap.value.tfidf.TfIdfCosineValue.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a> once at run start to
 freeze inverse document frequency weights for the full archive corpus.</p>
@@ -334,7 +341,14 @@ freeze inverse document frequency weights for the full archive corpus.</p>
 
 <span class="n">value_fn</span> <span class="o">=</span> <span class="n">CosineEmbeddingValue</span><span class="p">(</span><span class="n">embedding_mode</span><span class="o">=</span><span class="n">EmbeddingMode</span><span class="o">.</span><span class="n">STATIC</span><span class="p">)</span>
 <span class="n">similarity</span> <span class="o">=</span> <span class="n">value_fn</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">candidate</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">similarity</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>0.9939
+</pre></div>
+</div>
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">embedding_euclidean</span></code> for U4-style <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">/</span> <span class="pre">(1</span> <span class="pre">+</span> <span class="pre">distance)</span></code> scoring.
 Set <code class="docutils literal notranslate"><span class="pre">embedding_mode=EmbeddingMode.CONTEXTUAL</span></code> for U2 contextual embeddings.</p>
@@ -345,7 +359,14 @@ Set <code class="docutils literal notranslate"><span class="pre">embedding_mode=
 
 <span class="n">candidate</span> <span class="o">=</span> <span class="n">GenerationRecord</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;answer&quot;</span><span class="p">,</span> <span class="n">logprobs</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">))</span>
 <span class="n">utility</span> <span class="o">=</span> <span class="n">LogprobValue</span><span class="p">()</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">candidate</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">utility</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>-0.6
+</pre></div>
+</div>
 </div>
 <p>When logprobs are absent, <a class="reference internal" href="../api/value.html#nlp_shap.value.logprob.LogprobValue" title="nlp_shap.value.logprob.LogprobValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogprobValue</span></code></a> falls
 back to a deterministic stub so reanalysis paths can swap utilities without
@@ -359,7 +380,14 @@ change archived coalition utilities.</p>
 
 <span class="n">raw</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]</span>
 <span class="n">displayed</span> <span class="o">=</span> <span class="n">MinMaxNormalizer</span><span class="p">()</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">displayed</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[0.37499999999999994, 0.0, 0.625]
+</pre></div>
+</div>
 </div>
 <p>Config keys: <code class="docutils literal notranslate"><span class="pre">identity</span></code>, <code class="docutils literal notranslate"><span class="pre">abs_sum</span></code>, <code class="docutils literal notranslate"><span class="pre">power_shift</span></code>, <code class="docutils literal notranslate"><span class="pre">min_max</span></code>. See
 <a class="reference internal" href="config.html"><span class="doc">Configuration</span></a> and <a class="reference internal" href="../theory/value_functions.html"><span class="doc">Value functions and normalizers</span></a>.</p>

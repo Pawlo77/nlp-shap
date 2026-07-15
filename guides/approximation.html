@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=eb227069" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=aade2278" />
     
     
 
@@ -319,14 +319,22 @@ and Neyman estimators use complementary-contribution (CC) aggregation.</p>
     <span class="n">include_minimal_masks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
 <span class="p">))</span>
-<span class="n">payoffs</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>  <span class="c1"># one float per mask from your value function</span>
-
+<span class="n">payoffs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">index</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">masks</span><span class="p">))]</span>
 <span class="n">values</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">estimate_attributions</span><span class="p">(</span>
     <span class="n">masks</span><span class="p">,</span>
     <span class="n">payoffs</span><span class="p">,</span>
     <span class="n">ShapleyAggregator</span><span class="p">(),</span>
 <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;samples:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">masks</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;values:&quot;</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">))</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>samples: 7
+values: (0.4167, 0.5, 0.0833, 0.25)
+</pre></div>
+</div>
 </div>
 </section>
 <section id="complementary-pairs">
@@ -397,7 +405,14 @@ and Neyman estimators use complementary-contribution (CC) aggregation.</p>
 <span class="n">mc</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMATORS</span><span class="p">,</span> <span class="s2">&quot;mc&quot;</span><span class="p">)</span>
 <span class="n">complementary</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMATORS</span><span class="p">,</span> <span class="s2">&quot;complementary&quot;</span><span class="p">)</span>
 <span class="n">neyman</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">PluginGroup</span><span class="o">.</span><span class="n">ESTIMATORS</span><span class="p">,</span> <span class="s2">&quot;neyman_cc&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mc</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">complementary</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">neyman</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="guide-result docutils container">
+<p><strong>Output</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>mc complementary neyman_cc
+</pre></div>
+</div>
 </div>
 <p>Entry points are registered under <code class="docutils literal notranslate"><span class="pre">nlp_shap.estimators</span></code> in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>.</p>
 </section>

@@ -52,6 +52,8 @@ Quick start
    print("Shapley:", shapley)
    print("Banzhaf:", banzhaf)
 
+.. guide-result:: exact_quick_start
+
 Bitmask iteration
 -----------------
 
@@ -62,8 +64,13 @@ needed:
 
    from nlp_shap.estimation.exact import ExactEstimator
 
-   for mask_int in ExactEstimator.iter_mask_ints(player_set.num_players):
-       present = ExactEstimator.mask_int_to_present(mask_int, player_set.num_players)
+   for index, mask_int in enumerate(ExactEstimator.iter_mask_ints(3)):
+       present = ExactEstimator.mask_int_to_present(mask_int, 3)
+       print(present)
+       if index >= 2:
+           break
+
+.. guide-result:: exact_bitmask_iteration
 
 Budget requirement
 ------------------
@@ -84,7 +91,9 @@ Exact enumeration requires a full budget fraction:
            seed=0,
        )
    except ValueError as exc:
-       print(exc)  # exact estimator requires budget_fraction == 1.0
+       print(exc)
+
+.. guide-result:: exact_budget_requirement
 
 Plugin resolution
 -----------------
@@ -100,7 +109,9 @@ Resolve the estimator from packaging entry points:
    registry.load_entry_points(PluginGroup.ESTIMATORS)
 
    estimator = registry.resolve(PluginGroup.ESTIMATORS, "exact")
-   print(estimator.name)  # exact
+   print(estimator.name)
+
+.. guide-result:: exact_plugin
 
 Notebook
 --------
