@@ -2,6 +2,7 @@ backend:
   kind: lmstudio
   model_id: qwen2-500m-instruct
   api_host: null
+  serialize_generate: true
 
 generation:
   max_new_tokens: 32

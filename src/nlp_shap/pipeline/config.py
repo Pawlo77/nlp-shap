@@ -32,6 +32,9 @@ class BackendConfig(BaseModel):
     auto_download: bool = True
     """Download missing models through the LM Studio repository API."""
 
+    serialize_generate: bool = True
+    """Serialize backend ``generate`` calls (needed for MLX LM Studio)."""
+
 
 class GenerationConfig(BaseModel):
     """Generation parameters for the base and coalition evaluations."""
