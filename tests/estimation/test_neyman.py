@@ -36,6 +36,22 @@ def test_neyman_initial_sampling_is_reproducible() -> None:
     assert len(first) % 2 == 0
 
 
+def test_neyman_initial_sampling_terminates_for_small_n() -> None:
+    """Phase-one sampling must finish for small n (no empty/grand M-cell hang)."""
+    player_set = PlayerSet(player_ids=("a", "b", "c", "d"))
+    masks = list(
+        NeymanEstimator().sample_masks(
+            player_set,
+            budget_fraction=1.0,
+            include_minimal_masks=False,
+            seed=0,
+        )
+    )
+    assert masks
+    assert len(masks) % 2 == 0
+    assert len(masks) <= 14
+
+
 def test_neyman_two_phase_sampling_respects_budget() -> None:
     """Initial and allocation phases together stay within the total budget."""
     player_set = PlayerSet(player_ids=("a", "b", "c", "d"))

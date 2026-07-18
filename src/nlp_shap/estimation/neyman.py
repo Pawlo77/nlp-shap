@@ -106,7 +106,8 @@ class NeymanEstimator(ComplementaryEstimator):
         )
         self._step = _NeymanStep.INITIAL_SAMPLING
         self._position_i = 0
-        self._position_j = 0
+        # Sizes 0 and n are empty/grand and are never yielded; start at size 1.
+        self._position_j = 1 if num_players >= 2 else 0
         self._first_call = True
         self._m_hat = None
         self._c_matrix = None
@@ -126,12 +127,18 @@ class NeymanEstimator(ComplementaryEstimator):
         """Advance the initial-phase cursor.
 
         Return True when initial sampling completes.
+
+        Empty (size 0) and grand (size n) columns are ignored: those coalitions
+        are skipped by sampling, so requiring them to reach
+        ``initial_num_splits`` would loop forever.
         """
         m_counts = self._m_counts
         if m_counts is None:
             msg = "M matrix must be initialized before sampling."
             raise RuntimeError(msg)
         incomplete = m_counts < self._initial_num_splits
+        incomplete[:, 0] = False
+        incomplete[:, -1] = False
         if not np.any(incomplete):
             return True
 
@@ -228,6 +235,8 @@ class NeymanEstimator(ComplementaryEstimator):
             raise ValueError(msg)
         self._reset_neyman_state(player_set.num_players, budget_fraction, seed)
         generated = 0
+        stale_attempts = 0
+        max_stale = max(10_000, 32 * self._total_num_splits)
 
         while generated < self._total_num_splits:
             if self._step == _NeymanStep.INITIAL_SAMPLING:
@@ -237,14 +246,33 @@ class NeymanEstimator(ComplementaryEstimator):
                     self._initial_masks_count = generated
                     return
                 self._first_call = False
+                if self._position_j in (0, self._num_players):
+                    if self._update_m_position():
+                        self._initial_masks_count = generated
+                        return
+                    stale_attempts += 1
+                    if stale_attempts >= max_stale:
+                        break
+                    continue
                 present = self._next_initial_split()
                 if present is None:
                     break
                 if is_empty_or_grand(present):
+                    stale_attempts += 1
+                    if stale_attempts >= max_stale:
+                        break
                     continue
+                yielded = 0
                 for mask in self._yield_complementary_pair(present):
                     generated += 1
+                    yielded += 1
                     yield mask
+                if yielded:
+                    stale_attempts = 0
+                else:
+                    stale_attempts += 1
+                    if stale_attempts >= max_stale:
+                        break
                 continue
             break
 
