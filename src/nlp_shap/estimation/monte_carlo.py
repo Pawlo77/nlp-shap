@@ -10,7 +10,6 @@ from ..domain.players import PlayerSet
 from ..protocols.estimand import EstimandAggregator
 from ._shared import (
     compute_mc_num_samples,
-    is_empty_or_grand,
     iter_minimal_masks,
     present_to_mask_int,
     random_present,
@@ -49,7 +48,6 @@ class MonteCarloEstimator:
         rng = np.random.default_rng(seed)
         seen: set[int] = set()
         generated = 0
-        grand_mask = present_to_mask_int((True,) * num_players)
 
         if include_minimal_masks:
             for present in iter_minimal_masks(num_players):
@@ -63,13 +61,14 @@ class MonteCarloEstimator:
                     return
 
         while generated < num_samples:
+            # Guard against exhaustion when unique non-grand masks run out.
+            if len(seen) >= ((1 << num_players) - 1):
+                return
             present = random_present(rng, num_players)
-            if is_empty_or_grand(present):
+            if all(present):
                 continue
             mask_int = present_to_mask_int(present)
             if mask_int in seen:
-                continue
-            if mask_int == grand_mask:
                 continue
             seen.add(mask_int)
             generated += 1

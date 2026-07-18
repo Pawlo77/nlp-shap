@@ -30,6 +30,22 @@ def test_mc_budget_cap_is_honoured() -> None:
     assert len(masks) <= 3
 
 
+def test_mc_full_budget_terminates_excluding_grand() -> None:
+    """Full MC budget finishes with all non-grand coalitions (including empty)."""
+    player_set = PlayerSet(player_ids=("a", "b", "c", "d"))
+    masks = list(
+        MonteCarloEstimator().sample_masks(
+            player_set,
+            budget_fraction=1.0,
+            include_minimal_masks=False,
+            seed=0,
+        )
+    )
+    assert len(masks) == 15
+    assert not any(all(mask.present) for mask in masks)
+    assert any(not any(mask.present) for mask in masks)
+
+
 def test_mc_shapley_differs_from_banzhaf_same_seed() -> None:
     """Monte Carlo attributions depend on the selected estimand plugin."""
     player_set = PlayerSet(player_ids=("p0", "p1", "p2"))
