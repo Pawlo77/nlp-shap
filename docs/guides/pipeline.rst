@@ -33,8 +33,9 @@ Quick start
 
 .. guide-result:: pipeline_quick_start
 
-The mock backend is deterministic and requires no GPU or optional extras. Use
-``pad`` absence policy when the estimator samples the empty coalition.
+The mock backend is deterministic and requires no GPU or optional extras.
+``delete``, ``pad``, and ``neutral`` absence policies all support the empty
+coalition required by exact Shapley (``delete`` yields empty message text).
 
 For remote or local model servers see :doc:`backends`.
 

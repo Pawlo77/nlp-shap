@@ -1,7 +1,5 @@
 """Tests for absence-policy rendering."""
 
-import pytest
-
 from nlp_shap.domain.coalition import CoalitionMask
 from nlp_shap.domain.conversation import ConversationSnapshot
 from nlp_shap.masking.builder import MaskBuilder
@@ -38,14 +36,16 @@ def test_neutral_policy_preserves_token_width(
     assert rendered.turns[0].messages[0].text == "Who ___ you?"
 
 
-def test_delete_policy_rejects_empty_coalition(
+def test_delete_policy_empty_coalition_yields_empty_text(
     sample_snapshot: ConversationSnapshot,
 ) -> None:
-    """Deleting every token is invalid."""
+    """Empty coalition keeps structure with empty message text for v(∅)."""
     players = TokenPartitioner().partition(sample_snapshot)
     mask = CoalitionMask.from_sequence((False,) * players.num_players)
-    with pytest.raises(ValueError, match="cannot remove every token"):
-        DeletePolicy().apply(sample_snapshot, players, mask)
+    rendered = DeletePolicy().apply(sample_snapshot, players, mask)
+    assert all(
+        message.text == "" for turn in rendered.turns for message in turn.messages
+    )
 
 
 def test_mask_builder_renders_via_policy(sample_snapshot: ConversationSnapshot) -> None:

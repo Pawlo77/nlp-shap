@@ -27,6 +27,8 @@ Delete
 Absent tokens are removed from the rendered text. This matches the default
 ``explanation.absence_policy: delete`` setting in :class:`~nlp_shap.ExplainConfig`
 and changes later token positions when a model consumes the prompt sequentially.
+The empty coalition yields empty message text so exact Shapley can score
+:math:`v(\emptyset)`.
 
 Pad
 ~~~

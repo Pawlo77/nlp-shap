@@ -16,6 +16,13 @@ Added
   :class:`~nlp_shap.pipeline.runner.ExplainRunner` for per-coalition progress
   reporting (no-op when omitted).
 
+Changed
+~~~~~~~
+
+- :class:`~nlp_shap.masking.policies.DeletePolicy` renders the empty coalition as
+  empty message text instead of raising, so exact Shapley can evaluate
+  :math:`v(\emptyset)` under deletion absence.
+
 .. _release-0-1-15:
 
 0.1.15 (2026-07-15)

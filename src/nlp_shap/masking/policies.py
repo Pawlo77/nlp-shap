@@ -37,9 +37,8 @@ class DeletePolicy:
         kept_spans = tuple(
             span for span, present in zip(spans, mask.present, strict=True) if present
         )
-        if not rendered:
-            msg = "delete policy cannot remove every token"
-            raise ValueError(msg)
+        # Empty coalition is valid for Shapley (v(∅)): keep turn/message
+        # structure with empty message text.
         return rebuild_snapshot(snapshot, kept_spans, rendered)
 
 

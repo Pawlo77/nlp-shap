@@ -55,6 +55,18 @@ def test_runner_e2e_mock_exact_shapley() -> None:
     assert output.perf.total_ms >= 0.0
 
 
+def test_runner_e2e_mock_exact_with_delete_policy() -> None:
+    """Exact SHAP completes under delete absence, including empty coalition."""
+    payload = _e2e_config().model_dump(mode="python")
+    payload["explanation"]["absence_policy"] = "delete"
+    output = ExplainRunner(ExplainConfig.model_validate(payload)).explain_sync(
+        _three_token_snapshot()
+    )
+    assert len(output.result.values) == 3
+    assert output.metrics.requested == ExactEstimator.num_coalitions(3)
+    assert output.metrics.executed == output.metrics.requested
+
+
 def test_runner_e2e_exact_shapley_beyond_default_hot_store_size() -> None:
     """Exact SHAP must retain all coalition outputs when 2^n exceeds store LRU default.
 
