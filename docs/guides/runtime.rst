@@ -110,6 +110,29 @@ Schedule async coalition jobs
 
 .. guide-result:: runtime_scheduler
 
+Coalition progress callbacks
+----------------------------
+
+Pass an optional sync :class:`~nlp_shap.runtime.progress.CoalitionProgress`
+implementation to report planned and finished coalition counts. Omitting it
+uses a no-op sink:
+
+.. code-block:: python
+
+   class PrintProgress:
+       def on_coalitions_planned(self, total: int) -> None:
+           print(f"planned={total}")
+
+       def on_coalition_finished(self, done: int, total: int) -> None:
+           print(f"finished={done}/{total}")
+
+   scheduler = InferenceScheduler(
+       max_inflight=2,
+       generation=GenerationConfig(temperature=0.0),
+       store=HotResultStore(),
+       progress=PrintProgress(),
+   )
+
 Streaming large job sets
 ------------------------
 

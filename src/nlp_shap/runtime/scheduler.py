@@ -10,6 +10,7 @@ from ..masking.codec import PackedMask
 from ..pipeline.config import GenerationConfig
 from .archive import CoalitionRecordDraft, RunArchive
 from .dedup import CoalitionDedupRegistry
+from .progress import CoalitionProgress, NullCoalitionProgress
 from .store import HotResultStore
 
 GenerateFn = Callable[[ConversationSnapshot], Awaitable[str]]
@@ -79,6 +80,7 @@ class InferenceScheduler:
         dedup: CoalitionDedupRegistry | None = None,
         archive: RunArchive | None = None,
         pending_limit: int | None = None,
+        progress: CoalitionProgress | None = None,
     ) -> None:
         if max_inflight < 1:
             msg = "max_inflight must be at least 1"
@@ -90,6 +92,7 @@ class InferenceScheduler:
         self._archive = archive
         self._semaphore = asyncio.Semaphore(max_inflight)
         self._pending_limit = pending_limit or max(max_inflight * 4, max_inflight)
+        self._progress: CoalitionProgress = progress or NullCoalitionProgress()
 
     async def run(
         self,
@@ -97,19 +100,30 @@ class InferenceScheduler:
         generate: GenerateFn,
     ) -> SchedulerMetrics:
         """Execute coalition jobs and return scheduler counters."""
-        return await self.run_iter(iter(jobs), generate)
+        self._progress.on_coalitions_planned(len(jobs))
+        return await self.run_iter(iter(jobs), generate, total=len(jobs))
 
     async def run_iter(
         self,
         jobs: Iterable[CoalitionJob],
         generate: GenerateFn,
+        total: int | None = None,
     ) -> SchedulerMetrics:
         """Execute jobs from an iterable without creating all coroutines upfront."""
-        mutable = {"executed": 0, "deduplicated": 0, "cache_hits": 0, "requested": 0}
+        mutable = {
+            "executed": 0,
+            "deduplicated": 0,
+            "cache_hits": 0,
+            "requested": 0,
+            "finished": 0,
+            "total": total if total is not None else 0,
+        }
         pending: set[asyncio.Task[None]] = set()
 
         for job in jobs:
             mutable["requested"] += 1
+            if total is None:
+                mutable["total"] = mutable["requested"]
             while len(pending) >= self._pending_limit:
                 _done, pending = await asyncio.wait(
                     pending,
@@ -135,11 +149,19 @@ class InferenceScheduler:
         generate: GenerateFn,
     ) -> SchedulerMetrics:
         """Execute jobs from an async iterator with bounded pending tasks."""
-        mutable = {"executed": 0, "deduplicated": 0, "cache_hits": 0, "requested": 0}
+        mutable = {
+            "executed": 0,
+            "deduplicated": 0,
+            "cache_hits": 0,
+            "requested": 0,
+            "finished": 0,
+            "total": 0,
+        }
         pending: set[asyncio.Task[None]] = set()
 
         async for job in jobs:
             mutable["requested"] += 1
+            mutable["total"] = mutable["requested"]
             while len(pending) >= self._pending_limit:
                 _done, pending = await asyncio.wait(
                     pending,
@@ -165,28 +187,34 @@ class InferenceScheduler:
         generate: GenerateFn,
         mutable: dict[str, int],
     ) -> None:
-        cached = self._store.get(job.coalition_key)
-        if cached is not None:
-            mutable["cache_hits"] += 1
-            self._maybe_archive(job, cached, cache_hit=True, elapsed_ms=0.0)
-            return
+        try:
+            cached = self._store.get(job.coalition_key)
+            if cached is not None:
+                mutable["cache_hits"] += 1
+                self._maybe_archive(job, cached, cache_hit=True, elapsed_ms=0.0)
+                return
 
-        if self._dedup is not None and not self._dedup.observe(job.coalition_key):
-            mutable["deduplicated"] += 1
-            return
+            if self._dedup is not None and not self._dedup.observe(job.coalition_key):
+                mutable["deduplicated"] += 1
+                return
 
-        async with self._semaphore:
-            started = time.perf_counter()
-            generation_text = await generate(job.snapshot)
-            elapsed_ms = (time.perf_counter() - started) * 1000.0
-        mutable["executed"] += 1
-        self._store.put(job.coalition_key, generation_text)
-        self._maybe_archive(
-            job,
-            generation_text,
-            cache_hit=False,
-            elapsed_ms=elapsed_ms,
-        )
+            async with self._semaphore:
+                started = time.perf_counter()
+                generation_text = await generate(job.snapshot)
+                elapsed_ms = (time.perf_counter() - started) * 1000.0
+            mutable["executed"] += 1
+            self._store.put(job.coalition_key, generation_text)
+            self._maybe_archive(
+                job,
+                generation_text,
+                cache_hit=False,
+                elapsed_ms=elapsed_ms,
+            )
+        finally:
+            mutable["finished"] += 1
+            total = mutable["total"] or mutable["requested"]
+            if total > 0:
+                self._progress.on_coalition_finished(mutable["finished"], total)
 
     def _maybe_archive(
         self,

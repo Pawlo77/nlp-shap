@@ -144,6 +144,7 @@ class ExplainOrchestrator:
                     store=store,
                     dedup=dedup,
                     archive=archive,
+                    progress=self._context.resolved_progress(),
                 )
 
                 generation = config.generation

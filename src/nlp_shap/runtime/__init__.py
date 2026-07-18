@@ -13,6 +13,7 @@ from .kv_cache import (
     group_jobs_for_prefix_cache,
 )
 from .metrics import PerfSummary
+from .progress import CoalitionProgress, NullCoalitionProgress
 from .scheduler import CoalitionJob, InferenceScheduler, SchedulerMetrics
 from .store import HotResultStore
 from .telemetry import (
@@ -26,11 +27,13 @@ __all__ = [
     "BASE_GENERATION_FILE",
     "CoalitionDedupRegistry",
     "CoalitionJob",
+    "CoalitionProgress",
     "CoalitionRecord",
     "CoalitionRecordDraft",
     "HotResultStore",
     "InMemoryObservabilitySink",
     "InferenceScheduler",
+    "NullCoalitionProgress",
     "NullObservabilitySink",
     "ObservabilitySink",
     "PerfSummary",

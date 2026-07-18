@@ -47,7 +47,7 @@ repos:
         name: python tests naming
         entry: >-
           bash -c 'status=0; for f in "$@"; do base=$(basename "$f");
-          case "$base" in conftest.py|__init__.py) continue ;; test_*.py) ;; *)
+          case "$base" in conftest.py|__init__.py|_*) continue ;; test_*.py) ;; *)
           echo "Test files must be named test_*.py -> $f"; status=1;; esac; done;
           exit $status'
         language: system

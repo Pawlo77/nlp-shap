@@ -7,6 +7,7 @@ from ..domain.conversation import ConversationSnapshot
 from ..masking.partitions import TokenPartitioner
 from ..plugins import PluginGroup, PluginRegistry, register_builtin_plugins
 from ..plugins.backends import instantiate_backend
+from ..runtime.progress import CoalitionProgress
 from ..runtime.telemetry import NullObservabilitySink, ObservabilitySink
 from .config import ExplainConfig
 from .context import ExplainContext
@@ -23,10 +24,12 @@ class ExplainRunner:
         config: ExplainConfig,
         registry: PluginRegistry | None = None,
         telemetry: ObservabilitySink | None = None,
+        progress: CoalitionProgress | None = None,
     ) -> None:
         self._config = config
         self._registry = registry or _default_registry()
         self._telemetry = telemetry or NullObservabilitySink()
+        self._progress = progress
 
     async def explain(self, snapshot: ConversationSnapshot) -> ExplainRunOutput:
         """Execute the async explain pipeline."""
@@ -71,6 +74,7 @@ class ExplainRunner:
             run_id=run_id,
             archive_root=self._resolve_archive_root(run_id),
             telemetry=self._telemetry,
+            progress=self._progress,
         )
 
     def _resolve_archive_root(self, run_id: str) -> Path | None:

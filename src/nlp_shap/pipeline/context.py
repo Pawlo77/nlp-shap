@@ -6,6 +6,7 @@ from pathlib import Path
 from ..domain.conversation import ConversationSnapshot
 from ..domain.players import PlayerSet
 from ..plugins.registry import PluginRegistry
+from ..runtime.progress import CoalitionProgress, NullCoalitionProgress
 from ..runtime.telemetry import NullObservabilitySink, ObservabilitySink
 from .config import ExplainConfig
 
@@ -35,6 +36,13 @@ class ExplainContext:
     telemetry: ObservabilitySink | None = None
     """Optional observability sink for stage spans."""
 
+    progress: CoalitionProgress | None = None
+    """Optional sync sink for coalition scheduling progress."""
+
     def resolved_telemetry(self) -> ObservabilitySink:
         """Return the configured telemetry sink or a no-op implementation."""
         return self.telemetry or NullObservabilitySink()
+
+    def resolved_progress(self) -> CoalitionProgress:
+        """Return the configured progress sink or a no-op implementation."""
+        return self.progress or NullCoalitionProgress()

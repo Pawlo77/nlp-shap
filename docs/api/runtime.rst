@@ -20,3 +20,7 @@ Runtime
 .. automodule:: nlp_shap.runtime.scheduler
    :members:
    :undoc-members:
+
+.. automodule:: nlp_shap.runtime.progress
+   :members:
+   :undoc-members:

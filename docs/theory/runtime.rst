@@ -35,6 +35,16 @@ then the dedup registry, then acquires a concurrency semaphore before calling
 the backend. :class:`~nlp_shap.runtime.scheduler.SchedulerMetrics` reports
 ``requested``, ``executed``, ``deduplicated``, and ``cache_hits``.
 
+Optional progress
+-----------------
+
+Pass a :class:`~nlp_shap.runtime.progress.CoalitionProgress` implementation to
+:class:`~nlp_shap.runtime.scheduler.InferenceScheduler` or
+:class:`~nlp_shap.pipeline.runner.ExplainRunner` to receive sync
+``on_coalitions_planned`` / ``on_coalition_finished`` callbacks. When omitted,
+:class:`~nlp_shap.runtime.progress.NullCoalitionProgress` keeps the hot path
+near zero cost.
+
 See also
 --------
 
