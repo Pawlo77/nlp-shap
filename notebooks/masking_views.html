@@ -599,8 +599,8 @@ neutral TokenPartitioner NeutralPolicy neutral
 </section>
 <section id="validation-guards">
 <h2>Validation guards<a class="headerlink" href="#validation-guards" title="Link to this heading">¶</a></h2>
-<p><strong>Business:</strong> Misaligned masks or empty coalitions can silently corrupt attribution studies; explicit guards surface failures before costly model calls.</p>
-<p><strong>Technical:</strong> <code class="docutils literal notranslate"><span class="pre">CoalitionMask.validate_against</span></code>, delete-all-tokens rejection, and builder/policy mismatch checks.</p>
+<p><strong>Business:</strong> Misaligned masks or builder/policy mismatches can silently corrupt attribution studies; explicit guards surface failures before costly model calls.</p>
+<p><strong>Technical:</strong> <code class="docutils literal notranslate"><span class="pre">CoalitionMask.validate_against</span></code>, empty-coalition delete rendering (<code class="docutils literal notranslate"><span class="pre">v(∅)</span></code> → empty message text), and builder/policy mismatch checks.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">short_mask</span> <span class="o">=</span> <span class="n">CoalitionMask</span><span class="o">.</span><span class="n">from_sequence</span><span class="p">((</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
@@ -610,10 +610,11 @@ neutral TokenPartitioner NeutralPolicy neutral
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mask length guard:&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
 
 <span class="n">empty_mask</span> <span class="o">=</span> <span class="n">CoalitionMask</span><span class="o">.</span><span class="n">from_sequence</span><span class="p">((</span><span class="kc">False</span><span class="p">,)</span> <span class="o">*</span> <span class="n">players</span><span class="o">.</span><span class="n">num_players</span><span class="p">)</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">DeletePolicy</span><span class="p">()</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">snapshot</span><span class="p">,</span> <span class="n">players</span><span class="p">,</span> <span class="n">empty_mask</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;delete empty coalition guard:&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+<span class="n">empty_rendered</span> <span class="o">=</span> <span class="n">DeletePolicy</span><span class="p">()</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">snapshot</span><span class="p">,</span> <span class="n">players</span><span class="p">,</span> <span class="n">empty_mask</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;delete empty coalition text:&quot;</span><span class="p">,</span>
+    <span class="nb">repr</span><span class="p">(</span><span class="n">empty_rendered</span><span class="o">.</span><span class="n">turns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">messages</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">),</span>
+<span class="p">)</span>
 
 <span class="n">mismatched_view</span> <span class="o">=</span> <span class="n">MaskedSnapshot</span><span class="p">(</span>
     <span class="n">base</span><span class="o">=</span><span class="n">snapshot</span><span class="p">,</span>
@@ -630,7 +631,7 @@ neutral TokenPartitioner NeutralPolicy neutral
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mask length guard: coalition mask length 3 does not match player count 7
-delete empty coalition guard: delete policy cannot remove every token
+delete empty coalition text: &#39;&#39;
 builder policy guard: masked view policy &#39;delete&#39; does not match builder policy &#39;pad&#39;
 </pre></div>
 </div>

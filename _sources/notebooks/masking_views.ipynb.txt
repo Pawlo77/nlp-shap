@@ -497,9 +497,9 @@
    "source": [
     "## Validation guards\n",
     "\n",
-    "**Business:** Misaligned masks or empty coalitions can silently corrupt attribution studies; explicit guards surface failures before costly model calls.\n",
+    "**Business:** Misaligned masks or builder/policy mismatches can silently corrupt attribution studies; explicit guards surface failures before costly model calls.\n",
     "\n",
-    "**Technical:** `CoalitionMask.validate_against`, delete-all-tokens rejection, and builder/policy mismatch checks."
+    "**Technical:** `CoalitionMask.validate_against`, empty-coalition delete rendering (`v(∅)` → empty message text), and builder/policy mismatch checks.\n"
    ]
   },
   {
@@ -520,7 +520,7 @@
      "output_type": "stream",
      "text": [
       "mask length guard: coalition mask length 3 does not match player count 7\n",
-      "delete empty coalition guard: delete policy cannot remove every token\n",
+      "delete empty coalition text: ''\n",
       "builder policy guard: masked view policy 'delete' does not match builder policy 'pad'\n"
      ]
     }
@@ -533,10 +533,11 @@
     "    print(\"mask length guard:\", error)\n",
     "\n",
     "empty_mask = CoalitionMask.from_sequence((False,) * players.num_players)\n",
-    "try:\n",
-    "    DeletePolicy().apply(snapshot, players, empty_mask)\n",
-    "except ValueError as error:\n",
-    "    print(\"delete empty coalition guard:\", error)\n",
+    "empty_rendered = DeletePolicy().apply(snapshot, players, empty_mask)\n",
+    "print(\n",
+    "    \"delete empty coalition text:\",\n",
+    "    repr(empty_rendered.turns[0].messages[0].text),\n",
+    ")\n",
     "\n",
     "mismatched_view = MaskedSnapshot(\n",
     "    base=snapshot,\n",
@@ -547,7 +548,7 @@
     "try:\n",
     "    MaskBuilder(PadPolicy()).render(mismatched_view)\n",
     "except ValueError as error:\n",
-    "    print(\"builder policy guard:\", error)"
+    "    print(\"builder policy guard:\", error)\n"
    ]
   }
  ],

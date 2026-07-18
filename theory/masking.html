@@ -322,7 +322,9 @@ identifier derived from the base snapshot id and token coordinates.</p>
 <h3>Delete<a class="headerlink" href="#delete" title="Link to this heading">¶</a></h3>
 <p>Absent tokens are removed from the rendered text. This matches the default
 <code class="docutils literal notranslate"><span class="pre">explanation.absence_policy:</span> <span class="pre">delete</span></code> setting in <a class="reference internal" href="../api.html#nlp_shap.ExplainConfig" title="nlp_shap.ExplainConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainConfig</span></code></a>
-and changes later token positions when a model consumes the prompt sequentially.</p>
+and changes later token positions when a model consumes the prompt sequentially.
+The empty coalition yields empty message text so exact Shapley can score
+<span class="math notranslate nohighlight">\(v(\emptyset)\)</span>.</p>
 </section>
 <section id="pad">
 <h3>Pad<a class="headerlink" href="#pad" title="Link to this heading">¶</a></h3>
@@ -454,5 +456,6 @@ back into full-length masks when some positions are always present.</p>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=fd10adb8"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     </body>
 </html>

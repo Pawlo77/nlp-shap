@@ -336,8 +336,9 @@ executed: 3
 </pre></div>
 </div>
 </div>
-<p>The mock backend is deterministic and requires no GPU or optional extras. Use
-<code class="docutils literal notranslate"><span class="pre">pad</span></code> absence policy when the estimator samples the empty coalition.</p>
+<p>The mock backend is deterministic and requires no GPU or optional extras.
+<code class="docutils literal notranslate"><span class="pre">delete</span></code>, <code class="docutils literal notranslate"><span class="pre">pad</span></code>, and <code class="docutils literal notranslate"><span class="pre">neutral</span></code> absence policies all support the empty
+coalition required by exact Shapley (<code class="docutils literal notranslate"><span class="pre">delete</span></code> yields empty message text).</p>
 <p>For remote or local model servers see <a class="reference internal" href="backends.html"><span class="doc">Generative backends</span></a>.</p>
 <p>See <a class="reference internal" href="config.html"><span class="doc">Configuration</span></a> for the full configuration schema.</p>
 </section>
