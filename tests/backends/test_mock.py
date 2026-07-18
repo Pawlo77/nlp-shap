@@ -45,3 +45,18 @@ def test_mock_backend_exposes_model_id() -> None:
     """Backend reports the configured model identifier."""
     backend = MockBackend(model_id="custom-mock")
     assert backend.model_id == "custom-mock"
+
+
+def test_mock_backend_populates_embeddings() -> None:
+    """Mock generations include static and contextual embedding vectors."""
+    backend = MockBackend(model_id="stub")
+    snapshot = _snapshot("hello world")
+
+    async def run() -> tuple[tuple[float, ...], tuple[float, ...]]:
+        record = await backend.generate(snapshot, 8, 0.0, 1)
+        return record.embedding, record.contextual_embedding
+
+    embedding, contextual = asyncio.run(run())
+    assert len(embedding) == 8
+    assert len(contextual) == 8
+    assert embedding != contextual
