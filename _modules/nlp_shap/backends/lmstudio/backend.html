@@ -6,7 +6,7 @@
         <link rel="prefetch" href="../../../../_static/logo.svg" as="image">
 
     <link rel="shortcut icon" href="../../../../_static/favicon.svg"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>nlp_shap.backends.lmstudio.backend - nlp-shap 0.1.15</title>
+        <title>nlp_shap.backends.lmstudio.backend - nlp-shap 0.1.16</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
@@ -171,7 +171,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../../index.html"><div class="brand">nlp-shap 0.1.15</div></a>
+      <a href="../../../../index.html"><div class="brand">nlp-shap 0.1.16</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
     <img class="sidebar-logo" src="../../../../_static/logo.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">nlp-shap 0.1.15</span>
+  <span class="sidebar-brand-text">nlp-shap 0.1.16</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -292,6 +292,9 @@
 <span></span><span class="sd">&quot;&quot;&quot;LM Studio generative backend.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncIterator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">asynccontextmanager</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">...backends.mock.generation</span><span class="w"> </span><span class="kn">import</span> <span class="n">generation_record_from_snapshot</span>
@@ -313,6 +316,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_init_lock</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_generate_lock</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">model_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -330,7 +334,6 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GenerationRecord</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate assistant text for ``snapshot`` via LM Studio.&quot;&quot;&quot;</span>
         <span class="n">lms</span> <span class="o">=</span> <span class="n">_import_lmstudio</span><span class="p">()</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_model</span><span class="p">()</span>
         <span class="n">chat</span> <span class="o">=</span> <span class="n">snapshot_to_chat</span><span class="p">(</span><span class="n">snapshot</span><span class="p">,</span> <span class="n">lms</span><span class="o">.</span><span class="n">Chat</span><span class="p">)</span>
         <span class="n">prediction_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="n">temperature</span><span class="p">,</span>
@@ -338,13 +341,21 @@
         <span class="p">}</span>
         <span class="k">if</span> <span class="n">top_k</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">prediction_config</span><span class="p">[</span><span class="s2">&quot;topKSampling&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">top_k</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">model</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="n">chat</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">prediction_config</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;LM Studio generation request failed&quot;</span>
-            <span class="k">raise</span> <span class="n">BackendUnavailableError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
-        <span class="n">text</span> <span class="o">=</span> <span class="n">_extract_text</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">generation_record_from_snapshot</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">)</span></div>
+        <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generation_slot</span><span class="p">():</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_model</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">model</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="n">chat</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">prediction_config</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="c1"># Model may have crashed/unloaded; drop handle and retry once.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">model</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_model</span><span class="p">()</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">model</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="n">chat</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">prediction_config</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">retry_exc</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;LM Studio generation request failed&quot;</span>
+                    <span class="k">raise</span> <span class="n">BackendUnavailableError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">retry_exc</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">_extract_text</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">generation_record_from_snapshot</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="LmStudioBackend.aclose">
@@ -357,6 +368,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
+    <span class="nd">@asynccontextmanager</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_generation_slot</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">serialize_generate</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_lock</span><span class="p">:</span>
+                <span class="k">yield</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">yield</span>
+
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_ensure_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
         <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_lock</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -364,7 +383,8 @@
             <span class="n">client</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connect_client</span><span class="p">()</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">model_key</span> <span class="o">=</span> <span class="k">await</span> <span class="n">resolve_model_key</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">model_key</span><span class="p">)</span>
+                <span class="c1"># ttl=None keeps the instance loaded (UI Idle TTL still applies).</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">model_key</span><span class="p">,</span> <span class="n">ttl</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">BackendUnavailableError</span><span class="p">:</span>
                 <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">aclose</span><span class="p">()</span>
                 <span class="k">raise</span>
@@ -409,7 +429,21 @@
     <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;lmstudio package is required for the LM Studio backend extra&quot;</span>
         <span class="k">raise</span> <span class="n">BackendUnavailableError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+    <span class="n">_silence_lmstudio_sdk_logs</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">lms</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_silence_lmstudio_sdk_logs</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Drop LM Studio SDK websocket chatter (class-named loggers at INFO).&quot;&quot;&quot;</span>
+    <span class="c1"># SDK uses type(self).__name__ as logger names (not under ``lmstudio.*``).</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span>
+        <span class="s2">&quot;_AsyncLMStudioWebsocket&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;AsyncWebsocketHandler&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;AsyncWebsocketThread&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;_SyncLMStudioWebsocket&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;SyncWebsocketHandler&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
 </pre></div>
         </article>
       </div>
@@ -450,7 +484,7 @@
       
     </aside>
   </div>
-</div><script src="../../../../_static/documentation_options.js?v=e2f3408e"></script>
+</div><script src="../../../../_static/documentation_options.js?v=d50bcae4"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/scripts/furo.js?v=46bd48cc"></script>
