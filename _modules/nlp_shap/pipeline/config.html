@@ -314,7 +314,16 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Model name or repository id passed to the backend.&quot;&quot;&quot;</span>
 
     <span class="n">api_host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Optional API host for HTTP-compatible backends.&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Optional API host for HTTP-compatible backends.&quot;&quot;&quot;</span>
+
+    <span class="n">hub_search</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Optional LM Studio repository search term; defaults to ``model_id``.&quot;&quot;&quot;</span>
+
+    <span class="n">quantization</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Q4_K_M&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;GGUF quantization to download when the model is not already local.&quot;&quot;&quot;</span>
+
+    <span class="n">auto_download</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Download missing models through the LM Studio repository API.&quot;&quot;&quot;</span></div>
 
 
 

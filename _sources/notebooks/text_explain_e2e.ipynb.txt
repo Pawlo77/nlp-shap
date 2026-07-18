@@ -71,7 +71,7 @@
        "6"
       ]
      },
-     "execution_count": 2,
+     "execution_count": null,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -576,13 +576,13 @@
        "description": "",
        "description_allow_html": false,
        "layout": "IPY_MODEL_9ba0ccf21ed9494dbd6ce7abd3a0138b",
-       "max": 64.0,
-       "min": 0.0,
+       "max": 64,
+       "min": 0,
        "orientation": "horizontal",
        "style": "IPY_MODEL_dcdb58bae0fa4bb09ad4251c8e7161b7",
        "tabbable": null,
        "tooltip": null,
-       "value": 64.0
+       "value": 64
       }
      },
      "8fecab6120b74f75ad1cd108918a1b01": {
