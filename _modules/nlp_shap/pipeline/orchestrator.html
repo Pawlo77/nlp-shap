@@ -419,7 +419,15 @@
                         <span class="p">)</span>
                     <span class="p">)</span>
 
-                <span class="n">store</span> <span class="o">=</span> <span class="n">HotResultStore</span><span class="p">()</span>
+                <span class="n">jobs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_jobs</span><span class="p">(</span><span class="n">mask_builder</span><span class="p">,</span> <span class="n">player_set</span><span class="p">,</span> <span class="n">masks</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">explanation</span><span class="o">.</span><span class="n">kv_cache</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+                    <span class="n">jobs</span> <span class="o">=</span> <span class="n">group_jobs_for_prefix_cache</span><span class="p">(</span>
+                        <span class="n">jobs</span><span class="p">,</span>
+                        <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">job</span><span class="p">:</span> <span class="n">job</span><span class="o">.</span><span class="n">prefix_hash</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="c1"># Store is the scoring buffer for this run — must retain every</span>
+                <span class="c1"># coalition output (exact SHAP needs 2^n; default LRU is 128).</span>
+                <span class="n">store</span> <span class="o">=</span> <span class="n">HotResultStore</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">jobs</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
                 <span class="n">dedup</span> <span class="o">=</span> <span class="p">(</span>
                     <span class="n">CoalitionDedupRegistry</span><span class="p">()</span>
                     <span class="k">if</span> <span class="n">dedup_enabled</span><span class="p">(</span><span class="n">explanation</span><span class="o">.</span><span class="n">dedup</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">generation</span><span class="p">)</span>
@@ -433,12 +441,6 @@
                     <span class="n">archive</span><span class="o">=</span><span class="n">archive</span><span class="p">,</span>
                 <span class="p">)</span>
 
-                <span class="n">jobs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_jobs</span><span class="p">(</span><span class="n">mask_builder</span><span class="p">,</span> <span class="n">player_set</span><span class="p">,</span> <span class="n">masks</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">explanation</span><span class="o">.</span><span class="n">kv_cache</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
-                    <span class="n">jobs</span> <span class="o">=</span> <span class="n">group_jobs_for_prefix_cache</span><span class="p">(</span>
-                        <span class="n">jobs</span><span class="p">,</span>
-                        <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">job</span><span class="p">:</span> <span class="n">job</span><span class="o">.</span><span class="n">prefix_hash</span><span class="p">,</span>
-                    <span class="p">)</span>
                 <span class="n">generation</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">generation</span>
                 <span class="n">set_kv_cache</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="p">,</span> <span class="s2">&quot;set_kv_cache_enabled&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">set_kv_cache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

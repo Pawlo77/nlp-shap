@@ -301,8 +301,8 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">HotResultStore</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;In-memory LRU store for recently generated coalition outputs.&quot;&quot;&quot;</span>
 
-    <span class="n">maxsize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Maximum number of coalition results retained in memory.&quot;&quot;&quot;</span>
+    <span class="n">maxsize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Maximum retained results; ``None`` disables eviction.&quot;&quot;&quot;</span>
 
     <span class="n">_values</span><span class="p">:</span> <span class="n">OrderedDict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">OrderedDict</span><span class="p">)</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;LRU mapping from coalition key to generated text.&quot;&quot;&quot;</span>
@@ -324,6 +324,8 @@
         <span class="k">if</span> <span class="n">coalition_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="o">.</span><span class="n">move_to_end</span><span class="p">(</span><span class="n">coalition_key</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="p">[</span><span class="n">coalition_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">generation_text</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
         <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxsize</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_values</span><span class="o">.</span><span class="n">popitem</span><span class="p">(</span><span class="n">last</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
