@@ -22,6 +22,9 @@ Changed
 - :class:`~nlp_shap.masking.policies.DeletePolicy` renders the empty coalition as
   empty message text instead of raising, so exact Shapley can evaluate
   :math:`v(\emptyset)` under deletion absence.
+- :class:`~nlp_shap.estimation.neyman.NeymanEstimator` initial sampling no longer
+  waits on empty/grand M-matrix columns (which are never yielded), fixing an
+  infinite loop on small player counts.
 
 .. _release-0-1-15:
 

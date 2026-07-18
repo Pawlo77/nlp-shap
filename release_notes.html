@@ -319,6 +319,9 @@ reporting (no-op when omitted).</p></li>
 <li><p><a class="reference internal" href="api/masking.html#nlp_shap.masking.policies.DeletePolicy" title="nlp_shap.masking.policies.DeletePolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">DeletePolicy</span></code></a> renders the empty coalition as
 empty message text instead of raising, so exact Shapley can evaluate
 <span class="math notranslate nohighlight">\(v(\emptyset)\)</span> under deletion absence.</p></li>
+<li><p><a class="reference internal" href="api/estimation.html#nlp_shap.estimation.neyman.NeymanEstimator" title="nlp_shap.estimation.neyman.NeymanEstimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">NeymanEstimator</span></code></a> initial sampling no longer
+waits on empty/grand M-matrix columns (which are never yielded), fixing an
+infinite loop on small player counts.</p></li>
 </ul>
 </section>
 </section>
