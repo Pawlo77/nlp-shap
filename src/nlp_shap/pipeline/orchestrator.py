@@ -124,7 +124,15 @@ class ExplainOrchestrator:
                         )
                     )
 
-                store = HotResultStore()
+                jobs = self._build_jobs(mask_builder, player_set, masks)
+                if explanation.kv_cache.enabled:
+                    jobs = group_jobs_for_prefix_cache(
+                        jobs,
+                        key=lambda job: job.prefix_hash,
+                    )
+                # Store is the scoring buffer for this run — must retain every
+                # coalition output (exact SHAP needs 2^n; default LRU is 128).
+                store = HotResultStore(maxsize=max(len(jobs), 1))
                 dedup = (
                     CoalitionDedupRegistry()
                     if dedup_enabled(explanation.dedup, config.generation)
@@ -138,12 +146,6 @@ class ExplainOrchestrator:
                     archive=archive,
                 )
 
-                jobs = self._build_jobs(mask_builder, player_set, masks)
-                if explanation.kv_cache.enabled:
-                    jobs = group_jobs_for_prefix_cache(
-                        jobs,
-                        key=lambda job: job.prefix_hash,
-                    )
                 generation = config.generation
                 set_kv_cache = getattr(self._backend, "set_kv_cache_enabled", None)
                 if set_kv_cache is not None:

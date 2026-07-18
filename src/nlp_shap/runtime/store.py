@@ -8,8 +8,8 @@ from dataclasses import dataclass, field
 class HotResultStore:
     """In-memory LRU store for recently generated coalition outputs."""
 
-    maxsize: int = 128
-    """Maximum number of coalition results retained in memory."""
+    maxsize: int | None = 128
+    """Maximum retained results; ``None`` disables eviction."""
 
     _values: OrderedDict[str, str] = field(default_factory=OrderedDict)
     """LRU mapping from coalition key to generated text."""
@@ -26,6 +26,8 @@ class HotResultStore:
         if coalition_key in self._values:
             self._values.move_to_end(coalition_key)
         self._values[coalition_key] = generation_text
+        if self.maxsize is None:
+            return
         while len(self._values) > self.maxsize:
             self._values.popitem(last=False)
 

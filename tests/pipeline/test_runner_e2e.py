@@ -55,6 +55,24 @@ def test_runner_e2e_mock_exact_shapley() -> None:
     assert output.perf.total_ms >= 0.0
 
 
+def test_runner_e2e_exact_shapley_beyond_default_hot_store_size() -> None:
+    """Exact SHAP must retain all coalition outputs when 2^n exceeds store LRU default.
+
+    Regression: HotResultStore maxsize=128 dropped early coalitions for n>=8,
+    causing ``missing generation for coalition`` during scoring.
+    """
+    turn = Turn(
+        messages=(Message(role=Role.USER, text="a b c d e f g h"),),
+    )
+    snapshot = ConversationSnapshot.from_turns((turn,))
+    output = ExplainRunner(_e2e_config()).explain_sync(snapshot)
+
+    assert len(output.result.values) == 8
+    assert output.metrics.requested == ExactEstimator.num_coalitions(8)
+    assert output.metrics.executed == output.metrics.requested
+    assert ExactEstimator.num_coalitions(8) > 128
+
+
 def test_runner_archives_base_generation_before_coalitions(
     tmp_path: Path,
 ) -> None:

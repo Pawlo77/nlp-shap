@@ -21,3 +21,13 @@ def test_hot_store_evicts_least_recently_used_entry() -> None:
     assert store.get("k2") is None
     assert store.get("k1") == "one"
     assert store.get("k3") == "three"
+
+
+def test_hot_store_unbounded_when_maxsize_none() -> None:
+    """``maxsize=None`` retains every inserted coalition result."""
+    store = HotResultStore(maxsize=None)
+    for index in range(200):
+        store.put(f"k{index}", f"v{index}")
+    assert len(store) == 200
+    assert store.get("k0") == "v0"
+    assert store.get("k199") == "v199"
