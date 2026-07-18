@@ -9,6 +9,7 @@ from ...domain.generation import GenerationRecord
 from ...errors import BackendUnavailableError
 from ...pipeline.config import BackendConfig
 from .chat import snapshot_to_chat
+from .models import resolve_model_key
 
 
 class LmStudioBackend:
@@ -63,10 +64,14 @@ class LmStudioBackend:
                 return self._model
             client = await self._connect_client()
             try:
-                self._model = await client.llm.model(self._config.model_id)
+                model_key = await resolve_model_key(client, self._config)
+                self._model = await client.llm.model(model_key)
+            except BackendUnavailableError:
+                await self.aclose()
+                raise
             except Exception as exc:
                 await self.aclose()
-                msg = f"failed to resolve LM Studio model {self._config.model_id!r}"
+                msg = f"failed to load LM Studio model {self._config.model_id!r}"
                 raise BackendUnavailableError(msg) from exc
             return self._model
 

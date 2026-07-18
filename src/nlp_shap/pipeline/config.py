@@ -23,6 +23,15 @@ class BackendConfig(BaseModel):
     api_host: str | None = None
     """Optional API host for HTTP-compatible backends."""
 
+    hub_search: str | None = None
+    """Optional LM Studio repository search term; defaults to ``model_id``."""
+
+    quantization: str = "Q4_K_M"
+    """GGUF quantization to download when the model is not already local."""
+
+    auto_download: bool = True
+    """Download missing models through the LM Studio repository API."""
+
 
 class GenerationConfig(BaseModel):
     """Generation parameters for the base and coalition evaluations."""
