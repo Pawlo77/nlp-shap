@@ -8,6 +8,14 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+Added
+~~~~~
+
+- Optional sync :class:`~nlp_shap.runtime.progress.CoalitionProgress` callbacks on
+  :class:`~nlp_shap.runtime.scheduler.InferenceScheduler` and
+  :class:`~nlp_shap.pipeline.runner.ExplainRunner` for per-coalition progress
+  reporting (no-op when omitted).
+
 .. _release-0-1-15:
 
 0.1.15 (2026-07-15)

@@ -298,6 +298,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">..masking.partitions</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenPartitioner</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..plugins</span><span class="w"> </span><span class="kn">import</span> <span class="n">PluginGroup</span><span class="p">,</span> <span class="n">PluginRegistry</span><span class="p">,</span> <span class="n">register_builtin_plugins</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..plugins.backends</span><span class="w"> </span><span class="kn">import</span> <span class="n">instantiate_backend</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.progress</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoalitionProgress</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..runtime.telemetry</span><span class="w"> </span><span class="kn">import</span> <span class="n">NullObservabilitySink</span><span class="p">,</span> <span class="n">ObservabilitySink</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExplainConfig</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExplainContext</span>
@@ -316,10 +317,12 @@
         <span class="n">config</span><span class="p">:</span> <span class="n">ExplainConfig</span><span class="p">,</span>
         <span class="n">registry</span><span class="p">:</span> <span class="n">PluginRegistry</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">telemetry</span><span class="p">:</span> <span class="n">ObservabilitySink</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">progress</span><span class="p">:</span> <span class="n">CoalitionProgress</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span> <span class="o">=</span> <span class="n">registry</span> <span class="ow">or</span> <span class="n">_default_registry</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_telemetry</span> <span class="o">=</span> <span class="n">telemetry</span> <span class="ow">or</span> <span class="n">NullObservabilitySink</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_progress</span> <span class="o">=</span> <span class="n">progress</span>
 
 <div class="viewcode-block" id="ExplainRunner.explain">
 <a class="viewcode-back" href="../../../api/pipeline.html#nlp_shap.ExplainRunner.explain">[docs]</a>
@@ -373,6 +376,7 @@
             <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span>
             <span class="n">archive_root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_resolve_archive_root</span><span class="p">(</span><span class="n">run_id</span><span class="p">),</span>
             <span class="n">telemetry</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_telemetry</span><span class="p">,</span>
+            <span class="n">progress</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_progress</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_archive_root</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>

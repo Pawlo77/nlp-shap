@@ -540,14 +540,14 @@
           <li><a href="api.html#nlp_shap.ShapleyAggregator.coalition_weight">(nlp_shap.ShapleyAggregator method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionDedupRegistry">CoalitionDedupRegistry (class in nlp_shap.runtime)</a>
 
         <ul>
           <li><a href="api/runtime.html#nlp_shap.runtime.dedup.CoalitionDedupRegistry">(class in nlp_shap.runtime.dedup)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionJob">CoalitionJob (class in nlp_shap.runtime)</a>
 
         <ul>
@@ -558,6 +558,12 @@
 
         <ul>
           <li><a href="api/domain.html#nlp_shap.domain.coalition.CoalitionMask">(class in nlp_shap.domain.coalition)</a>
+</li>
+        </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionProgress">CoalitionProgress (class in nlp_shap.runtime)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.progress.CoalitionProgress">(class in nlp_shap.runtime.progress)</a>
 </li>
         </ul></li>
         <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionRecord">CoalitionRecord (class in nlp_shap.runtime)</a>
@@ -1344,6 +1350,8 @@
 </li>
           <li><a href="api/runtime.html#module-nlp_shap.runtime.dedup">nlp_shap.runtime.dedup</a>
 </li>
+          <li><a href="api/runtime.html#module-nlp_shap.runtime.progress">nlp_shap.runtime.progress</a>
+</li>
           <li><a href="api/runtime.html#module-nlp_shap.runtime.scheduler">nlp_shap.runtime.scheduler</a>
 </li>
           <li><a href="api/runtime.html#module-nlp_shap.runtime.store">nlp_shap.runtime.store</a>
@@ -1622,8 +1630,6 @@
           <li><a href="api/estimation.html#module-nlp_shap.estimation.normalizers">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     nlp_shap.masking
 
@@ -1631,6 +1637,8 @@
           <li><a href="api/masking.html#module-nlp_shap.masking">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     nlp_shap.masking.builder
 
@@ -1807,6 +1815,13 @@
 </li>
         </ul></li>
         <li>
+    nlp_shap.runtime.progress
+
+        <ul>
+          <li><a href="api/runtime.html#module-nlp_shap.runtime.progress">module</a>
+</li>
+        </ul></li>
+        <li>
     nlp_shap.runtime.scheduler
 
         <ul>
@@ -1897,6 +1912,12 @@
           <li><a href="api/plugins.html#nlp_shap.plugins.groups.PluginGroup.NORMALIZERS">(nlp_shap.plugins.groups.PluginGroup attribute)</a>
 </li>
         </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.NullCoalitionProgress">NullCoalitionProgress (class in nlp_shap.runtime)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.progress.NullCoalitionProgress">(class in nlp_shap.runtime.progress)</a>
+</li>
+        </ul></li>
         <li><a href="api/runtime.html#nlp_shap.runtime.NullObservabilitySink">NullObservabilitySink (class in nlp_shap.runtime)</a>
 </li>
         <li><a href="api/estimation.html#nlp_shap.estimation.exact.ExactEstimator.num_coalitions">num_coalitions() (nlp_shap.estimation.exact.ExactEstimator static method)</a>
@@ -1927,8 +1948,28 @@
           <li><a href="api/runtime.html#nlp_shap.runtime.dedup.CoalitionDedupRegistry.observe">(nlp_shap.runtime.dedup.CoalitionDedupRegistry method)</a>
 </li>
         </ul></li>
+        <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionProgress.on_coalition_finished">on_coalition_finished() (nlp_shap.runtime.CoalitionProgress method)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.NullCoalitionProgress.on_coalition_finished">(nlp_shap.runtime.NullCoalitionProgress method)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.progress.CoalitionProgress.on_coalition_finished">(nlp_shap.runtime.progress.CoalitionProgress method)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.progress.NullCoalitionProgress.on_coalition_finished">(nlp_shap.runtime.progress.NullCoalitionProgress method)</a>
+</li>
+        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/runtime.html#nlp_shap.runtime.CoalitionProgress.on_coalitions_planned">on_coalitions_planned() (nlp_shap.runtime.CoalitionProgress method)</a>
+
+        <ul>
+          <li><a href="api/runtime.html#nlp_shap.runtime.NullCoalitionProgress.on_coalitions_planned">(nlp_shap.runtime.NullCoalitionProgress method)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.progress.CoalitionProgress.on_coalitions_planned">(nlp_shap.runtime.progress.CoalitionProgress method)</a>
+</li>
+          <li><a href="api/runtime.html#nlp_shap.runtime.progress.NullCoalitionProgress.on_coalitions_planned">(nlp_shap.runtime.progress.NullCoalitionProgress method)</a>
+</li>
+        </ul></li>
         <li><a href="api/runtime.html#nlp_shap.runtime.archive.RunArchive.open">open() (nlp_shap.runtime.archive.RunArchive class method)</a>
 
         <ul>

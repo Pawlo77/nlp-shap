@@ -418,6 +418,27 @@ and schedule async coalition generation with bounded concurrency.</p>
 </div>
 </div>
 </section>
+<section id="coalition-progress-callbacks">
+<h2>Coalition progress callbacks<a class="headerlink" href="#coalition-progress-callbacks" title="Link to this heading">¶</a></h2>
+<p>Pass an optional sync <a class="reference internal" href="../api/runtime.html#nlp_shap.runtime.progress.CoalitionProgress" title="nlp_shap.runtime.progress.CoalitionProgress"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoalitionProgress</span></code></a>
+implementation to report planned and finished coalition counts. Omitting it
+uses a no-op sink:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">PrintProgress</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_coalitions_planned</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;planned=</span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_coalition_finished</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">done</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">total</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;finished=</span><span class="si">{</span><span class="n">done</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">InferenceScheduler</span><span class="p">(</span>
+    <span class="n">max_inflight</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">generation</span><span class="o">=</span><span class="n">GenerationConfig</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>
+    <span class="n">store</span><span class="o">=</span><span class="n">HotResultStore</span><span class="p">(),</span>
+    <span class="n">progress</span><span class="o">=</span><span class="n">PrintProgress</span><span class="p">(),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
 <section id="streaming-large-job-sets">
 <h2>Streaming large job sets<a class="headerlink" href="#streaming-large-job-sets" title="Link to this heading">¶</a></h2>
 <p>For exact enumeration or other large coalition batches, pass a generator to
@@ -518,6 +539,7 @@ make<span class="w"> </span>bench-regression<span class="w">   </span><span clas
 <li><a class="reference internal" href="#open-a-run-archive">Open a run archive</a></li>
 <li><a class="reference internal" href="#build-coalition-dedup-keys">Build coalition dedup keys</a></li>
 <li><a class="reference internal" href="#schedule-async-coalition-jobs">Schedule async coalition jobs</a></li>
+<li><a class="reference internal" href="#coalition-progress-callbacks">Coalition progress callbacks</a></li>
 <li><a class="reference internal" href="#streaming-large-job-sets">Streaming large job sets</a></li>
 <li><a class="reference internal" href="#performance-benchmarks">Performance benchmarks</a></li>
 <li><a class="reference internal" href="#notebook">Notebook</a></li>

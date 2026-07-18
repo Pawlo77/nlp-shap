@@ -332,6 +332,15 @@ then the dedup registry, then acquires a concurrency semaphore before calling
 the backend. <a class="reference internal" href="../api/runtime.html#nlp_shap.runtime.scheduler.SchedulerMetrics" title="nlp_shap.runtime.scheduler.SchedulerMetrics"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchedulerMetrics</span></code></a> reports
 <code class="docutils literal notranslate"><span class="pre">requested</span></code>, <code class="docutils literal notranslate"><span class="pre">executed</span></code>, <code class="docutils literal notranslate"><span class="pre">deduplicated</span></code>, and <code class="docutils literal notranslate"><span class="pre">cache_hits</span></code>.</p>
 </section>
+<section id="optional-progress">
+<h2>Optional progress<a class="headerlink" href="#optional-progress" title="Link to this heading">¶</a></h2>
+<p>Pass a <a class="reference internal" href="../api/runtime.html#nlp_shap.runtime.progress.CoalitionProgress" title="nlp_shap.runtime.progress.CoalitionProgress"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoalitionProgress</span></code></a> implementation to
+<a class="reference internal" href="../api/runtime.html#nlp_shap.runtime.scheduler.InferenceScheduler" title="nlp_shap.runtime.scheduler.InferenceScheduler"><code class="xref py py-class docutils literal notranslate"><span class="pre">InferenceScheduler</span></code></a> or
+<a class="reference internal" href="../api/pipeline.html#nlp_shap.pipeline.runner.ExplainRunner" title="nlp_shap.pipeline.runner.ExplainRunner"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplainRunner</span></code></a> to receive sync
+<code class="docutils literal notranslate"><span class="pre">on_coalitions_planned</span></code> / <code class="docutils literal notranslate"><span class="pre">on_coalition_finished</span></code> callbacks. When omitted,
+<a class="reference internal" href="../api/runtime.html#nlp_shap.runtime.progress.NullCoalitionProgress" title="nlp_shap.runtime.progress.NullCoalitionProgress"><code class="xref py py-class docutils literal notranslate"><span class="pre">NullCoalitionProgress</span></code></a> keeps the hot path
+near zero cost.</p>
+</section>
 <section id="see-also">
 <h2>See also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
 <ul class="simple">
@@ -409,6 +418,7 @@ the backend. <a class="reference internal" href="../api/runtime.html#nlp_shap.ru
 <li><a class="reference internal" href="#run-archive">Run archive</a></li>
 <li><a class="reference internal" href="#coalition-deduplication">Coalition deduplication</a></li>
 <li><a class="reference internal" href="#scheduling">Scheduling</a></li>
+<li><a class="reference internal" href="#optional-progress">Optional progress</a></li>
 <li><a class="reference internal" href="#see-also">See also</a></li>
 </ul>
 </li>
