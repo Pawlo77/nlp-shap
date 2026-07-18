@@ -301,7 +301,6 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">..protocols.estimand</span><span class="w"> </span><span class="kn">import</span> <span class="n">EstimandAggregator</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">._shared</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">compute_mc_num_samples</span><span class="p">,</span>
-    <span class="n">is_empty_or_grand</span><span class="p">,</span>
     <span class="n">iter_minimal_masks</span><span class="p">,</span>
     <span class="n">present_to_mask_int</span><span class="p">,</span>
     <span class="n">random_present</span><span class="p">,</span>
@@ -347,7 +346,6 @@
         <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
         <span class="n">seen</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="n">generated</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">grand_mask</span> <span class="o">=</span> <span class="n">present_to_mask_int</span><span class="p">((</span><span class="kc">True</span><span class="p">,)</span> <span class="o">*</span> <span class="n">num_players</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">include_minimal_masks</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">present</span> <span class="ow">in</span> <span class="n">iter_minimal_masks</span><span class="p">(</span><span class="n">num_players</span><span class="p">):</span>
@@ -361,13 +359,14 @@
                     <span class="k">return</span>
 
         <span class="k">while</span> <span class="n">generated</span> <span class="o">&lt;</span> <span class="n">num_samples</span><span class="p">:</span>
+            <span class="c1"># Guard against exhaustion when unique non-grand masks run out.</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">seen</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">num_players</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">return</span>
             <span class="n">present</span> <span class="o">=</span> <span class="n">random_present</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">num_players</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">is_empty_or_grand</span><span class="p">(</span><span class="n">present</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">present</span><span class="p">):</span>
                 <span class="k">continue</span>
             <span class="n">mask_int</span> <span class="o">=</span> <span class="n">present_to_mask_int</span><span class="p">(</span><span class="n">present</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">mask_int</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
-                <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">mask_int</span> <span class="o">==</span> <span class="n">grand_mask</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mask_int</span><span class="p">)</span>
             <span class="n">generated</span> <span class="o">+=</span> <span class="mi">1</span>
