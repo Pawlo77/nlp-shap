@@ -8,6 +8,11 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-1-16:
+
+0.1.16 (2026-07-19)
+-------------------
+
 Added
 ~~~~~
 
@@ -15,6 +20,11 @@ Added
   :class:`~nlp_shap.runtime.scheduler.InferenceScheduler` and
   :class:`~nlp_shap.pipeline.runner.ExplainRunner` for per-coalition progress
   reporting (no-op when omitted).
+- Deterministic hash embeddings on mock :func:`~nlp_shap.backends.mock.generation.generation_record_from_snapshot`
+  so embedding-based value functions work in CI / mock campaigns.
+- ``BackendConfig.serialize_generate`` (default ``True``) to serialize LM Studio
+  ``generate`` calls; required for MLX backends that crash under concurrent predict.
+- LM Studio SDK websocket INFO logs are silenced on backend import.
 
 Changed
 ~~~~~~~
@@ -25,6 +35,7 @@ Changed
 - :class:`~nlp_shap.estimation.neyman.NeymanEstimator` initial sampling no longer
   waits on empty/grand M-matrix columns (which are never yielded), fixing an
   infinite loop on small player counts.
+- LM Studio model handles use ``ttl=None`` and retry once after unload/crash.
 
 .. _release-0-1-15:
 
