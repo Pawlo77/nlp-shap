@@ -2,7 +2,13 @@
 
 from .coalition import CoalitionMask
 from .conversation import ConversationSnapshot, Message, Turn
-from .enums import EmbeddingMode, Role, SystemRolesSetup
+from .enums import (
+    EmbeddingMode,
+    ModalityFlag,
+    ModelHistoryTrackingMode,
+    Role,
+    SystemRolesSetup,
+)
 from .estimands import Estimand, EstimandWire, estimand_to_wire
 from .game import CooperativeGame
 from .generation import GenerationRecord
@@ -17,6 +23,8 @@ __all__ = [
     "EstimandWire",
     "GenerationRecord",
     "Message",
+    "ModalityFlag",
+    "ModelHistoryTrackingMode",
     "PlayerSet",
     "Role",
     "SystemRolesSetup",

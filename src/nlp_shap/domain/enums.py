@@ -1,4 +1,4 @@
-"""Conversation and explanation enumerations for the text MVP."""
+"""Conversation and explanation enumerations for text and multimodal inputs."""
 
 from enum import StrEnum
 
@@ -16,6 +16,19 @@ class Role(StrEnum):
     """System-level instruction or steering text."""
 
 
+class ModalityFlag(StrEnum):
+    """Input or output modality attached to a message or token."""
+
+    IGNORE = "ignore"
+    """Skip this unit for modality-specific operations."""
+
+    TEXT = "text"
+    """Text content."""
+
+    AUDIO = "audio"
+    """Audio content."""
+
+
 class SystemRolesSetup(StrEnum):
     """How system-role tokens participate in explainability."""
 
@@ -27,6 +40,19 @@ class SystemRolesSetup(StrEnum):
 
     SYSTEM_ASSISTANT = "system_assistant"
     """System and assistant tokens are excluded from explainability."""
+
+
+class ModelHistoryTrackingMode(StrEnum):
+    """Which generated modalities are retained in run history."""
+
+    TEXT = "text"
+    """Track text outputs only."""
+
+    AUDIO = "audio"
+    """Track audio outputs only."""
+
+    TEXT_AUDIO = "text_audio"
+    """Track both text and audio outputs."""
 
 
 class EmbeddingMode(StrEnum):
