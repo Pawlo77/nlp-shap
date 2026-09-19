@@ -83,3 +83,20 @@ Same permission gate — **propose title and body; create only when asked.**
 ```
 
 Keep PRs focused. Large work → suggest stacked commits or multiple PRs. Use `gh pr create` with HEREDOC body when user approves.
+
+### Always after `gh pr create`
+
+Assign the author and set **one** label from the title type:
+
+```bash
+gh pr edit <n> --add-assignee Pawlo77 --add-label <label>
+```
+
+| Title prefix | Label |
+|--------------|-------|
+| `feat:` / `perf:` | `enhancement` |
+| `fix:` | `bug` |
+| `docs:` | `documentation` |
+| `chore:` / `ci:` / `build:` / `refactor:` / `test:` | `enhancement` |
+
+Never leave a PR with empty assignees or labels.
