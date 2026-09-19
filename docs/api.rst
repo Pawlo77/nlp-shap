@@ -27,6 +27,12 @@ Public exports
      - Serialize :class:`~nlp_shap.ExplainConfig` to YAML.
    * - :class:`~nlp_shap.ConversationSnapshot`
      - Frozen conversation input for explainability. See :doc:`api/domain`.
+   * - :class:`~nlp_shap.Message`
+     - Text or audio message unit within a turn. See :doc:`api/domain`.
+   * - :class:`~nlp_shap.AudioPayload`
+     - Encoded audio bytes attached to a multimodal message. See :doc:`api/domain`.
+   * - :class:`~nlp_shap.ModalityFlag`
+     - Message modality enum (``text`` | ``audio`` | ``ignore``). See :doc:`api/domain`.
    * - :class:`~nlp_shap.PlayerSet`
      - Ordered explainability players. See :doc:`api/domain`.
    * - :class:`~nlp_shap.CoalitionMask`

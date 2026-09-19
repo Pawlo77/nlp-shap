@@ -8,6 +8,21 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-2-0:
+
+0.2.0 (2026-09-19)
+------------------
+
+Added
+~~~~~
+
+- :class:`~nlp_shap.ModalityFlag` and :class:`~nlp_shap.ModelHistoryTrackingMode`
+  enums for multimodal conversation metadata.
+- :class:`~nlp_shap.AudioPayload` and optional ``modality`` / ``audio`` fields on
+  :class:`~nlp_shap.Message`, with :meth:`~nlp_shap.ConversationSnapshot.has_audio`.
+- Multimodal snapshot round-trip coverage; text-only constructors and digests
+  remain unchanged.
+
 .. _release-0-1-16:
 
 0.1.16 (2026-07-19)

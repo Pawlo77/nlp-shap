@@ -78,6 +78,35 @@ For end-to-end token attributions, build a
 
 .. guide-result:: getting_started_explain
 
+Attach audio to a message
+-------------------------
+
+Messages default to text. For multimodal inputs, set ``modality`` and attach an
+:class:`~nlp_shap.AudioPayload` (backends that are text-only reject these):
+
+.. code-block:: python
+
+   from nlp_shap import AudioPayload, ConversationSnapshot, Message, ModalityFlag, Role, Turn
+
+   payload = AudioPayload(
+       data=b"RIFF....",
+       sample_rate_hz=16000,
+       audio_format="wav",
+   )
+   snapshot = ConversationSnapshot.from_turns((
+       Turn(
+           messages=(
+               Message(
+                   role=Role.USER,
+                   text="hello",
+                   modality=ModalityFlag.AUDIO,
+                   audio=payload,
+               ),
+           )
+       ),
+   ))
+   assert snapshot.has_audio()
+
 Label results for archives
 --------------------------
 
