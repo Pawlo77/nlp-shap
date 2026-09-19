@@ -97,6 +97,13 @@ transformers = [
 api = [
     "httpx>=0.28.0",
 ]
+audio = [
+    "librosa>=0.10.0",
+    "soundfile>=0.12.0",
+    "torch>=2.5.0",
+    "torchaudio>=2.5.0",
+    "transformers>=4.40.0",
+]
 viz = [
     "matplotlib>=3.9.0",
     "seaborn>=0.13.0",
@@ -183,7 +190,18 @@ module = ["httpx", "httpx.*"]
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
-module = ["torch", "torch.*", "transformers", "transformers.*"]
+module = [
+  "torch",
+  "torch.*",
+  "torchaudio",
+  "torchaudio.*",
+  "transformers",
+  "transformers.*",
+  "soundfile",
+  "soundfile.*",
+  "librosa",
+  "librosa.*",
+]
 ignore_missing_imports = true
 
 [tool.bandit]
