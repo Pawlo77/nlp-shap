@@ -7,8 +7,13 @@ from typing import Any
 import pytest
 
 from nlp_shap.backends.transformers import text as transformers_text
-from nlp_shap.domain.conversation import ConversationSnapshot, Message, Turn
-from nlp_shap.domain.enums import Role
+from nlp_shap.domain.conversation import (
+    AudioPayload,
+    ConversationSnapshot,
+    Message,
+    Turn,
+)
+from nlp_shap.domain.enums import ModalityFlag, Role
 from nlp_shap.domain.generation import GenerationRecord
 from nlp_shap.errors import BackendUnavailableError
 from nlp_shap.pipeline.config import BackendConfig
@@ -118,9 +123,24 @@ def test_transformers_backend_varies_with_masked_text() -> None:
 
 
 def test_transformers_backend_rejects_audio_snapshots() -> None:
-    """Audio-marked snapshots raise before model generation."""
+    """Audio payloads raise before model generation on the text backend."""
     backend = _backend_with_stub()
-    snapshot = _snapshot("audio:payload")
+    snapshot = ConversationSnapshot.from_turns((
+        Turn(
+            messages=(
+                Message(
+                    role=Role.USER,
+                    text="",
+                    modality=ModalityFlag.AUDIO,
+                    audio=AudioPayload(
+                        data=b"RIFF",
+                        sample_rate_hz=16000,
+                        audio_format="wav",
+                    ),
+                ),
+            )
+        ),
+    ))
 
     with pytest.raises(ValueError, match="audio snapshots"):
         asyncio.run(backend.generate(snapshot, 4, 0.0, 1))

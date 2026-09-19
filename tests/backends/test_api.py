@@ -8,8 +8,13 @@ import pytest
 
 from nlp_shap.backends.api import ApiBackend
 from nlp_shap.backends.api import payload as api_payload
-from nlp_shap.domain.conversation import ConversationSnapshot, Message, Turn
-from nlp_shap.domain.enums import Role
+from nlp_shap.domain.conversation import (
+    AudioPayload,
+    ConversationSnapshot,
+    Message,
+    Turn,
+)
+from nlp_shap.domain.enums import ModalityFlag, Role
 from nlp_shap.errors import BackendUnavailableError
 from nlp_shap.pipeline.config import BackendConfig
 
@@ -162,12 +167,27 @@ def test_api_backend_raises_on_http_error() -> None:
 
 
 def test_api_backend_rejects_audio_snapshots() -> None:
-    """Audio-marked snapshots are rejected before any HTTP call."""
+    """Audio payloads are rejected before any HTTP call."""
     backend = ApiBackend(
         BackendConfig(kind="api", model_id="remote-model", api_host="http://mock"),
         transport=httpx.MockTransport(lambda request: _success_response("noop")),
     )
-    snapshot = _snapshot("audio:clip.wav")
+    snapshot = ConversationSnapshot.from_turns((
+        Turn(
+            messages=(
+                Message(
+                    role=Role.USER,
+                    text="",
+                    modality=ModalityFlag.AUDIO,
+                    audio=AudioPayload(
+                        data=b"RIFF",
+                        sample_rate_hz=16000,
+                        audio_format="wav",
+                    ),
+                ),
+            )
+        ),
+    ))
 
     async def run() -> None:
         try:

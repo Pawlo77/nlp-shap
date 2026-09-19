@@ -8,11 +8,7 @@ from ...domain.enums import Role
 
 def snapshot_has_audio(snapshot: ConversationSnapshot) -> bool:
     """Return whether ``snapshot`` carries audio payloads."""
-    for turn in snapshot.turns:
-        for message in turn.messages:
-            if message.text.startswith("audio:"):
-                return True
-    return False
+    return snapshot.has_audio()
 
 
 def snapshot_to_chat_messages(snapshot: ConversationSnapshot) -> list[dict[str, str]]:

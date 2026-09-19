@@ -1,7 +1,7 @@
 """Domain types for cooperative-game explainability."""
 
 from .coalition import CoalitionMask
-from .conversation import ConversationSnapshot, Message, Turn
+from .conversation import AudioPayload, ConversationSnapshot, Message, Turn
 from .enums import (
     EmbeddingMode,
     ModalityFlag,
@@ -15,6 +15,7 @@ from .generation import GenerationRecord
 from .players import PlayerSet
 
 __all__ = [
+    "AudioPayload",
     "CoalitionMask",
     "ConversationSnapshot",
     "CooperativeGame",
