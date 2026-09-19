@@ -18,6 +18,7 @@ Propose a pull request — do **not** create or push until the user approves.
 ```
 
 4. Ask user to approve create; only then `git push -u` + `gh pr create`
+   - **Never WIP:** no `--draft`, no `WIP`/`[WIP]` in title, no WIP label — ready-for-review only
 5. **Always** assign + label (never skip):
 
 ```bash

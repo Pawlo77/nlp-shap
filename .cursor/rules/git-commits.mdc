@@ -67,7 +67,10 @@ Do not `--no-verify`, amend, or force-push unless user rules explicitly allow.
 
 Same permission gate — **propose title and body; create only when asked.**
 
+**Never mark PRs as WIP:** no draft PRs (`gh pr create --draft` / Convert to draft), no `WIP`/`[WIP]` in the title, no WIP label. Open ready-for-review PRs only.
+
 **Title:** same style as commit subject — `feat: add backend benchmark harness`
+
 
 **Body:**
 

@@ -19,7 +19,7 @@ Optional markers: `make tests-all` · `make bench` (not part of `make check`).
 
 - Skill `caveman` at **ultra** intensity for all chat responses (code/commits/PRs still normal)
 - No commit / push / PR unless explicitly asked — `git-commits.mdc`
-- After `gh pr create`: always `--add-assignee Pawlo77` + label from title type (`enhancement` / `bug` / `documentation`)
+- After `gh pr create`: always `--add-assignee Pawlo77` + label from title type (`enhancement` / `bug` / `documentation`); never draft/WIP PRs
 - No new markdown or doc expansion unless asked
 - No runtime deps without justification in `pyproject.toml`
 - No force push; no `git commit --amend` unless user rules allow
