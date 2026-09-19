@@ -123,13 +123,9 @@ def decide_git(cmd: str) -> dict[str, str] | None:
                             "no trailing period; ≤72 chars."
                         ),
                     }
-        return {
-            "permission": "ask",
-            "user_message": "Approve git commit?",
-            "agent_message": (
-                "git commit requires explicit user approval (git-commits.mdc)."
-            ),
-        }
+        # Valid commit shape — allow without Cursor approval prompt.
+        # User permission still required by git-commits.mdc / AGENTS.md.
+        return None
 
     if _PUSH.search(bare):
         if _push_targets_main(cmd, bare):
@@ -141,23 +137,12 @@ def decide_git(cmd: str) -> dict[str, str] | None:
                     "(gh pr create) after user approval."
                 ),
             }
-        return {
-            "permission": "ask",
-            "user_message": "Approve git push?",
-            "agent_message": (
-                "git push requires explicit user approval. After push: "
-                "gh run list && gh run watch <id> --exit-status."
-            ),
-        }
+        # Feature-branch push — allow; after-push hook reminds about CI watch.
+        return None
 
     if _PR.search(bare):
-        return {
-            "permission": "ask",
-            "user_message": "Approve GitHub PR command?",
-            "agent_message": (
-                "gh pr create/merge requires explicit user approval (git-commits.mdc)."
-            ),
-        }
+        # Allow without Cursor approval prompt; AGENTS.md still requires user ask.
+        return None
 
     return None
 

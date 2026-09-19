@@ -39,7 +39,8 @@ docs: add repository URL to README and project urls
 - One concern per commit; do not mix unrelated types
 
 **Enforced by:** prek `commit-msg` hook (`.cursor/hooks/commit_msg.py`) and Cursor
-`beforeShellExecution` (deny bad `-m` / `--no-verify`; **ask** on commit/push/PR).
+`beforeShellExecution` (deny bad `-m` / `--no-verify` / push to main — no approval
+prompt; user permission still required by this rule / `AGENTS.md`).
 
 ### Before committing
 

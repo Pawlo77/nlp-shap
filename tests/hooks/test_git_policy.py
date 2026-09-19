@@ -26,23 +26,23 @@ def git_policy():
         ("git commit", "deny"),
         ("git commit -m 'WIP'", "deny"),
         ("git commit -m 'feat: trailing.'", "deny"),
-        ("git commit -m 'feat: add thing'", "ask"),
+        ("git commit -m 'feat: add thing'", None),
         (
             "git commit -m \"$(cat <<'EOF'\nfeat: add thing\n\nBody.\nEOF\n)\"",
-            "ask",
+            None,
         ),
         ("git push origin main", "deny"),
         ("git push origin master", "deny"),
         ("git push origin HEAD:main", "deny"),
-        ("git push -u origin feature/foo", "ask"),
-        ("gh pr create --title 'feat: x' --body 'y'", "ask"),
-        ("gh pr merge 1", "ask"),
+        ("git push -u origin feature/foo", None),
+        ("gh pr create --title 'feat: x' --body 'y'", None),
+        ("gh pr merge 1", None),
         ("git status", None),
         ("uv run pytest", None),
     ],
 )
 def test_decide_git(git_policy, cmd: str, permission: str | None) -> None:
-    """Commit/push/PR policy returns deny, ask, or None."""
+    """Commit/push/PR policy returns deny or None (allow, no ask prompt)."""
     result = git_policy.decide_git(cmd)
     if permission is None:
         assert result is None

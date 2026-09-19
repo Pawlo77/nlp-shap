@@ -31,20 +31,16 @@ def deny_shell():
         ("git push --force origin main", "deny"),
         ("git push -f origin HEAD", "deny"),
         ("git push --force-with-lease origin main", "deny"),
-        ("git commit -m 'feat: add x'", "ask"),
+        ("git commit -m 'feat: add x'", "allow"),
         ("git push origin main", "deny"),
         ("uv run prek run --all-files", "allow"),
         ("uv sync --all-groups", "allow"),
         ("make install", "allow"),
-        ("git push origin HEAD", "ask"),  # ask unless on main (hook may deny)
+        ("git push -u origin feature/foo", "allow"),
         ('echo "pip install foo" | cat', "allow"),
         ("uv run pytest tests/", "allow"),
     ],
 )
 def test_decide_permission(deny_shell, cmd: str, permission: str) -> None:
     """Package and git policies compose into a single decision."""
-    got = deny_shell.decide(cmd)["permission"]
-    if cmd == "git push origin HEAD":
-        assert got in {"ask", "deny"}
-        return
-    assert got == permission
+    assert deny_shell.decide(cmd)["permission"] == permission
