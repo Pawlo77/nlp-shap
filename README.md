@@ -22,6 +22,7 @@ pip install "nlp-shap[transformers]"   # Hugging Face text backend
 pip install "nlp-shap[lmstudio]"       # LM Studio SDK
 pip install "nlp-shap[api]"            # OpenAI-compatible HTTP API
 pip install "nlp-shap[viz]"            # matplotlib token charts
+pip install "nlp-shap[audio]"          # SGPA Wav2Vec2 alignment
 ```
 
 The core package does not install PyTorch. See the [extending guide](https://pawlo77.github.io/nlp-shap/guides/extending.html) for plugin entry points.

@@ -8,6 +8,19 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-2-1:
+
+0.2.1 (2026-09-20)
+------------------
+
+Added
+~~~~~
+
+- :class:`~nlp_shap.alignment.SpectrogramGuidedAligner` (Wav2Vec2 CTC + spectrogram
+  boundary refinement) under :mod:`nlp_shap.alignment`.
+- :attr:`~nlp_shap.alignment.AudioSegment.boundary_refined` on aligned segments.
+- Optional ``[audio]`` extra documentation and :doc:`guides/alignment` walkthrough.
+
 .. _release-0-2-0:
 
 0.2.0 (2026-09-19)

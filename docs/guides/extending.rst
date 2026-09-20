@@ -17,6 +17,7 @@ Install only what your deployment needs:
    pip install "nlp-shap[lmstudio]"        # LM Studio SDK backend
    pip install "nlp-shap[api]"             # OpenAI-compatible HTTP backend
    pip install "nlp-shap[viz]"             # matplotlib token attribution charts
+   pip install "nlp-shap[audio]"           # SGPA Wav2Vec2 alignment stack
 
 Entry-point groups
 ------------------
