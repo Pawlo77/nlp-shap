@@ -30,6 +30,7 @@ def test_audio_segment_add_merges_matching_tokens() -> None:
         end_time=0.3,
         confidence=0.6,
         audio=b"x",
+        boundary_refined=True,
     )
     right = AudioSegment(
         token="a",
@@ -37,6 +38,7 @@ def test_audio_segment_add_merges_matching_tokens() -> None:
         end_time=0.4,
         confidence=0.8,
         audio=b"y",
+        boundary_refined=False,
     )
     merged = left + right
     assert merged.token == "a"
@@ -44,6 +46,7 @@ def test_audio_segment_add_merges_matching_tokens() -> None:
     assert merged.end_time == pytest.approx(0.4)
     assert merged.confidence == pytest.approx(0.7)
     assert merged.audio == b"xy"
+    assert merged.boundary_refined is False
 
 
 def test_audio_segment_add_rejects_mismatched_tokens() -> None:

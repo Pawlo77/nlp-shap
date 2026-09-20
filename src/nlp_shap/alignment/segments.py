@@ -34,6 +34,9 @@ class AudioSegment:
     end_sample: int | None = None
     """Exclusive end sample index in the source waveform."""
 
+    boundary_refined: bool = True
+    """Whether both edges used acoustic boundary refinement."""
+
     def __post_init__(self) -> None:
         if self.end_time <= self.start_time:
             msg = "end_time must be greater than start_time"
@@ -59,6 +62,7 @@ class AudioSegment:
             sample_rate=self.sample_rate or other.sample_rate,
             start_sample=_min_optional(self.start_sample, other.start_sample),
             end_sample=_max_optional(self.end_sample, other.end_sample),
+            boundary_refined=self.boundary_refined and other.boundary_refined,
         )
 
 
