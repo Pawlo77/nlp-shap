@@ -59,7 +59,7 @@ Paths in that file are relative to `nlp-shap/` (`../nlp-shap-research`, `../MLLM
 
 1. This file (exit + agent-only)
 2. Skill `caveman` (**ultra** — auto-invoked for all chat; off only via "stop caveman" / "normal mode")
-3. Always-apply rules: `minimal-diff`, `git-commits`, `uv-workflow`, `package-boundaries`
+3. Always-apply rules: `caveman`, `minimal-diff`, `git-commits`, `uv-workflow`, `package-boundaries`
 4. Glob-matched rules for open files (types, docs, examples, backends, …)
 5. Skill `nlp-shap-development` for implementation work
 6. Skill `nlp-shap-rewrite` only for audio-track / named rewrite phases
