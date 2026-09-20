@@ -8,6 +8,24 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-2-2:
+
+0.2.2 (2026-09-20)
+------------------
+
+Added
+~~~~~
+
+- :mod:`nlp_shap.masking.filters` with :class:`~nlp_shap.masking.filters.KeepAllTokens`
+  and :class:`~nlp_shap.masking.filters.ExcludePunctuationTokensFilter` (configurable
+  exclude sets; 0.x punctuation parity).
+- :class:`~nlp_shap.alignment.partitions.SgpaSegmentPartitioner` plugin
+  ``sgpa_segments`` for coalition players from aligned audio segments.
+- :class:`~nlp_shap.masking.policies.SegmentDeletePolicy` to render multimodal
+  coalitions by dropping absent SGPA segments and recombining kept audio.
+- Optional ``token_filter`` on :class:`~nlp_shap.alignment.sgpa.SpectrogramGuidedAligner`
+  so punctuation can be excluded from SGPA target segments.
+
 .. _release-0-2-1:
 
 0.2.1 (2026-09-20)

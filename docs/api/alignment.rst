@@ -17,3 +17,7 @@ optional ``[audio]`` extra (``torch``, ``torchaudio``, ``transformers``,
 .. automodule:: nlp_shap.alignment.sgpa
    :members:
    :undoc-members:
+
+.. automodule:: nlp_shap.alignment.partitions
+   :members:
+   :undoc-members:
