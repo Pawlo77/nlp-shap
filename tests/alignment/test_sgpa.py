@@ -218,3 +218,171 @@ def test_attach_audio_writes_wav_bytes(mock_require: MagicMock) -> None:
         assert segment.start_sample is not None
         assert segment.end_sample is not None
         assert segment.end_sample > segment.start_sample
+
+
+@patch("nlp_shap.alignment.sgpa._require_transformers")
+def test_refine_boundary_short_region_returns_candidate(
+    mock_require: MagicMock,
+) -> None:
+    """Short search regions skip refinement (0.x parity)."""
+    import numpy as np
+
+    processor_cls, model_cls = _patched_transformers()
+    mock_require.return_value = (processor_cls, model_cls)
+    aligner = SpectrogramGuidedAligner(device="cpu")
+    out, refined = aligner._refine_boundary_smart(
+        waveform=np.zeros(10, dtype=np.float32),
+        sr=16_000,
+        candidate_time=0.1,
+    )
+    assert out == pytest.approx(0.1)
+    assert refined is False
+
+
+@patch("nlp_shap.alignment.sgpa._require_transformers")
+def test_refine_boundary_no_silence_keeps_candidate(mock_require: MagicMock) -> None:
+    """No quiet frame → candidate time unchanged (0.x parity)."""
+    import numpy as np
+
+    processor_cls, model_cls = _patched_transformers()
+    mock_require.return_value = (processor_cls, model_cls)
+    aligner = SpectrogramGuidedAligner(device="cpu")
+    librosa = MagicMock()
+    librosa.feature.rms.return_value = np.ones((1, 10))
+    librosa.stft.return_value = np.ones((4, 10))
+    with (
+        patch("nlp_shap.alignment.sgpa._require_librosa", return_value=librosa),
+        patch("nlp_shap.alignment.sgpa._require_numpy", return_value=np),
+    ):
+        out, refined = aligner._refine_boundary_smart(
+            waveform=np.ones(4000, dtype=np.float32),
+            sr=1000,
+            candidate_time=1.0,
+            left_time=0.8,
+            right_time=1.2,
+        )
+    assert out == pytest.approx(1.0)
+    assert refined is False
+
+
+@patch("nlp_shap.alignment.sgpa._require_transformers")
+def test_refine_boundary_silence_matches_legacy_timestamp(
+    mock_require: MagicMock,
+) -> None:
+    """Quiet RMS minimum yields the same refined time as 0.x (±1 ms)."""
+    import numpy as np
+
+    processor_cls, model_cls = _patched_transformers()
+    mock_require.return_value = (processor_cls, model_cls)
+    aligner = SpectrogramGuidedAligner(device="cpu")
+    librosa = MagicMock()
+    librosa.feature.rms.return_value = np.array([[1.0, 0.0, 1.0]], dtype=np.float32)
+    librosa.stft.return_value = np.ones((4, 3))
+    with (
+        patch("nlp_shap.alignment.sgpa._require_librosa", return_value=librosa),
+        patch("nlp_shap.alignment.sgpa._require_numpy", return_value=np),
+    ):
+        out, refined = aligner._refine_boundary_smart(
+            waveform=np.ones(4000, dtype=np.float32),
+            sr=1000,
+            candidate_time=1.0,
+            left_time=0.6,
+            right_time=1.4,
+        )
+    # 0.x expected ~0.624-0.625 s for this synthetic RMS pattern
+    assert out == pytest.approx(0.624, abs=0.002)
+    assert refined is True
+
+
+@patch("nlp_shap.alignment.sgpa._require_transformers")
+def test_prepare_transcript_accepts_token_list(mock_require: MagicMock) -> None:
+    """List transcripts join while preserving per-token segments."""
+    processor_cls, model_cls = _patched_transformers()
+    mock_require.return_value = (processor_cls, model_cls)
+    aligner = SpectrogramGuidedAligner(device="cpu")
+    vocab_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ|"
+    aligner.vocab = {char: index for index, char in enumerate(vocab_chars)}
+    aligner.tokenizer.convert_tokens_to_ids = lambda char: (
+        vocab_chars.index(char) if char in vocab_chars else -1
+    )
+    full, segments, clean, tokens = aligner._prepare_transcript(["Hi", "all"])
+    assert full == "Hi all"
+    assert segments == ["Hi", "all"]
+    assert clean == "HI|ALL"
+    assert len(tokens) == len(clean)
+
+
+@patch("nlp_shap.alignment.sgpa._require_transformers")
+def test_aggregate_chars_skips_empty_and_propagates_refine_flag(
+    mock_require: MagicMock,
+) -> None:
+    """Aggregation skips empty targets and ANDs boundary_refined."""
+    processor_cls, model_cls = _patched_transformers()
+    mock_require.return_value = (processor_cls, model_cls)
+    aligner = SpectrogramGuidedAligner(device="cpu")
+    char_segments = [
+        {
+            "char": "H",
+            "start": 0.0,
+            "end": 0.1,
+            "confidence": 1.0,
+            "boundary_refined": True,
+        },
+        {
+            "char": "E",
+            "start": 0.1,
+            "end": 0.2,
+            "confidence": 0.5,
+            "boundary_refined": False,
+        },
+    ]
+    out = aligner._aggregate_chars_to_segments(
+        char_segments, target_segments=["", "HE", "MISS"]
+    )
+    assert len(out) == 1
+    assert out[0].token == "HE"
+    assert out[0].start_time == pytest.approx(0.0)
+    assert out[0].end_time == pytest.approx(0.2)
+    assert out[0].confidence == pytest.approx(0.75)
+    assert out[0].boundary_refined is False
+
+
+@patch("nlp_shap.alignment.sgpa._require_transformers")
+def test_golden_segment_boundaries_within_tolerance(mock_require: MagicMock) -> None:
+    """Controlled refine+aggregate fixture locks 0.x-compatible boundaries."""
+    processor_cls, model_cls = _patched_transformers()
+    mock_require.return_value = (processor_cls, model_cls)
+    aligner = SpectrogramGuidedAligner(device="cpu")
+    char_segments = [
+        {
+            "char": "H",
+            "start": 0.10,
+            "end": 0.25,
+            "confidence": 0.9,
+            "boundary_refined": True,
+        },
+        {
+            "char": "I",
+            "start": 0.25,
+            "end": 0.40,
+            "confidence": 0.8,
+            "boundary_refined": True,
+        },
+        {
+            "char": "A",
+            "start": 0.45,
+            "end": 0.70,
+            "confidence": 0.7,
+            "boundary_refined": True,
+        },
+    ]
+    segments = aligner._aggregate_chars_to_segments(
+        char_segments, target_segments=["HI", "A"]
+    )
+    assert len(segments) == 2
+    assert segments[0].token == "HI"
+    assert segments[0].start_time == pytest.approx(0.10, abs=1e-3)
+    assert segments[0].end_time == pytest.approx(0.40, abs=1e-3)
+    assert segments[1].token == "A"
+    assert segments[1].start_time == pytest.approx(0.45, abs=1e-3)
+    assert segments[1].end_time == pytest.approx(0.70, abs=1e-3)

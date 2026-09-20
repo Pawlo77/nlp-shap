@@ -76,3 +76,35 @@ def test_to_bytes_rejects_non_wav(mono_waveform: "torch.Tensor") -> None:
     """Non-WAV formats raise ValueError."""
     with pytest.raises(ValueError, match="unsupported audio_format"):
         TorchAudioHandler.to_bytes(mono_waveform, audio_format="mp3")
+
+
+@patch("nlp_shap.alignment.io._require_soundfile")
+@patch("nlp_shap.alignment.io._require_torchaudio")
+def test_combine_concatenates_segment_waveforms(
+    mock_require_ta: MagicMock,
+    mock_require_sf: MagicMock,
+    mono_waveform: "torch.Tensor",
+) -> None:
+    """combine joins segment payloads along the time axis."""
+    from types import SimpleNamespace
+
+    sf = MagicMock()
+    sf.read.side_effect = [
+        (mono_waveform.squeeze(0).numpy(), 16_000),
+        (mono_waveform.squeeze(0).numpy(), 16_000),
+    ]
+
+    def _write(buf: BytesIO, *_args: object, **_kwargs: object) -> None:
+        buf.write(b"COMBINED")
+
+    sf.write.side_effect = _write
+    mock_require_sf.return_value = sf
+    mock_require_ta.return_value = MagicMock()
+
+    segments = [
+        SimpleNamespace(audio=b"a", audio_format="wav"),
+        SimpleNamespace(audio=b"b", audio_format="wav"),
+    ]
+    combined = TorchAudioHandler.combine(segments)
+    assert combined == b"COMBINED"
+    assert sf.read.call_count == 2

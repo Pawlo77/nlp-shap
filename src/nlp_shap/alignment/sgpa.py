@@ -170,8 +170,6 @@ class SpectrogramGuidedAligner:
         left_time: float | None = None,
         right_time: float | None = None,
     ) -> tuple[float, bool]:
-        np = _require_numpy()
-        librosa = _require_librosa()
         if left_time is not None and right_time is not None:
             center_time = (left_time + right_time) / 2.0
             half_window = (right_time - left_time) / 2.0 + 0.04
@@ -187,6 +185,8 @@ class SpectrogramGuidedAligner:
         if len(search_region) < _MIN_REFINE_SAMPLES:
             return candidate_time, False
 
+        np = _require_numpy()
+        librosa = _require_librosa()
         rms = librosa.feature.rms(y=search_region, frame_length=256, hop_length=64)[0]
         stft = np.abs(librosa.stft(search_region, n_fft=256, hop_length=64))
         flux = np.sum(np.diff(stft, axis=1) ** 2, axis=0)

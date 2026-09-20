@@ -19,7 +19,10 @@ Added
 - :class:`~nlp_shap.alignment.SpectrogramGuidedAligner` (Wav2Vec2 CTC + spectrogram
   boundary refinement) under :mod:`nlp_shap.alignment`.
 - :attr:`~nlp_shap.alignment.AudioSegment.boundary_refined` on aligned segments.
+- :meth:`~nlp_shap.alignment.TorchAudioHandler.combine` for concatenating segment
+  WAV payloads.
 - Optional ``[audio]`` extra documentation and :doc:`guides/alignment` walkthrough.
+- Phase 15–16 sign-off coverage for multimodal domain and alignment surfaces.
 
 .. _release-0-2-0:
 

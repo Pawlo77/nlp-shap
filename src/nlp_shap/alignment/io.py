@@ -34,6 +34,15 @@ def _require_soundfile() -> Any:
     return sf
 
 
+def _require_torchaudio() -> Any:
+    try:
+        import torchaudio
+    except ImportError as exc:
+        msg = "torchaudio is required for alignment I/O; install nlp-shap[audio]"
+        raise ImportError(msg) from exc
+    return torchaudio
+
+
 class TorchAudioHandler:
     """Convert between encoded audio bytes and mono float waveforms."""
 
@@ -92,3 +101,43 @@ class TorchAudioHandler:
         sf.write(buf, wf.numpy(), int(sample_rate), format="WAV", subtype="PCM_16")
         buf.seek(0)
         return buf.read()
+
+    @staticmethod
+    def combine(
+        audio_segments: list[Any],
+        target_audio_format: str = "wav",
+    ) -> bytes:
+        """Concatenate segment audio payloads into one encoded waveform.
+
+        Each item must expose ``audio`` and ``audio_format`` attributes matching
+        :class:`~nlp_shap.alignment.segments.AudioSegment`.
+        """
+        torch = _require_torch()
+        torchaudio = _require_torchaudio()
+        waveforms: list[Any] = []
+        sample_rates: list[int] = []
+        for segment in audio_segments:
+            segment_bytes = getattr(segment, "audio", b"")
+            if not segment_bytes:
+                continue
+            segment_format = getattr(segment, "audio_format", "wav")
+            waveform, sample_rate = TorchAudioHandler.from_bytes(
+                segment_bytes, audio_format=segment_format
+            )
+            waveforms.append(waveform)
+            sample_rates.append(sample_rate)
+        if not waveforms:
+            return b""
+        target_sr = sample_rates[0]
+        resampled: list[Any] = []
+        for waveform, sample_rate in zip(waveforms, sample_rates, strict=True):
+            if sample_rate != target_sr:
+                resampler = torchaudio.transforms.Resample(
+                    orig_freq=sample_rate, new_freq=target_sr
+                )
+                waveform = resampler(waveform)
+            resampled.append(waveform)
+        combined = torch.cat(resampled, dim=1)
+        return TorchAudioHandler.to_bytes(
+            combined, sample_rate=target_sr, audio_format=target_audio_format
+        )
