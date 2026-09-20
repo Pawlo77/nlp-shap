@@ -1,5 +1,6 @@
 """Built-in plugin registration hooks."""
 
+from ..alignment.partitions import SgpaSegmentPartitioner
 from ..backends.mock import MockBackend
 from ..estimation.complementary import ComplementaryEstimator
 from ..estimation.exact import ExactEstimator
@@ -40,6 +41,7 @@ def register_builtin_plugins(registry: PluginRegistry) -> None:
     registry.register(PluginGroup.NORMALIZERS, "power_shift", PowerShiftNormalizer)
     registry.register(PluginGroup.NORMALIZERS, "min_max", MinMaxNormalizer)
     registry.register(PluginGroup.PARTITIONS, "tokens", TokenPartitioner)
+    registry.register(PluginGroup.PARTITIONS, "sgpa_segments", SgpaSegmentPartitioner)
     registry.register(PluginGroup.ABSENCE_POLICIES, "delete", DeletePolicy)
     registry.register(PluginGroup.ABSENCE_POLICIES, "pad", PadPolicy)
     registry.register(PluginGroup.ABSENCE_POLICIES, "neutral", NeutralPolicy)

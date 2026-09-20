@@ -7,6 +7,7 @@ import warnings
 import wave
 from typing import Any, TypedDict, cast
 
+from ..masking.filters import KeepAllTokens, TokenFilter
 from .io import TorchAudioHandler
 from .segments import AudioSegment
 
@@ -94,6 +95,7 @@ class SpectrogramGuidedAligner:
         ctc_separator: str = "|",
         boundary_energy_weight: float = 0.8,
         boundary_flux_weight: float = 0.2,
+        token_filter: TokenFilter | None = None,
     ) -> None:
         if boundary_energy_weight < 0 or boundary_flux_weight < 0:
             msg = "Boundary refinement weights must be non-negative."
@@ -108,6 +110,9 @@ class SpectrogramGuidedAligner:
         self.ctc_separator = ctc_separator
         self.boundary_energy_weight = float(boundary_energy_weight)
         self.boundary_flux_weight = float(boundary_flux_weight)
+        self.token_filter: TokenFilter = (
+            token_filter if token_filter is not None else KeepAllTokens()
+        )
 
         logger.debug("Loading alignment model %s on %s", model_name, device)
         try:
@@ -245,6 +250,9 @@ class SpectrogramGuidedAligner:
         else:
             target_segments = list(transcript)
             full_transcript = " ".join(transcript)
+        target_segments = [
+            token for token in target_segments if self.token_filter.keeps(token)
+        ]
 
         text_upper = full_transcript.upper()
         text_nfd = unicodedata.normalize("NFD", text_upper)

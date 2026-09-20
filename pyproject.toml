@@ -1,6 +1,6 @@
 [project]
 name = "nlp-shap"
-version = "0.2.1"
+version = "0.2.2"
 description = "Multimodal explainability tool for NLP based on Shapley value."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
@@ -57,6 +57,7 @@ banzhaf = "nlp_shap.estimation.estimands.banzhaf:BanzhafAggregator"
 
 [project.entry-points."nlp_shap.partitions"]
 tokens = "nlp_shap.masking.partitions:TokenPartitioner"
+sgpa_segments = "nlp_shap.alignment.partitions:SgpaSegmentPartitioner"
 
 [project.entry-points."nlp_shap.absence_policies"]
 delete = "nlp_shap.masking.policies:DeletePolicy"
