@@ -60,8 +60,9 @@ Compare absence policies
 Resolve plugins from config
 ---------------------------
 
-Built-in plugins register the ``tokens`` partition and ``delete`` / ``pad`` /
-``neutral`` absence policies. Load them through :class:`~nlp_shap.PluginRegistry`:
+Built-in plugins register the ``tokens`` and ``sgpa_segments`` partitions and
+``delete`` / ``pad`` / ``neutral`` absence policies. Load them through
+:class:`~nlp_shap.PluginRegistry`:
 
 .. code-block:: python
 

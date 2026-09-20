@@ -70,6 +70,7 @@ Optional extras:
    pip install "nlp-shap[lmstudio]"       # LM Studio backend
    pip install "nlp-shap[api]"             # OpenAI-compatible HTTP API
    pip install "nlp-shap[viz]"             # matplotlib attribution charts
+   pip install "nlp-shap[audio]"           # SGPA alignment (Wav2Vec2)
 
 See :doc:`guides/extending` for the full extras and entry-point matrix.
 
@@ -85,6 +86,7 @@ See :doc:`guides/extending` for the full extras and entry-point matrix.
    guides/value_functions
    guides/pipeline
    guides/backends
+   guides/alignment
    guides/config
    guides/extending
    guides/masking

@@ -1,6 +1,6 @@
 [project]
 name = "nlp-shap"
-version = "0.1.16"
+version = "0.2.2"
 description = "Multimodal explainability tool for NLP based on Shapley value."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
@@ -57,6 +57,7 @@ banzhaf = "nlp_shap.estimation.estimands.banzhaf:BanzhafAggregator"
 
 [project.entry-points."nlp_shap.partitions"]
 tokens = "nlp_shap.masking.partitions:TokenPartitioner"
+sgpa_segments = "nlp_shap.alignment.partitions:SgpaSegmentPartitioner"
 
 [project.entry-points."nlp_shap.absence_policies"]
 delete = "nlp_shap.masking.policies:DeletePolicy"
@@ -96,6 +97,13 @@ transformers = [
 ]
 api = [
     "httpx>=0.28.0",
+]
+audio = [
+    "librosa>=0.10.0",
+    "soundfile>=0.12.0",
+    "torch>=2.5.0",
+    "torchaudio>=2.5.0",
+    "transformers>=4.40.0",
 ]
 viz = [
     "matplotlib>=3.9.0",
@@ -183,7 +191,18 @@ module = ["httpx", "httpx.*"]
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
-module = ["torch", "torch.*", "transformers", "transformers.*"]
+module = [
+  "torch",
+  "torch.*",
+  "torchaudio",
+  "torchaudio.*",
+  "transformers",
+  "transformers.*",
+  "soundfile",
+  "soundfile.*",
+  "librosa",
+  "librosa.*",
+]
 ignore_missing_imports = true
 
 [tool.bandit]

@@ -4,12 +4,15 @@ from importlib.metadata import PackageNotFoundError, version
 
 from ._logging import bootstrap_logging
 from .domain import (
+    AudioPayload,
     CoalitionMask,
     ConversationSnapshot,
     CooperativeGame,
     Estimand,
     GenerationRecord,
     Message,
+    ModalityFlag,
+    ModelHistoryTrackingMode,
     PlayerSet,
     Role,
     Turn,
@@ -48,6 +51,7 @@ def __getattr__(name: str) -> object:
 
 
 __all__ = [
+    "AudioPayload",
     "BanzhafAggregator",
     "CoalitionMask",
     "ComplementaryEstimator",
@@ -65,6 +69,8 @@ __all__ = [
     "LogprobValue",
     "Message",
     "MinMaxNormalizer",
+    "ModalityFlag",
+    "ModelHistoryTrackingMode",
     "MonteCarloEstimator",
     "NeymanEstimator",
     "PlayerSet",

@@ -8,6 +8,55 @@ Changes in each published ``nlp-shap`` version. Newest first.
 Unreleased
 ----------
 
+.. _release-0-2-2:
+
+0.2.2 (2026-09-20)
+------------------
+
+Added
+~~~~~
+
+- :mod:`nlp_shap.masking.filters` with :class:`~nlp_shap.masking.filters.KeepAllTokens`
+  and :class:`~nlp_shap.masking.filters.ExcludePunctuationTokensFilter` (configurable
+  exclude sets; 0.x punctuation parity).
+- :class:`~nlp_shap.alignment.partitions.SgpaSegmentPartitioner` plugin
+  ``sgpa_segments`` for coalition players from aligned audio segments.
+- :class:`~nlp_shap.masking.policies.SegmentDeletePolicy` to render multimodal
+  coalitions by dropping absent SGPA segments and recombining kept audio.
+- Optional ``token_filter`` on :class:`~nlp_shap.alignment.sgpa.SpectrogramGuidedAligner`
+  so punctuation can be excluded from SGPA target segments.
+
+.. _release-0-2-1:
+
+0.2.1 (2026-09-20)
+------------------
+
+Added
+~~~~~
+
+- :class:`~nlp_shap.alignment.SpectrogramGuidedAligner` (Wav2Vec2 CTC + spectrogram
+  boundary refinement) under :mod:`nlp_shap.alignment`.
+- :attr:`~nlp_shap.alignment.AudioSegment.boundary_refined` on aligned segments.
+- :meth:`~nlp_shap.alignment.TorchAudioHandler.combine` for concatenating segment
+  WAV payloads.
+- Optional ``[audio]`` extra documentation and :doc:`guides/alignment` walkthrough.
+- Phase 15–16 sign-off coverage for multimodal domain and alignment surfaces.
+
+.. _release-0-2-0:
+
+0.2.0 (2026-09-19)
+------------------
+
+Added
+~~~~~
+
+- :class:`~nlp_shap.ModalityFlag` and :class:`~nlp_shap.ModelHistoryTrackingMode`
+  enums for multimodal conversation metadata.
+- :class:`~nlp_shap.AudioPayload` and optional ``modality`` / ``audio`` fields on
+  :class:`~nlp_shap.Message`, with :meth:`~nlp_shap.ConversationSnapshot.has_audio`.
+- Multimodal snapshot round-trip coverage; text-only constructors and digests
+  remain unchanged.
+
 .. _release-0-1-16:
 
 0.1.16 (2026-07-19)

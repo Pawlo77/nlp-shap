@@ -17,6 +17,10 @@ Masking
    :members:
    :undoc-members:
 
+.. automodule:: nlp_shap.masking.filters
+   :members:
+   :undoc-members:
+
 .. automodule:: nlp_shap.masking.policies
    :members:
    :undoc-members:

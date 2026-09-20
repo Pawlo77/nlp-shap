@@ -5,8 +5,13 @@ from nlp_shap.backends.transformers.chat import (
     snapshot_has_audio,
     snapshot_to_chat_messages,
 )
-from nlp_shap.domain.conversation import ConversationSnapshot, Message, Turn
-from nlp_shap.domain.enums import Role
+from nlp_shap.domain.conversation import (
+    AudioPayload,
+    ConversationSnapshot,
+    Message,
+    Turn,
+)
+from nlp_shap.domain.enums import ModalityFlag, Role
 
 
 class _TemplateTokenizer:
@@ -55,10 +60,23 @@ def test_render_prompt_uses_chat_template_when_available() -> None:
     assert rendered == "user:hello"
 
 
-def test_snapshot_has_audio_detects_audio_marker() -> None:
-    """Audio snapshots are rejected by the text-only backend."""
+def test_snapshot_has_audio_detects_audio_payload() -> None:
+    """Snapshots with AudioPayload are flagged as multimodal."""
     snapshot = ConversationSnapshot.from_turns((
-        Turn(messages=(Message(role=Role.USER, text="audio:payload"),)),
+        Turn(
+            messages=(
+                Message(
+                    role=Role.USER,
+                    text="",
+                    modality=ModalityFlag.AUDIO,
+                    audio=AudioPayload(
+                        data=b"RIFF",
+                        sample_rate_hz=16000,
+                        audio_format="wav",
+                    ),
+                ),
+            )
+        ),
     ))
     assert snapshot_has_audio(snapshot) is True
 
